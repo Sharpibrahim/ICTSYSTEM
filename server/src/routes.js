@@ -191,14 +191,22 @@ api.get('/dashboard', requireAuth, (_req, res) => {
       WHERE join_date IS NOT NULL GROUP BY month ORDER BY month DESC LIMIT 8`
   ).reverse()
 
+  /* Charts about the school structure only count students (staff and alumni
+     have no class, stream or house). */
   const membersByClass = all(
-    "SELECT COALESCE(NULLIF(class_level,''),'Unspecified') AS name, COUNT(*) AS value FROM members GROUP BY name ORDER BY name"
+    `SELECT class_level AS name, COUNT(*) AS value FROM members
+      WHERE class_level IS NOT NULL AND class_level <> ''
+      GROUP BY name ORDER BY name`
   )
   const membersByHouse = all(
-    "SELECT COALESCE(NULLIF(house,''),'Unspecified') AS name, COUNT(*) AS value FROM members GROUP BY name ORDER BY value DESC LIMIT 8"
+    `SELECT house AS name, COUNT(*) AS value FROM members
+      WHERE house IS NOT NULL AND house <> ''
+      GROUP BY name ORDER BY value DESC LIMIT 8`
   )
   const membersByStream = all(
-    "SELECT COALESCE(NULLIF(stream,''),'Unspecified') AS name, COUNT(*) AS value FROM members GROUP BY name ORDER BY name"
+    `SELECT stream AS name, COUNT(*) AS value FROM members
+      WHERE stream IS NOT NULL AND stream <> ''
+      GROUP BY name ORDER BY value DESC`
   )
   const membersByStatus = all('SELECT status AS name, COUNT(*) AS value FROM members GROUP BY status ORDER BY value DESC')
   const membersByGender = all(
@@ -219,6 +227,7 @@ api.get('/dashboard', requireAuth, (_req, res) => {
             COALESCE(SUM(d.amount_paid),0) AS collected,
             COALESCE(SUM(CASE WHEN d.status IN ('Unpaid','Partial') THEN d.amount_due - d.amount_paid ELSE 0 END),0) AS outstanding
        FROM dues d JOIN members m ON m.id = d.member_id
+      WHERE m.class_level IS NOT NULL AND m.class_level <> ''
       GROUP BY name ORDER BY name`
   )
   const duesDefaulters = all(
@@ -808,6 +817,7 @@ api.get('/reports/data', requireAuth, (req, res) => {
             COALESCE(SUM(d.amount_paid),0) AS collected,
             COALESCE(SUM(CASE WHEN d.status IN ('Unpaid','Partial') THEN d.amount_due - d.amount_paid ELSE 0 END),0) AS outstanding
        FROM dues d JOIN members m ON m.id = d.member_id
+      WHERE m.class_level IS NOT NULL AND m.class_level <> ''
       GROUP BY name ORDER BY name`
   )
   const duesByTerm = all(
@@ -969,6 +979,33 @@ api.get('/backup', requireRole('admin'), (_req, res) => {
 /* ------------------------------------------------------------------ */
 /* SETTINGS                                                            */
 /* ------------------------------------------------------------------ */
+
+/* ------------------------------------------------------------------ */
+/* Demo school data                                                    */
+/* ------------------------------------------------------------------ */
+
+/**
+ * Reloads the demo school (administrator only). This wipes the database,
+ * so the settings screen warns the user first and signs them out afterwards.
+ */
+api.post('/demo/seed', async (_req, res) => {
+  if (!_req.user || _req.user.role !== 'admin') {
+    return res.status(403).json({ error: 'Only an administrator can reload the demo school data' })
+  }
+  const { seedDemo } = await import('./seed.js')
+  const result = seedDemo({ reset: true, quiet: true })
+  res.json({
+    data: {
+      skipped: Boolean(result.skipped),
+      counts: result.counts || null,
+      accounts: [
+        { email: 'admin@school.ac.ug', password: 'admin123', role: 'Teacher patron / administrator' },
+        { email: 'executive@school.ac.ug', password: 'executive123', role: 'Student executive' },
+        { email: 'member@school.ac.ug', password: 'member123', role: 'Student member' }
+      ]
+    }
+  })
+})
 
 api.get('/settings', requireAuth, (_req, res) => res.json({ data: getSettings() }))
 

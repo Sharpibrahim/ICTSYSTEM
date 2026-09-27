@@ -7,8 +7,6 @@ import { all, db, get, insert, run, saveSettings, DEFAULT_SETTINGS, logActivity 
 import { hashPassword } from './auth.js'
 import { OPTION_SETS } from '../../shared/schema.js'
 
-const RESET = process.argv.includes('--reset')
-
 /* Deterministic pseudo-random generator so demo data is stable. */
 let seedState = 20260101
 function rand() {
@@ -890,40 +888,69 @@ function seedActivityLog() {
 
 /* ------------------------------------------------------------------ */
 
-function main() {
+/**
+ * Loads the demo school. Returns the record counts that were created.
+ * Safe to call from the API as well as from the command line.
+ */
+export function seedDemo({ reset = true, quiet = false } = {}) {
   const existing = all('SELECT id FROM users LIMIT 1')
-  if (existing.length && !RESET) {
-    console.log('\n  Database already contains data.')
-    console.log('  Run `npm run db:reset` to wipe and reload the demo club.\n')
-    process.exit(0)
+  if (existing.length && !reset) {
+    return { skipped: true, reason: 'The database already contains data.' }
   }
 
-  console.log('\n  Seeding the secondary school ICT club…')
-  if (RESET) wipe()
+  const tables = {
+    members: 'members', cabinet: 'cabinet', meetings: 'meetings', activities: 'activities',
+    courses: 'courses', enrollments: 'enrollments', attendance: 'attendance', dues: 'dues',
+    reports: 'reports', certificates: 'certificates', notes: 'notes', projects: 'projects',
+    project_members: 'project_members', project_tasks: 'project_tasks', users: 'users'
+  }
 
-  seedSettings()
-  const userIds = seedUsers()
-  const members = seedMembers()
-  seedCabinet(members, userIds)
-  const meetings = seedMeetings(members)
-  const activities = seedActivities(members)
-  const courses = seedCourses(members)
-  seedEnrollments(courses, members)
-  seedAttendance(meetings, activities, courses, members)
-  seedDues(members)
-  seedReports(members)
-  seedCertificates(members, courses, activities)
-  seedNotes(members)
-  seedProjects(members)
-  seedActivityLog()
+  const originalLog = console.log
+  if (quiet) console.log = () => {}
+  try {
+    console.log('\n  Seeding the secondary school ICT club…')
+    if (reset) wipe()
 
-  const dues = all('SELECT COUNT(*) AS c FROM dues')[0]
-  console.log(`  • ${dues.c} dues records in the finance register`)
+    seedSettings()
+    const userIds = seedUsers()
+    const members = seedMembers()
+    seedCabinet(members, userIds)
+    const meetings = seedMeetings(members)
+    const activities = seedActivities(members)
+    const courses = seedCourses(members)
+    seedEnrollments(courses, members)
+    seedAttendance(meetings, activities, courses, members)
+    seedDues(members)
+    seedReports(members)
+    seedCertificates(members, courses, activities)
+    seedNotes(members)
+    seedProjects(members)
+    seedActivityLog()
 
+    const counts = {}
+    for (const [key, table] of Object.entries(tables)) {
+      counts[key] = all(`SELECT COUNT(*) AS c FROM ${table}`)[0].c
+    }
+    return { skipped: false, counts }
+  } finally {
+    console.log = originalLog
+  }
+}
+
+function main() {
+  const reset = process.argv.includes('--reset')
+  const result = seedDemo({ reset })
+  if (result.skipped) {
+    console.log('\n  Database already contains data.')
+    console.log('  Run `npm run db:reset` to wipe and reload the demo school.\n')
+    process.exit(0)
+  }
+  console.log(`  • ${result.counts.dues} dues records in the finance register`)
   console.log('\n  Done. Sign in with:')
   console.log('    admin@school.ac.ug      / admin123      (teacher patron / administrator)')
   console.log('    executive@school.ac.ug  / executive123  (student executive)')
   console.log('    member@school.ac.ug     / member123     (ordinary student member)\n')
 }
 
-main()
+/* Only run the CLI when this file is executed directly (not when imported). */
+if (process.argv[1] && process.argv[1].endsWith('seed.js')) main()

@@ -4,6 +4,27 @@
  */
 const TOKEN_KEY = 'ict-club-token'
 const USER_KEY = 'ict-club-user'
+const NOTICE_KEY = 'ict-club-notice'
+
+/** A one-shot message shown on the sign-in screen (e.g. "your session ended"). */
+export function setSessionNotice(message) {
+  try {
+    if (message) sessionStorage.setItem(NOTICE_KEY, message)
+    else sessionStorage.removeItem(NOTICE_KEY)
+  } catch {
+    /* storage can be unavailable in private mode — the notice is not critical */
+  }
+}
+
+export function takeSessionNotice() {
+  try {
+    const message = sessionStorage.getItem(NOTICE_KEY)
+    if (message) sessionStorage.removeItem(NOTICE_KEY)
+    return message
+  } catch {
+    return null
+  }
+}
 
 export function getToken() {
   return localStorage.getItem(TOKEN_KEY) || ''
@@ -25,6 +46,17 @@ export function getStoredUser() {
 export function setStoredUser(user) {
   if (user) localStorage.setItem(USER_KEY, JSON.stringify(user))
   else localStorage.removeItem(USER_KEY)
+}
+
+export const SESSION_EXPIRED_EVENT = 'ict-club:session-expired'
+
+function notifySessionExpired() {
+  if (typeof window === 'undefined') return
+  try {
+    window.dispatchEvent(new Event(SESSION_EXPIRED_EVENT))
+  } catch {
+    /* ignore */
+  }
 }
 
 export class ApiError extends Error {
@@ -72,8 +104,13 @@ export async function request(path, { method = 'GET', body, params, raw = false 
 
   if (!res.ok) {
     if (res.status === 401) {
+      /* The stored token is no longer valid (signed out elsewhere, or the
+         demo data was reloaded). Drop it and let the app fall back to the
+         sign-in screen instead of leaving the user on a broken page. */
       setToken('')
       setStoredUser(null)
+      setSessionNotice('Your session has ended — please sign in again.')
+      notifySessionExpired()
     }
     throw new ApiError(data?.error || `Request failed (${res.status})`, res.status)
   }
@@ -110,6 +147,9 @@ export const api = {
   markAllPresent: (body) => request('/api/attendance/mark-all', { method: 'POST', body }),
   importMembers: (rows) => request('/api/members/import', { method: 'POST', body: { rows } }),
   enrollCourse: (courseId, memberIds) => request(`/api/courses/${courseId}/enroll`, { method: 'POST', body: { member_ids: memberIds } }),
+  /* demo data */
+  loadDemoData: () => request('/api/demo/seed', { method: 'POST' }),
+
   /* Dues helpers */
   createDuesForTerm: (payload) => request('/api/dues/generate', { method: 'POST', body: payload }),
   recordPayment: (id, payload) => request(`/api/dues/${id}/payment`, { method: 'POST', body: payload }),

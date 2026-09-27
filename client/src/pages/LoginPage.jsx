@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import Icon from '../icons'
 import { useAuth } from '../auth'
+import { takeSessionNotice } from '../api'
 import { Button } from '../components/ui'
 
 const FEATURES = [
@@ -27,6 +28,9 @@ export default function LoginPage() {
   const [form, setForm] = useState({ name: '', email: '', password: '' })
   const [error, setError] = useState('')
   const [busy, setBusy] = useState(false)
+  /* Shown when the app bounced the user back here (session expired, data reloaded). */
+  const [notice, setNotice] = useState(() => takeSessionNotice())
+  const [noticeDismissed, dismissNotice] = useState(false)
 
   if (user) navigate('/', { replace: true })
 
@@ -77,6 +81,27 @@ export default function LoginPage() {
               ? 'Use the account the club patron or the executive committee created for you.'
               : 'Student accounts can view club records and manage their own notes.'}
           </p>
+
+          {notice && !noticeDismissed && (
+            <div
+              className="card mb-2"
+              style={{ background: 'var(--amber-soft, #fff7e6)', borderColor: 'var(--amber, #e0a300)' }}
+              role="status"
+            >
+              <div className="card__body flex items-center gap-2" style={{ padding: 12 }}>
+                <Icon name="alert" size={16} />
+                <div className="small" style={{ flex: 1 }}>{notice}</div>
+                <button
+                  type="button"
+                  className="btn btn--ghost btn--sm"
+                  onClick={() => dismissNotice(true)}
+                  aria-label="Dismiss message"
+                >
+                  ×
+                </button>
+              </div>
+            </div>
+          )}
 
           <form onSubmit={run}>
             {mode === 'signup' && (

@@ -474,6 +474,35 @@ await check('activity log records actions', async () => {
   return `${data.data.length} recent entries`
 })
 
+/* Demo data reload (runs last: it replaces every record) --------------- */
+
+await check('only an administrator can reload the demo school data', async () => {
+  const { status } = await call('/api/demo/seed', { method: 'POST', token: memberToken })
+  assert(status === 403, `expected 403 for a student, got ${status}`)
+  const cabinet = await call('/api/demo/seed', { method: 'POST', token: cabinetToken })
+  assert(cabinet.status === 403, `expected 403 for an executive, got ${cabinet.status}`)
+  return '403 for students and executives'
+})
+
+await check('an administrator can reload the demo school data', async () => {
+  const { data, status } = await call('/api/demo/seed', { method: 'POST', token: adminToken })
+  assert(status === 200, `status ${status}`)
+  assert(data.data.counts?.members > 50, `only ${data.data.counts?.members} members seeded`)
+  assert(data.data.counts?.dues > 100, `only ${data.data.counts?.dues} dues records seeded`)
+  assert(Array.isArray(data.data.accounts) && data.data.accounts.length === 3, 'demo accounts not reported')
+
+  /* The reload replaces the sessions table, so sign in again before reading. */
+  const relogin = await call('/api/auth/login', {
+    method: 'POST',
+    body: { email: 'admin@school.ac.ug', password: 'admin123' }
+  })
+  assert(relogin.status === 200 && relogin.data.token, 'admin could not sign in after a reload')
+  adminToken = relogin.data.token
+  const { data: dashboard } = await call('/api/dashboard', { token: adminToken })
+  assert(dashboard.cards.members === data.data.counts.members, 'dashboard does not match the reloaded data')
+  return `${data.data.counts.members} members, ${data.data.counts.dues} dues records, ${dashboard.cards.certificates} certificates`
+})
+
 /* Summary ------------------------------------------------------------ */
 console.log(`\n  ${passed} passed, ${failed} failed\n`)
 if (failed) {

@@ -1,5 +1,13 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react'
-import { api, getStoredUser, getToken, setStoredUser, setToken } from './api'
+import {
+  api,
+  getStoredUser,
+  getToken,
+  SESSION_EXPIRED_EVENT,
+  setSessionNotice,
+  setStoredUser,
+  setToken
+} from './api'
 
 const AuthContext = createContext(null)
 
@@ -35,6 +43,17 @@ export function AuthProvider({ children }) {
     }
   }, [])
 
+  /* When any request is rejected with 401 the API client clears the token and
+     fires this event, so the whole app drops to the sign-in screen instead of
+     showing error cards on every page. */
+  useEffect(() => {
+    const onExpired = () => {
+      setUser(null)
+    }
+    window.addEventListener(SESSION_EXPIRED_EVENT, onExpired)
+    return () => window.removeEventListener(SESSION_EXPIRED_EVENT, onExpired)
+  }, [])
+
   const refreshSettings = useCallback(async () => {
     try {
       const { data } = await api.settings()
@@ -65,14 +84,15 @@ export function AuthProvider({ children }) {
     return result.user
   }, [])
 
-  const logout = useCallback(async () => {
+  const logout = useCallback(async (notice) => {
     try {
       await api.logout()
     } catch {
-      /* ignore */
+      /* the session may already be gone */
     }
     setToken('')
     setStoredUser(null)
+    if (notice) setSessionNotice(notice)
     setUser(null)
   }, [])
 

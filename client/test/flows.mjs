@@ -619,7 +619,87 @@ await flow('Verify a real certificate on the public page', async () => {
 /* Clean up the records created by this run                            */
 /* ------------------------------------------------------------------ */
 
+
+
 if (createdNoteId) await api(`/api/notes/${createdNoteId}`, { method: 'DELETE' })
+
+/* ------------------------------------------------------------------ */
+/* 14. Settings: reload the demo school data (wipes and re-seeds)      */
+/* ------------------------------------------------------------------ */
+
+await flow('Reload the demo school data from Settings', async () => {
+  const page = await mount('/settings')
+  try {
+    const demoButton = await waitFor(
+      () => [...page.container.querySelectorAll('button')].find((b) => /Load demo school data/i.test(b.textContent)),
+      { label: 'the demo-data button' }
+    )
+    await act(async () => {
+      click(demoButton)
+    })
+    await flush(300)
+    const confirm = await waitFor(
+      () => [...window.document.querySelectorAll('.modal button')].find((b) => /Load demo data/i.test(b.textContent)),
+      { label: 'the confirmation dialog' }
+    )
+    await act(async () => {
+      click(confirm)
+    })
+    // The app must drop the dead session and land on the sign-in screen…
+    await waitFor(() => (/Sign in to your club/i.test(window.document.body.textContent || '') ? true : null), {
+      timeout: 20000,
+      label: 'the sign-in screen after the reload'
+    })
+    const notice = /demo school data was reloaded/i.test(window.document.body.textContent || '')
+    if (!notice) throw new Error('no explanation was shown on the sign-in screen')
+    // …and the API must be serving a complete demo school again.
+    const relogin = await nodeFetch(`${API}/api/auth/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: 'admin@school.ac.ug', password: 'admin123' })
+    }).then((r) => r.json())
+    if (!relogin.token) throw new Error('could not sign in after the reload')
+    const dashboard = await nodeFetch(`${API}/api/dashboard`, {
+      headers: { Authorization: `Bearer ${relogin.token}` }
+    }).then((r) => r.json())
+    if (!dashboard.cards?.members) throw new Error('the dashboard has no data after the reload')
+    return `${dashboard.cards.members} members, ${dashboard.cards.dues_records} dues records reloaded; signed out with an explanation`
+  } finally {
+    await page.unmount()
+  }
+})
+
+/* ------------------------------------------------------------------ */
+/* 15. An expired session must fall back to the sign-in screen         */
+/* ------------------------------------------------------------------ */
+
+await flow('An expired session returns to the sign-in screen', async () => {
+  /* Exactly the situation after a database reset: the browser still holds a
+     token that the API no longer accepts. The dashboard must not sit on an
+     error card — the app has to sign the user out and explain why. */
+  const liveToken = TOKEN
+  TOKEN = '' // otherwise the fetch shim would paper over the rejected token
+  window.localStorage.setItem('ict-club-token', 'token-from-before-the-reset')
+  window.localStorage.setItem('ict-club-user', JSON.stringify({ id: 1, name: 'Mr. Ssekandi John', role: 'admin' }))
+  const page = await mount('/')
+  try {
+    const text = await waitFor(
+      () => (/Sign in to your club/i.test(page.text()) ? page.text() : null),
+      { timeout: 12000, label: 'the sign-in screen' }
+    ).catch(() => page.text())
+    if (!/Sign in to your club/i.test(text)) {
+      throw new Error(`expected the sign-in screen, saw: ${text.replace(/\s+/g, ' ').slice(0, 120)}`)
+    }
+    if (!/session has ended/i.test(text)) throw new Error('no explanation was shown')
+    if (window.localStorage.getItem('ict-club-token')) throw new Error('the dead token was kept in storage')
+    return 'stale token cleared, sign-in screen shown with an explanation'
+  } finally {
+    await page.unmount()
+    window.localStorage.removeItem('ict-club-token')
+    window.localStorage.removeItem('ict-club-user')
+    TOKEN = liveToken
+  }
+})
 
 const failed = results.filter((r) => !r.ok)
 console.log(`\n  ${results.length - failed.length}/${results.length} write flows worked.`)
