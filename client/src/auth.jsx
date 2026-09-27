@@ -68,6 +68,18 @@ export function AuthProvider({ children }) {
     if (user) refreshSettings()
   }, [user, refreshSettings])
 
+  /** Re-reads the signed-in user (used after the token is replaced). */
+  const reload = useCallback(async () => {
+    try {
+      const { user: me } = await api.me()
+      setUser(me)
+      setStoredUser(me)
+      return me
+    } catch {
+      return null
+    }
+  }, [])
+
   const login = useCallback(async (email, password) => {
     const result = await api.login(email, password)
     setToken(result.token)
@@ -105,11 +117,12 @@ export function AuthProvider({ children }) {
       login,
       signup,
       logout,
+      reload,
       isAdmin: user?.role === 'admin',
       isCabinet: user?.role === 'admin' || user?.role === 'cabinet',
       can: (roles) => (roles || []).includes(user?.role)
     }),
-    [user, ready, settings, refreshSettings, login, signup, logout]
+    [user, ready, settings, refreshSettings, login, signup, logout, reload]
   )
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>

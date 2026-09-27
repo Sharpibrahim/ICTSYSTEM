@@ -103,13 +103,16 @@ export async function request(path, { method = 'GET', body, params, raw = false 
   }
 
   if (!res.ok) {
-    if (res.status === 401) {
+    const isSignInAttempt = /\/auth\/(login|signup)$/.test(path)
+    if (res.status === 401 && !isSignInAttempt) {
       /* The stored token is no longer valid (signed out elsewhere, or the
          demo data was reloaded). Drop it and let the app fall back to the
          sign-in screen instead of leaving the user on a broken page. */
       setToken('')
       setStoredUser(null)
-      setSessionNotice('Your session has ended — please sign in again.')
+      setSessionNotice(
+        'Your session has ended, so you were signed out. Sign in again to continue — the demo buttons below fill in an account for you.'
+      )
       notifySessionExpired()
     }
     throw new ApiError(data?.error || `Request failed (${res.status})`, res.status)

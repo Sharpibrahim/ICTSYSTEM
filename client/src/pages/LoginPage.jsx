@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import Icon from '../icons'
 import { useAuth } from '../auth'
@@ -32,7 +32,9 @@ export default function LoginPage() {
   const [notice, setNotice] = useState(() => takeSessionNotice())
   const [noticeDismissed, dismissNotice] = useState(false)
 
-  if (user) navigate('/', { replace: true })
+  useEffect(() => {
+    if (user) navigate('/', { replace: true })
+  }, [user, navigate])
 
   const run = async (event) => {
     event.preventDefault()

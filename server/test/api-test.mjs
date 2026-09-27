@@ -491,16 +491,14 @@ await check('an administrator can reload the demo school data', async () => {
   assert(data.data.counts?.dues > 100, `only ${data.data.counts?.dues} dues records seeded`)
   assert(Array.isArray(data.data.accounts) && data.data.accounts.length === 3, 'demo accounts not reported')
 
-  /* The reload replaces the sessions table, so sign in again before reading. */
-  const relogin = await call('/api/auth/login', {
-    method: 'POST',
-    body: { email: 'admin@school.ac.ug', password: 'admin123' }
-  })
-  assert(relogin.status === 200 && relogin.data.token, 'admin could not sign in after a reload')
-  adminToken = relogin.data.token
-  const { data: dashboard } = await call('/api/dashboard', { token: adminToken })
+  /* The caller keeps a working session: the reload issues a fresh token. */
+  assert(data.data.token, 'no replacement session token was returned')
+  assert(data.data.user?.email === 'admin@school.ac.ug', `unexpected user ${data.data.user?.email}`)
+  adminToken = data.data.token
+  const { data: dashboard, status: dashStatus } = await call('/api/dashboard', { token: adminToken })
+  assert(dashStatus === 200, `the replacement token does not work (${dashStatus})`)
   assert(dashboard.cards.members === data.data.counts.members, 'dashboard does not match the reloaded data')
-  return `${data.data.counts.members} members, ${data.data.counts.dues} dues records, ${dashboard.cards.certificates} certificates`
+  return `${data.data.counts.members} members, ${data.data.counts.dues} dues records, ${dashboard.cards.certificates} certificates, session kept`
 })
 
 /* Summary ------------------------------------------------------------ */

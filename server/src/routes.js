@@ -988,16 +988,38 @@ api.get('/backup', requireRole('admin'), (_req, res) => {
  * Reloads the demo school (administrator only). This wipes the database,
  * so the settings screen warns the user first and signs them out afterwards.
  */
-api.post('/demo/seed', async (_req, res) => {
-  if (!_req.user || _req.user.role !== 'admin') {
+api.post('/demo/seed', async (req, res) => {
+  if (!req.user || req.user.role !== 'admin') {
     return res.status(403).json({ error: 'Only an administrator can reload the demo school data' })
   }
   const { seedDemo } = await import('./seed.js')
   const result = seedDemo({ reset: true, quiet: true })
+
+  /* The reload recreates every row, including users, so the caller's session is
+     gone. Issue a fresh one for the matching demo account to keep them signed
+     in instead of dumping them on the sign-in screen. */
+  const fallback = { admin: 'admin@school.ac.ug', cabinet: 'executive@school.ac.ug', member: 'member@school.ac.ug' }
+  const target =
+    get('SELECT id, name, email, role, member_id FROM users WHERE email = ?', [req.user.email]) ||
+    get('SELECT id, name, email, role, member_id FROM users WHERE email = ?', [fallback[req.user.role] || fallback.admin])
+  let session = null
+  if (target) {
+    session = createSession(target.id)
+    logActivity({
+      userId: target.id,
+      userName: target.name,
+      action: 'settings',
+      resource: 'demo',
+      detail: 'Reloaded the demo school data'
+    })
+  }
+
   res.json({
     data: {
       skipped: Boolean(result.skipped),
       counts: result.counts || null,
+      token: session?.token || null,
+      user: target ? { id: target.id, name: target.name, email: target.email, role: target.role, member_id: target.member_id } : null,
       accounts: [
         { email: 'admin@school.ac.ug', password: 'admin123', role: 'Teacher patron / administrator' },
         { email: 'executive@school.ac.ug', password: 'executive123', role: 'Student executive' },

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Icon from '../icons'
-import { api, downloadAuthed, setSessionNotice, triggerDownload } from '../api'
+import { api, downloadAuthed, setStoredUser, setToken, triggerDownload } from '../api'
 import { useAuth } from '../auth'
 import { useAsync } from '../hooks'
 import { Badge, Button, Card, ConfirmDialog, EmptyState, Loading, useToast } from '../components/ui'
@@ -24,7 +24,7 @@ const PROFILE_FIELDS = [
 ]
 
 export default function SettingsPage() {
-  const { user, settings, refreshSettings, logout } = useAuth()
+  const { user, settings, refreshSettings, reload: reloadSession } = useAuth()
   const toast = useToast()
   const navigate = useNavigate()
   const [form, setForm] = useState(settings || {})
@@ -58,24 +58,30 @@ export default function SettingsPage() {
   }
 
   /**
-   * Reloads the demo school (administrators only). This replaces every record
-   * in the database, so the old session is discarded and the user is returned
-   * to the sign-in screen with an explanation.
+   * Reloads the demo school (administrators only). Every record is replaced,
+   * which recreates the user accounts too — the API hands back a fresh session
+   * for the matching demo account so the user stays signed in seamlessly.
    */
   const loadDemoData = async () => {
     setDemoBusy(true)
     try {
       const result = await api.loadDemoData()
-      const counts = result?.data?.counts || {}
-      const summary = counts.members
-        ? `${counts.members} students and teachers, ${counts.courses} courses, ${counts.dues} dues records`
-        : 'a fresh set of school records'
+      const { counts = {}, token, user: nextUser } = result?.data || {}
       setDemoOpen(false)
-      await logout(`The demo school data was reloaded with ${summary}. Sign in again to explore it.`)
-      setSessionNotice(`The demo school data was reloaded with ${summary}. Sign in again to explore it.`)
-      navigate('/login', { replace: true })
+      if (token && nextUser) {
+        setToken(token)
+        setStoredUser(nextUser)
+        await reloadSession()
+      }
+      await refreshSettings()
+      const summary = counts.members
+        ? `${counts.members} members, ${counts.courses} courses and ${counts.dues} dues records`
+        : 'a fresh set of school records'
+      toast.success('Demo school data loaded', summary)
+      navigate('/', { replace: true })
     } catch (err) {
       toast.error('Could not load the demo data', err.message)
+    } finally {
       setDemoBusy(false)
     }
   }

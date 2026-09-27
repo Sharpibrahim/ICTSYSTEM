@@ -51,11 +51,11 @@ console.error = (...args) => {
 
 let TOKEN = ''
 const nodeFetch = global.fetch
+/* The app sends its own Authorization header (from localStorage), so this shim
+   only rewrites relative URLs — it must never touch the headers, otherwise it
+   would mask exactly the session handling this suite tests. */
 global.fetch = (input, init = {}) => {
   const url = typeof input === 'string' && input.startsWith('/') ? `${API}${input}` : input
-  if (TOKEN && typeof url === 'string' && url.startsWith(API) && !/[?&]token=/.test(url)) {
-    init = { ...init, headers: { ...(init.headers || {}), Authorization: `Bearer ${TOKEN}` } }
-  }
   return nodeFetch(url, init)
 }
 window.fetch = global.fetch
@@ -313,16 +313,28 @@ await flow('Delete a student from the list row action', async () => {
   if (!createdStudentId) throw new Error('no student to delete (create step failed)')
   const page = await mount(`/r/members?q=Flow+Test+Student`)
   try {
-    const row = await waitFor(() => page.container.querySelector('table.data tbody tr'), { label: 'the student row' })
+    /* Wait for the row that actually belongs to the student this flow created —
+       never the first row on screen, which may predate the filtered fetch. */
+    const row = await waitFor(
+      () =>
+        [...page.container.querySelectorAll('table.data tbody tr')].find((tr) =>
+          tr.textContent.includes('Flow Test Student')
+        ),
+      { label: 'the row for the student created above' }
+    )
     const del = row.querySelector('button[title="Delete"]')
     if (!del) throw new Error('delete action missing on the row')
     await act(async () => {
       click(del)
     })
-    await flush(250)
-    const confirm = await waitFor(() => [...window.document.querySelectorAll('.modal button')].find((b) => b.textContent.trim() === 'Delete'), {
-      label: 'the delete confirmation'
-    })
+    const confirm = await waitFor(
+      () => {
+        const dialog = window.document.querySelector('.modal')
+        if (!dialog || !/Flow Test Student/.test(dialog.textContent || '')) return null
+        return [...dialog.querySelectorAll('button')].find((b) => b.textContent.trim() === 'Delete')
+      },
+      { label: 'the delete confirmation naming the student' }
+    )
     await act(async () => {
       click(confirm)
     })
@@ -645,25 +657,31 @@ await flow('Reload the demo school data from Settings', async () => {
     await act(async () => {
       click(confirm)
     })
-    // The app must drop the dead session and land on the sign-in screen…
-    await waitFor(() => (/Sign in to your club/i.test(window.document.body.textContent || '') ? true : null), {
-      timeout: 20000,
-      label: 'the sign-in screen after the reload'
-    })
-    const notice = /demo school data was reloaded/i.test(window.document.body.textContent || '')
-    if (!notice) throw new Error('no explanation was shown on the sign-in screen')
-    // …and the API must be serving a complete demo school again.
-    const relogin = await nodeFetch(`${API}/api/auth/login`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email: 'admin@school.ac.ug', password: 'admin123' })
-    }).then((r) => r.json())
-    if (!relogin.token) throw new Error('could not sign in after the reload')
+    // The user must stay signed in: the API hands back a fresh session and the
+    // app lands on the dashboard with the reloaded school.
+    const landed = await waitFor(
+      () => (/Good (morning|afternoon|evening)/i.test(window.document.body.textContent || '') ? true : null),
+      { timeout: 25000, label: 'the dashboard after the reload' }
+    ).catch(() => null)
+    if (!landed) {
+      throw new Error(
+        `the app did not return to the dashboard. token=${Boolean(window.localStorage.getItem('ict-club-token'))} text=${(window.document.body.textContent || '').replace(/\s+/g, ' ').slice(0, 200)}`
+      )
+    }
+    if (/Sign in to your club/i.test(window.document.body.textContent || '')) {
+      throw new Error('the user was signed out by the reload')
+    }
+    // …and the new token must be live against the reloaded data.
+    const token = window.localStorage.getItem('ict-club-token')
+    if (!token) throw new Error('no session token was stored after the reload')
     const dashboard = await nodeFetch(`${API}/api/dashboard`, {
-      headers: { Authorization: `Bearer ${relogin.token}` }
+      headers: { Authorization: `Bearer ${token}` }
     }).then((r) => r.json())
     if (!dashboard.cards?.members) throw new Error('the dashboard has no data after the reload')
-    return `${dashboard.cards.members} members, ${dashboard.cards.dues_records} dues records reloaded; signed out with an explanation`
+    const visible = /Members/i.test(window.document.body.textContent || '')
+    if (!visible) throw new Error('the dashboard widgets did not render')
+    TOKEN = token
+    return `${dashboard.cards.members} members, ${dashboard.cards.dues_records} dues records reloaded; stayed signed in`
   } finally {
     await page.unmount()
   }
@@ -698,6 +716,42 @@ await flow('An expired session returns to the sign-in screen', async () => {
     window.localStorage.removeItem('ict-club-token')
     window.localStorage.removeItem('ict-club-user')
     TOKEN = liveToken
+  }
+})
+
+/* ------------------------------------------------------------------ */
+/* 16. A wrong password is reported as a password problem              */
+/* ------------------------------------------------------------------ */
+
+await flow('A wrong password is not reported as an ended session', async () => {
+  window.localStorage.removeItem('ict-club-token')
+  window.localStorage.removeItem('ict-club-user')
+  window.sessionStorage.removeItem('ict-club-notice')
+  const page = await mount('/')
+  try {
+    await waitFor(() => (page.container.querySelector('#email') ? true : null), { label: 'the sign-in form' })
+    const email = page.container.querySelector('#email')
+    const password = page.container.querySelector('#password')
+    await act(async () => {
+      setValue(email, 'admin@school.ac.ug')
+      setValue(password, 'definitely-the-wrong-password')
+      const button = [...page.container.querySelectorAll('button')].find((b) => /^Sign in$/i.test(b.textContent.trim()))
+      const form = button?.closest('form')
+      if (form?.requestSubmit) form.requestSubmit()
+      else if (button) click(button)
+    })
+    const text = await waitFor(
+      () => (/Incorrect password|Invalid email or password/i.test(page.text()) ? page.text() : null),
+      { timeout: 12000, label: 'the password error' }
+    ).catch(() => page.text())
+    if (!/Incorrect password|Invalid email or password/i.test(text)) {
+      throw new Error(`expected a password error, saw: ${text.replace(/\s+/g, ' ').slice(0, 140)}`)
+    }
+    if (/session has ended/i.test(text)) throw new Error('the wrong password was blamed on an ended session')
+    if (window.localStorage.getItem('ict-club-token')) throw new Error('a token was stored after a failed sign-in')
+    return 'showed “Incorrect password” and no session notice'
+  } finally {
+    await page.unmount()
   }
 })
 
