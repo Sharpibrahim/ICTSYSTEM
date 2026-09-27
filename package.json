@@ -12,13 +12,13 @@
     "start": "npm run dev",
     "db:seed": "npm --prefix server run seed",
     "db:reset": "npm --prefix server run reset",
-    "test": "npm --prefix server run test && npm --prefix client run test",
-    "test:api": "npm --prefix server run test",
-    "test:ui": "npm --prefix client run test",
+    "test": "node scripts/run-tests.mjs",
+    "test:api": "node scripts/run-tests.mjs api",
+    "test:ui": "node scripts/run-tests.mjs ui",
     "build": "npm --prefix client run build",
-    "test:flows": "npm --prefix client run test:flows",
-    "test:all": "npm --prefix server run test && npm --prefix client run test:all",
-    "admin": "npm --prefix server run admin --"
+    "test:flows": "node scripts/run-tests.mjs flows",
+    "admin": "npm --prefix server run admin --",
+    "test:live": "node scripts/run-tests.mjs --live"
   },
   "devDependencies": {
     "concurrently": "^9.1.2"

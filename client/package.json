@@ -7,10 +7,11 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "test": "npm run test:build && node test/smoke.mjs",
+    "test": "node ../scripts/run-tests.mjs ui",
     "test:build": "vite build --ssr test/ssr-entry.jsx --outDir test/dist --logLevel warn",
-    "test:flows": "npm run test:build && node test/flows.mjs",
-    "test:all": "npm run test && npm run test:flows"
+    "test:flows": "node ../scripts/run-tests.mjs flows",
+    "test:direct": "npm run test:build && node test/smoke.mjs",
+    "test:flows:direct": "npm run test:build && node test/flows.mjs"
   },
   "dependencies": {
     "react": "^19.1.0",

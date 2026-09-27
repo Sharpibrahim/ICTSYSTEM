@@ -9,8 +9,10 @@
     "dev": "node --disable-warning=ExperimentalWarning --watch src/index.js",
     "seed": "node --disable-warning=ExperimentalWarning src/seed.js",
     "reset": "node --disable-warning=ExperimentalWarning src/seed.js --reset",
-    "test": "node --disable-warning=ExperimentalWarning test/api-test.mjs",
-    "admin": "node --disable-warning=ExperimentalWarning src/set-admin.js"
+    "test": "node ../scripts/run-tests.mjs api",
+    "admin": "node --disable-warning=ExperimentalWarning src/set-admin.js",
+    "test:isolated": "node ../scripts/run-tests.mjs api",
+    "test:live": "node ../scripts/run-tests.mjs api --live"
   },
   "dependencies": {
     "cors": "^2.8.5",

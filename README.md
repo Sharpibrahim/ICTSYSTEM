@@ -362,47 +362,43 @@ members ──┬─< cabinet            (student or teacher holds a position fo
 ## Testing
 
 ```bash
-npm test              # API checks + every screen and interaction in the UI
-npm run test:api      # 69 API checks (needs the API running)
-npm run test:ui       # 42 screens + 8 interaction flows in jsdom
+npm test              # every suite on an isolated database + its own API server
+npm run test:api      # 69 API checks
+npm run test:ui       # 42 screens + 8 interactions, for the admin, executive and member roles
 npm run test:flows    # 16 write flows: every action is saved and read back
-npm run test:all      # everything above, in one go
+npm run test:live     # the same checks against the app you are already running (see the warning)
 ```
 
-- **API tests** (`server/test/api-test.mjs`, 69 checks) cover authentication, permissions, validation,
-  filtering, sorting, pagination, CRUD, the dues register (generation, repeat generation, part-payments,
-  receipts, summary, role guards), attendance bulk-save, analytics, exports, backups, certificate
-  verification, the course/certificate automations and the demo-data reload endpoint (admin only,
-  and it re-reads the dashboard afterwards). Sign-in by username *and* by email is covered, as is
-  username uniqueness; the role checks create their own executive and student accounts and delete
-  them again, so the club database stays with a single administrator account.
+**Test runs never touch your school's data.** `npm test` creates a throwaway database
+(`server/data/test.db`), seeds it, starts its own API on port **4100** and runs everything against
+that. The app on port 4000 keeps its own database, records and logins — so running the tests cannot
+sign you (or a student) out. Use `npm run test:live` only when you deliberately want to exercise the
+running app; that mode reloads the demo data and therefore replaces every record and session.
+
+- **API tests** (`server/test/api-test.mjs`, 69 checks) cover authentication (sign-in by username *and*
+  email, wrong passwords, username uniqueness), permissions, validation, filtering, sorting, pagination,
+  CRUD, the dues register (generation, repeat generation, part-payments, receipts, summary, role guards),
+  attendance bulk-save, analytics, exports, backups, certificate verification, the course/certificate
+  automations and the demo-data reload endpoint. Role checks create their own executive and student
+  accounts and delete them again, so the database always ends with a single administrator account.
 - **UI smoke test** (`client/test/smoke.mjs`, 42 screens + 8 interactions) renders **every screen and every
-  view mode** (table, cards, board, calendar, class-filtered registers, detail pages) against the live API
-  in headless jsdom, failing on React errors, empty screens or values the API no longer sends. It then
-  drives real interactions: opening the create form, filtering a list, marking attendance, switching list
-  views, recording a dues payment, opening the dues generator and generating a report draft.
+  view mode** (table, cards, board, calendar, class-filtered registers, detail pages) in headless jsdom,
+  failing on React errors, empty screens or values the API no longer sends. It then drives real
+  interactions: opening the create form, filtering a list, marking attendance, switching list views,
+  recording a dues payment, opening the dues generator and generating a report draft.
 - **Write-flow test** (`client/test/flows.mjs`, 16 flows) proves the buttons really save: it fills the real
-  forms, submits them, and then re-reads the API to confirm the change — create/edit/delete a student
-  (including the chip-style interests field), record a dues payment and check the receipt plus the
-  collection total, save an attendance register, register a completer and issue their certificate, save a
-  generated report, create a note, save the club profile, and verify a certificate on the public page.
-  It also signs in with the administrator username *and* the administrator email and checks the dashboard
-  opens, reloads the demo school from Settings (the user stays signed in), and checks that a stale session
-  notice is cleared as soon as typing starts, never comes back during sign-in, and that a wrong password is
-  reported as a password problem rather than an ended session. It cleans up after itself, so it can be run
-  repeatedly.
-
-> The suites are run against the **built** client (`client/dist` or the Vite dev server), so a stale browser
-> bundle can also be ruled out: `index.html` is served with `no-cache`, and the asset filenames are hashed.
-- Both UI suites are **role aware**: `AS=member node test/smoke.mjs` (or `cabinet`; the default is `admin`).
-  For the cabinet and member runs they create a temporary account with that role, sign in with it, and
-  delete it afterwards. Member runs skip the screens only an admin may open and *assert that write
-  controls are hidden* from read-only students; cabinet runs exercise the full student-executive flow.
-  The administrator credentials can be overridden with `ADMIN_USERNAME` / `ADMIN_PASSWORD`.
-
-> The tests add and remove their own records, but running them still changes demo data slightly
-> (attendance marks, dues payments, issued certificates). Run `npm run db:reset` afterwards for a pristine
-> demo school.
+  forms, submits them and re-reads the API to confirm the change — create/edit/delete a student (including
+  the chip-style interests field), record a dues payment and check the receipt plus the collection total,
+  save an attendance register, register a completer and issue their certificate, save a generated report,
+  create a note, save the club profile, verify a certificate on the public page, sign in with the
+  administrator username and email, reload the demo school from Settings (staying signed in) and check that
+  a stale session notice clears as soon as typing starts and that a wrong password is reported as a
+  password problem rather than an ended session.
+- The UI suites are **role aware**: the runner signs in as the administrator, a temporary executive and a
+  temporary student (created and removed automatically). Member runs skip the screens only an admin may
+  open and *assert that write controls are hidden* from read-only students.
+- Credentials for the tests can be overridden with `ADMIN_USERNAME` / `ADMIN_PASSWORD`, and the isolated
+  server's port with `TEST_PORT`.
 
 ## Everyday tasks (recipes)
 
@@ -468,7 +464,8 @@ computer lab. Notes:
 | Port already in use | Start with `PORT=4100 npm run dev:api` and `API_URL=http://localhost:4100 npm run dev:web` |
 | Demo data has drifted | `npm run db:reset` restores the seeded school |
 | Login fails after a database reset | Sign in again — the app now returns you to the sign-in screen with a message when a stored token is no longer valid |
-| Dashboard shows an error instead of statistics | The session ended (the demo data was reloaded, or you signed out elsewhere). Sign in again; the app should already have returned you to the sign-in screen |
+| Dashboard shows an error instead of statistics | The session ended (the demo data was reloaded, or you signed out elsewhere). Sign in again — the app returns you to the sign-in screen with a short explanation |
+| Signed out right after running the tests | Run `npm test` (isolated database). Only `npm run test:live` exercises the running app, and it replaces every record and session |
 
 ---
 
