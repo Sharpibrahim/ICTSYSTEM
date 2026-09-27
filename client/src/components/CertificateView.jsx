@@ -20,7 +20,8 @@ export default function CertificateView({ record = {}, settings = {}, related })
 
       <p className="small muted">This certificate is proudly presented to</p>
       <div className="certificate__name">{record.recipient_id_label || record.recipient_name || 'Recipient name'}</div>
-      {record.recipient_reg && <div className="small muted">Reg. No: {record.recipient_reg}</div>}
+      {record.recipient_class && <div className="small muted">Class: {record.recipient_class}</div>}
+      {record.recipient_reg && <div className="small muted">Admission No: {record.recipient_reg}</div>}
 
       <div className="certificate__title mt-2">{record.title}</div>
 

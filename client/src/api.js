@@ -104,11 +104,16 @@ export const api = {
   activity: (limit = 100) => request('/api/activity', { params: { limit } }),
   settings: () => request('/api/settings'),
   saveSettings: (body) => request('/api/settings', { method: 'PUT', body }),
-  attendanceRegister: (refType, refId) => request('/api/attendance/register', { params: { ref_type: refType, ref_id: refId } }),
+  attendanceRegister: (refType, refId, extra) =>
+    request('/api/attendance/register', { params: { ref_type: refType, ref_id: refId, ...(extra || {}) } }),
   saveAttendanceRegister: (body) => request('/api/attendance/register', { method: 'POST', body }),
   markAllPresent: (body) => request('/api/attendance/mark-all', { method: 'POST', body }),
   importMembers: (rows) => request('/api/members/import', { method: 'POST', body: { rows } }),
   enrollCourse: (courseId, memberIds) => request(`/api/courses/${courseId}/enroll`, { method: 'POST', body: { member_ids: memberIds } }),
+  /* Dues helpers */
+  createDuesForTerm: (payload) => request('/api/dues/generate', { method: 'POST', body: payload }),
+  recordPayment: (id, payload) => request(`/api/dues/${id}/payment`, { method: 'POST', body: payload }),
+  duesSummary: (params) => request('/api/dues/summary', { params }),
   issueCertificates: (courseId, status) => request(`/api/courses/${courseId}/issue-certificates`, { method: 'POST', body: { status } }),
   printable: (id) => request(`/api/certificates/${id}/printable`),
   verify: (code) => request(`/api/verify/${encodeURIComponent(code)}`),

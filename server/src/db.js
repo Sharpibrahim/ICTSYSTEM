@@ -1,6 +1,7 @@
 /**
  * Database layer — uses Node's built-in SQLite (node:sqlite), so the project
- * has zero native dependencies. Creates the schema on first run.
+ * has zero native dependencies. Creates the schema on first run and upgrades
+ * older databases automatically (see SCHEMA_VERSION).
  */
 import { DatabaseSync } from 'node:sqlite'
 import fs from 'node:fs'
@@ -12,35 +13,47 @@ export const ROOT_DIR = path.resolve(__dirname, '..')
 export const DATA_DIR = path.join(ROOT_DIR, 'data')
 export const DB_PATH = process.env.DB_PATH || path.join(DATA_DIR, 'ictclub.db')
 
+/** Bump this whenever the table layout changes — old databases are rebuilt. */
+export const SCHEMA_VERSION = 2
+
 fs.mkdirSync(DATA_DIR, { recursive: true })
 
 export const db = new DatabaseSync(DB_PATH)
 db.exec('PRAGMA journal_mode = WAL')
 db.exec('PRAGMA foreign_keys = ON')
+// Wait (instead of failing) when another process — e.g. the seed script — is writing.
+db.exec('PRAGMA busy_timeout = 8000')
 
 /* ------------------------------------------------------------------ */
 /* SCHEMA                                                              */
 /* ------------------------------------------------------------------ */
 
 const SCHEMA = `
+CREATE TABLE IF NOT EXISTS meta (
+  key TEXT PRIMARY KEY,
+  value TEXT
+);
+
 CREATE TABLE IF NOT EXISTS members (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   full_name TEXT NOT NULL,
-  reg_number TEXT,
-  email TEXT,
-  phone TEXT,
+  admission_number TEXT,
+  class_level TEXT,
+  stream TEXT,
+  house TEXT,
+  role TEXT DEFAULT 'Student Member',
+  status TEXT DEFAULT 'Active',
   gender TEXT,
   date_of_birth TEXT,
-  department TEXT,
-  program TEXT,
-  year_of_study TEXT,
-  role TEXT DEFAULT 'Member',
-  status TEXT DEFAULT 'Active',
+  email TEXT,
+  phone TEXT,
+  address TEXT,
+  guardian_name TEXT,
+  guardian_phone TEXT,
+  guardian_relationship TEXT,
   join_date TEXT,
   skills TEXT,
   interests TEXT,
-  address TEXT,
-  emergency_contact TEXT,
   photo_url TEXT,
   bio TEXT,
   created_at TEXT NOT NULL DEFAULT (datetime('now')),
@@ -153,6 +166,23 @@ CREATE TABLE IF NOT EXISTS attendance (
   session_date TEXT NOT NULL,
   status TEXT NOT NULL DEFAULT 'Present',
   check_in_time TEXT,
+  remarks TEXT,
+  recorded_by_id INTEGER REFERENCES members(id) ON DELETE SET NULL,
+  created_at TEXT NOT NULL DEFAULT (datetime('now')),
+  updated_at TEXT
+);
+
+CREATE TABLE IF NOT EXISTS dues (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  member_id INTEGER NOT NULL REFERENCES members(id) ON DELETE CASCADE,
+  term TEXT NOT NULL,
+  academic_year TEXT NOT NULL,
+  amount_due REAL DEFAULT 0,
+  amount_paid REAL DEFAULT 0,
+  status TEXT DEFAULT 'Unpaid',
+  payment_date TEXT,
+  method TEXT,
+  receipt_no TEXT,
   remarks TEXT,
   recorded_by_id INTEGER REFERENCES members(id) ON DELETE SET NULL,
   created_at TEXT NOT NULL DEFAULT (datetime('now')),
@@ -297,6 +327,7 @@ CREATE TABLE IF NOT EXISTS activity_log (
   created_at TEXT NOT NULL DEFAULT (datetime('now'))
 );
 
+CREATE INDEX IF NOT EXISTS idx_members_class ON members(class_level);
 CREATE INDEX IF NOT EXISTS idx_members_status ON members(status);
 CREATE INDEX IF NOT EXISTS idx_attendance_member ON attendance(member_id);
 CREATE INDEX IF NOT EXISTS idx_attendance_ref ON attendance(ref_type, ref_id);
@@ -304,12 +335,54 @@ CREATE INDEX IF NOT EXISTS idx_attendance_date ON attendance(session_date);
 CREATE INDEX IF NOT EXISTS idx_enrollments_course ON enrollments(course_id);
 CREATE INDEX IF NOT EXISTS idx_enrollments_member ON enrollments(member_id);
 CREATE INDEX IF NOT EXISTS idx_cabinet_member ON cabinet(member_id);
+CREATE INDEX IF NOT EXISTS idx_dues_member ON dues(member_id);
+CREATE INDEX IF NOT EXISTS idx_dues_term ON dues(term, academic_year);
 CREATE INDEX IF NOT EXISTS idx_tasks_project ON project_tasks(project_id);
 CREATE INDEX IF NOT EXISTS idx_team_project ON project_members(project_id);
 CREATE INDEX IF NOT EXISTS idx_log_created ON activity_log(created_at);
 `
 
+const ALL_TABLES = [
+  'activity_log', 'sessions', 'project_tasks', 'project_members', 'projects', 'notes', 'certificates',
+  'reports', 'dues', 'attendance', 'enrollments', 'courses', 'activities', 'meetings', 'cabinet',
+  'members', 'users', 'settings', 'meta'
+]
+
+function tableExists(name) {
+  try {
+    const row = db.prepare("SELECT name FROM sqlite_master WHERE type = 'table' AND name = ?").get(name)
+    return Boolean(row)
+  } catch {
+    return false
+  }
+}
+
+/* Upgrade older layouts: the system ships with demo data, so rebuilding the
+   tables (and re-seeding) is safer and simpler than piecemeal migrations. */
+const wasExisting = tableExists('members')
+let storedVersion = null
+if (tableExists('meta')) {
+  try {
+    storedVersion = db.prepare("SELECT value FROM meta WHERE key = 'schema_version'").get()?.value ?? null
+  } catch {
+    storedVersion = null
+  }
+}
+const effectiveVersion = storedVersion === null ? (wasExisting ? 1 : null) : Number(storedVersion)
+
+if (effectiveVersion !== null && effectiveVersion !== SCHEMA_VERSION) {
+  for (const table of ALL_TABLES) db.exec(`DROP TABLE IF EXISTS "${table}"`)
+  console.log(`\n  Database layout upgraded (v${effectiveVersion} → v${SCHEMA_VERSION}).`)
+  console.log('  Run `npm run db:seed` to load the club data.\n')
+}
+
 db.exec(SCHEMA)
+try {
+  db.prepare("INSERT INTO meta (key, value) VALUES ('schema_version', ?) ON CONFLICT(key) DO UPDATE SET value = excluded.value").run(String(SCHEMA_VERSION))
+} catch (error) {
+  // Another process holds the write lock (e.g. `npm run db:seed` running right now).
+  console.warn(`  Could not record the schema version yet (${error.message}). The server will continue.`)
+}
 
 /* ------------------------------------------------------------------ */
 /* QUERY HELPERS                                                       */
@@ -373,14 +446,17 @@ function plain(row) {
 
 export const DEFAULT_SETTINGS = {
   club_name: 'ICT Club',
-  club_tagline: 'Innovate • Build • Share',
-  institution: 'Faculty of Computing & Informatics',
-  academic_year: '2025/2026',
-  currency: 'USD',
-  contact_email: 'info@ictclub.org',
-  contact_phone: '+000 000 0000',
-  meeting_frequency: 'Every second Friday',
+  club_tagline: 'Learn • Create • Innovate',
+  institution: 'Secondary School',
+  academic_year: '2026',
+  current_term: 'Term 1',
+  currency: 'UGX',
+  contact_email: 'ictclub@school.ac.ug',
+  contact_phone: '+256 700 000 000',
+  meeting_frequency: 'Every Wednesday, 4:00 PM',
   attendance_target: '75',
+  dues_per_term: '10000',
+  patron_name: '',
   logo_url: ''
 }
 

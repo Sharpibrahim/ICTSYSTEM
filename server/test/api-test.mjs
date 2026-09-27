@@ -60,21 +60,21 @@ await check('health endpoint responds', async () => {
 
 /* 2. Authentication --------------------------------------------------- */
 await check('admin can sign in', async () => {
-  const { data, status } = await call('/api/auth/login', { method: 'POST', body: { email: 'admin@ictclub.org', password: 'admin123' } })
+  const { data, status } = await call('/api/auth/login', { method: 'POST', body: { email: 'admin@school.ac.ug', password: 'admin123' } })
   assert(status === 200 && data.token, `login failed (${status})`)
   adminToken = data.token
   return `signed in as ${data.user.name} (${data.user.role})`
 })
 
 await check('wrong password is rejected', async () => {
-  const { status } = await call('/api/auth/login', { method: 'POST', body: { email: 'admin@ictclub.org', password: 'nope' } })
+  const { status } = await call('/api/auth/login', { method: 'POST', body: { email: 'admin@school.ac.ug', password: 'nope' } })
   assert(status === 401, `expected 401, got ${status}`)
   return '401 returned'
 })
 
-await check('cabinet and member accounts sign in', async () => {
-  const cabinet = await call('/api/auth/login', { method: 'POST', body: { email: 'cabinet@ictclub.org', password: 'cabinet123' } })
-  const member = await call('/api/auth/login', { method: 'POST', body: { email: 'member@ictclub.org', password: 'member123' } })
+await check('student executive and member accounts sign in', async () => {
+  const cabinet = await call('/api/auth/login', { method: 'POST', body: { email: 'executive@school.ac.ug', password: 'executive123' } })
+  const member = await call('/api/auth/login', { method: 'POST', body: { email: 'member@school.ac.ug', password: 'member123' } })
   assert(cabinet.data?.token && member.data?.token, 'demo accounts unavailable')
   cabinetToken = cabinet.data.token
   memberToken = member.data.token
@@ -90,12 +90,12 @@ await check('unauthenticated requests are blocked', async () => {
 
 await check('current user can be fetched', async () => {
   const { data } = await call('/api/auth/me', { token: adminToken })
-  assert(data?.user?.email === 'admin@ictclub.org', 'wrong user returned')
+  assert(data?.user?.email === 'admin@school.ac.ug', 'wrong user returned')
   return data.user.role
 })
 
 /* 3. Every resource lists -------------------------------------------- */
-const RESOURCES = ['members', 'cabinet', 'meetings', 'activities', 'courses', 'enrollments', 'attendance', 'reports', 'certificates', 'notes', 'projects', 'project_members', 'project_tasks', 'users']
+const RESOURCES = ['members', 'cabinet', 'meetings', 'activities', 'courses', 'enrollments', 'attendance', 'dues', 'reports', 'certificates', 'notes', 'projects', 'project_members', 'project_tasks', 'users']
 for (const resource of RESOURCES) {
   await check(`GET /api/${resource} returns records`, async () => {
     const { data, status } = await call(`/api/${resource}?pageSize=3`, { token: adminToken })
@@ -135,11 +135,18 @@ await check('pagination works', async () => {
 
 /* 5. CRUD + validation ---------------------------------------------- */
 let scratchMemberId = null
-await check('create a member', async () => {
+await check('register a student', async () => {
   const { data, status } = await call('/api/members', {
     method: 'POST',
     token: adminToken,
-    body: { full_name: 'API Test Member', email: 'api-test@example.com', department: 'Computer Science', year_of_study: 'Year 2' }
+    body: {
+      full_name: 'API Test Student',
+      class_level: 'S2',
+      stream: 'A',
+      house: 'Kenya',
+      guardian_name: 'Mrs. Test Guardian',
+      guardian_phone: '+256700000000'
+    }
   })
   assert(status === 201, `status ${status}`)
   scratchMemberId = data.id
@@ -147,19 +154,19 @@ await check('create a member', async () => {
 })
 
 await check('required field validation works', async () => {
-  const { status, data } = await call('/api/members', { method: 'POST', token: adminToken, body: { department: 'Computer Science' } })
+  const { status, data } = await call('/api/members', { method: 'POST', token: adminToken, body: { class_level: 'S2' } })
   assert(status === 400, `expected 400, got ${status}`)
   assert(/required/i.test(data.error), 'no validation message')
   return data.error
 })
 
 await check('invalid email is rejected', async () => {
-  const { status } = await call('/api/members', { method: 'POST', token: adminToken, body: { full_name: 'Bad Email', email: 'not-an-email' } })
+  const { status } = await call('/api/members', { method: 'POST', token: adminToken, body: { full_name: 'Bad Email', email: 'not-an-email', class_level: 'S1' } })
   assert(status === 400, `expected 400, got ${status}`)
   return '400 returned'
 })
 
-await check('update a member', async () => {
+await check('update a student', async () => {
   const { data, status } = await call(`/api/members/${scratchMemberId}`, {
     method: 'PATCH',
     token: adminToken,
@@ -169,13 +176,13 @@ await check('update a member', async () => {
   return 'skills updated'
 })
 
-await check('member record detail includes relations', async () => {
+await check('student record detail includes relations', async () => {
   const { data } = await call(`/api/members/${scratchMemberId}`, { token: adminToken })
   assert(Array.isArray(data.relations), 'no relations array')
   return `${data.relations.length} related sections`
 })
 
-await check('delete a member', async () => {
+await check('delete a student', async () => {
   const { status } = await call(`/api/members/${scratchMemberId}`, { method: 'DELETE', token: adminToken })
   assert(status === 200, `status ${status}`)
   const after = await call(`/api/members/${scratchMemberId}`, { token: adminToken })
@@ -268,13 +275,95 @@ await check('unknown session type is rejected', async () => {
 })
 
 /* 8. Analytics -------------------------------------------------------- */
+await check('dues register can be generated per term', async () => {
+  /* Clear the batch this check owns so the suite can be run repeatedly. */
+  const stale = await call('/api/dues?term=Term%203&academic_year=2027&pageSize=200', { token: adminToken })
+  for (const row of stale.data.data) {
+    await call(`/api/dues/${row.id}`, { method: 'DELETE', token: adminToken })
+  }
+  const { data, status } = await call('/api/dues/generate', {
+    method: 'POST',
+    token: adminToken,
+    body: { term: 'Term 3', academic_year: '2027', amount_due: 12000 }
+  })
+  assert(status === 200, `status ${status}`)
+  assert(data.created > 0, 'no dues records created')
+  return `${data.created} records created for ${data.term} ${data.academic_year}`
+})
+
+await check('generating the same term twice does not duplicate records', async () => {
+  const { data } = await call('/api/dues/generate', {
+    method: 'POST',
+    token: adminToken,
+    body: { term: 'Term 3', academic_year: '2027', amount_due: 12000 }
+  })
+  assert(data.created === 0 && data.skipped > 0, `created ${data.created}, skipped ${data.skipped}`)
+  return `skipped ${data.skipped} existing records`
+})
+
+await check('a payment updates the balance and status', async () => {
+  const list = await call('/api/dues?status=Unpaid&pageSize=1', { token: adminToken })
+  const record = list.data.data[0]
+  const half = Math.round(Number(record.amount_due) / 2)
+  const partial = await call(`/api/dues/${record.id}/payment`, { method: 'POST', token: adminToken, body: { amount: half, method: 'Mobile Money' } })
+  assert(partial.status === 200, `status ${partial.status}`)
+  assert(partial.data.data.status === 'Partial', `status became ${partial.data.data.status}`)
+  assert(partial.data.data.receipt_no, 'no receipt number issued')
+  const rest = await call(`/api/dues/${record.id}/payment`, { method: 'POST', token: adminToken, body: { amount: half } })
+  assert(rest.data.data.status === 'Paid', `final status ${rest.data.data.status}`)
+  return `partial → paid, receipt ${partial.data.data.receipt_no}`
+})
+
+await check('payments must be greater than zero', async () => {
+  const list = await call('/api/dues?pageSize=1', { token: adminToken })
+  const { status } = await call(`/api/dues/${list.data.data[0].id}/payment`, { method: 'POST', token: adminToken, body: { amount: 0 } })
+  assert(status === 400, `expected 400, got ${status}`)
+  return '400 returned'
+})
+
+await check('dues summary reports collection totals', async () => {
+  const { data, status } = await call('/api/dues/summary', { token: adminToken })
+  assert(status === 200, `status ${status}`)
+  assert(data.totals.expected > 0, 'no expected amount')
+  assert(data.totals.collected <= data.totals.expected, 'collected more than expected')
+  return `${data.totals.collected} of ${data.totals.expected} collected, ${data.owing.length} owing`
+})
+
+await check('students cannot generate dues records', async () => {
+  const { status } = await call('/api/dues/generate', { method: 'POST', token: memberToken, body: { term: 'Term 1', academic_year: '2030', amount_due: 1000 } })
+  assert(status === 403, `expected 403, got ${status}`)
+  return '403 returned'
+})
+
+await check('attendance register can be limited to one class', async () => {
+  const all = await call('/api/attendance/register?ref_type=meeting&ref_id=1', { token: adminToken })
+  const oneClass = await call('/api/attendance/register?ref_type=meeting&ref_id=1&class_level=S2', { token: adminToken })
+  assert(oneClass.data.roster.length > 0, 'no students returned for S2')
+  assert(oneClass.data.roster.every((r) => r.class_level === 'S2'), 'roster contains other classes')
+  assert(oneClass.data.roster.length <= all.data.roster.length, 'class filter returned more rows')
+  return `${oneClass.data.roster.length} S2 students of ${all.data.roster.length}`
+})
+
+await check('attendance register flags students who owe dues', async () => {
+  const { data } = await call('/api/attendance/register?ref_type=meeting&ref_id=1', { token: adminToken })
+  assert(Array.isArray(data.dues), 'no dues list on the register')
+  return `${data.dues.length} students with outstanding dues`
+})
+
 await check('dashboard returns all widget blocks', async () => {
   const { data, status } = await call('/api/dashboard', { token: adminToken })
   assert(status === 200, `status ${status}`)
-  for (const key of ['cards', 'attendance', 'members', 'projects', 'activities', 'courses', 'meetings', 'recent']) {
+  for (const key of ['cards', 'attendance', 'members', 'finance', 'projects', 'activities', 'courses', 'meetings', 'recent']) {
     assert(data[key], `missing ${key}`)
   }
-  return `${data.cards.members} members, attendance ${data.attendance.rate}%`
+  assert(data.members.byClass.length >= 5, 'no class breakdown')
+  return `${data.cards.members} members, attendance ${data.attendance.rate}%, dues ${data.finance.collected}`
+})
+await check('reports data includes dues and class breakdown', async () => {
+  const { data } = await call('/api/reports/data', { token: adminToken })
+  assert(data.dues?.summary, 'no dues summary in reports data')
+  assert(Array.isArray(data.classBreakdown) && data.classBreakdown.length > 0, 'no class breakdown')
+  return `${data.classBreakdown.length} classes, expected ${data.dues.summary.expected}`
 })
 
 await check('reports data respects a date range', async () => {

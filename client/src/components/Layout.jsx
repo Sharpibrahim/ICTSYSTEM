@@ -12,8 +12,8 @@ const NAV = [
   {
     group: 'People',
     items: [
-      { to: '/r/members', label: 'Members', icon: 'users' },
-      { to: '/r/cabinet', label: 'Cabinet', icon: 'crown' }
+      { to: '/r/members', label: 'Students', icon: 'users' },
+      { to: '/r/cabinet', label: 'Executive', icon: 'crown' }
     ]
   },
   {
@@ -28,8 +28,12 @@ const NAV = [
     group: 'Learning',
     items: [
       { to: '/r/courses', label: 'Courses', icon: 'book' },
-      { to: '/r/enrollments', label: 'Enrollments', icon: 'userPlus' }
+      { to: '/r/enrollments', label: 'Course Register', icon: 'userPlus' }
     ]
+  },
+  {
+    group: 'Finance',
+    items: [{ to: '/r/dues', label: 'Club Dues', icon: 'wallet' }]
   },
   {
     group: 'Workspace',
@@ -122,7 +126,7 @@ export default function Layout() {
         </nav>
         <div className="sidebar__footer">
           <div style={{ color: '#cbd5e1', fontWeight: 600, fontSize: 12 }}>{clubName}</div>
-          {academicYear && <div>Academic year {academicYear}</div>}
+          {academicYear && <div>{settings?.current_term ? `${settings.current_term} • ` : ''}{academicYear}</div>}
           <div className="mt-1">
             <Link to="/verify" style={{ color: '#8ba3cc' }}>
               Verify a certificate →
@@ -141,7 +145,7 @@ export default function Layout() {
             <Icon name="search" size={16} />
             <input
               className="input"
-              placeholder="Search members, meetings, courses, projects…"
+              placeholder="Search students, meetings, courses, dues…"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               onFocus={() => setSearchOpen(true)}

@@ -4,7 +4,7 @@ import { displayValue, formatCurrency, initials, percent, truncate } from '../fo
 
 const STATUS_KEYS = new Set([
   'status', 'type', 'category', 'level', 'priority', 'role', 'mode', 'visibility', 'gender',
-  'department', 'year_of_study', 'position', 'term', 'color', 'certificate_type', 'ref_type'
+  'class_level', 'stream', 'house', 'position', 'term', 'color', 'certificate_type', 'ref_type'
 ])
 
 const PROGRESS_KEYS = new Set(['progress', 'attendance_rate'])
@@ -66,7 +66,7 @@ function renderCell(row, key, field, currency) {
     return <Badge dot={key === 'status'}>{text}</Badge>
   }
 
-  if (key === 'reg_number' || key === 'certificate_no' || key === 'code') {
+  if (key === 'admission_number' || key === 'certificate_no' || key === 'code') {
     return <span style={{ fontFamily: 'var(--mono)', fontSize: 12 }}>{String(value)}</span>
   }
 

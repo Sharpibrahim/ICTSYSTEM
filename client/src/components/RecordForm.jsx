@@ -14,10 +14,16 @@ function optionLabel(option) {
 }
 
 /** Single reference field backed by /api/options/:resource */
-function RefField({ field, value, onChange }) {
+function RefField({ field, value, onChange, id, disabled }) {
   const { options, loading } = useOptions(field.resource)
   return (
-    <select className="select" value={value ?? ''} onChange={(e) => onChange(e.target.value === '' ? null : Number(e.target.value))} disabled={loading}>
+    <select
+      id={id}
+      className="select"
+      value={value ?? ''}
+      onChange={(e) => onChange(e.target.value === '' ? null : Number(e.target.value))}
+      disabled={loading || disabled}
+    >
       <option value="">{loading ? 'Loading…' : `Select ${field.label.toLowerCase()}`}</option>
       {options.map((option) => (
         <option key={optionValue(option)} value={optionValue(option)}>
@@ -30,16 +36,17 @@ function RefField({ field, value, onChange }) {
 }
 
 /** Polymorphic reference: e.g. attendance session (meeting / activity / course / project) */
-function DynamicRefField({ field, typeValue, value, onChange, extra }) {
+function DynamicRefField({ field, typeValue, value, onChange, extra, id, disabled }) {
   const resource = DYNAMIC_RESOURCE[typeValue]
   const { options, loading } = useOptions(resource)
   const current = options.find((o) => Number(optionValue(o)) === Number(value))
   return (
     <div className="flex gap-1" style={{ flexDirection: 'column' }}>
       <select
+        id={id}
         className="select"
         value={value ?? ''}
-        disabled={!resource || loading}
+        disabled={!resource || loading || disabled}
         onChange={(e) => {
           const selected = options.find((o) => String(optionValue(o)) === e.target.value)
           onChange(selected ? Number(optionValue(selected)) : null, selected)
@@ -236,12 +243,14 @@ export default function RecordForm({ resource, initial = {}, onSubmit, onCancel,
                   )
                   break
                 case 'ref':
-                  control = <RefField field={field} value={value} onChange={(v) => set(field.key, v)} />
+                  control = <RefField field={field} value={value} onChange={(v) => set(field.key, v)} id={common.id} disabled={readOnly} />
                   break
                 case 'dynamicRef':
                   control = (
                     <DynamicRefField
                       field={field}
+                      id={common.id}
+                      disabled={readOnly}
                       typeValue={values[field.dependsOn]}
                       value={value}
                       onChange={(v, selected) => {

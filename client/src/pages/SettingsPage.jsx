@@ -10,12 +10,15 @@ import { relativeTime } from '../format'
 const PROFILE_FIELDS = [
   { key: 'club_name', label: 'Club name', type: 'text' },
   { key: 'club_tagline', label: 'Tagline / motto', type: 'text' },
-  { key: 'institution', label: 'Institution / faculty', type: 'text' },
-  { key: 'academic_year', label: 'Academic year', type: 'text', placeholder: 'e.g. 2025/2026' },
-  { key: 'currency', label: 'Currency code', type: 'text', placeholder: 'e.g. NGN, USD, KES' },
+  { key: 'institution', label: 'School name', type: 'text' },
+  { key: 'patron_name', label: 'Club patron (teacher)', type: 'text', placeholder: 'e.g. Mr. Ssekandi John' },
+  { key: 'academic_year', label: 'Academic year', type: 'text', placeholder: 'e.g. 2026' },
+  { key: 'current_term', label: 'Current term', type: 'select', options: ['Term 1', 'Term 2', 'Term 3'] },
+  { key: 'dues_per_term', label: 'Club dues per term', type: 'number', help: 'Amount used when generating term dues records' },
+  { key: 'currency', label: 'Currency code', type: 'text', placeholder: 'e.g. UGX, KES, NGN' },
   { key: 'contact_email', label: 'Contact email', type: 'email' },
   { key: 'contact_phone', label: 'Contact phone', type: 'tel' },
-  { key: 'meeting_frequency', label: 'Meeting frequency', type: 'text', placeholder: 'e.g. Every second Friday' },
+  { key: 'meeting_frequency', label: 'Meeting day and time', type: 'text', placeholder: 'e.g. Every Wednesday, 4:00 PM' },
   { key: 'attendance_target', label: 'Attendance target (%)', type: 'number' },
   { key: 'logo_url', label: 'Logo URL', type: 'url' }
 ]
@@ -125,15 +128,32 @@ export default function SettingsPage() {
                 <label className="field__label" htmlFor={`s-${field.key}`}>
                   {field.label}
                 </label>
-                <input
-                  id={`s-${field.key}`}
-                  className="input"
-                  type={field.type}
-                  placeholder={field.placeholder}
-                  value={form[field.key] ?? ''}
-                  disabled={!canEdit}
-                  onChange={(e) => setForm((prev) => ({ ...prev, [field.key]: e.target.value }))}
-                />
+                {field.type === 'select' ? (
+                  <select
+                    id={`s-${field.key}`}
+                    className="select"
+                    value={form[field.key] ?? ''}
+                    disabled={!canEdit}
+                    onChange={(e) => setForm((prev) => ({ ...prev, [field.key]: e.target.value }))}
+                  >
+                    {(field.options || []).map((option) => (
+                      <option key={option} value={option}>
+                        {option}
+                      </option>
+                    ))}
+                  </select>
+                ) : (
+                  <input
+                    id={`s-${field.key}`}
+                    className="input"
+                    type={field.type}
+                    placeholder={field.placeholder}
+                    value={form[field.key] ?? ''}
+                    disabled={!canEdit}
+                    onChange={(e) => setForm((prev) => ({ ...prev, [field.key]: e.target.value }))}
+                  />
+                )}
+                {field.help && <span className="field__help">{field.help}</span>}
               </div>
             ))}
           </div>
@@ -196,6 +216,9 @@ export default function SettingsPage() {
             <div className="small" style={{ lineHeight: 1.7 }}>
               <div>
                 <b>Database file:</b> <code>server/data/ictclub.db</code>
+              </div>
+              <div>
+                <b>Backups:</b> keep the JSON backup with the club file every term
               </div>
               <div>
                 <b>Reload demo data:</b> <code>npm run db:reset</code>

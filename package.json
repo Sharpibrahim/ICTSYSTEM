@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "ICT Club Management System - manage members, cabinet, meetings, activities, courses, attendance, reports, certificates, notes and projects.",
+  "description": "ICT Club Management System for secondary schools - students, executive committee, club dues, meetings, activities, courses, attendance, reports, certificates, notes and projects.",
   "scripts": {
     "setup": "npm install --no-audit --no-fund && npm --prefix server install --no-audit --no-fund && npm --prefix client install --no-audit --no-fund",
     "dev": "concurrently -n API,WEB -c cyan,magenta \"npm:dev:api\" \"npm:dev:web\"",
@@ -15,7 +15,9 @@
     "test": "npm --prefix server run test && npm --prefix client run test",
     "test:api": "npm --prefix server run test",
     "test:ui": "npm --prefix client run test",
-    "build": "npm --prefix client run build"
+    "build": "npm --prefix client run build",
+    "test:flows": "npm --prefix client run test:flows",
+    "test:all": "npm --prefix server run test && npm --prefix client run test:all"
   },
   "devDependencies": {
     "concurrently": "^9.1.2"

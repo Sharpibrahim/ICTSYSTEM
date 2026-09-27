@@ -19,7 +19,7 @@ import {
 } from '../components/ui'
 import DataTable from '../components/DataTable'
 import { DonutChart } from '../components/charts'
-import { formatDate, formatTime, percent } from '../format'
+import { formatCurrency, formatDate, formatTime, percent } from '../format'
 
 const SESSION_TYPES = [
   { value: 'meeting', label: 'Meeting', icon: 'calendar', resource: 'meetings' },
@@ -52,6 +52,7 @@ export default function AttendancePage() {
   const [loading, setLoading] = useState(false)
   const [saving, setSaving] = useState(false)
   const [search, setSearch] = useState('')
+  const [classFilter, setClassFilter] = useState('')
 
   const sessionMeta = SESSION_TYPES.find((s) => s.value === refType) || SESSION_TYPES[0]
   const canWrite = user?.role === 'admin' || user?.role === 'cabinet'
@@ -79,7 +80,7 @@ export default function AttendancePage() {
       }
       setLoading(true)
       try {
-        const data = await api.attendanceRegister(type, id)
+        const data = await api.attendanceRegister(type, id, classFilter ? { class_level: classFilter } : undefined)
         setRegister(data)
         const next = {}
         for (const row of data.roster) next[row.member_id] = { status: row.status || '', check_in_time: row.check_in_time || '', remarks: row.remarks || '' }
@@ -91,13 +92,13 @@ export default function AttendancePage() {
         setLoading(false)
       }
     },
-    [toast]
+    [toast, classFilter]
   )
 
   useEffect(() => {
     if (refId) loadRegister(refType, refId)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [refType, refId])
+  }, [refType, refId, classFilter])
 
   const setStatus = (memberId, status) => {
     setMarks((prev) => ({
@@ -163,13 +164,15 @@ export default function AttendancePage() {
     }
   }
 
+  const duesOwing = Object.fromEntries((register?.dues || []).map((row) => [row.member_id, row]))
+
   const roster = (register?.roster || []).filter((row) => {
     if (!search.trim()) return true
     const term = search.toLowerCase()
     return (
       row.full_name?.toLowerCase().includes(term) ||
-      row.reg_number?.toLowerCase().includes(term) ||
-      row.department?.toLowerCase().includes(term)
+      row.admission_number?.toLowerCase().includes(term) ||
+      row.class_level?.toLowerCase().includes(term)
     )
   })
 
@@ -279,14 +282,22 @@ export default function AttendancePage() {
                 flush
               >
                 <div className="filters-bar" style={{ margin: 12, boxShadow: 'none' }}>
-                  <div style={{ position: 'relative', flex: '1 1 220px' }}>
+                  <div style={{ position: 'relative', flex: '1 1 200px' }}>
                     <Icon name="search" size={16} style={{ position: 'absolute', left: 12, top: '50%', transform: 'translateY(-50%)', color: 'var(--muted)' }} />
-                    <input className="input" style={{ paddingLeft: 36, width: '100%' }} placeholder="Find a member…" value={search} onChange={(e) => setSearch(e.target.value)} />
+                    <input className="input" style={{ paddingLeft: 36, width: '100%' }} placeholder="Find a student…" value={search} onChange={(e) => setSearch(e.target.value)} />
                   </div>
+                  <select className="select" value={classFilter} onChange={(e) => setClassFilter(e.target.value)} title="Only show one class">
+                    <option value="">All classes</option>
+                    {(register.classes || OPTION_SETS.classes).map((option) => (
+                      <option key={option} value={option}>
+                        {option} only
+                      </option>
+                    ))}
+                  </select>
                   <span className="filters-bar__label">Quick set:</span>
                   {STATUSES.map((status) => (
                     <button key={status} type="button" className="reg-btn" onClick={() => bulkSet(status, 'unmarked')}>
-                      {status} → unmarked
+                      {status}
                     </button>
                   ))}
                 </div>
@@ -295,9 +306,9 @@ export default function AttendancePage() {
                   <table className="data register-table">
                     <thead>
                       <tr>
-                        <th>Member</th>
-                        <th className="hide-sm">Reg. number</th>
-                        <th className="hide-sm">Department</th>
+                        <th>Student</th>
+                        <th className="hide-sm">Admission no.</th>
+                        <th className="hide-sm">Class</th>
                         <th style={{ minWidth: 330 }}>Status</th>
                         <th>Check-in</th>
                       </tr>
@@ -317,9 +328,17 @@ export default function AttendancePage() {
                               </div>
                             </td>
                             <td className="hide-sm">
-                              <span style={{ fontFamily: 'var(--mono)', fontSize: 12 }}>{row.reg_number || '—'}</span>
+                              <span style={{ fontFamily: 'var(--mono)', fontSize: 12 }}>{row.admission_number || '—'}</span>
                             </td>
-                            <td className="hide-sm">{row.department || '—'}</td>
+                            <td className="hide-sm">
+                              {row.class_level || '—'}
+                              {row.stream ? ` ${row.stream}` : ''}
+                              {duesOwing[row.member_id] && (
+                                <Badge tone="red" className="mt-1">
+                                  owes {duesOwing[row.member_id].balance.toLocaleString()}
+                                </Badge>
+                              )}
+                            </td>
                             <td>
                               <div className="flex gap-1 wrap">
                                 {STATUSES.map((status) => (
@@ -418,10 +437,10 @@ function AttendanceInsights() {
               key: 'attendance_report',
               label: 'Members',
               titleKey: 'full_name',
-              listColumns: ['full_name', 'department', 'sessions', 'attended', 'rate'],
+              listColumns: ['full_name', 'class_level', 'sessions', 'attended', 'rate'],
               fields: [
-                { key: 'full_name', label: 'Member' },
-                { key: 'department', label: 'Department' },
+                { key: 'full_name', label: 'Student' },
+                { key: 'class_level', label: 'Class' },
                 { key: 'sessions', label: 'Sessions', type: 'number' },
                 { key: 'attended', label: 'Attended', type: 'number' },
                 { key: 'rate', label: 'Rate', type: 'percentage' }
@@ -461,11 +480,11 @@ function AttendanceInsights() {
             key: 'attendance_followup',
             label: 'Members',
             titleKey: 'full_name',
-            listColumns: ['full_name', 'reg_number', 'department', 'sessions', 'attended', 'rate'],
+            listColumns: ['full_name', 'admission_number', 'class_level', 'sessions', 'attended', 'rate'],
             fields: [
-              { key: 'full_name', label: 'Member' },
-              { key: 'reg_number', label: 'Reg. number' },
-              { key: 'department', label: 'Department' },
+              { key: 'full_name', label: 'Student' },
+              { key: 'admission_number', label: 'Admission no.' },
+              { key: 'class_level', label: 'Class' },
               { key: 'sessions', label: 'Sessions', type: 'number' },
               { key: 'attended', label: 'Attended', type: 'number' },
               { key: 'rate', label: 'Rate', type: 'percentage' }
@@ -498,11 +517,12 @@ function AttendanceRecords() {
     key: 'attendance',
     label: 'Attendance',
     titleKey: 'session_title',
-    listColumns: ['session_date', 'session_title', 'member_id', 'status', 'check_in_time', 'remarks'],
+    listColumns: ['session_date', 'session_title', 'member_id', 'class_level', 'status', 'check_in_time'],
     fields: [
       { key: 'session_date', label: 'Date', type: 'date' },
       { key: 'session_title', label: 'Session' },
-      { key: 'member_id', label: 'Member' },
+      { key: 'member_id', label: 'Student' },
+      { key: 'class_level', label: 'Class' },
       { key: 'status', label: 'Status' },
       { key: 'check_in_time', label: 'Check-in', type: 'time' },
       { key: 'remarks', label: 'Remarks' }

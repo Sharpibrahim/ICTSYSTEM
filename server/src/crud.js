@@ -9,7 +9,7 @@
  */
 import { Router } from 'express'
 import crypto from 'node:crypto'
-import { all, count, deleteRow, get, insert, logActivity, run, updateRow } from './db.js'
+import { all, count, deleteRow, get, getSettings, insert, logActivity, run, updateRow } from './db.js'
 import { hashPassword, requireAuth } from './auth.js'
 import { OPTION_SETS, RESOURCE_MAP, resourceByKey, writableFields } from '../../shared/schema.js'
 
@@ -28,12 +28,28 @@ const POLY = {
 }
 
 /* Derived columns that make list screens much more useful. */
+const CLASS_LOOKUP = `(SELECT class_level FROM members WHERE id = t.member_id)`
+
 const COMPUTED = {
   members: {
     attendance_rate: `(SELECT ROUND(100.0 * SUM(CASE WHEN a.status IN ('Present','Late') THEN 1 ELSE 0 END) / COUNT(*), 1) FROM attendance a WHERE a.member_id = t.id)`,
     registrations: `(SELECT COUNT(*) FROM enrollments e WHERE e.member_id = t.id)`,
     certificates: `(SELECT COUNT(*) FROM certificates c WHERE c.recipient_id = t.id)`,
-    projects_joined: `(SELECT COUNT(*) FROM project_members pm WHERE pm.member_id = t.id)`
+    projects_joined: `(SELECT COUNT(*) FROM project_members pm WHERE pm.member_id = t.id)`,
+    dues_paid: `(SELECT COALESCE(SUM(d.amount_paid), 0) FROM dues d WHERE d.member_id = t.id)`,
+    dues_balance: `(SELECT COALESCE(SUM(d.amount_due - d.amount_paid), 0) FROM dues d WHERE d.member_id = t.id AND d.status <> 'Exempt')`
+  },
+  enrollments: {
+    class_level: CLASS_LOOKUP,
+    stream: `(SELECT stream FROM members WHERE id = t.member_id)`
+  },
+  attendance: {
+    class_level: CLASS_LOOKUP,
+    stream: `(SELECT stream FROM members WHERE id = t.member_id)`
+  },
+  dues: {
+    class_level: CLASS_LOOKUP,
+    balance: `(t.amount_due - t.amount_paid)`
   },
   courses: {
     enrolled_count: `(SELECT COUNT(*) FROM enrollments e WHERE e.course_id = t.id)`,
@@ -270,6 +286,22 @@ function applyHooks(resource, data, { id = null, existing = null } = {}) {
     if ((data.status ?? existing?.status) === 'Done' && !data.progress && !existing?.progress) data.progress = 100
   }
 
+  if (resource.key === 'dues') {
+    const due = data.amount_due !== undefined ? Number(data.amount_due) : Number(existing?.amount_due || 0)
+    const paid = data.amount_paid !== undefined ? Number(data.amount_paid) : Number(existing?.amount_paid || 0)
+    const exempt = (data.status ?? existing?.status) === 'Exempt'
+    if (!exempt) {
+      data.status = paid <= 0 ? 'Unpaid' : paid >= due ? 'Paid' : 'Partial'
+    }
+    if (paid > 0 && !data.payment_date && !existing?.payment_date) data.payment_date = today
+    if (paid > 0 && !data.receipt_no && !existing?.receipt_no) {
+      const year = new Date().getFullYear()
+      data.receipt_no = `RCT/${year}/${String(count('SELECT COUNT(*) FROM dues') + 1).padStart(4, '0')}`
+    }
+    if (!data.term && !existing?.term) data.term = getSettings().current_term || 'Term 1'
+    if (!data.academic_year && !existing?.academic_year) data.academic_year = getSettings().academic_year || String(new Date().getFullYear())
+  }
+
   if (resource.key === 'cabinet' && !data.order_index && !existing?.order_index) {
     const position = data.position ?? existing?.position
     const idx = OPTION_SETS.cabinetPositions.indexOf(position)
@@ -434,7 +466,8 @@ const RELATIONS = {
     { resource: 'enrollments', foreignKey: 'member_id', label: 'Course registrations', limit: 50 },
     { resource: 'certificates', foreignKey: 'recipient_id', label: 'Certificates', limit: 50 },
     { resource: 'project_members', foreignKey: 'member_id', label: 'Project teams', limit: 50 },
-    { resource: 'attendance', foreignKey: 'member_id', label: 'Attendance history', limit: 50 }
+    { resource: 'attendance', foreignKey: 'member_id', label: 'Attendance history', limit: 50 },
+    { resource: 'dues', foreignKey: 'member_id', label: 'Club dues', limit: 30 }
   ],
   users: [{ resource: 'cabinet', foreignKey: 'member_id', label: 'Cabinet positions', limit: 20 }]
 }

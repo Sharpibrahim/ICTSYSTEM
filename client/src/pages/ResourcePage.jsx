@@ -4,7 +4,7 @@ import Icon, { RESOURCE_ICONS } from '../icons'
 import { api } from '../api'
 import { useAuth } from '../auth'
 import { invalidateOptions, useAsync, useDebounced, useOptions } from '../hooks'
-import { canWrite as schemaCanWrite, fieldMap, resourceByKey } from '../../../shared/schema'
+import { OPTION_SETS, canWrite as schemaCanWrite, fieldMap, resourceByKey } from '../../../shared/schema'
 import {
   Avatar,
   Badge,
@@ -33,12 +33,13 @@ const VIEWS = {
   members: ['table', 'cards'],
   courses: ['cards', 'table'],
   reports: ['board', 'table'],
+  dues: ['table', 'board'],
   enrollments: ['table', 'board'],
   certificates: ['table', 'cards'],
   cabinet: ['table', 'cards']
 }
 
-const DEFAULT_VIEW = { project_tasks: 'board', projects: 'cards', notes: 'cards', meetings: 'table', activities: 'table', members: 'table', courses: 'table', reports: 'board' }
+const DEFAULT_VIEW = { project_tasks: 'board', projects: 'cards', notes: 'cards', meetings: 'table', activities: 'table', members: 'table', courses: 'table', reports: 'board', dues: 'table' }
 
 function defaultView(resourceKey, saved) {
   const allowed = VIEWS[resourceKey] || ['table']
@@ -54,7 +55,8 @@ export default function ResourcePage() {
   const { user, settings } = useAuth()
   const [searchParams, setSearchParams] = useSearchParams()
 
-  const [view, setView] = useState(() => defaultView(resourceKey, localStorage.getItem(`view:${resourceKey}`)))
+  const storedView = searchParams.get('view') || localStorage.getItem(`view:${resourceKey}`)
+  const [view, setView] = useState(() => defaultView(resourceKey, storedView))
   const [query, setQuery] = useState('')
   const [filters, setFilters] = useState({})
   const [sort, setSort] = useState(resource?.defaultSort || '')
@@ -66,18 +68,20 @@ export default function ResourcePage() {
   const [deleting, setDeleting] = useState(null)
   const [deletingBusy, setDeletingBusy] = useState(false)
   const [importOpen, setImportOpen] = useState(false)
+  const [generateOpen, setGenerateOpen] = useState(false)
+  const [paymentFor, setPaymentFor] = useState(null)
   const [refreshKey, setRefreshKey] = useState(0)
 
   const debouncedQuery = useDebounced(query, 260)
 
   useEffect(() => {
-    setView(defaultView(resourceKey, localStorage.getItem(`view:${resourceKey}`)))
+    setView(defaultView(resourceKey, searchParams.get('view') || localStorage.getItem(`view:${resourceKey}`)))
     setQuery('')
     setPage(1)
     setSort(resourceByKey(resourceKey)?.defaultSort || '')
     const initial = {}
     for (const [key, value] of searchParams.entries()) {
-      if (['new', 'page'].includes(key)) continue
+      if (['new', 'page', 'view'].includes(key)) continue
       initial[key] = value
     }
     setFilters(initial)
@@ -174,6 +178,18 @@ export default function ResourcePage() {
       {resource.key === 'courses' && (
         <Button size="sm" variant="ghost" icon="award" title="Issue certificates to completers" onClick={() => issueCertificates(row)} />
       )}
+      {resource.key === 'dues' && canWrite && row.status !== 'Paid' && (
+        <Button size="sm" variant="ghost" icon="wallet" title="Record a payment" onClick={() => setPaymentFor(row)} />
+      )}
+      {resource.key === 'members' && (
+        <Button
+          size="sm"
+          variant="ghost"
+          icon="wallet"
+          title="Dues record for this student"
+          onClick={() => navigate(`/r/dues?member_id=${row.id}`)}
+        />
+      )}
       {canWrite && <Button size="sm" variant="ghost" icon="edit" title="Edit" onClick={() => setEditing(row)} />}
       {canWrite && <Button size="sm" variant="ghost" icon="trash" title="Delete" onClick={() => setDeleting(row)} />}
     </>
@@ -223,6 +239,11 @@ export default function ResourcePage() {
           {resource.key === 'members' && canWrite && (
             <Button icon="upload" onClick={() => setImportOpen(true)}>
               <span className="hide-sm">Import</span>
+            </Button>
+          )}
+          {resource.key === 'dues' && canWrite && (
+            <Button icon="plus" onClick={() => setGenerateOpen(true)}>
+              Generate term dues
             </Button>
           )}
           {canWrite && (
@@ -394,6 +415,29 @@ export default function ResourcePage() {
           }}
         />
       )}
+
+      {resource.key === 'dues' && (
+        <>
+          <GenerateDues
+            open={generateOpen}
+            settings={settings}
+            onClose={() => setGenerateOpen(false)}
+            onDone={() => {
+              setGenerateOpen(false)
+              refresh()
+            }}
+          />
+          <RecordPayment
+            record={paymentFor}
+            currency={currency}
+            onClose={() => setPaymentFor(null)}
+            onDone={() => {
+              setPaymentFor(null)
+              refresh()
+            }}
+          />
+        </>
+      )}
     </>
   )
 }
@@ -401,6 +445,10 @@ export default function ResourcePage() {
 /* ------------------------------------------------------------------ */
 /* Filters                                                             */
 /* ------------------------------------------------------------------ */
+
+/* Option lists may be plain strings or { value, label } objects. */
+const optionValue = (option) => (typeof option === 'object' && option !== null ? option.value : option)
+const optionLabel = (option) => (typeof option === 'object' && option !== null ? option.label : option)
 
 function FilterControl({ field, value, onChange }) {
   const isRef = field.type === 'ref'
@@ -411,8 +459,8 @@ function FilterControl({ field, value, onChange }) {
       <select className="select" value={value} onChange={(e) => onChange(e.target.value)} title={field.label}>
         <option value="">All {field.label.toLowerCase()}</option>
         {(field.options || []).map((option) => (
-          <option key={option} value={option}>
-            {option}
+          <option key={optionValue(option)} value={optionValue(option)}>
+            {optionLabel(option)}
           </option>
         ))}
       </select>
@@ -491,7 +539,7 @@ function CardGrid({ resource, rows, currency, onOpen, onEdit }) {
                 <Avatar name={member.full_name} src={member.photo_url} size="lg" />
                 <div style={{ minWidth: 0 }}>
                   <div style={{ fontWeight: 620, fontSize: 15 }}>{member.full_name}</div>
-                  <div className="small muted">{member.reg_number || 'No reg. number'}</div>
+                  <div className="small muted">{member.admission_number || 'No admission number'}</div>
                   <div className="flex gap-1 wrap mt-1">
                     <StatusBadge value={member.status} />
                     <Badge>{member.role}</Badge>
@@ -500,12 +548,12 @@ function CardGrid({ resource, rows, currency, onOpen, onEdit }) {
               </div>
               <div className="grid grid--2 mt-2" style={{ gap: 8, fontSize: 12.5 }}>
                 <div>
-                  <div className="muted small">Department</div>
-                  <div>{member.department || '—'}</div>
+                  <div className="muted small">Class</div>
+                  <div>{member.class_level || 'Staff'}{member.stream ? ` ${member.stream}` : ''}</div>
                 </div>
                 <div>
-                  <div className="muted small">Year</div>
-                  <div>{member.year_of_study || '—'}</div>
+                  <div className="muted small">House</div>
+                  <div>{member.house || '—'}</div>
                 </div>
                 <div>
                   <div className="muted small">Attendance</div>
@@ -872,9 +920,9 @@ function CalendarView({ resource, onOpen, currency }) {
 /* Member import                                                       */
 /* ------------------------------------------------------------------ */
 
-const SAMPLE = `full_name,reg_number,email,phone,department,year_of_study,status
-Amina Yusuf,IT/2024/001,amina@example.com,+2348012345678,Information Technology,Year 3,Active
-Ibrahim Bello,CS/2023/045,ibrahim@example.com,+2348098765432,Computer Science,Year 4,Active`
+const SAMPLE = `full_name,admission_number,class_level,stream,house,gender,guardian_name,guardian_phone,status
+Nakato Sarah,2026/S1/014,S1,A,Kilimanjaro,Female,Mrs. Grace Nakato,+256772111222,Active
+Okello Brian,2025/S2/031,S2,B,Kenya,Male,Mr. Peter Okello,+256701333444,Active`
 
 function parseCsv(text) {
   const lines = text.trim().split(/\r?\n/).filter(Boolean)
@@ -931,7 +979,8 @@ function MemberImport({ open, onClose, onDone }) {
         <label className="field__label">CSV data</label>
         <textarea className="textarea" rows={10} value={text} onChange={(e) => setText(e.target.value)} style={{ fontFamily: 'var(--mono)', fontSize: 12.5 }} />
         <span className="field__help">
-          Recognised columns: full_name, reg_number, email, phone, gender, department, program, year_of_study, role, status, join_date, skills.
+          Recognised columns: full_name, admission_number, class_level, stream, house, gender, guardian_name,
+          guardian_phone, guardian_relationship, email, phone, address, role, status, join_date, skills.
         </span>
       </div>
       {preview.length > 0 && (
@@ -959,6 +1008,200 @@ function MemberImport({ open, onClose, onDone }) {
           </div>
         </div>
       )}
+    </Modal>
+  )
+}
+
+/* ------------------------------------------------------------------ */
+/* Dues: generate a term + record a payment                            */
+/* ------------------------------------------------------------------ */
+
+function GenerateDues({ open, onClose, onDone, settings }) {
+  const toast = useToast()
+  const [form, setForm] = useState({
+    term: settings?.current_term || 'Term 1',
+    academic_year: settings?.academic_year || String(new Date().getFullYear()),
+    amount_due: settings?.dues_per_term || 10000,
+    class_level: ''
+  })
+  const [busy, setBusy] = useState(false)
+  const [result, setResult] = useState(null)
+
+  const run = async () => {
+    setBusy(true)
+    try {
+      const res = await api.createDuesForTerm({
+        term: form.term,
+        academic_year: String(form.academic_year),
+        amount_due: Number(form.amount_due),
+        class_level: form.class_level || undefined
+      })
+      setResult(res)
+      toast.success(`${res.created} dues records created`, `${res.term} ${res.academic_year}${res.skipped ? ` • ${res.skipped} already existed` : ''}`)
+      onDone()
+    } catch (err) {
+      toast.error('Could not create the dues records', err.message)
+    } finally {
+      setBusy(false)
+    }
+  }
+
+  return (
+    <Modal
+      open={open}
+      onClose={onClose}
+      title="Generate dues for a term"
+      subtitle="Creates one dues record per active student. Students who already have a record for that term are skipped."
+      footer={
+        <>
+          <Button onClick={onClose}>Close</Button>
+          <Button variant="primary" icon="plus" loading={busy} onClick={run}>
+            Create records
+          </Button>
+        </>
+      }
+    >
+      <div className="form-grid">
+        <div className="field">
+          <label className="field__label">Term</label>
+          <select className="select" value={form.term} onChange={(e) => setForm({ ...form, term: e.target.value })}>
+            {OPTION_SETS.terms.map((option) => (
+              <option key={option} value={option}>
+                {option}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className="field">
+          <label className="field__label">Academic year</label>
+          <input className="input" value={form.academic_year} onChange={(e) => setForm({ ...form, academic_year: e.target.value })} />
+        </div>
+        <div className="field">
+          <label className="field__label">Amount due per student</label>
+          <input
+            className="input"
+            type="number"
+            value={form.amount_due}
+            onChange={(e) => setForm({ ...form, amount_due: e.target.value })}
+          />
+          <span className="field__help">{settings?.currency || 'UGX'} — the club dues for the term</span>
+        </div>
+        <div className="field">
+          <label className="field__label">Limit to one class (optional)</label>
+          <select className="select" value={form.class_level} onChange={(e) => setForm({ ...form, class_level: e.target.value })}>
+            <option value="">All classes</option>
+            {OPTION_SETS.classes.map((option) => (
+              <option key={option} value={option}>
+                {option}
+              </option>
+            ))}
+          </select>
+        </div>
+      </div>
+      {result && (
+        <p className="small muted">
+          Created {result.created} records for {result.term} {result.academic_year} at {result.amount_due} each
+          {result.skipped ? `, skipped ${result.skipped} that already existed.` : '.'}
+        </p>
+      )}
+    </Modal>
+  )
+}
+
+function RecordPayment({ record, onClose, onDone, currency }) {
+  const toast = useToast()
+  const [amount, setAmount] = useState('')
+  const [method, setMethod] = useState('Cash')
+  const [remarks, setRemarks] = useState('')
+  const [busy, setBusy] = useState(false)
+
+  const due = Number(record?.amount_due || 0)
+  const paid = Number(record?.amount_paid || 0)
+  const balance = Math.max(0, due - paid)
+
+  useEffect(() => {
+    if (record) {
+      setAmount(String(balance || ''))
+      setMethod(record.method || 'Cash')
+      setRemarks('')
+    }
+  }, [record, balance])
+
+  const submit = async () => {
+    setBusy(true)
+    try {
+      const res = await api.recordPayment(record.id, { amount: Number(amount), method, remarks: remarks || undefined })
+      toast.success('Payment recorded', `${record.member_id_label || 'Student'} — ${res.data.status}`)
+      onDone()
+    } catch (err) {
+      toast.error('Could not record the payment', err.message)
+    } finally {
+      setBusy(false)
+    }
+  }
+
+  return (
+    <Modal
+      open={Boolean(record)}
+      onClose={onClose}
+      title="Record a dues payment"
+      subtitle={record ? `${record.member_id_label || 'Student'} • ${record.term} ${record.academic_year}` : ''}
+      size="sm"
+      footer={
+        <>
+          <Button onClick={onClose}>Cancel</Button>
+          <Button variant="success" icon="check" loading={busy} onClick={submit} disabled={!Number(amount)}>
+            Record payment
+          </Button>
+        </>
+      }
+    >
+      <div className="card mb-2" style={{ background: 'var(--surface-2)' }}>
+        <div className="card__body" style={{ padding: 14 }}>
+          <div className="flex justify-between small">
+            <span className="muted">Amount due</span>
+            <b>{formatCurrency(due, currency)}</b>
+          </div>
+          <div className="flex justify-between small mt-1">
+            <span className="muted">Already paid</span>
+            <b>{formatCurrency(paid, currency)}</b>
+          </div>
+          <div className="flex justify-between small mt-1">
+            <span className="muted">Balance</span>
+            <b style={{ color: balance ? 'var(--red)' : 'var(--green)' }}>{formatCurrency(balance, currency)}</b>
+          </div>
+        </div>
+      </div>
+
+      <div className="field">
+        <label className="field__label">Amount received</label>
+        <input className="input" type="number" value={amount} onChange={(e) => setAmount(e.target.value)} placeholder="0" />
+        <div className="flex gap-1 mt-1">
+          <Button size="sm" onClick={() => setAmount(String(balance))}>
+            Full balance
+          </Button>
+          <Button size="sm" onClick={() => setAmount(String(Math.round(balance / 2)))}>
+            Half
+          </Button>
+          <Button size="sm" onClick={() => setAmount(String(Math.min(1000, balance)))}>
+            1,000
+          </Button>
+        </div>
+      </div>
+      <div className="field">
+        <label className="field__label">Payment method</label>
+        <select className="select" value={method} onChange={(e) => setMethod(e.target.value)}>
+          {OPTION_SETS.paymentMethods.map((option) => (
+            <option key={option} value={option}>
+              {option}
+            </option>
+          ))}
+        </select>
+      </div>
+      <div className="field">
+        <label className="field__label">Remarks</label>
+        <input className="input" value={remarks} onChange={(e) => setRemarks(e.target.value)} placeholder="e.g. Balance promised next week" />
+      </div>
     </Modal>
   )
 }

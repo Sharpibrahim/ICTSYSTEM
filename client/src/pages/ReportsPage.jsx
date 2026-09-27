@@ -45,7 +45,7 @@ export default function ReportsPage() {
   if (loading && !data) return <Loading label="Collecting club statistics…" />
   if (error) return <EmptyState icon="alert" title="Could not load report data" message={error} action={<Button icon="refresh" onClick={reload}>Retry</Button>} />
 
-  const { members, attendance, meetings, activities, financial, courses, certificates, projects, cabinet } = data
+  const { members, attendance, meetings, activities, financial, courses, certificates, projects, cabinet, dues, classBreakdown } = data
 
   const sessionsByType = [
     { name: 'Meetings', value: meetings.length },
@@ -98,12 +98,83 @@ export default function ReportsPage() {
       </div>
 
       <div className="grid grid--stats mb-2">
-        <Stat icon="users" label="Total members" value={members.total} hint={`${members.active} active`} />
+        <Stat icon="users" label="Members" value={members.total} hint={`${members.active} active students`} />
         <Stat icon="check" label="Sessions recorded" value={attendance.bySession.length} hint={`${attendance.byStatus.reduce((s, r) => s + r.value, 0)} attendance entries`} tone="green" />
         <Stat icon="calendar" label="Meetings in range" value={meetings.length} tone="blue" />
         <Stat icon="sparkles" label="Activities in range" value={activities.length} tone="teal" />
-        <Stat icon="book" label="Courses" value={courses.length} hint={`${courseRows.reduce((s, c) => s + c.enrolled, 0)} enrollments`} tone="purple" />
+        <Stat icon="book" label="Courses" value={courses.length} hint={`${courseRows.reduce((s, c) => s + c.enrolled, 0)} registrations`} tone="purple" />
         <Stat icon="award" label="Certificates" value={certificates.reduce((s, r) => s + r.value, 0)} tone="amber" />
+        <Stat
+          icon="wallet"
+          label="Dues collected"
+          value={formatCurrency(dues.summary.collected, currency)}
+          hint={`${formatCurrency(dues.summary.outstanding, currency)} outstanding`}
+          tone="green"
+        />
+      </div>
+
+      <div className="grid grid--2 mb-2">
+        <Card title="Class breakdown" subtitle="Membership and gender balance per class" icon="layers" flush>
+          <DataTable
+            resource={{
+              key: 'report_classes',
+              label: 'Classes',
+              titleKey: 'name',
+              listColumns: ['name', 'total', 'active', 'female', 'male'],
+              fields: [
+                { key: 'name', label: 'Class' },
+                { key: 'total', label: 'Members', type: 'number' },
+                { key: 'active', label: 'Active', type: 'number' },
+                { key: 'female', label: 'Female', type: 'number' },
+                { key: 'male', label: 'Male', type: 'number' }
+              ]
+            }}
+            rows={classBreakdown}
+            emptyTitle="No members recorded"
+          />
+        </Card>
+        <Card title="Dues summary" subtitle="Club dues for the selected period" icon="wallet" flush>
+          <div className="card__body">
+            <div className="grid grid--3" style={{ gap: 12 }}>
+              <div>
+                <div className="small muted">Expected</div>
+                <div style={{ fontSize: 18, fontWeight: 700 }}>{formatCurrency(dues.summary.expected, currency)}</div>
+              </div>
+              <div>
+                <div className="small muted">Collected</div>
+                <div style={{ fontSize: 18, fontWeight: 700, color: 'var(--green)' }}>{formatCurrency(dues.summary.collected, currency)}</div>
+              </div>
+              <div>
+                <div className="small muted">Outstanding</div>
+                <div style={{ fontSize: 18, fontWeight: 700, color: 'var(--red)' }}>{formatCurrency(dues.summary.outstanding, currency)}</div>
+              </div>
+            </div>
+            <div className="flex gap-1 wrap mt-2">
+              <Badge tone="green">{dues.summary.paid_records} fully paid</Badge>
+              <Badge tone="amber">{dues.summary.partial_records} partial</Badge>
+              <Badge tone="red">{dues.summary.unpaid_records} unpaid</Badge>
+            </div>
+          </div>
+          <DataTable
+            resource={{
+              key: 'report_dues_class',
+              label: 'Dues',
+              titleKey: 'name',
+              listColumns: ['name', 'students', 'expected', 'collected', 'outstanding'],
+              fields: [
+                { key: 'name', label: 'Class' },
+                { key: 'students', label: 'Records', type: 'number' },
+                { key: 'expected', label: 'Expected', type: 'currency' },
+                { key: 'collected', label: 'Collected', type: 'currency' },
+                { key: 'outstanding', label: 'Outstanding', type: 'currency' }
+              ]
+            }}
+            rows={dues.byClass}
+            currency={currency}
+            compact
+            emptyTitle="No dues records yet"
+          />
+        </Card>
       </div>
 
       <div className="grid grid--2 mb-2">
@@ -279,6 +350,55 @@ export default function ReportsPage() {
         />
       </Card>
 
+      <div className="grid grid--2 mt-3">
+        <Card title="Students owing dues" subtitle={`${dues.defaulters.length} records`} icon="alert" flush>
+          <DataTable
+            resource={{
+              key: 'report_dues_owing',
+              label: 'Dues',
+              titleKey: 'full_name',
+              listColumns: ['full_name', 'class_level', 'term', 'amount_due', 'amount_paid', 'balance', 'status'],
+              fields: [
+                { key: 'full_name', label: 'Student' },
+                { key: 'class_level', label: 'Class' },
+                { key: 'term', label: 'Term' },
+                { key: 'amount_due', label: 'Due', type: 'currency' },
+                { key: 'amount_paid', label: 'Paid', type: 'currency' },
+                { key: 'balance', label: 'Balance', type: 'currency' },
+                { key: 'status', label: 'Status' }
+              ]
+            }}
+            rows={dues.defaulters.slice(0, 25)}
+            currency={currency}
+            compact
+            emptyTitle="No outstanding dues"
+            emptyMessage="Every student has cleared their club dues."
+          />
+        </Card>
+        <Card title="Recent dues payments" subtitle="Latest receipts recorded" icon="wallet" flush>
+          <DataTable
+            resource={{
+              key: 'report_dues_payments',
+              label: 'Payments',
+              titleKey: 'full_name',
+              listColumns: ['payment_date', 'full_name', 'class_level', 'amount_paid', 'method', 'receipt_no'],
+              fields: [
+                { key: 'payment_date', label: 'Date', type: 'date' },
+                { key: 'full_name', label: 'Student' },
+                { key: 'class_level', label: 'Class' },
+                { key: 'amount_paid', label: 'Amount', type: 'currency' },
+                { key: 'method', label: 'Method' },
+                { key: 'receipt_no', label: 'Receipt' }
+              ]
+            }}
+            rows={dues.payments}
+            currency={currency}
+            compact
+            emptyTitle="No payments recorded yet"
+          />
+        </Card>
+      </div>
+
       <p className="small muted mt-3">
         Statistics generated {formatDate(data.generated_at)} • period {range.from || 'all time'} → {range.to || 'today'} •{' '}
         <button type="button" className="btn btn--sm btn--ghost" onClick={() => setBuilderOpen(true)}>
@@ -297,7 +417,7 @@ export default function ReportsPage() {
 
 function buildReportText(stats, range, currency) {
   if (!stats) return ''
-  const { members, attendance, meetings, activities, financial, courses, certificates, projects, cabinet, settings } = stats
+  const { members, attendance, meetings, activities, courses, certificates, projects, cabinet, dues, classBreakdown, settings } = stats
   const totalAttendance = attendance.byStatus.reduce((sum, row) => sum + row.value, 0)
   const present = attendance.byStatus.find((r) => r.name === 'Present')?.value || 0
   const late = attendance.byStatus.find((r) => r.name === 'Late')?.value || 0
@@ -306,83 +426,104 @@ function buildReportText(stats, range, currency) {
   const topSessions = [...attendance.bySession].sort((a, b) => (b.rate || 0) - (a.rate || 0)).slice(0, 3)
   const weakSessions = [...attendance.bySession].sort((a, b) => (a.rate || 0) - (b.rate || 0)).slice(0, 3)
   const topMembers = attendance.byMember.slice(0, 5)
-  const weakMembers = [...attendance.byMember].reverse().slice(0, 5)
+  const weakMembers = [...attendance.byMember].reverse().slice(0, 6)
   const completedCourses = courses.filter((c) => c.completed > 0)
+  const owing = dues?.defaulters || []
   const period = `${range.from || 'the beginning of records'} to ${range.to || 'today'}`
+  const school = settings?.institution || 'the school'
+  const money = (value) => `${currency} ${Number(value || 0).toLocaleString('en-GB')}`
 
-  return `ICT CLUB — OFFICIAL REPORT
+  return `${(settings?.club_name || 'ICT CLUB').toUpperCase()} — OFFICIAL REPORT
+${school}${settings?.patron_name ? `        Club Patron: ${settings.patron_name}` : ''}
 Reporting period: ${period}
+Academic year: ${settings?.academic_year || ''}    Current term: ${settings?.current_term || ''}
 Prepared by: ______________________     Date: ${new Date().toLocaleDateString('en-GB')}
-Club: ${settings?.club_name || 'ICT Club'}   Academic year: ${settings?.academic_year || ''}
 
 1. INTRODUCTION
-This report summarises the activities, membership, attendance and finances of ${settings?.club_name || 'the ICT Club'} for the period ${period}. It is compiled from the club management system and all figures are drawn directly from the club records.
+This report summarises the activities, membership, attendance, training and finances of the ${settings?.club_name || 'ICT Club'} at ${school} for the period ${period}. All figures are taken directly from the club records.
 
 2. MEMBERSHIP
-Total registered members: ${members.total}
+Total members: ${members.total}
 Active members: ${members.active}
-Members by gender — Male: ${members.male || 0}, Female: ${members.female || 0}
-Current cabinet positions held: ${cabinet.filter((c) => c.status === 'Active').length}
+Gender — Boys: ${members.male || 0}, Girls: ${members.female || 0}
+
+Membership by class:
+${(classBreakdown || []).map((row) => `  • ${row.name}: ${row.total} members (${row.active} active, ${row.female} girls, ${row.male} boys)`).join('\n') || '  No class data'}
 
 3. ATTENDANCE
-Total attendance entries recorded: ${totalAttendance}
+Total attendance entries: ${totalAttendance}
 Present: ${present} • Late: ${late} • Absent: ${absent}
 Overall attendance rate: ${rate}% (club target: ${settings?.attendance_target || 75}%)
-Sessions recorded in the period: ${attendance.bySession.length}
+Sessions recorded: ${attendance.bySession.length}
 
-Highest turnout sessions:
-${topSessions.map((s) => `  • ${s.session_title} (${formatDate(s.session_date)}) — ${s.rate}%`).join('\n') || '  • No sessions recorded'}
+Sessions with the best turnout:
+${topSessions.map((s) => `  • ${s.session_title} (${formatDate(s.session_date)}) — ${s.rate}%`).join('\n') || '  No sessions recorded'}
 
-Sessions needing attention:
-${weakSessions.map((s) => `  • ${s.session_title} (${formatDate(s.session_date)}) — ${s.rate}%`).join('\n') || '  • No sessions recorded'}
+Sessions with the lowest turnout:
+${weakSessions.map((s) => `  • ${s.session_title} (${formatDate(s.session_date)}) — ${s.rate}%`).join('\n') || '  No sessions recorded'}
 
-Members with the best attendance:
-${topMembers.map((m, i) => `  ${i + 1}. ${m.full_name} — ${m.rate}% (${m.attended}/${m.sessions} sessions)`).join('\n') || '  No member attendance data'}
+Students with the best attendance:
+${topMembers.map((m, i) => `  ${i + 1}. ${m.full_name} (${m.class_level || '—'}) — ${m.rate}% (${m.attended}/${m.sessions} sessions)`).join('\n') || '  No student attendance data'}
 
-Members with the lowest attendance (follow-up required):
-${weakMembers.map((m) => `  • ${m.full_name} — ${m.rate}% (${m.attended}/${m.sessions} sessions)`).join('\n') || '  No member attendance data'}
+Students requiring follow-up (low attendance):
+${weakMembers.map((m) => `  • ${m.full_name} (${m.class_level || '—'}) — ${m.rate}%`).join('\n') || '  No student attendance data'}
 
-4. MEETINGS
-Meetings held: ${meetings.filter((m) => m.status === 'Completed').length} of ${meetings.length} scheduled
+4. MEETINGS HELD
+Meetings completed: ${meetings.filter((m) => m.status === 'Completed').length} of ${meetings.length} scheduled
 ${meetings.slice(0, 8).map((m) => `  • ${formatDate(m.date)} — ${m.title} (${m.type})${m.total ? `, present ${m.present}/${m.total}` : ''}`).join('\n') || '  No meetings recorded'}
 
 5. ACTIVITIES AND FINANCE
-Activities recorded: ${activities.length}
-Budget committed: ${formatCurrency(financial.total_budget, currency)}
-Amount spent: ${formatCurrency(financial.total_spent, currency)}
-Balance: ${formatCurrency(financial.total_budget - financial.total_spent, currency)}
-${activities.slice(0, 10).map((a) => `  • ${formatDate(a.date)} — ${a.title} (${a.category}) — budget ${formatCurrency(a.budget, currency)}, spent ${formatCurrency(a.spent, currency)}`).join('\n') || '  No activities recorded'}
+Activities held: ${activities.length}
+Budget committed: ${money(activities.reduce((sum, a) => sum + Number(a.budget || 0), 0))}
+Amount spent: ${money(activities.reduce((sum, a) => sum + Number(a.spent || 0), 0))}
+${activities.slice(0, 10).map((a) => `  • ${formatDate(a.date)} — ${a.title} (${a.category}) — budget ${money(a.budget)}, spent ${money(a.spent)}`).join('\n') || '  No activities recorded'}
 
-6. COURSES AND CERTIFICATES
+6. CLUB DUES
+Expected from students: ${money(dues?.summary?.expected)}
+Collected: ${money(dues?.summary?.collected)}
+Outstanding: ${money(dues?.summary?.outstanding)}
+Records — fully paid: ${dues?.summary?.paid_records || 0}, partial: ${dues?.summary?.partial_records || 0}, unpaid: ${dues?.summary?.unpaid_records || 0}
+
+Collection by class:
+${(dues?.byClass || []).map((row) => `  • ${row.name}: ${money(row.collected)} of ${money(row.expected)} (${row.outstanding ? `${money(row.outstanding)} outstanding` : 'fully cleared'})`).join('\n') || '  No dues records'}
+
+Students still owing (${owing.length} records):
+${owing.slice(0, 15).map((row) => `  • ${row.full_name} (${row.class_level || '—'}) — ${money(row.balance)} owing for ${row.term} ${row.academic_year}${row.guardian_phone ? ` — guardian ${row.guardian_phone}` : ''}`).join('\n') || '  All dues cleared'}
+
+7. COURSES AND TRAINING
 Courses offered: ${courses.length}
-Total enrollments: ${courses.reduce((sum, c) => sum + c.enrolled, 0)}
-Courses completed: ${completedCourses.length}
-${completedCourses.map((c) => `  • ${c.title} (${c.level}) — ${c.completed} of ${c.enrolled} learners completed`).join('\n') || '  No courses completed in this period'}
+Total course registrations: ${courses.reduce((sum, c) => sum + c.enrolled, 0)}
+Courses completed by at least one student: ${completedCourses.length}
+${completedCourses.map((c) => `  • ${c.title} (${c.level}) — ${c.completed} of ${c.enrolled} students completed`).join('\n') || '  No courses completed in this period'}
+
+8. CERTIFICATES AND AWARDS
 Certificates issued: ${certificates.reduce((sum, r) => sum + r.value, 0)}
 ${certificates.map((c) => `  • ${c.name}: ${c.value}`).join('\n') || '  No certificates issued'}
 
-7. PROJECTS
+9. PROJECTS
 ${projects.map((p) => `  • ${p.name}: ${p.value}`).join('\n') || '  No projects recorded'}
 
-8. EXECUTIVE COMMITTEE
-${cabinet.filter((c) => c.status === 'Active').map((c) => `  • ${c.position} — ${c.full_name || 'Vacant'} (${c.term})`).join('\n') || '  Cabinet not yet constituted'}
+10. EXECUTIVE COMMITTEE
+${cabinet.filter((c) => c.status === 'Active').map((c) => `  • ${c.position} — ${c.full_name || 'Vacant'} (${c.term})`).join('\n') || '  Executive committee not yet constituted'}
 
-9. CHALLENGES
-  • Attendance at some sessions fell below the club target of ${settings?.attendance_target || 75}%.
-  • Some activities were delivered behind schedule.
-  • Record keeping must be completed immediately after every session.
+11. CHALLENGES
+  • Some students have not cleared their club dues for the term.
+  • Attendance at a few sessions fell below the club target of ${settings?.attendance_target || 75}%.
+  • Some computers in the ICT lab require repair.
+  • Club meetings sometimes clash with evening prep time.
 
-10. RECOMMENDATIONS
-  • Publish the club calendar at the start of every semester.
-  • Follow up individually with members whose attendance is below target.
-  • Complete minutes and attendance registers within 48 hours of each session.
-  • Submit financial documentation for every activity within one week.
+12. RECOMMENDATIONS
+  • Class representatives to follow up outstanding dues through the guardians.
+  • Publish the club calendar at the start of every term.
+  • Report the computers that need repair to the administration.
+  • Timetable club meetings on Wednesday afternoons.
+  • Complete attendance registers and minutes within 48 hours of every session.
 
-11. CONCLUSION
-The club recorded ${totalAttendance} attendance entries, ${activities.length} activities, ${meetings.length} meetings and issued ${certificates.reduce((sum, r) => sum + r.value, 0)} certificates during the period. The executive committee remains committed to improving participation and record keeping.
+13. CONCLUSION
+The club recorded ${totalAttendance} attendance entries, ${activities.length} activities and ${meetings.length} meetings, trained ${courses.reduce((sum, c) => sum + c.enrolled, 0)} students and issued ${certificates.reduce((sum, r) => sum + r.value, 0)} certificates during the period. The executive committee remains committed to improving participation, skills and record keeping.
 
 Prepared by: ______________________        Signature: ______________________
-Approved by (Patron/President): ______________________        Date: ______________
+Approved by (Patron): ______________________        Head Teacher: ______________________
 `
 }
 
@@ -399,6 +540,7 @@ function ReportBuilder({ open, onClose, stats, range, currency, user, toast }) {
 
   const suggestedTitle = useMemo(() => {
     if (type === 'Annual Report') return `Annual Report — ${stats?.settings?.academic_year || new Date().getFullYear()}`
+    if (type === 'Term Report') return `Term Report — ${stats?.settings?.current_term || ''} ${stats?.settings?.academic_year || ''}`.trim()
     if (type === 'Monthly Report') return `Monthly Report — ${new Date().toLocaleDateString('en-GB', { month: 'long', year: 'numeric' })}`
     return `${type} — ${range.from ? formatDate(range.from) : 'All time' } to ${range.to ? formatDate(range.to) : 'today'}`
   }, [type, stats, range])
@@ -411,7 +553,7 @@ function ReportBuilder({ open, onClose, stats, range, currency, user, toast }) {
         type,
         period: period || `${range.from || 'All time'} — ${range.to || 'today'}`,
         author_id: authorId ? Number(authorId) : user?.member_id || null,
-        summary: `Auto-generated ${type.toLowerCase()} covering ${stats?.attendance?.bySession?.length || 0} sessions, ${stats?.activities?.length || 0} activities and ${stats?.courses?.length || 0} courses.`,
+        summary: `Auto-generated ${type.toLowerCase()} covering ${stats?.attendance?.bySession?.length || 0} sessions, ${stats?.activities?.length || 0} activities, ${stats?.courses?.length || 0} courses and club dues of ${stats?.dues?.summary?.collected || 0} collected.`,
         content: text,
         status: 'Draft'
       })

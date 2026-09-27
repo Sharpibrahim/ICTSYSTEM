@@ -5,7 +5,7 @@ import { api } from '../api'
 import { useAsync } from '../hooks'
 import { Avatar, Badge, Button, Card, EmptyState, Loading, ProgressBar, Stat, StatusBadge } from '../components/ui'
 import { BarChart, DonutChart, LineChart, Ring } from '../components/charts'
-import { dueLabel, formatCurrency, formatDate, relativeTime } from '../format'
+import { dueLabel, formatCurrency, formatDate, formatNumber, relativeTime } from '../format'
 
 function monthLabel(value) {
   if (!value) return ''
@@ -22,11 +22,11 @@ function greeting() {
 }
 
 const QUICK_ACTIONS = [
-  { label: 'Add member', to: '/r/members?new=1', icon: 'userPlus' },
+  { label: 'Register student', to: '/r/members?new=1', icon: 'userPlus' },
   { label: 'New meeting', to: '/r/meetings?new=1', icon: 'calendar' },
   { label: 'Record attendance', to: '/attendance', icon: 'check' },
-  { label: 'Create report', to: '/r/reports?new=1', icon: 'file' },
-  { label: 'Issue certificate', to: '/r/certificates?new=1', icon: 'award' }
+  { label: 'Record dues', to: '/r/dues?new=1', icon: 'wallet' },
+  { label: 'Create report', to: '/r/reports?new=1', icon: 'file' }
 ]
 
 const REF_LABELS = { meeting: 'Meetings', activity: 'Activities', course: 'Course sessions', project: 'Projects' }
@@ -48,7 +48,7 @@ export default function Dashboard() {
     )
   }
 
-  const { cards, attendance, members, projects, activities, courses, meetings, recent } = data
+  const { cards, attendance, members, projects, activities, courses, meetings, recent, finance } = data
   const currency = settings?.currency || data.settings?.currency || 'USD'
 
   const attendanceTrend = attendance.trend.map((row) => ({
@@ -67,8 +67,9 @@ export default function Dashboard() {
             {greeting()}, {user?.name?.split(' ')[0]} 👋
           </h1>
           <p>
-            {data.settings?.club_name || 'ICT Club'} • {data.settings?.academic_year || ''} — here is what is happening
-            across your members, sessions and projects.
+            {data.settings?.institution ? `${data.settings.institution} • ` : ''}
+            {data.settings?.club_name || 'ICT Club'} • {data.settings?.current_term || ''} {data.settings?.academic_year || ''}
+            {' — '}here is what is happening across your students, sessions and projects.
           </p>
         </div>
         <div className="page-head__actions">
@@ -82,8 +83,15 @@ export default function Dashboard() {
       </div>
 
       <div className="grid grid--stats mb-2">
-        <Stat icon="users" label="Members" value={cards.members} hint={`${cards.active_members} active`} tone="brand" />
-        <Stat icon="crown" label="Cabinet" value={cards.cabinet} hint="Current executives" tone="purple" />
+        <Stat icon="users" label="Members" value={cards.members} hint={`${cards.active_members} active students`} tone="brand" />
+        <Stat icon="crown" label="Executive committee" value={cards.cabinet} hint="Positions filled" tone="purple" />
+        <Stat
+          icon="wallet"
+          label="Dues collected"
+          value={formatCurrency(cards.dues_collected, currency)}
+          hint={`${formatCurrency(cards.dues_expected - cards.dues_collected, currency)} outstanding`}
+          tone={cards.dues_collected / Math.max(1, cards.dues_expected) > 0.8 ? 'green' : 'amber'}
+        />
         <Stat
           icon="check"
           label="Attendance rate"
@@ -95,7 +103,7 @@ export default function Dashboard() {
         <Stat icon="sparkles" label="Activities" value={cards.activities} hint={`${cards.upcoming_activities} planned`} tone="teal" />
         <Stat icon="book" label="Courses" value={cards.courses} hint={`${cards.enrollments} enrollments`} tone="green" />
         <Stat icon="rocket" label="Projects" value={cards.projects} hint={`${cards.open_tasks} open tasks`} tone="purple" />
-        <Stat icon="award" label="Certificates" value={cards.certificates} hint={`${cards.pending_reports} reports awaiting review`} tone="amber" />
+        <Stat icon="award" label="Certificates issued" value={cards.certificates} hint={`${cards.dues_defaulters} students with dues owing`} tone="amber" />
       </div>
 
       <div className="grid grid--2 mb-2" style={{ gridTemplateColumns: 'minmax(0, 2fr) minmax(280px, 1fr)' }}>
@@ -193,8 +201,8 @@ export default function Dashboard() {
       </div>
 
       <div className="grid grid--2 mb-2">
-        <Card title="Members by department" icon="users">
-          <BarChart data={members.byDepartment} formatValue={(v) => v} />
+        <Card title="Members per class" subtitle="S1 – S6" icon="users">
+          <BarChart data={members.byClass} formatValue={(v) => v} />
         </Card>
         <Card title="Membership growth" subtitle="New members per month" icon="trendingUp">
           <LineChart data={memberGrowth} series={[{ key: 'value', label: 'New members', color: '#4f46e5' }]} />
@@ -210,7 +218,8 @@ export default function Dashboard() {
               <div className="list-row__main">
                 <div className="list-row__title">{member.full_name}</div>
                 <div className="list-row__meta">
-                  <span>{member.attended}/{member.total} sessions</span>
+                  <span>{member.class_level || '—'}</span>
+                  <span>• {member.attended}/{member.total} sessions</span>
                 </div>
               </div>
               <div className="list-row__side" style={{ minWidth: 110 }}>
@@ -228,7 +237,7 @@ export default function Dashboard() {
               <div className="list-row__main">
                 <div className="list-row__title">{member.full_name}</div>
                 <div className="list-row__meta">
-                  <span>{member.department}</span>
+                  <span>{member.class_level || '—'}</span>
                 </div>
               </div>
               <div className="list-row__side" style={{ minWidth: 110 }}>
@@ -265,8 +274,8 @@ export default function Dashboard() {
             color="#12b76a"
           />
         </Card>
-        <Card title="Members by year of study" icon="users">
-          <DonutChart data={members.byYear} centerLabel="Members" />
+        <Card title="Members by house" icon="users">
+          <DonutChart data={members.byHouse} centerLabel="Members" />
         </Card>
       </div>
 
@@ -363,12 +372,118 @@ export default function Dashboard() {
         </Card>
       </div>
 
+      <div className="grid grid--2 mb-2">
+        <Card
+          title="Club dues collection"
+          subtitle={`${finance.defaulters} students still owing`}
+          icon="wallet"
+          flush
+          actions={<Button size="sm" variant="ghost" iconRight="chevronRight" onClick={() => navigate('/r/dues')}>Open register</Button>}
+        >
+          <div className="card__body">
+            <div className="grid grid--3" style={{ gap: 12 }}>
+              <div>
+                <div className="small muted">Expected</div>
+                <div style={{ fontSize: 18, fontWeight: 700 }}>{formatCurrency(finance.expected, currency)}</div>
+              </div>
+              <div>
+                <div className="small muted">Collected</div>
+                <div style={{ fontSize: 18, fontWeight: 700, color: 'var(--green)' }}>{formatCurrency(finance.collected, currency)}</div>
+              </div>
+              <div>
+                <div className="small muted">Outstanding</div>
+                <div style={{ fontSize: 18, fontWeight: 700, color: 'var(--red)' }}>{formatCurrency(finance.outstanding, currency)}</div>
+              </div>
+            </div>
+            <div className="mt-2">
+              <ProgressBar
+                value={finance.expected ? Math.round((finance.collected / finance.expected) * 100) : 0}
+              />
+              <div className="small muted mt-1">
+                {finance.expected ? Math.round((finance.collected / finance.expected) * 100) : 0}% of expected dues collected
+              </div>
+            </div>
+          </div>
+          {finance.byTerm.slice(0, 3).map((row) => (
+            <div className="list-row" key={`${row.academic_year}-${row.term}`}>
+              <div className="list-row__main">
+                <div className="list-row__title">
+                  {row.term} {row.academic_year}
+                </div>
+                <div className="list-row__meta">
+                  <span>{row.records} students</span>
+                  <span>• {formatCurrency(row.collected, currency)} of {formatCurrency(row.expected, currency)}</span>
+                </div>
+              </div>
+              <div className="list-row__side" style={{ minWidth: 120 }}>
+                <ProgressBar value={row.expected ? Math.round((row.collected / row.expected) * 100) : 0} />
+              </div>
+            </div>
+          ))}
+        </Card>
+
+        <Card
+          title="Students with outstanding dues"
+          subtitle="Follow up with the class representative or guardian"
+          icon="alert"
+          flush
+          actions={<Button size="sm" variant="ghost" iconRight="chevronRight" onClick={() => navigate('/r/dues?status=Unpaid')}>View all</Button>}
+        >
+          {finance.watchlist.length === 0 && (
+            <EmptyState icon="check" title="All dues cleared" message="Every student has paid their club dues." />
+          )}
+          {finance.watchlist.map((row) => (
+            <div
+              className="list-row"
+              key={row.id}
+              style={{ cursor: 'pointer' }}
+              onClick={() => navigate(`/r/dues/${row.id}`)}
+            >
+              <Avatar name={row.full_name} size="sm" />
+              <div className="list-row__main">
+                <div className="list-row__title">{row.full_name}</div>
+                <div className="list-row__meta">
+                  <span>{row.class_level || '—'}</span>
+                  <span>• {row.term} {row.academic_year}</span>
+                  {row.guardian_phone && <span>• {row.guardian_phone}</span>}
+                </div>
+              </div>
+              <div className="list-row__side">
+                <Badge tone={row.status === 'Unpaid' ? 'red' : 'amber'}>
+                  {formatCurrency(row.balance, currency)} owing
+                </Badge>
+              </div>
+            </div>
+          ))}
+        </Card>
+      </div>
+
+      <div className="grid grid--2 mb-2">
+        <Card title="Dues by class" subtitle="Collection rate per class" icon="layers" flush>
+          <DataMiniTable
+            columns={['Class', 'Students', 'Expected', 'Collected', 'Outstanding']}
+            rows={finance.byClass.map((row) => [
+              row.name,
+              row.students,
+              formatCurrency(row.expected, currency),
+              formatCurrency(row.collected, currency),
+              formatCurrency(row.outstanding, currency)
+            ])}
+            onRow={(index) => navigate(`/r/dues?class_level=${encodeURIComponent(finance.byClass[index].name)}`)}
+          />
+        </Card>
+        <Card title="Members by stream" subtitle="A / B / C / East / West" icon="grid">
+          <DonutChart data={members.byStream} centerLabel="Students" />
+        </Card>
+      </div>
+
       <div className="card mt-3">
         <div className="card__body flex items-center justify-between gap-3 wrap">
           <div>
-            <h3>Turn this data into an official report</h3>
+            <h3>Turn this data into an official school report</h3>
             <p className="small muted mt-1">
-              The Reports Studio writes attendance, membership, financial and course statistics into a ready-to-edit report.
+              The Reports Studio writes membership, attendance, dues, activity and course statistics into a ready-to-file
+              report for the patron, the head teacher or the PTA.
             </p>
           </div>
           <div className="flex gap-1 wrap">
@@ -382,5 +497,36 @@ export default function Dashboard() {
         </div>
       </div>
     </>
+  )
+}
+
+/** Compact read-only table used by the dues-by-class card. */
+function DataMiniTable({ columns, rows, onRow }) {
+  if (!rows.length) return <EmptyState icon="wallet" title="No dues records yet" />
+  return (
+    <div className="table-wrap">
+      <table className="data">
+        <thead>
+          <tr>
+            {columns.map((column) => (
+              <th key={column} className={column === columns[0] ? '' : 'num'}>
+                {column}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map((row, index) => (
+            <tr key={row[0]} onClick={() => onRow?.(index)} style={onRow ? { cursor: 'pointer' } : undefined}>
+              {row.map((cell, cellIndex) => (
+                <td key={cellIndex} className={cellIndex === 0 ? '' : 'num'}>
+                  {cell}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   )
 }

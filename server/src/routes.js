@@ -39,7 +39,7 @@ api.get('/verify/:code', (req, res) => {
   const code = String(req.params.code || '').trim()
   const row = get(
     `SELECT c.certificate_no, c.title, c.type, c.issue_date, c.status, c.grade, c.issued_by, c.signed_by,
-            m.full_name AS recipient_name, m.reg_number AS recipient_reg
+            m.full_name AS recipient_name, m.admission_number AS recipient_reg, m.class_level AS recipient_class
        FROM certificates c LEFT JOIN members m ON m.id = c.recipient_id
       WHERE upper(c.verification_code) = upper(?) OR upper(c.certificate_no) = upper(?)`,
     [code, code]
@@ -119,7 +119,7 @@ api.get('/meta', requireAuth, (_req, res) => {
 })
 
 const OPTION_LABELS = {
-  members: (r) => ({ value: r.id, label: r.full_name, sub: r.reg_number }),
+  members: (r) => ({ value: r.id, label: r.full_name, sub: [r.class_level, r.admission_number].filter(Boolean).join(' • ') }),
   meetings: (r) => ({ value: r.id, label: r.title, sub: r.date }),
   activities: (r) => ({ value: r.id, label: r.title, sub: r.date }),
   courses: (r) => ({ value: r.id, label: r.code ? `${r.code} — ${r.title}` : r.title, sub: r.instructor }),
@@ -158,6 +158,10 @@ api.get('/dashboard', requireAuth, (_req, res) => {
     pending_reports: one("SELECT COUNT(*) AS v FROM reports WHERE status IN ('Submitted','Under Review')", []),
     certificates: one('SELECT COUNT(*) AS v FROM certificates'),
     notes: one('SELECT COUNT(*) AS v FROM notes'),
+    dues_records: one('SELECT COUNT(*) AS v FROM dues'),
+    dues_collected: one('SELECT COALESCE(SUM(amount_paid),0) AS v FROM dues'),
+    dues_expected: one("SELECT COALESCE(SUM(amount_due),0) AS v FROM dues WHERE status <> 'Exempt'"),
+    dues_defaulters: one("SELECT COUNT(*) AS v FROM dues WHERE status IN ('Unpaid','Partial')"),
     projects: one('SELECT COUNT(*) AS v FROM projects'),
     active_projects: one("SELECT COUNT(*) AS v FROM projects WHERE status IN ('Planning','In Progress','In Review')"),
     open_tasks: one("SELECT COUNT(*) AS v FROM project_tasks WHERE status <> 'Done'"),
@@ -187,13 +191,44 @@ api.get('/dashboard', requireAuth, (_req, res) => {
       WHERE join_date IS NOT NULL GROUP BY month ORDER BY month DESC LIMIT 8`
   ).reverse()
 
-  const membersByDepartment = all(
-    "SELECT COALESCE(NULLIF(department,''),'Unspecified') AS name, COUNT(*) AS value FROM members GROUP BY name ORDER BY value DESC LIMIT 8"
+  const membersByClass = all(
+    "SELECT COALESCE(NULLIF(class_level,''),'Unspecified') AS name, COUNT(*) AS value FROM members GROUP BY name ORDER BY name"
   )
-  const membersByYear = all(
-    "SELECT COALESCE(NULLIF(year_of_study,''),'Unspecified') AS name, COUNT(*) AS value FROM members GROUP BY name ORDER BY value DESC"
+  const membersByHouse = all(
+    "SELECT COALESCE(NULLIF(house,''),'Unspecified') AS name, COUNT(*) AS value FROM members GROUP BY name ORDER BY value DESC LIMIT 8"
+  )
+  const membersByStream = all(
+    "SELECT COALESCE(NULLIF(stream,''),'Unspecified') AS name, COUNT(*) AS value FROM members GROUP BY name ORDER BY name"
   )
   const membersByStatus = all('SELECT status AS name, COUNT(*) AS value FROM members GROUP BY status ORDER BY value DESC')
+  const membersByGender = all(
+    "SELECT COALESCE(NULLIF(gender,''),'Unspecified') AS name, COUNT(*) AS value FROM members GROUP BY name ORDER BY value DESC"
+  )
+
+  const feesByTerm = all(
+    `SELECT term, academic_year,
+            COUNT(*) AS records,
+            COALESCE(SUM(amount_due),0) AS expected,
+            COALESCE(SUM(amount_paid),0) AS collected
+       FROM dues GROUP BY term, academic_year ORDER BY academic_year DESC, term DESC LIMIT 6`
+  )
+  const duesByClass = all(
+    `SELECT COALESCE(NULLIF(m.class_level,''),'Unspecified') AS name,
+            COUNT(*) AS students,
+            COALESCE(SUM(d.amount_due),0) AS expected,
+            COALESCE(SUM(d.amount_paid),0) AS collected,
+            COALESCE(SUM(CASE WHEN d.status IN ('Unpaid','Partial') THEN d.amount_due - d.amount_paid ELSE 0 END),0) AS outstanding
+       FROM dues d JOIN members m ON m.id = d.member_id
+      GROUP BY name ORDER BY name`
+  )
+  const duesDefaulters = all(
+    `SELECT d.id, m.id AS member_id, m.full_name, m.class_level, m.guardian_phone,
+            d.term, d.academic_year, d.amount_due, d.amount_paid,
+            (d.amount_due - d.amount_paid) AS balance, d.status
+       FROM dues d JOIN members m ON m.id = d.member_id
+      WHERE d.status IN ('Unpaid','Partial')
+      ORDER BY balance DESC LIMIT 8`
+  )
 
   const projectStatus = all('SELECT status AS name, COUNT(*) AS value FROM projects GROUP BY status ORDER BY value DESC')
   const taskStatus = all('SELECT status AS name, COUNT(*) AS value FROM project_tasks GROUP BY status ORDER BY value DESC')
@@ -210,7 +245,7 @@ api.get('/dashboard', requireAuth, (_req, res) => {
   )
 
   const topMembers = all(
-    `SELECT m.id, m.full_name, m.department,
+    `SELECT m.id, m.full_name, m.class_level,
             COUNT(a.id) AS total,
             SUM(CASE WHEN a.status IN ('Present','Late') THEN 1 ELSE 0 END) AS attended,
             ROUND(100.0 * SUM(CASE WHEN a.status IN ('Present','Late') THEN 1 ELSE 0 END) / NULLIF(COUNT(a.id),0), 1) AS rate
@@ -220,7 +255,7 @@ api.get('/dashboard', requireAuth, (_req, res) => {
   )
 
   const lowAttendance = all(
-    `SELECT m.id, m.full_name, m.department,
+    `SELECT m.id, m.full_name, m.class_level,
             COUNT(a.id) AS total,
             SUM(CASE WHEN a.status IN ('Present','Late') THEN 1 ELSE 0 END) AS attended,
             ROUND(100.0 * SUM(CASE WHEN a.status IN ('Present','Late') THEN 1 ELSE 0 END) / NULLIF(COUNT(a.id),0), 1) AS rate
@@ -260,6 +295,11 @@ api.get('/dashboard', requireAuth, (_req, res) => {
        FROM notes n LEFT JOIN members m ON m.id = n.author_id
       WHERE n.visibility = 'Public' OR n.visibility IS NULL ORDER BY n.created_at DESC LIMIT 5`
   )
+  const pinnedNotes = all(
+    `SELECT n.id, n.title, n.category, n.color, n.created_at, m.full_name AS author
+       FROM notes n LEFT JOIN members m ON m.id = n.author_id
+      WHERE n.pinned = 1 ORDER BY n.created_at DESC LIMIT 4`
+  )
   const recentActivityLog = all(
     'SELECT id, user_name, action, resource, record_id, detail, created_at FROM activity_log ORDER BY id DESC LIMIT 10'
   )
@@ -288,18 +328,29 @@ api.get('/dashboard', requireAuth, (_req, res) => {
     },
     members: {
       growth: memberGrowth,
-      byDepartment: membersByDepartment,
-      byYear: membersByYear,
+      byClass: membersByClass,
+      byHouse: membersByHouse,
+      byStream: membersByStream,
       byStatus: membersByStatus,
+      byGender: membersByGender,
       top: topMembers,
       low: lowAttendance,
       topSkills
+    },
+    finance: {
+      expected: cards.dues_expected,
+      collected: cards.dues_collected,
+      outstanding: Math.max(0, cards.dues_expected - cards.dues_collected),
+      defaulters: cards.dues_defaulters,
+      byTerm: feesByTerm,
+      byClass: duesByClass,
+      watchlist: duesDefaulters
     },
     projects: { byStatus: projectStatus, byTaskStatus: taskStatus, deadlines: upcomingDeadlines, timeline: expiringProjects },
     activities: { byCategory: activityByCategory, upcoming: upcomingActivities },
     courses: { enrollment: courseEnrollment },
     meetings: { upcoming: upcomingMeetings },
-    recent: { certificates: recentCertificates, notes: recentNotes, log: recentActivityLog },
+    recent: { certificates: recentCertificates, notes: recentNotes, pinned: pinnedNotes, log: recentActivityLog },
     settings: getSettings()
   })
 })
@@ -334,16 +385,25 @@ api.get('/attendance/register', requireAuth, (req, res) => {
     [ref_type, Number(ref_id)]
   )
   const byMember = new Map(existing.map((row) => [row.member_id, row]))
-  const members = all("SELECT id, full_name, reg_number, department, year_of_study, status, photo_url FROM members WHERE status IN ('Active','Alumni') ORDER BY full_name COLLATE NOCASE")
+  // Class list can be narrowed (e.g. only S2 students for a class meeting).
+  const classFilter = req.query.class_level
+  const members = all(
+    `SELECT id, full_name, admission_number, class_level, stream, house, status, photo_url
+       FROM members
+      WHERE status IN ('Active','Alumni')${classFilter ? ' AND class_level = ?' : ''}
+      ORDER BY class_level, full_name COLLATE NOCASE`,
+    classFilter ? [classFilter] : []
+  )
 
   const roster = members.map((m) => {
     const record = byMember.get(m.id)
     return {
       member_id: m.id,
       full_name: m.full_name,
-      reg_number: m.reg_number,
-      department: m.department,
-      year_of_study: m.year_of_study,
+      admission_number: m.admission_number,
+      class_level: m.class_level,
+      stream: m.stream,
+      house: m.house,
       member_status: m.status,
       photo_url: m.photo_url,
       attendance_id: record?.id ?? null,
@@ -363,6 +423,12 @@ api.get('/attendance/register', requireAuth, (req, res) => {
       start_time: session.start_time ?? '',
       end_time: session.end_time ?? session.end_time
     },
+    dues: all(
+      `SELECT d.member_id, d.term, d.academic_year, d.amount_due, d.amount_paid,
+              (d.amount_due - d.amount_paid) AS balance, d.status
+         FROM dues d WHERE d.status IN ('Unpaid','Partial')`
+    ),
+    classes: all("SELECT DISTINCT class_level FROM members WHERE class_level IS NOT NULL ORDER BY class_level").map((r) => r.class_level),
     roster,
     summary: {
       marked: existing.length,
@@ -473,6 +539,161 @@ api.post('/attendance/mark-all', requireAuth, (req, res) => {
 })
 
 /* ------------------------------------------------------------------ */
+/* CLUB DUES                                                           */
+/* ------------------------------------------------------------------ */
+
+const STUDENT_FILTER = "status = 'Active' AND role IN ('Student Member','Executive')"
+
+function duesStatusFor(due, paid) {
+  if (due === 0) return 'Exempt'
+  if (paid <= 0) return 'Unpaid'
+  return paid >= due ? 'Paid' : 'Partial'
+}
+
+/** Create this term's dues records for every active student. */
+api.post('/dues/generate', requireRole('admin', 'cabinet'), (req, res) => {
+  const settings = getSettings()
+  const term = req.body?.term || settings.current_term || 'Term 1'
+  const academicYear = String(req.body?.academic_year || settings.academic_year || new Date().getFullYear())
+  const amountDue = Number(req.body?.amount_due ?? settings.dues_per_term ?? 0)
+  const classLevel = req.body?.class_level || null
+
+  const students = all(
+    `SELECT id, full_name, class_level FROM members WHERE ${STUDENT_FILTER}${classLevel ? ' AND class_level = ?' : ''} ORDER BY class_level, full_name`,
+    classLevel ? [classLevel] : []
+  )
+  if (!students.length) return res.status(400).json({ error: 'No active students found for that selection' })
+
+  let created = 0
+  let skipped = 0
+  for (const student of students) {
+    const existing = get('SELECT id FROM dues WHERE member_id = ? AND term = ? AND academic_year = ?', [student.id, term, academicYear])
+    if (existing) {
+      skipped += 1
+      continue
+    }
+    insert('dues', {
+      member_id: student.id,
+      term,
+      academic_year: academicYear,
+      amount_due: amountDue,
+      amount_paid: 0,
+      status: amountDue > 0 ? 'Unpaid' : 'Exempt',
+      recorded_by_id: req.user.member_id ?? null
+    })
+    created += 1
+  }
+
+  logActivity({
+    userId: req.user.id,
+    userName: req.user.name,
+    action: 'dues',
+    resource: 'dues',
+    detail: `${term} ${academicYear}: ${created} dues records created`
+  })
+  res.json({ ok: true, created, skipped, term, academic_year: academicYear, amount_due: amountDue })
+})
+
+/** Record a payment against one dues record and recompute its status. */
+api.post('/dues/:id/payment', requireRole('admin', 'cabinet'), (req, res) => {
+  const record = get('SELECT * FROM dues WHERE id = ?', [Number(req.params.id)])
+  if (!record) return res.status(404).json({ error: 'Dues record not found' })
+
+  const amount = Number(req.body?.amount ?? 0)
+  if (!amount || amount <= 0) return res.status(400).json({ error: 'Enter an amount greater than zero' })
+
+  const paid = Number(record.amount_paid || 0) + amount
+  const due = Number(record.amount_due || 0)
+  const year = new Date().getFullYear()
+
+  updateRow('dues', record.id, {
+    amount_paid: paid,
+    status: duesStatusFor(due, paid),
+    payment_date: req.body?.payment_date || new Date().toISOString().slice(0, 10),
+    method: req.body?.method || record.method || 'Cash',
+    receipt_no: record.receipt_no || `RCT/${year}/${String(count('SELECT COUNT(*) FROM dues') + 1).padStart(4, '0')}`,
+    remarks: req.body?.remarks || record.remarks,
+    recorded_by_id: req.user.member_id ?? record.recorded_by_id ?? null,
+    updated_at: new Date().toISOString().replace('T', ' ').slice(0, 19)
+  })
+
+  logActivity({
+    userId: req.user.id,
+    userName: req.user.name,
+    action: 'payment',
+    resource: 'dues',
+    recordId: record.id,
+    detail: `${amount} received (${paid}/${due})`
+  })
+  res.json({ ok: true, data: get('SELECT * FROM dues WHERE id = ?', [record.id]), received: amount })
+})
+
+/** Totals by term / class plus the list of students still owing. */
+api.get('/dues/summary', requireAuth, (req, res) => {
+  const term = req.query.term
+  const academicYear = req.query.academic_year
+  const filters = []
+  const params = []
+  if (term) {
+    filters.push('d.term = ?')
+    params.push(term)
+  }
+  if (academicYear) {
+    filters.push('d.academic_year = ?')
+    params.push(String(academicYear))
+  }
+  const where = filters.length ? ` AND ${filters.join(' AND ')}` : ''
+
+  const totals = get(
+    `SELECT COUNT(*) AS records,
+            COALESCE(SUM(d.amount_due),0) AS expected,
+            COALESCE(SUM(d.amount_paid),0) AS collected,
+            COALESCE(SUM(CASE WHEN d.status IN ('Unpaid','Partial') THEN d.amount_due - d.amount_paid ELSE 0 END),0) AS outstanding,
+            SUM(CASE WHEN d.status='Paid' THEN 1 ELSE 0 END) AS fully_paid,
+            SUM(CASE WHEN d.status='Partial' THEN 1 ELSE 0 END) AS partial,
+            SUM(CASE WHEN d.status='Unpaid' THEN 1 ELSE 0 END) AS unpaid,
+            SUM(CASE WHEN d.status='Exempt' THEN 1 ELSE 0 END) AS exempt
+       FROM dues d WHERE 1=1${where}`,
+    params
+  )
+  const byClass = all(
+    `SELECT COALESCE(NULLIF(m.class_level,''),'Unspecified') AS name,
+            COUNT(*) AS students,
+            COALESCE(SUM(d.amount_due),0) AS expected,
+            COALESCE(SUM(d.amount_paid),0) AS collected,
+            COALESCE(SUM(CASE WHEN d.status IN ('Unpaid','Partial') THEN d.amount_due - d.amount_paid ELSE 0 END),0) AS outstanding
+       FROM dues d JOIN members m ON m.id = d.member_id
+      WHERE 1=1${where} GROUP BY name ORDER BY name`,
+    params
+  )
+  const byTerm = all(
+    `SELECT d.term, d.academic_year, COUNT(*) AS students,
+            COALESCE(SUM(d.amount_due),0) AS expected,
+            COALESCE(SUM(d.amount_paid),0) AS collected
+       FROM dues d WHERE 1=1${where} GROUP BY d.term, d.academic_year ORDER BY d.academic_year, d.term`,
+    params
+  )
+  const owing = all(
+    `SELECT d.id, m.full_name, m.class_level, m.guardian_name, m.guardian_phone,
+            d.term, d.academic_year, d.amount_due, d.amount_paid,
+            (d.amount_due - d.amount_paid) AS balance, d.status
+       FROM dues d JOIN members m ON m.id = d.member_id
+      WHERE d.status IN ('Unpaid','Partial')${where}
+      ORDER BY balance DESC`,
+    params
+  )
+  const payments = all(
+    `SELECT d.id, d.payment_date, d.amount_paid, d.method, d.receipt_no, d.term, d.academic_year,
+            m.full_name, m.class_level
+       FROM dues d JOIN members m ON m.id = d.member_id
+      WHERE d.amount_paid > 0${where} ORDER BY d.payment_date DESC LIMIT 60`,
+    params
+  )
+
+  res.json({ totals, byClass, byTerm, owing, payments, settings: getSettings() })
+})
+
+/* ------------------------------------------------------------------ */
 /* REPORT DATA + SUMMARY GENERATOR                                     */
 /* ------------------------------------------------------------------ */
 
@@ -504,7 +725,7 @@ api.get('/reports/data', requireAuth, (req, res) => {
     attendance.params
   )
   const attendanceByMember = all(
-    `SELECT m.id, m.full_name, m.department, m.reg_number,
+    `SELECT m.id, m.full_name, m.class_level, m.admission_number,
             COUNT(a.id) AS sessions,
             SUM(CASE WHEN a.status IN ('Present','Late') THEN 1 ELSE 0 END) AS attended,
             ROUND(100.0 * SUM(CASE WHEN a.status IN ('Present','Late') THEN 1 ELSE 0 END) / NULLIF(COUNT(a.id),0),1) AS rate
@@ -560,14 +781,73 @@ api.get('/reports/data', requireAuth, (req, res) => {
             SUM(CASE WHEN gender='Male' THEN 1 ELSE 0 END) AS male
        FROM members`
   )
+  const classBreakdown = all(
+    `SELECT COALESCE(NULLIF(class_level,''),'Unspecified') AS name,
+            COUNT(*) AS total,
+            SUM(CASE WHEN status='Active' THEN 1 ELSE 0 END) AS active,
+            SUM(CASE WHEN gender='Female' THEN 1 ELSE 0 END) AS female,
+            SUM(CASE WHEN gender='Male' THEN 1 ELSE 0 END) AS male
+       FROM members GROUP BY name ORDER BY name`
+  )
+  const duesRange = RANGE_CLAUSE('payment_date', from, to)
+  const duesSummary = get(
+    `SELECT COUNT(*) AS records,
+            COALESCE(SUM(amount_due),0) AS expected,
+            COALESCE(SUM(amount_paid),0) AS collected,
+            COALESCE(SUM(CASE WHEN status IN ('Unpaid','Partial') THEN amount_due - amount_paid ELSE 0 END),0) AS outstanding,
+            SUM(CASE WHEN status='Paid' THEN 1 ELSE 0 END) AS paid_records,
+            SUM(CASE WHEN status='Partial' THEN 1 ELSE 0 END) AS partial_records,
+            SUM(CASE WHEN status='Unpaid' THEN 1 ELSE 0 END) AS unpaid_records
+       FROM dues WHERE 1=1`,
+    []
+  )
+  const duesByClass = all(
+    `SELECT COALESCE(NULLIF(m.class_level,''),'Unspecified') AS name,
+            COUNT(*) AS students,
+            COALESCE(SUM(d.amount_due),0) AS expected,
+            COALESCE(SUM(d.amount_paid),0) AS collected,
+            COALESCE(SUM(CASE WHEN d.status IN ('Unpaid','Partial') THEN d.amount_due - d.amount_paid ELSE 0 END),0) AS outstanding
+       FROM dues d JOIN members m ON m.id = d.member_id
+      GROUP BY name ORDER BY name`
+  )
+  const duesByTerm = all(
+    `SELECT term, academic_year, COUNT(*) AS students,
+            COALESCE(SUM(amount_due),0) AS expected,
+            COALESCE(SUM(amount_paid),0) AS collected
+       FROM dues GROUP BY term, academic_year ORDER BY academic_year, term`
+  )
+  const duesDefaulters = all(
+    `SELECT d.id, m.full_name, m.class_level, m.guardian_name, m.guardian_phone,
+            d.term, d.academic_year, d.amount_due, d.amount_paid,
+            (d.amount_due - d.amount_paid) AS balance, d.status
+       FROM dues d JOIN members m ON m.id = d.member_id
+      WHERE d.status IN ('Unpaid','Partial')
+      ORDER BY balance DESC`
+  )
+  const duesPayments = all(
+    `SELECT d.id, d.payment_date, d.amount_paid, d.method, d.receipt_no, d.term, d.academic_year,
+            m.full_name, m.class_level
+       FROM dues d JOIN members m ON m.id = d.member_id
+      WHERE d.amount_paid > 0${duesRange.sql}
+      ORDER BY d.payment_date DESC LIMIT 40`,
+    duesRange.params
+  )
   const cabinetList = all(
-    `SELECT c.id, c.position, c.term, c.status, m.full_name, m.email, m.phone, m.department
+    `SELECT c.id, c.position, c.term, c.status, m.full_name, m.email, m.phone, m.class_level
        FROM cabinet c LEFT JOIN members m ON m.id = c.member_id ORDER BY c.order_index, c.position`
   )
 
   res.json({
     range: { from: from || null, to: to || null },
     members: memberStats,
+    classBreakdown,
+    dues: {
+      summary: duesSummary,
+      byClass: duesByClass,
+      byTerm: duesByTerm,
+      defaulters: duesDefaulters,
+      payments: duesPayments
+    },
     attendance: { byStatus: attendanceByStatus, byMember: attendanceByMember, bySession: attendanceBySession },
     meetings: meetingStats,
     activities: activityStats,
@@ -587,8 +867,8 @@ api.get('/reports/data', requireAuth, (req, res) => {
 
 api.get('/certificates/:id/printable', requireAuth, (req, res) => {
   const row = get(
-    `SELECT c.*, m.full_name AS recipient_name, m.reg_number AS recipient_reg, m.department AS recipient_department,
-            m.email AS recipient_email
+    `SELECT c.*, m.full_name AS recipient_name, m.admission_number AS recipient_reg,
+            m.class_level AS recipient_class, m.email AS recipient_email
        FROM certificates c LEFT JOIN members m ON m.id = c.recipient_id WHERE c.id = ?`,
     [Number(req.params.id)]
   )
@@ -611,9 +891,16 @@ api.get('/search', requireAuth, (req, res) => {
   const groups = []
 
   const memberRows = all(
-    "SELECT id, full_name, reg_number, department FROM members WHERE full_name LIKE ? OR reg_number LIKE ? OR email LIKE ? OR skills LIKE ? ORDER BY full_name LIMIT 8",
-    [like, like, like, like]
-  ).map((r) => ({ id: r.id, title: r.full_name, subtitle: [r.reg_number, r.department].filter(Boolean).join(' • ') }))
+    `SELECT id, full_name, admission_number, class_level, stream FROM members
+      WHERE full_name LIKE ? OR admission_number LIKE ? OR email LIKE ? OR skills LIKE ?
+         OR guardian_name LIKE ? OR guardian_phone LIKE ?
+      ORDER BY full_name LIMIT 8`,
+    [like, like, like, like, like, like]
+  ).map((r) => ({
+    id: r.id,
+    title: r.full_name,
+    subtitle: [r.class_level, r.stream && `Stream ${r.stream}`, r.admission_number].filter(Boolean).join(' • ')
+  }))
   if (memberRows.length) groups.push({ resource: 'members', label: 'Members', items: memberRows })
 
   const simpleSearch = (resource, extra = '') => {
@@ -625,7 +912,7 @@ api.get('/search', requireAuth, (req, res) => {
     ).map((r) => ({ id: r.id, title: r.title, subtitle: r.subtitle ? String(r.subtitle) : '' }))
   }
 
-  for (const key of ['meetings', 'activities', 'courses', 'projects', 'reports', 'certificates', 'notes']) {
+  for (const key of ['meetings', 'activities', 'courses', 'projects', 'reports', 'certificates', 'notes', 'dues']) {
     const meta = resourceByKey(key)
     const items = simpleSearch(key)
     if (items.length) groups.push({ resource: key, label: meta.label, items })
@@ -664,7 +951,7 @@ api.get('/export/:resource', requireAuth, (req, res) => {
 
 api.get('/backup', requireRole('admin'), (_req, res) => {
   const tables = [
-    'members', 'cabinet', 'meetings', 'activities', 'courses', 'enrollments', 'attendance',
+    'members', 'cabinet', 'meetings', 'activities', 'courses', 'enrollments', 'attendance', 'dues',
     'reports', 'certificates', 'notes', 'projects', 'project_members', 'project_tasks', 'users', 'settings'
   ]
   const dump = { generated_at: new Date().toISOString(), version: 1, tables: {} }
@@ -708,14 +995,18 @@ api.post('/members/import', requireRole('admin', 'cabinet'), (req, res) => {
     }
     insert('members', {
       full_name: name,
-      reg_number: raw.reg_number || null,
+      admission_number: raw.admission_number || raw.reg_number || null,
+      class_level: raw.class_level || raw.class || null,
+      stream: raw.stream || null,
+      house: raw.house || null,
       email: raw.email || null,
       phone: raw.phone || null,
       gender: raw.gender || null,
-      department: raw.department || null,
-      program: raw.program || null,
-      year_of_study: raw.year_of_study || null,
-      role: raw.role || 'Member',
+      guardian_name: raw.guardian_name || null,
+      guardian_phone: raw.guardian_phone || null,
+      guardian_relationship: raw.guardian_relationship || null,
+      address: raw.address || null,
+      role: raw.role || 'Student Member',
       status: raw.status || 'Active',
       join_date: raw.join_date || new Date().toISOString().slice(0, 10),
       skills: raw.skills || null

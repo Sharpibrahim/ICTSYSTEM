@@ -5,18 +5,19 @@ import { useAuth } from '../auth'
 import { Button } from '../components/ui'
 
 const FEATURES = [
-  'Members, cabinet positions and terms',
-  'Meetings with agendas, minutes and action items',
-  'Attendance registers for every session',
-  'Courses, enrollments and certificates',
-  'Reports studio with live statistics',
-  'Projects, tasks and shared notes'
+  'Students from S1 to S6, streams and houses',
+  'Executive committee and class representatives',
+  'Meetings with agendas, minutes and decisions',
+  'Attendance registers for every session and class',
+  'Course register, certificates and awards',
+  'Club dues tracking with receipts and balances',
+  'Term reports with live statistics'
 ]
 
 const DEMO = [
-  { label: 'Administrator', email: 'admin@ictclub.org', password: 'admin123', hint: 'Full access — manage everything' },
-  { label: 'Cabinet member', email: 'cabinet@ictclub.org', password: 'cabinet123', hint: 'Records, attendance, reports' },
-  { label: 'Member', email: 'member@ictclub.org', password: 'member123', hint: 'Read-only plus own notes' }
+  { label: 'Teacher patron', email: 'admin@school.ac.ug', password: 'admin123', hint: 'Administrator — full access' },
+  { label: 'Student executive', email: 'executive@school.ac.ug', password: 'executive123', hint: 'Records, attendance, dues' },
+  { label: 'Student member', email: 'member@school.ac.ug', password: 'member123', hint: 'Read-only plus own notes' }
 ]
 
 export default function LoginPage() {
@@ -49,10 +50,10 @@ export default function LoginPage() {
       <div className="login-art">
         <div>
           <div className="login-art__logo">IC</div>
-          <h1>Everything your ICT Club runs on, in one place.</h1>
+          <h1>Everything your school ICT Club runs on, in one place.</h1>
           <p>
-            Track members, cabinet positions, meetings, activities, courses, attendance, reports,
-            certificates, notes and projects — with live statistics for every session.
+            Track students, the executive committee, meetings, activities, courses, attendance, club dues,
+            reports, certificates, notes and projects — with live statistics for every session and class.
           </p>
           <div className="login-art__features">
             {FEATURES.map((feature) => (
@@ -64,7 +65,7 @@ export default function LoginPage() {
           </div>
         </div>
         <p className="small" style={{ color: '#8ba3cc' }}>
-          Built for student clubs • works offline on your own machine
+          Built for secondary school ICT clubs • runs on the school computer or a laptop with no internet
         </p>
       </div>
 
@@ -73,8 +74,8 @@ export default function LoginPage() {
           <h2>{mode === 'login' ? 'Sign in to your club' : 'Create your account'}</h2>
           <p className="muted">
             {mode === 'login'
-              ? 'Use the account your club administrator created for you.'
-              : 'Member accounts can view records and manage their own notes.'}
+              ? 'Use the account the club patron or the executive committee created for you.'
+              : 'Student accounts can view club records and manage their own notes.'}
           </p>
 
           <form onSubmit={run}>
@@ -99,7 +100,7 @@ export default function LoginPage() {
                 type="email"
                 value={form.email}
                 onChange={(e) => setForm({ ...form, email: e.target.value })}
-                placeholder="you@ictclub.org"
+                placeholder="you@school.ac.ug"
                 autoComplete="username"
                 required
               />
@@ -130,7 +131,7 @@ export default function LoginPage() {
               <>
                 No account yet?{' '}
                 <a href="#signup" onClick={(e) => { e.preventDefault(); setMode('signup') }} style={{ color: 'var(--brand)', fontWeight: 600 }}>
-                  Register as a member
+                  Register as a student
                 </a>
               </>
             ) : (

@@ -15,10 +15,10 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const ACCOUNT = process.env.AS || 'admin'
 const CREDENTIALS =
   ACCOUNT === 'cabinet'
-    ? { email: 'cabinet@ictclub.org', password: 'cabinet123' }
+    ? { email: 'executive@school.ac.ug', password: 'executive123' }
     : ACCOUNT === 'member'
-      ? { email: 'member@ictclub.org', password: 'member123' }
-      : { email: 'admin@ictclub.org', password: 'admin123' }
+      ? { email: 'member@school.ac.ug', password: 'member123' }
+      : { email: 'admin@school.ac.ug', password: 'admin123' }
 
 /* Screens only an administrator may open. */
 const ADMIN_ONLY = ['User accounts']
@@ -101,16 +101,18 @@ const { createElement, act } = await import('react')
 
 const ALL_ROUTES = [
   ['Dashboard', '/'],
-  ['Members list', '/r/members'],
-  ['Member detail', '/r/members/1'],
+  ['Students list', '/r/members'],
+  ['Student detail', '/r/members/1'],
   ['Members (cards)', '/r/members?view=cards'],
-  ['Cabinet', '/r/cabinet'],
+  ['Executive committee', '/r/cabinet'],
   ['Meetings', '/r/meetings'],
   ['Meeting detail', '/r/meetings/4'],
   ['Activities', '/r/activities'],
   ['Courses', '/r/courses'],
   ['Course detail', '/r/courses/1'],
-  ['Enrollments', '/r/enrollments'],
+  ['Course register', '/r/enrollments'],
+  ['Club dues', '/r/dues'],
+  ['Dues record detail', '/r/dues/1'],
   ['Attendance page', '/attendance'],
   ['Reports studio', '/reports'],
   ['Report records', '/r/reports'],
@@ -123,7 +125,24 @@ const ALL_ROUTES = [
   ['User accounts', '/r/users'],
   ['Settings', '/settings'],
   ['Verify page', '/verify'],
-  ['Attendance register', '/attendance?ref_type=meeting&ref_id=4']
+  ['Attendance register', '/attendance?ref_type=meeting&ref_id=4'],
+  /* Every alternate view of every module (the app can render each one). */
+  ['Students (table)', '/r/members?view=table'],
+  ['Executive (cards)', '/r/cabinet?view=cards'],
+  ['Meetings (calendar)', '/r/meetings?view=calendar'],
+  ['Meetings (cards)', '/r/meetings?view=cards'],
+  ['Activities (calendar)', '/r/activities?view=calendar'],
+  ['Activities (cards)', '/r/activities?view=cards'],
+  ['Courses (cards)', '/r/courses?view=cards'],
+  ['Course register (board)', '/r/enrollments?view=board'],
+  ['Club dues (board)', '/r/dues?view=board'],
+  ['Reports (table)', '/r/reports?view=table'],
+  ['Certificates (cards)', '/r/certificates?view=cards'],
+  ['Notes (table)', '/r/notes?view=table'],
+  ['Projects (table)', '/r/projects?view=table'],
+  ['Project tasks (table)', '/r/project_tasks?view=table'],
+  ['Project team', '/r/project_members'],
+  ['Attendance records', '/r/attendance']
 ]
 
 let ROUTES = process.env.ONLY ? ALL_ROUTES.filter(([label]) => label === process.env.ONLY) : ALL_ROUTES
@@ -131,23 +150,46 @@ if (ACCOUNT === 'member') ROUTES = ROUTES.filter(([label]) => !ADMIN_ONLY.includ
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
 
-/** Repeated short act flushes until the screen stops showing a loading state. */
-async function settle(container, timeout = 15000) {
+/**
+ * Repeated short act flushes until the screen stops showing a loading state.
+ * Two consecutive clear polls are required because screens re-fetch (for
+ * example when URL filters change) and briefly render without a spinner.
+ */
+async function settle(container, timeout = 8000) {
   const marker = /\bLoading\b|Crunching club statistics|Collecting club statistics|Starting ICT Club/
   const started = Date.now()
-  let settled = false
+  let clear = 0
   while (Date.now() - started < timeout) {
     await act(async () => {
       await sleep(120)
     })
     if (!marker.test(container.textContent || '')) {
-      settled = true
-      break
+      clear += 1
+      if (clear >= 2) return true
+    } else {
+      clear = 0
     }
   }
-  return settled
+  return false
 }
-let failures = 0
+
+/**
+ * Waits for a condition that only becomes true once data has arrived, e.g. a
+ * row action button on a filtered list. Used instead of guessing at timings.
+ */
+async function waitFor(container, predicate, timeout = 8000) {
+  const started = Date.now()
+  while (Date.now() - started < timeout) {
+    const found = predicate(container)
+    if (found) return found
+    await act(async () => {
+      await sleep(120)
+    })
+  }
+  return null
+}
+
+let screenFailures = 0
 const results = []
 
 for (const [label, route] of ROUTES) {
@@ -155,12 +197,14 @@ for (const [label, route] of ROUTES) {
   window.document.body.appendChild(container)
   const root = createRoot(container)
   const before = errors.length
+  const problems = []
+  let settled = false
 
   try {
     await act(async () => {
       root.render(renderAt(route))
     })
-    const settled = await settle(container)
+    settled = await settle(container)
     if (!settled) problems.push('stuck in a loading state')
   } catch (error) {
     errors.push(`${label}: render threw — ${error.message}`)
@@ -168,18 +212,23 @@ for (const [label, route] of ROUTES) {
 
   const html = container.innerHTML
   const text = container.textContent || ''
-  const problems = []
   if (errors.length > before) problems.push(errors.slice(before).join(' | ').slice(0, 300))
   if (html.length < 200) problems.push(`rendered almost nothing (${html.length} chars)`)
   if (/Something went wrong|Unexpected Application Error|Could not load|Cannot read propert|is not a function|undefined is not an object/i.test(text)) {
     problems.push('error text in DOM')
+  }
+  // Catches fields the UI reads but the API no longer sends (renamed or removed columns).
+  const stale = [/\bundefined\b/, /\bNaN\b/, /Invalid Date/, /\[object Object\]/].filter((re) => re.test(text))
+  if (stale.length) {
+    const sample = text.replace(/\s+/g, ' ')
+    problems.push(`stale value in UI: ${stale.map((r) => r.source).join(', ')} — …${sample.slice(Math.max(0, sample.search(stale[0]) - 60), sample.search(stale[0]) + 60)}…`)
   }
 
   results.push({ label, route, ok: problems.length === 0, size: html.length, problems })
   if (process.env.SNIPPET) {
     console.log(`\n=== ${label} (${route}) ===\n` + text.replace(/\s+/g, ' ').slice(0, 700))
   }
-  if (problems.length) failures += 1
+  if (problems.length) screenFailures += 1
 
   await act(async () => {
     root.unmount()
@@ -208,6 +257,17 @@ async function mountRoute(route) {
   return { container, root }
 }
 
+/** Mounts a route and then waits for a specific piece of content to appear. */
+async function mountRouteFor(route, selector, timeout = 8000) {
+  const mounted = await mountRoute(route)
+  const found = await waitFor(mounted.container, (c) => c.querySelector(selector), timeout)
+  if (!found) {
+    await unmount(mounted)
+    throw new Error(`timed out waiting for ${selector} on ${route}`)
+  }
+  return mounted
+}
+
 async function unmount({ container, root }) {
   await act(async () => {
     root.unmount()
@@ -215,6 +275,7 @@ async function unmount({ container, root }) {
   container.remove()
 }
 
+const READ_ONLY = ACCOUNT === 'member'
 const interactions = []
 async function checkInteraction(label, fn) {
   const before = errors.length
@@ -232,9 +293,9 @@ if (ACCOUNT === 'member') {
 }
 
 if (ACCOUNT !== 'member') {
-await checkInteraction('Open the “New member” form', async () => {
-  const mounted = await mountRoute('/r/members')
-  const button = [...mounted.container.querySelectorAll('button')].find((b) => /New member/i.test(b.textContent))
+await checkInteraction('Open the “New student” form', async () => {
+  const mounted = await mountRoute('/r/members?view=table')
+  const button = [...mounted.container.querySelectorAll('button')].find((b) => /New student/i.test(b.textContent))
   if (!button) throw new Error('create button not found')
   await act(async () => {
     click(button)
@@ -250,15 +311,15 @@ await checkInteraction('Open the “New member” form', async () => {
 
 }
 
-await checkInteraction('Filter the members list', async () => {
-  const mounted = await mountRoute('/r/members')
+await checkInteraction('Filter the student list', async () => {
+  const mounted = await mountRoute('/r/members?view=table')
   const search = mounted.container.querySelector('.filters-bar input')
   if (!search) throw new Error('search box not found')
   await act(async () => {
     search.value = 'Amina'
     search.dispatchEvent(new window.Event('input', { bubbles: true }))
   })
-  await settle(mounted.container)
+  await waitFor(mounted.container, (c) => c.querySelector('table.data tbody tr'))
   const rows = mounted.container.querySelectorAll('table.data tbody tr').length
   if (!rows) throw new Error('no rows after filtering')
   await unmount(mounted)
@@ -267,7 +328,7 @@ await checkInteraction('Filter the members list', async () => {
 
 if (ACCOUNT !== 'member') {
 await checkInteraction('Mark attendance in a register', async () => {
-  const mounted = await mountRoute('/attendance?ref_type=meeting&ref_id=4')
+  const mounted = await mountRouteFor('/attendance?ref_type=meeting&ref_id=4', '.reg-btn')
   const buttons = [...mounted.container.querySelectorAll('.reg-btn')]
   if (buttons.length < 5) throw new Error('register did not render')
   const firstRow = mounted.container.querySelector('table.data tbody tr')
@@ -286,11 +347,84 @@ await checkInteraction('Mark attendance in a register', async () => {
 }
 
 await checkInteraction('Switch views on projects (cards → board)', async () => {
-  const mounted = await mountRoute('/r/project_tasks')
+  const mounted = await mountRouteFor('/r/project_tasks?view=board', '.kanban__col')
   const kanban = mounted.container.querySelectorAll('.kanban__col').length
   if (!kanban) throw new Error('kanban board did not render')
   await unmount(mounted)
   return `${kanban} kanban columns`
+})
+
+await checkInteraction('Toggle a list between table and card views', async () => {
+  const mounted = await mountRouteFor('/r/members?view=table', 'table.data tbody tr')
+  const tableRows = mounted.container.querySelectorAll('table.data tbody tr').length
+  const cardsButton = [...mounted.container.querySelectorAll('button')].find((b) => b.textContent.trim() === 'Cards')
+  if (!cardsButton) throw new Error('view switcher not found')
+  await act(async () => {
+    click(cardsButton)
+  })
+  const cards = await waitFor(mounted.container, (c) => (c.querySelector('table.data') ? null : c.querySelectorAll('.card').length > 3))
+  const cardCount = mounted.container.querySelectorAll('.card').length
+  if (!cards) throw new Error('cards view did not replace the table')
+  if (!tableRows) throw new Error('table view rendered no rows')
+  await unmount(mounted)
+  return `${tableRows} table rows → ${cardCount} cards`
+})
+
+await checkInteraction(READ_ONLY ? 'Dues actions are hidden for a read-only member' : 'Record a dues payment', async () => {
+  const mounted = await mountRoute('/r/dues?status=Unpaid&view=table')
+  if (READ_ONLY) {
+    await waitFor(mounted.container, (c) => c.querySelector('table.data tbody tr'))
+    const rows = mounted.container.querySelectorAll('table.data tbody tr').length
+    const leaks = [...mounted.container.querySelectorAll('button')].filter((b) =>
+      /Record a payment|Generate term dues|New dues|Edit|Delete/i.test(`${b.title} ${b.textContent}`)
+    )
+    if (leaks.length) throw new Error(`${leaks.length} write control(s) leaked to a read-only member`)
+    await unmount(mounted)
+    return `${rows} unpaid row(s) visible, no payment controls`
+  }
+  const button = await waitFor(mounted.container, (c) => c.querySelector('button[title="Record a payment"]'))
+  if (!button) {
+    const titles = [...mounted.container.querySelectorAll('table.data tbody button')].map((b) => b.title || b.textContent).slice(0, 12)
+    const statuses = [...mounted.container.querySelectorAll('table.data tbody tr')].map((tr) => tr.textContent.slice(0, 80))
+    throw new Error(`payment action not found. titles=${JSON.stringify(titles)} rows=${JSON.stringify(statuses.slice(0, 2))}`)
+  }
+  await act(async () => {
+    click(button)
+  })
+  const modal = window.document.querySelector('.modal')
+  const text = modal?.textContent || ''
+  if (!/Balance/.test(text)) throw new Error('payment dialog did not open')
+  const amountInput = modal.querySelector('input[type="number"]')
+  if (!amountInput || !Number(amountInput.value)) throw new Error('balance was not pre-filled')
+  const closer = modal.querySelector('.modal__head button')
+  await act(async () => {
+    click(closer)
+  })
+  await unmount(mounted)
+  return `dialog opened with ${amountInput.value} pre-filled`
+})
+
+await checkInteraction(READ_ONLY ? 'Dues generation stays closed to a read-only member' : 'Open the “Generate term dues” dialog', async () => {
+  const mounted = await mountRoute('/r/dues?view=table')
+  const button = [...mounted.container.querySelectorAll('button')].find((b) => /Generate term dues/i.test(b.textContent))
+  if (READ_ONLY) {
+    if (button) throw new Error('generate control leaked to a read-only member')
+    await unmount(mounted)
+    return 'generator unavailable, as intended'
+  }
+  if (!button) throw new Error('generate button not found')
+  await act(async () => {
+    click(button)
+  })
+  const modal = window.document.querySelector('.modal')
+  if (!modal) throw new Error('dialog did not open')
+  const fields = modal.querySelectorAll('.field').length
+  const closer = modal.querySelector('.modal__head button')
+  await act(async () => {
+    click(closer)
+  })
+  await unmount(mounted)
+  return `${fields} options in the dues generator`
 })
 
 await checkInteraction('Generate a report draft (Reports Studio)', async () => {
@@ -302,7 +436,8 @@ await checkInteraction('Generate a report draft (Reports Studio)', async () => {
   })
   const pre = window.document.querySelector('.modal pre')
   const text = pre?.textContent || ''
-  if (!/ICT CLUB — OFFICIAL REPORT/.test(text)) throw new Error('no report text generated')
+  if (!/OFFICIAL REPORT/.test(text)) throw new Error('no report text generated')
+  if (!/CLUB DUES/.test(text)) throw new Error('report is missing the dues section')
   const closer = [...window.document.querySelectorAll('.modal button')].find((b) => /Cancel|Close/i.test(b.textContent)) ||
     window.document.querySelector('.modal__head button')
   if (closer) {
@@ -328,12 +463,15 @@ for (const item of interactions) {
   console.log(`  ${item.label.padEnd(60)}${status}`)
 }
 const interactionFailures = interactions.filter((i) => !i.ok).length
-failures += interactionFailures
+const failed = screenFailures + interactionFailures
 
-console.log(`\n  ${results.length - failures}/${results.length} screens rendered successfully.`)
-if (failures) {
-  console.log(`  ${failures} screen(s) failed.\n`)
+console.log(`\n  ${results.length - screenFailures}/${results.length} screens rendered successfully.`)
+console.log(`  ${interactions.length - interactionFailures}/${interactions.length} interactions worked.`)
+if (failed) {
+  if (screenFailures) console.log(`  ${screenFailures} screen(s) failed.`)
+  if (interactionFailures) console.log(`  ${interactionFailures} interaction(s) failed.`)
+  console.log('')
   process.exit(1)
 }
-console.log('  All screens OK.\n')
+console.log('  All screens and interactions OK.\n')
 process.exit(0)

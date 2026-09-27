@@ -52,7 +52,10 @@ const P = {
   clipboard: <><rect x="8" y="2" width="8" height="4" rx="1" /><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" /><path d="M9 12h6M9 16h4" /></>,
   gift: <><rect x="2" y="7" width="20" height="5" rx="1.5" /><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8" /><path d="M12 7v15" /><path d="M12 7S9.5 7 8.5 5.5A2.5 2.5 0 0 1 12 3a2.5 2.5 0 0 1 3.5 2.5C14.5 7 12 7 12 7z" /></>,
   upload2: <><path d="M12 3v13" /><path d="M7 8l5-5 5 5" /><path d="M4 20h16" /></>,
-  message: <><path d="M21 11.5a8.4 8.4 0 0 1-9 8.5 8.9 8.9 0 0 1-4-.9L3 21l1.9-4.6A8.4 8.4 0 0 1 4 11.5 8.4 8.4 0 0 1 12 3a8.4 8.4 0 0 1 9 8.5z" /></>
+  message: <><path d="M21 11.5a8.4 8.4 0 0 1-9 8.5 8.9 8.9 0 0 1-4-.9L3 21l1.9-4.6A8.4 8.4 0 0 1 4 11.5 8.4 8.4 0 0 1 12 3a8.4 8.4 0 0 1 9 8.5z" /></>,
+  wallet: <><path d="M19 7V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2" /><path d="M21 12a2 2 0 0 0-2-2h-4a2 2 0 0 0 0 4h4a2 2 0 0 0 2-2z" /><path d="M3 7h14" /></>,
+  coins: <><circle cx="8" cy="8" r="5" /><path d="M18.1 5.5A5 5 0 0 1 21 12.9M15.5 10a5 5 0 0 1-1.8 8.7A5 5 0 0 1 7 20.5" /></>,
+  school: <><path d="M12 3l9 5-9 5-9-5 9-5z" /><path d="M5 11v6c0 1.7 3.1 3 7 3s7-1.3 7-3v-6" /></>
 }
 
 export function Icon({ name, size = 18, strokeWidth = 1.8, className = '', style }) {
