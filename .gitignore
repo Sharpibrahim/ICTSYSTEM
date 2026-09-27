@@ -1,0 +1,20 @@
+node_modules/
+dist/
+build/
+.DS_Store
+*.log
+npm-debug.log*
+
+# Local database + uploads (regenerated with `npm run db:seed`)
+server/data/*.db
+server/data/*.db-journal
+server/data/*.db-wal
+server/data/*.db-shm
+server/uploads/
+client/test/dist/
+
+.env
+.env.local
+.vscode/
+.idea/
+coverage/

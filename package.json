@@ -1,0 +1,23 @@
+{
+  "name": "ict-club-management-system",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "ICT Club Management System - manage members, cabinet, meetings, activities, courses, attendance, reports, certificates, notes and projects.",
+  "scripts": {
+    "setup": "npm install --no-audit --no-fund && npm --prefix server install --no-audit --no-fund && npm --prefix client install --no-audit --no-fund",
+    "dev": "concurrently -n API,WEB -c cyan,magenta \"npm:dev:api\" \"npm:dev:web\"",
+    "dev:api": "npm --prefix server run dev",
+    "dev:web": "npm --prefix client run dev",
+    "start": "npm run dev",
+    "db:seed": "npm --prefix server run seed",
+    "db:reset": "npm --prefix server run reset",
+    "test": "npm --prefix server run test && npm --prefix client run test",
+    "test:api": "npm --prefix server run test",
+    "test:ui": "npm --prefix client run test",
+    "build": "npm --prefix client run build"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}
