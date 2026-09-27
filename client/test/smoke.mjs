@@ -12,7 +12,16 @@ import { fileURLToPath } from 'node:url'
 
 const API = process.env.API_URL || 'http://127.0.0.1:4000'
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
-const CREDENTIALS = { email: 'admin@ictclub.org', password: 'admin123' }
+const ACCOUNT = process.env.AS || 'admin'
+const CREDENTIALS =
+  ACCOUNT === 'cabinet'
+    ? { email: 'cabinet@ictclub.org', password: 'cabinet123' }
+    : ACCOUNT === 'member'
+      ? { email: 'member@ictclub.org', password: 'member123' }
+      : { email: 'admin@ictclub.org', password: 'admin123' }
+
+/* Screens only an administrator may open. */
+const ADMIN_ONLY = ['User accounts']
 
 /* ------------------------------------------------------------------ */
 /* Environment                                                         */
@@ -117,7 +126,8 @@ const ALL_ROUTES = [
   ['Attendance register', '/attendance?ref_type=meeting&ref_id=4']
 ]
 
-const ROUTES = process.env.ONLY ? ALL_ROUTES.filter(([label]) => label === process.env.ONLY) : ALL_ROUTES
+let ROUTES = process.env.ONLY ? ALL_ROUTES.filter(([label]) => label === process.env.ONLY) : ALL_ROUTES
+if (ACCOUNT === 'member') ROUTES = ROUTES.filter(([label]) => !ADMIN_ONLY.includes(label))
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
 
@@ -217,6 +227,11 @@ async function checkInteraction(label, fn) {
   }
 }
 
+if (ACCOUNT === 'member') {
+  console.log('  (member access: write interactions are skipped by design)\n')
+}
+
+if (ACCOUNT !== 'member') {
 await checkInteraction('Open the “New member” form', async () => {
   const mounted = await mountRoute('/r/members')
   const button = [...mounted.container.querySelectorAll('button')].find((b) => /New member/i.test(b.textContent))
@@ -233,6 +248,8 @@ await checkInteraction('Open the “New member” form', async () => {
   return `${fields} fields in the create form`
 })
 
+}
+
 await checkInteraction('Filter the members list', async () => {
   const mounted = await mountRoute('/r/members')
   const search = mounted.container.querySelector('.filters-bar input')
@@ -248,6 +265,7 @@ await checkInteraction('Filter the members list', async () => {
   return `${rows} row(s) matched “Amina”`
 })
 
+if (ACCOUNT !== 'member') {
 await checkInteraction('Mark attendance in a register', async () => {
   const mounted = await mountRoute('/attendance?ref_type=meeting&ref_id=4')
   const buttons = [...mounted.container.querySelectorAll('.reg-btn')]
@@ -264,6 +282,8 @@ await checkInteraction('Mark attendance in a register', async () => {
   await unmount(mounted)
   return `${buttons.length} status buttons across ${marked} members, first row toggled`
 })
+
+}
 
 await checkInteraction('Switch views on projects (cards → board)', async () => {
   const mounted = await mountRoute('/r/project_tasks')
