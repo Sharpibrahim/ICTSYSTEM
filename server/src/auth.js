@@ -38,7 +38,7 @@ export function destroySession(token) {
 export function sessionUser(token) {
   if (!token) return null
   const row = get(
-    `SELECT s.token, s.expires_at, u.id, u.name, u.email, u.role, u.member_id, u.status
+    `SELECT s.token, s.expires_at, u.id, u.name, u.username, u.email, u.role, u.member_id, u.status
        FROM sessions s JOIN users u ON u.id = s.user_id
       WHERE s.token = ?`,
     [token]
@@ -52,6 +52,7 @@ export function sessionUser(token) {
   return {
     id: row.id,
     name: row.name,
+    username: row.username || null,
     email: row.email,
     role: row.role,
     member_id: row.member_id,
@@ -85,9 +86,16 @@ export function requireRole(...roles) {
   }
 }
 
-export function login(email, password) {
-  const user = get('SELECT * FROM users WHERE lower(email) = lower(?)', [email || ''])
-  if (!user) return { error: 'No account found with that email' }
+export function login(identifier, password) {
+  const value = (identifier || '').trim()
+  const user = get(
+    `SELECT * FROM users
+      WHERE lower(email) = lower(?)
+         OR (username IS NOT NULL AND username <> '' AND lower(username) = lower(?))
+      LIMIT 1`,
+    [value, value]
+  )
+  if (!user) return { error: 'No account found with that username or email' }
   if (user.status !== 'active') return { error: 'This account has been disabled' }
   if (!verifyPassword(password, user.password_hash)) return { error: 'Incorrect password' }
   const { token, expires } = createSession(user.id)
@@ -95,7 +103,14 @@ export function login(email, password) {
   return {
     token,
     expires,
-    user: { id: user.id, name: user.name, email: user.email, role: user.role, member_id: user.member_id }
+    user: {
+      id: user.id,
+      name: user.name,
+      username: user.username || null,
+      email: user.email,
+      role: user.role,
+      member_id: user.member_id
+    }
   }
 }
 

@@ -50,7 +50,7 @@ the back end. No external database, no cloud services, no native build steps —
 | **Certificates** | Issue certificates and awards, auto-numbered (`ICTC/2026/0001`) with verification codes, printable certificate layout showing the recipient's class, public verification page (`/verify`). |
 | **Notes** | Colour-coded sticky-note board for club announcements, meeting notes, course notes, examination tips, resources and to-dos, with visibility rules (Public / Executive only / Private). |
 | **Projects** | Project portfolio with objectives, tools used, team roster, progress, priority, deadlines and repos — plus a task board (drag between columns) linked to each project. |
-| **User accounts & settings** | Admin / executive / student access levels, linking accounts to student or teacher profiles, password change, school profile (patron, term, dues), activity log, JSON backup, full CSV export and a one-click **demo school data** loader. |
+| **User accounts & settings** | Admin / executive / student access levels, usernames or emails for signing in, linking accounts to student or teacher profiles, password change, school profile (patron, term, dues), activity log, JSON backup, full CSV export and a one-click **demo school data** loader. |
 
 Everything is searchable, filterable, sortable and exportable to CSV.
 
@@ -87,18 +87,36 @@ npm --prefix server start  # API + the built client served from http://localhost
 
 ---
 
-## Demo accounts
+## Signing in
 
-| Role | Email | Password | Can do |
-| --- | --- | --- | --- |
-| **Teacher patron / Administrator** | `admin@school.ac.ug` | `admin123` | Everything, including dues generation, user accounts, settings and backups |
-| **Student executive** | `executive@school.ac.ug` | `executive123` | All club records, dues, attendance, reports and certificates — no user management |
-| **Student member** | `member@school.ac.ug` | `member123` | Read-only access plus their own notes/reports/tasks |
+There is one administrator account — the teacher who runs the club:
 
-Students can self-register from the sign-in screen (they receive member-level access, and can pick
-their class while registering). The login screen has one-click buttons that fill in each demo account.
+| Username | Email | Password |
+| --- | --- | --- |
+| `Sharp` | `sharp@school.ac.ug` | `SunnyDay@2026` |
 
-The demo school is **St. Bernard Secondary School**, club patron **Mr. Ssekandi John**, current term
+You can type **either the username or the email** on the sign-in screen (the field accepts both).
+
+Everyone else gets their own account, created in either of two ways:
+
+- **By the club** — Administration → User Accounts → *New user account*, choosing the access level
+  (Administrator / Student executive / Student member) and optionally linking the account to a
+  student or teacher profile.
+- **By the student** — *Register as a student* on the sign-in screen; self-registered accounts get
+  read-only access plus their own notes, reports and tasks.
+
+To change the administrator credentials, or to recover from a lost password:
+
+```bash
+npm --prefix server run admin                                    # reset to Sharp / SunnyDay@2026
+npm --prefix server run admin -- --password "NewPass@2026"        # choose your own password
+npm --prefix server run admin -- --username "Amina" --email amina@school.ac.ug --password "Secret@123"
+```
+
+The command creates the account if it is missing, updates it if it exists, links it to the teacher
+patron profile and removes the old demo logins from earlier versions.
+
+The sample school is **St. Bernard Secondary School**, club patron **Mr. Ssekandi John**, current term
 **Term 1, 2026**, dues **UGX 10,000 per term**, attendance target **75%**.
 
 ### Loading the sample school data
@@ -120,7 +138,7 @@ You can reload it at any time:
 
 - **From the app** — sign in as the administrator, open **Settings → Demo school data → Load demo school data**.
   This replaces every record with a fresh sample school and keeps you signed in (the API issues a new session
-  for the matching demo account), so you land straight back on a fully populated dashboard.
+  for the administrator account), so you land straight back on a fully populated dashboard.
 - **From the command line** — `npm run db:reset` wipes and reseeds, `npm run db:seed` fills an empty database.
 
 Reloading from the command line (`npm run db:reset`) replaces the `sessions` table as well, so any browser tab
@@ -343,17 +361,19 @@ members ──┬─< cabinet            (student or teacher holds a position fo
 
 ```bash
 npm test              # API checks + every screen and interaction in the UI
-npm run test:api      # 66 API checks (needs the API running)
+npm run test:api      # 69 API checks (needs the API running)
 npm run test:ui       # 42 screens + 8 interaction flows in jsdom
 npm run test:flows    # 13 write flows: every action is saved and read back
 npm run test:all      # everything above, in one go
 ```
 
-- **API tests** (`server/test/api-test.mjs`, 66 checks) cover authentication, permissions, validation,
+- **API tests** (`server/test/api-test.mjs`, 69 checks) cover authentication, permissions, validation,
   filtering, sorting, pagination, CRUD, the dues register (generation, repeat generation, part-payments,
   receipts, summary, role guards), attendance bulk-save, analytics, exports, backups, certificate
   verification, the course/certificate automations and the demo-data reload endpoint (admin only,
-  and it re-reads the dashboard afterwards).
+  and it re-reads the dashboard afterwards). Sign-in by username *and* by email is covered, as is
+  username uniqueness; the role checks create their own executive and student accounts and delete
+  them again, so the club database stays with a single administrator account.
 - **UI smoke test** (`client/test/smoke.mjs`, 42 screens + 8 interactions) renders **every screen and every
   view mode** (table, cards, board, calendar, class-filtered registers, detail pages) against the live API
   in headless jsdom, failing on React errors, empty screens or values the API no longer sends. It then
@@ -368,9 +388,11 @@ npm run test:all      # everything above, in one go
   expired session drops the user back to the sign-in screen with an explanation, and that a wrong password
   is reported as a password problem rather than an ended session. It cleans up after itself, so it can be
   run repeatedly.
-- Both UI suites are **role aware**: `AS=member node test/smoke.mjs` (or `cabinet`; the default is `admin`)
-  signs in as that account. Member runs skip the screens only an admin may open and *assert that write
+- Both UI suites are **role aware**: `AS=member node test/smoke.mjs` (or `cabinet`; the default is `admin`).
+  For the cabinet and member runs they create a temporary account with that role, sign in with it, and
+  delete it afterwards. Member runs skip the screens only an admin may open and *assert that write
   controls are hidden* from read-only students; cabinet runs exercise the full student-executive flow.
+  The administrator credentials can be overridden with `ADMIN_USERNAME` / `ADMIN_PASSWORD`.
 
 > The tests add and remove their own records, but running them still changes demo data slightly
 > (attendance marks, dues payments, issued certificates). Run `npm run db:reset` afterwards for a pristine
@@ -435,7 +457,7 @@ computer lab. Notes:
 | Symptom | Fix |
 | --- | --- |
 | “No user accounts found” in the API log | Run `npm run db:seed` |
-| Forgot the admin password | `npm run db:reset` (wipes data) or create a user directly in the DB with a scrypt hash |
+| Forgot the admin password | `npm --prefix server run admin -- --password "YourNewPassword"` (keeps all club data) |
 | `Cannot find module 'node:sqlite'` | Node 22+ is required (the project uses the built-in SQLite driver) |
 | Port already in use | Start with `PORT=4100 npm run dev:api` and `API_URL=http://localhost:4100 npm run dev:web` |
 | Demo data has drifted | `npm run db:reset` restores the seeded school |

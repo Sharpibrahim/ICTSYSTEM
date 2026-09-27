@@ -13,12 +13,55 @@ import { fileURLToPath } from 'node:url'
 const API = process.env.API_URL || 'http://127.0.0.1:4000'
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const ACCOUNT = process.env.AS || 'admin'
-const CREDENTIALS =
-  ACCOUNT === 'cabinet'
-    ? { email: 'executive@school.ac.ug', password: 'executive123' }
-    : ACCOUNT === 'member'
-      ? { email: 'member@school.ac.ug', password: 'member123' }
-      : { email: 'admin@school.ac.ug', password: 'admin123' }
+
+/* The club ships with one administrator account. The cabinet and member runs
+   create a temporary account for that role (and remove it again afterwards). */
+const ADMIN = {
+  email: process.env.ADMIN_USERNAME || 'Sharp',
+  password: process.env.ADMIN_PASSWORD || 'SunnyDay@2026'
+}
+const ROLE_ACCOUNTS = {
+  cabinet: { name: 'Smoke Executive', username: 'smokeexec', path: 'cabinet', email: 'smoke-executive@school.ac.ug', password: 'executive123' },
+  member: { name: 'Smoke Student', username: 'smokestudent', path: 'member', email: 'smoke-student@school.ac.ug', password: 'member123' }
+}
+
+async function adminToken() {
+  const res = await fetch(`${API}/api/auth/login`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(ADMIN)
+  })
+  const data = await res.json()
+  if (!data.token) throw new Error(`could not sign in as the administrator: ${data.error || res.status}`)
+  return data.token
+}
+
+/** Makes sure an account with the requested role exists and returns its login. */
+async function accountForRole(role) {
+  if (role === 'admin') return ADMIN
+  const spec = ROLE_ACCOUNTS[role]
+  if (!spec) return ADMIN
+  const token = await adminToken()
+  const existing = await fetch(`${API}/api/users?all=1`, { headers: { Authorization: `Bearer ${token}` } }).then((r) => r.json())
+  const found = (existing.data || []).find((u) => u.role === role && /^smoke/.test(u.username || ''))
+  if (found) return { email: found.username || found.email, password: spec.password }
+  const created = await fetch(`${API}/api/users`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+    body: JSON.stringify({
+      name: spec.name,
+      username: spec.username,
+      email: spec.email,
+      password: spec.password,
+      role: spec.path,
+      status: 'active'
+    })
+  }).then((r) => r.json())
+  if (!created?.data?.id) throw new Error(`could not create a ${role} account: ${JSON.stringify(created).slice(0, 200)}`)
+  return { email: spec.username, password: spec.password, id: created.data.id }
+}
+
+const CREDENTIALS = await accountForRole(ACCOUNT)
 
 /* Screens only an administrator may open. */
 const ADMIN_ONLY = ['User accounts']
@@ -464,6 +507,12 @@ for (const item of interactions) {
 }
 const interactionFailures = interactions.filter((i) => !i.ok).length
 const failed = screenFailures + interactionFailures
+
+/* Remove the temporary role account this run created. */
+if (CREDENTIALS.id) {
+  const token = await adminToken()
+  await fetch(`${API}/api/users/${CREDENTIALS.id}`, { method: 'DELETE', headers: { Authorization: `Bearer ${token}` } })
+}
 
 console.log(`\n  ${results.length - screenFailures}/${results.length} screens rendered successfully.`)
 console.log(`  ${interactions.length - interactionFailures}/${interactions.length} interactions worked.`)

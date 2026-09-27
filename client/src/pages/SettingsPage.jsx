@@ -251,8 +251,8 @@ export default function SettingsPage() {
                 attendance registers, certificates, reports, notes and club projects.
               </p>
               <p className="small" style={{ color: 'var(--red)' }}>
-                This replaces <b>every record</b> currently in the database, including user accounts created since —
-                the three demo accounts are recreated and you will be signed out.
+                This replaces <b>every record</b> currently in the database, including any user accounts created since.
+                Your administrator account (Sharp) is recreated and you stay signed in.
               </p>
               <Button variant="primary" icon="sparkles" onClick={() => setDemoOpen(true)}>
                 Load demo school data
@@ -390,7 +390,7 @@ export default function SettingsPage() {
       <ConfirmDialog
         open={demoOpen}
         title="Load the demo school data?"
-        message="Every record currently in the database will be replaced with the sample secondary school data, and you will be signed out. Continue?"
+        message="Every record currently in the database will be replaced with the sample secondary school data. Your administrator account is kept and you stay signed in. Continue?"
         confirmLabel="Load demo data"
         loading={demoBusy}
         onCancel={() => setDemoOpen(false)}

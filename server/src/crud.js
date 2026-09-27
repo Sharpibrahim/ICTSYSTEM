@@ -549,6 +549,10 @@ export function resourceRouter(key) {
       delete payload.password
       const dupe = get('SELECT id FROM users WHERE lower(email) = lower(?)', [payload.email])
       if (dupe) return res.status(400).json({ error: 'An account with that email already exists' })
+      if (payload.username) {
+        const taken = get('SELECT id FROM users WHERE lower(username) = lower(?)', [payload.username])
+        if (taken) return res.status(400).json({ error: 'That username is already taken' })
+      }
     }
     const id = insert(resource.table, payload)
     logActivity({ userId: req.user.id, userName: req.user.name, action: 'create', resource: resource.key, recordId: id, detail: payload.title || payload.full_name || payload.name || payload.position || '' })
@@ -575,6 +579,10 @@ export function resourceRouter(key) {
       if (payload.email) {
         const dupe = get('SELECT id FROM users WHERE lower(email) = lower(?) AND id <> ?', [payload.email, id])
         if (dupe) return res.status(400).json({ error: 'Another account already uses that email' })
+      }
+      if (payload.username) {
+        const taken = get('SELECT id FROM users WHERE lower(username) = lower(?) AND id <> ?', [payload.username, id])
+        if (taken) return res.status(400).json({ error: 'Another account already uses that username' })
       }
     }
     payload.updated_at = new Date().toISOString().replace('T', ' ').slice(0, 19)

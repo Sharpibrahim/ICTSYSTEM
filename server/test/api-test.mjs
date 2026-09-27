@@ -59,27 +59,65 @@ await check('health endpoint responds', async () => {
 })
 
 /* 2. Authentication --------------------------------------------------- */
-await check('admin can sign in', async () => {
-  const { data, status } = await call('/api/auth/login', { method: 'POST', body: { email: 'admin@school.ac.ug', password: 'admin123' } })
-  assert(status === 200 && data.token, `login failed (${status})`)
+const ADMIN = { email: process.env.ADMIN_EMAIL || 'sharp@school.ac.ug', password: process.env.ADMIN_PASSWORD || 'SunnyDay@2026' }
+const ADMIN_USERNAME = process.env.ADMIN_USERNAME || 'Sharp'
+const emailFor = (role) => `test-${role}-${Date.now()}@school.ac.ug`
+
+await check('admin can sign in with the username', async () => {
+  const { data, status } = await call('/api/auth/login', { method: 'POST', body: { email: ADMIN_USERNAME, password: ADMIN.password } })
+  assert(status === 200 && data.token, `login with the username failed (${status})`)
   adminToken = data.token
   return `signed in as ${data.user.name} (${data.user.role})`
 })
 
+await check('admin can also sign in with the email', async () => {
+  const { data, status } = await call('/api/auth/login', { method: 'POST', body: { email: ADMIN.email, password: ADMIN.password } })
+  assert(status === 200 && data.token, `login with the email failed (${status})`)
+  adminToken = data.token
+  return ADMIN.email
+})
+
 await check('wrong password is rejected', async () => {
-  const { status } = await call('/api/auth/login', { method: 'POST', body: { email: 'admin@school.ac.ug', password: 'nope' } })
+  const { status } = await call('/api/auth/login', { method: 'POST', body: { email: ADMIN.email, password: 'nope' } })
   assert(status === 401, `expected 401, got ${status}`)
   return '401 returned'
 })
 
-await check('student executive and member accounts sign in', async () => {
-  const cabinet = await call('/api/auth/login', { method: 'POST', body: { email: 'executive@school.ac.ug', password: 'executive123' } })
-  const member = await call('/api/auth/login', { method: 'POST', body: { email: 'member@school.ac.ug', password: 'member123' } })
-  assert(cabinet.data?.token && member.data?.token, 'demo accounts unavailable')
-  cabinetToken = cabinet.data.token
-  memberToken = member.data.token
-  memberUserId = member.data.user.id
-  return `${cabinet.data.user.role} + ${member.data.user.role}`
+/* The club ships with a single administrator account; the role checks below
+   create their own executive and student logins and remove them afterwards. */
+let cabinetUserId = null
+await check('executive and student accounts can be created and sign in', async () => {
+  const cabinet = await call('/api/users', {
+    method: 'POST',
+    token: adminToken,
+    body: { name: 'Test Executive', username: 'testexec', email: emailFor('cabinet'), password: 'executive123', role: 'cabinet', status: 'active' }
+  })
+  const member = await call('/api/users', {
+    method: 'POST',
+    token: adminToken,
+    body: { name: 'Test Student', username: 'teststudent', email: emailFor('member'), password: 'member123', role: 'member', status: 'active' }
+  })
+  assert(cabinet.status === 201 && member.status === 201, `could not create accounts (${cabinet.status}/${member.status})`)
+
+  const cabinetLogin = await call('/api/auth/login', { method: 'POST', body: { email: 'testexec', password: 'executive123' } })
+  const memberLogin = await call('/api/auth/login', { method: 'POST', body: { email: 'teststudent', password: 'member123' } })
+  assert(cabinetLogin.data?.token && memberLogin.data?.token, 'created accounts cannot sign in')
+  cabinetToken = cabinetLogin.data.token
+  memberToken = memberLogin.data.token
+  memberUserId = memberLogin.data.user.id
+  cabinetUserId = cabinetLogin.data.user.id
+  return `${cabinetLogin.data.user.role} + ${memberLogin.data.user.role} created, signed in`
+})
+
+await check('username uniqueness is enforced', async () => {
+  const { status, data } = await call('/api/users', {
+    method: 'POST',
+    token: adminToken,
+    body: { name: 'Duplicate Sharp', username: 'sharp', email: emailFor('dupe'), password: 'whatever123', role: 'member' }
+  })
+  assert(status === 400, `expected 400, got ${status}`)
+  assert(/username/i.test(data.error || ''), `unexpected message: ${data.error}`)
+  return data.error
 })
 
 await check('unauthenticated requests are blocked', async () => {
@@ -90,8 +128,9 @@ await check('unauthenticated requests are blocked', async () => {
 
 await check('current user can be fetched', async () => {
   const { data } = await call('/api/auth/me', { token: adminToken })
-  assert(data?.user?.email === 'admin@school.ac.ug', 'wrong user returned')
-  return data.user.role
+  assert(data?.user?.email === ADMIN.email, `wrong user returned (${data?.user?.email})`)
+  assert(data.user.username === ADMIN_USERNAME, 'username missing from the session')
+  return `${data.user.name} (${data.user.role})`
 })
 
 /* 3. Every resource lists -------------------------------------------- */
@@ -474,6 +513,19 @@ await check('activity log records actions', async () => {
   return `${data.data.length} recent entries`
 })
 
+/* Remove the accounts this run created --------------------------------- */
+await check('test accounts are cleaned up', async () => {
+  for (const id of [memberUserId, cabinetUserId]) {
+    if (!id) continue
+    const { status } = await call(`/api/users/${id}`, { method: 'DELETE', token: adminToken })
+    assert(status === 200, `could not delete user ${id} (${status})`)
+  }
+  const remaining = await call('/api/users?pageSize=50', { token: adminToken })
+  const strays = remaining.data.data.filter((u) => /^test-|^testexec|^teststudent/.test(`${u.email} ${u.username}`))
+  assert(strays.length === 0, `test accounts left behind: ${strays.map((u) => u.email).join(', ')}`)
+  return `left ${remaining.data.total} account(s): ${remaining.data.data.map((u) => u.username || u.email).join(', ')}`
+})
+
 /* Demo data reload (runs last: it replaces every record) --------------- */
 
 await check('only an administrator can reload the demo school data', async () => {
@@ -489,11 +541,13 @@ await check('an administrator can reload the demo school data', async () => {
   assert(status === 200, `status ${status}`)
   assert(data.data.counts?.members > 50, `only ${data.data.counts?.members} members seeded`)
   assert(data.data.counts?.dues > 100, `only ${data.data.counts?.dues} dues records seeded`)
-  assert(Array.isArray(data.data.accounts) && data.data.accounts.length === 3, 'demo accounts not reported')
+  assert(Array.isArray(data.data.accounts) && data.data.accounts.length === 1, 'the administrator account was not reported')
+  assert(data.data.accounts[0].username === ADMIN_USERNAME, `wrong account reported: ${JSON.stringify(data.data.accounts[0])}`)
 
   /* The caller keeps a working session: the reload issues a fresh token. */
   assert(data.data.token, 'no replacement session token was returned')
-  assert(data.data.user?.email === 'admin@school.ac.ug', `unexpected user ${data.data.user?.email}`)
+  assert(data.data.user?.email === ADMIN.email, `unexpected user ${data.data.user?.email}`)
+  assert(data.data.user?.username === ADMIN_USERNAME, 'the administrator username was not preserved')
   adminToken = data.data.token
   const { data: dashboard, status: dashStatus } = await call('/api/dashboard', { token: adminToken })
   assert(dashStatus === 200, `the replacement token does not work (${dashStatus})`)

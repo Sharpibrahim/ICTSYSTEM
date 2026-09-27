@@ -86,7 +86,7 @@ api.post('/auth/logout', (req, res) => {
 
 api.get('/auth/me', (req, res) => {
   if (!req.user) return res.status(401).json({ error: 'Not signed in' })
-  const user = get('SELECT id, name, email, role, member_id, status, last_login FROM users WHERE id = ?', [req.user.id])
+  const user = get('SELECT id, name, username, email, role, member_id, status, last_login FROM users WHERE id = ?', [req.user.id])
   res.json({ user })
 })
 
@@ -998,10 +998,9 @@ api.post('/demo/seed', async (req, res) => {
   /* The reload recreates every row, including users, so the caller's session is
      gone. Issue a fresh one for the matching demo account to keep them signed
      in instead of dumping them on the sign-in screen. */
-  const fallback = { admin: 'admin@school.ac.ug', cabinet: 'executive@school.ac.ug', member: 'member@school.ac.ug' }
   const target =
-    get('SELECT id, name, email, role, member_id FROM users WHERE email = ?', [req.user.email]) ||
-    get('SELECT id, name, email, role, member_id FROM users WHERE email = ?', [fallback[req.user.role] || fallback.admin])
+    get('SELECT id, name, username, email, role, member_id FROM users WHERE email = ?', [req.user.email]) ||
+    get('SELECT id, name, username, email, role, member_id FROM users WHERE role = ? ORDER BY id LIMIT 1', ['admin'])
   let session = null
   if (target) {
     session = createSession(target.id)
@@ -1019,12 +1018,17 @@ api.post('/demo/seed', async (req, res) => {
       skipped: Boolean(result.skipped),
       counts: result.counts || null,
       token: session?.token || null,
-      user: target ? { id: target.id, name: target.name, email: target.email, role: target.role, member_id: target.member_id } : null,
-      accounts: [
-        { email: 'admin@school.ac.ug', password: 'admin123', role: 'Teacher patron / administrator' },
-        { email: 'executive@school.ac.ug', password: 'executive123', role: 'Student executive' },
-        { email: 'member@school.ac.ug', password: 'member123', role: 'Student member' }
-      ]
+      user: target
+        ? {
+            id: target.id,
+            name: target.name,
+            username: target.username || null,
+            email: target.email,
+            role: target.role,
+            member_id: target.member_id
+          }
+        : null,
+      accounts: [{ username: 'Sharp', email: 'sharp@school.ac.ug', role: 'Teacher patron / administrator' }]
     }
   })
 })

@@ -110,23 +110,19 @@ function seedSettings() {
 }
 
 function seedUsers() {
-  const accounts = [
-    { name: 'Mr. Ssekandi John', email: 'admin@school.ac.ug', password: 'admin123', role: 'admin' },
-    { name: 'Sarah Nakato', email: 'executive@school.ac.ug', password: 'executive123', role: 'cabinet' },
-    { name: 'Brian Okello', email: 'member@school.ac.ug', password: 'member123', role: 'member' }
-  ]
-  const ids = {}
-  for (const account of accounts) {
-    ids[account.role] = insert('users', {
-      name: account.name,
-      email: account.email,
-      password_hash: hashPassword(account.password),
-      role: account.role,
-      status: 'active'
-    })
-  }
-  console.log('  • 3 user accounts (admin@school.ac.ug / admin123, executive@school.ac.ug / executive123, member@school.ac.ug / member123)')
-  return ids
+  /* The club has a single administrator account — the ICT teacher / patron
+     running the club. Other accounts (executive, student, …) are created from
+     the User Accounts screen or by students signing up on the sign-in page. */
+  const admin = insert('users', {
+    name: 'Sharp',
+    username: 'Sharp',
+    email: 'sharp@school.ac.ug',
+    password_hash: hashPassword('SunnyDay@2026'),
+    role: 'admin',
+    status: 'active'
+  })
+  console.log('  • 1 administrator account (Sharp / sharp@school.ac.ug)')
+  return { admin }
 }
 
 function seedMembers() {
@@ -228,12 +224,9 @@ function seedCabinet(members, userIds) {
   const students = members.filter((m) => m.role === 'Student Member' && m.status === 'Active')
   const patron = members.find((m) => m.role === 'Teacher Patron')
 
-  // Put the demo logins on known people.
+  /* The administrator account belongs to the teacher who runs the club. */
   const sarah = students[0]
-  const brian = students[1]
   run('UPDATE users SET member_id = ? WHERE id = ?', [patron.id, userIds.admin])
-  run('UPDATE users SET member_id = ? WHERE id = ?', [sarah.id, userIds.cabinet])
-  run('UPDATE users SET member_id = ? WHERE id = ?', [brian.id, userIds.member])
 
   const leadership = [
     ['Chairperson', sarah, 1, 'Chairs all club meetings, represents the club to the school administration and leads the executive committee.'],
@@ -946,10 +939,10 @@ function main() {
     process.exit(0)
   }
   console.log(`  • ${result.counts.dues} dues records in the finance register`)
-  console.log('\n  Done. Sign in with:')
-  console.log('    admin@school.ac.ug      / admin123      (teacher patron / administrator)')
-  console.log('    executive@school.ac.ug  / executive123  (student executive)')
-  console.log('    member@school.ac.ug     / member123     (ordinary student member)\n')
+  console.log('\n  Done. Sign in as the administrator:')
+  console.log('    Sharp  (or sharp@school.ac.ug)')
+  console.log('    password: SunnyDay@2026\n')
+  console.log('  Create executive and student accounts from Administration → User Accounts.\n')
 }
 
 /* Only run the CLI when this file is executed directly (not when imported). */

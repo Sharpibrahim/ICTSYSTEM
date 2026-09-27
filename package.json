@@ -17,7 +17,8 @@
     "test:ui": "npm --prefix client run test",
     "build": "npm --prefix client run build",
     "test:flows": "npm --prefix client run test:flows",
-    "test:all": "npm --prefix server run test && npm --prefix client run test:all"
+    "test:all": "npm --prefix server run test && npm --prefix client run test:all",
+    "admin": "npm --prefix server run admin --"
   },
   "devDependencies": {
     "concurrently": "^9.1.2"

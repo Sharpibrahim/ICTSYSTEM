@@ -294,6 +294,7 @@ CREATE TABLE IF NOT EXISTS project_tasks (
 CREATE TABLE IF NOT EXISTS users (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   name TEXT NOT NULL,
+  username TEXT,
   email TEXT NOT NULL UNIQUE,
   password_hash TEXT NOT NULL,
   role TEXT NOT NULL DEFAULT 'member',
@@ -377,6 +378,22 @@ if (effectiveVersion !== null && effectiveVersion !== SCHEMA_VERSION) {
 }
 
 db.exec(SCHEMA)
+
+/* Additive column upgrades: new optional columns are added in place so an
+   existing club database (and its logins) survives the upgrade. */
+const ADDITIVE_COLUMNS = [['users', 'username', 'TEXT']]
+for (const [table, column, type] of ADDITIVE_COLUMNS) {
+  try {
+    const columns = db.prepare(`PRAGMA table_info(${table})`).all().map((c) => c.name)
+    if (columns.length && !columns.includes(column)) {
+      db.exec(`ALTER TABLE ${table} ADD COLUMN ${column} ${type}`)
+      console.log(`  • added ${table}.${column}`)
+    }
+  } catch (error) {
+    console.warn(`  Could not add ${table}.${column} (${error.message}).`)
+  }
+}
+
 try {
   db.prepare("INSERT INTO meta (key, value) VALUES ('schema_version', ?) ON CONFLICT(key) DO UPDATE SET value = excluded.value").run(String(SCHEMA_VERSION))
 } catch (error) {

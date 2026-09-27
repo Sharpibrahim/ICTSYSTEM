@@ -90,7 +90,10 @@ const list = async (resource, query = '') => (await api(`/api/${resource}?pageSi
 const loginRes = await nodeFetch(`${API}/api/auth/login`, {
   method: 'POST',
   headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify({ email: 'admin@school.ac.ug', password: 'admin123' })
+  body: JSON.stringify({
+    email: process.env.ADMIN_USERNAME || 'Sharp',
+    password: process.env.ADMIN_PASSWORD || 'SunnyDay@2026'
+  })
 })
 const login = await loginRes.json()
 if (!login.token) {
@@ -733,7 +736,7 @@ await flow('A wrong password is not reported as an ended session', async () => {
     const email = page.container.querySelector('#email')
     const password = page.container.querySelector('#password')
     await act(async () => {
-      setValue(email, 'admin@school.ac.ug')
+      setValue(email, process.env.ADMIN_USERNAME || 'Sharp')
       setValue(password, 'definitely-the-wrong-password')
       const button = [...page.container.querySelectorAll('button')].find((b) => /^Sign in$/i.test(b.textContent.trim()))
       const form = button?.closest('form')

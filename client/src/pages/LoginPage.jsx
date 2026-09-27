@@ -15,12 +15,6 @@ const FEATURES = [
   'Term reports with live statistics'
 ]
 
-const DEMO = [
-  { label: 'Teacher patron', email: 'admin@school.ac.ug', password: 'admin123', hint: 'Administrator — full access' },
-  { label: 'Student executive', email: 'executive@school.ac.ug', password: 'executive123', hint: 'Records, attendance, dues' },
-  { label: 'Student member', email: 'member@school.ac.ug', password: 'member123', hint: 'Read-only plus own notes' }
-]
-
 export default function LoginPage() {
   const { login, signup, user } = useAuth()
   const navigate = useNavigate()
@@ -120,17 +114,24 @@ export default function LoginPage() {
               </div>
             )}
             <div className="field">
-              <label className="field__label" htmlFor="email">Email address</label>
+              <label className="field__label" htmlFor="email">
+                {mode === 'login' ? 'Username or email' : 'Email address'}
+              </label>
               <input
                 id="email"
                 className="input"
-                type="email"
+                type={mode === 'login' ? 'text' : 'email'}
                 value={form.email}
                 onChange={(e) => setForm({ ...form, email: e.target.value })}
-                placeholder="you@school.ac.ug"
+                placeholder={mode === 'login' ? 'e.g. Sharp' : 'you@school.ac.ug'}
                 autoComplete="username"
                 required
               />
+              {mode === 'login' && (
+                <span className="field__help">
+                  Enter the username or email of the account the club patron gave you.
+                </span>
+              )}
             </div>
             <div className="field">
               <label className="field__label" htmlFor="password">Password</label>
@@ -170,25 +171,6 @@ export default function LoginPage() {
               </>
             )}
           </p>
-
-          {mode === 'login' && (
-            <div className="demo-accounts">
-              <div className="small muted mb-2" style={{ fontWeight: 620 }}>Demo accounts (click to fill)</div>
-              {DEMO.map((account) => (
-                <div
-                  className="demo-account"
-                  key={account.email}
-                  onClick={() => setForm({ name: '', email: account.email, password: account.password })}
-                >
-                  <div>
-                    <b>{account.label}</b>
-                    <div className="muted">{account.hint}</div>
-                  </div>
-                  <Icon name="chevronRight" size={15} />
-                </div>
-              ))}
-            </div>
-          )}
 
           <p className="small muted mt-3 center">
             <Link to="/verify" style={{ color: 'var(--brand)' }}>
