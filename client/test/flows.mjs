@@ -711,7 +711,7 @@ await flow('An expired session returns to the sign-in screen', async () => {
     if (!/Sign in to your club/i.test(text)) {
       throw new Error(`expected the sign-in screen, saw: ${text.replace(/\s+/g, ' ').slice(0, 120)}`)
     }
-    if (!/session has ended/i.test(text)) throw new Error('no explanation was shown')
+    if (!/session ended/i.test(text)) throw new Error(`no explanation was shown: ${text.replace(/\s+/g, ' ').slice(0, 160)}`)
     if (window.localStorage.getItem('ict-club-token')) throw new Error('the dead token was kept in storage')
     return 'stale token cleared, sign-in screen shown with an explanation'
   } finally {
@@ -723,26 +723,82 @@ await flow('An expired session returns to the sign-in screen', async () => {
 })
 
 /* ------------------------------------------------------------------ */
-/* 16. A wrong password is reported as a password problem              */
+/* 16. Signing in with the administrator credentials                   */
+/* ------------------------------------------------------------------ */
+
+const ADMIN_LOGIN = {
+  username: process.env.ADMIN_USERNAME || 'Sharp',
+  password: process.env.ADMIN_PASSWORD || 'SunnyDay@2026'
+}
+
+/** Types credentials into the sign-in form and submits it. */
+async function attemptSignIn(page, username, password) {
+  await waitFor(() => page.container.querySelector('#email'), { label: 'the sign-in form' })
+  await act(async () => {
+    setValue(page.container.querySelector('#email'), username)
+    setValue(page.container.querySelector('#password'), password)
+    const button = [...page.container.querySelectorAll('button')].find((b) => /^Sign in$/i.test(b.textContent.trim()))
+    const form = button?.closest('form')
+    if (form?.requestSubmit) form.requestSubmit()
+    else if (button) click(button)
+  })
+}
+
+await flow('Signing in with the administrator credentials opens the dashboard', async () => {
+  window.localStorage.clear()
+  window.sessionStorage.clear()
+  const page = await mount('/')
+  try {
+    await attemptSignIn(page, ADMIN_LOGIN.username, ADMIN_LOGIN.password)
+    const text = await waitFor(
+      () => (/Good (morning|afternoon|evening)/i.test(page.text()) ? page.text() : null),
+      { timeout: 20000, label: 'the dashboard after signing in' }
+    ).catch(() => page.text())
+    if (!/Good (morning|afternoon|evening)/i.test(text)) {
+      throw new Error(`the dashboard did not open: ${text.replace(/\s+/g, ' ').slice(0, 160)}`)
+    }
+    if (/session has ended/i.test(text)) throw new Error('a session notice was shown after a good sign-in')
+    if (!window.localStorage.getItem('ict-club-token')) throw new Error('no token was stored')
+    const admin = await nodeFetch(`${API}/api/auth/me`, {
+      headers: { Authorization: `Bearer ${window.localStorage.getItem('ict-club-token')}` }
+    }).then((r) => r.json())
+    if (!/admin/i.test(admin?.user?.role || '')) throw new Error('the signed-in account is not an administrator')
+    return `signed in as ${admin.user.name} (${admin.user.role}) with username “${ADMIN_LOGIN.username}”`
+  } finally {
+    await page.unmount()
+  }
+})
+
+await flow('Signing in also works with the administrator email', async () => {
+  window.localStorage.clear()
+  window.sessionStorage.clear()
+  const page = await mount('/')
+  try {
+    await attemptSignIn(page, process.env.ADMIN_EMAIL || 'sharp@school.ac.ug', ADMIN_LOGIN.password)
+    const text = await waitFor(
+      () => (/Good (morning|afternoon|evening)/i.test(page.text()) ? page.text() : null),
+      { timeout: 20000, label: 'the dashboard after signing in with the email' }
+    ).catch(() => page.text())
+    if (!/Good (morning|afternoon|evening)/i.test(text)) {
+      throw new Error(`the dashboard did not open: ${text.replace(/\s+/g, ' ').slice(0, 160)}`)
+    }
+    return 'signed in with the email address'
+  } finally {
+    await page.unmount()
+  }
+})
+
+/* ------------------------------------------------------------------ */
+/* 17. A wrong password is reported as a password problem              */
 /* ------------------------------------------------------------------ */
 
 await flow('A wrong password is not reported as an ended session', async () => {
-  window.localStorage.removeItem('ict-club-token')
-  window.localStorage.removeItem('ict-club-user')
-  window.sessionStorage.removeItem('ict-club-notice')
+  window.localStorage.clear()
+  /* Leave a stale session notice behind, the way a dead token would. */
+  window.sessionStorage.setItem('ict-club-notice', 'Your session ended, so you were signed out. Please sign in again to continue.')
   const page = await mount('/')
   try {
-    await waitFor(() => (page.container.querySelector('#email') ? true : null), { label: 'the sign-in form' })
-    const email = page.container.querySelector('#email')
-    const password = page.container.querySelector('#password')
-    await act(async () => {
-      setValue(email, process.env.ADMIN_USERNAME || 'Sharp')
-      setValue(password, 'definitely-the-wrong-password')
-      const button = [...page.container.querySelectorAll('button')].find((b) => /^Sign in$/i.test(b.textContent.trim()))
-      const form = button?.closest('form')
-      if (form?.requestSubmit) form.requestSubmit()
-      else if (button) click(button)
-    })
+    await attemptSignIn(page, ADMIN_LOGIN.username, 'definitely-the-wrong-password')
     const text = await waitFor(
       () => (/Incorrect password|Invalid email or password/i.test(page.text()) ? page.text() : null),
       { timeout: 12000, label: 'the password error' }
@@ -750,11 +806,42 @@ await flow('A wrong password is not reported as an ended session', async () => {
     if (!/Incorrect password|Invalid email or password/i.test(text)) {
       throw new Error(`expected a password error, saw: ${text.replace(/\s+/g, ' ').slice(0, 140)}`)
     }
-    if (/session has ended/i.test(text)) throw new Error('the wrong password was blamed on an ended session')
     if (window.localStorage.getItem('ict-club-token')) throw new Error('a token was stored after a failed sign-in')
-    return 'showed “Incorrect password” and no session notice'
+    return 'showed “Incorrect password” and stored no session'
   } finally {
     await page.unmount()
+  }
+})
+
+await flow('A stale session notice disappears once details are typed', async () => {
+  window.localStorage.setItem('ict-club-token', 'token-from-before-the-change')
+  window.sessionStorage.setItem('ict-club-notice', 'Your session ended, so you were signed out. Please sign in again to continue.')
+  const page = await mount('/')
+  try {
+    await waitFor(() => (/Sign in to your club/i.test(page.text()) ? true : null), { label: 'the sign-in screen' })
+    if (!/session ended/i.test(page.text())) throw new Error('the notice was not shown for a dead session')
+    await act(async () => {
+      setValue(page.container.querySelector('#email'), ADMIN_LOGIN.username)
+    })
+    const cleared = await waitFor(() => !/session ended/i.test(page.text()), {
+      timeout: 5000,
+      label: 'the notice to disappear as soon as the user types'
+    }).catch(() => null)
+    if (!cleared) throw new Error('the notice was still on screen while typing the username')
+    await act(async () => {
+      const button = [...page.container.querySelectorAll('button')].find((b) => /^Sign in$/i.test(b.textContent.trim()))
+      button?.closest('form')?.requestSubmit()
+      if (!button) return
+    })
+    await waitFor(() => (/Incorrect password|Good (morning|afternoon|evening)/i.test(page.text()) ? true : null), {
+      timeout: 12000,
+      label: 'the sign-in outcome'
+    }).catch(() => null)
+    if (/session ended/i.test(page.text())) throw new Error('the stale notice came back during sign-in')
+    return 'the stale notice cleared as soon as typing started and never returned'
+  } finally {
+    await page.unmount()
+    window.localStorage.removeItem('ict-club-token')
   }
 })
 

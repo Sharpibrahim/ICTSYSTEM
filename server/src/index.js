@@ -39,8 +39,20 @@ for (const resource of RESOURCES) {
 // Serve the built client when it exists (single-port deployment).
 const clientDist = path.resolve(__dirname, '../../client/dist')
 if (fs.existsSync(clientDist)) {
-  app.use(express.static(clientDist))
-  app.get(/^(?!\/api).*/, (_req, res) => res.sendFile(path.join(clientDist, 'index.html')))
+  app.use(
+    express.static(clientDist, {
+      /* The bundles are content-hashed, so they can be cached hard, but
+         index.html must always be revalidated or a browser can keep running
+         an old build after an upgrade. */
+      setHeaders: (res, filePath) => {
+        if (filePath.endsWith('.html')) res.setHeader('Cache-Control', 'no-cache, must-revalidate')
+      }
+    })
+  )
+  app.get(/^(?!\/api).*/, (_req, res) => {
+    res.setHeader('Cache-Control', 'no-cache, must-revalidate')
+    res.sendFile(path.join(clientDist, 'index.html'))
+  })
 }
 
 app.use((req, res) => res.status(404).json({ error: `No route for ${req.method} ${req.path}` }))

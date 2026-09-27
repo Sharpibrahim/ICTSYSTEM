@@ -110,9 +110,7 @@ export async function request(path, { method = 'GET', body, params, raw = false 
          sign-in screen instead of leaving the user on a broken page. */
       setToken('')
       setStoredUser(null)
-      setSessionNotice(
-        'Your session has ended, so you were signed out. Sign in again to continue — the demo buttons below fill in an account for you.'
-      )
+      setSessionNotice('Your session ended, so you were signed out. Please sign in again to continue.')
       notifySessionExpired()
     }
     throw new ApiError(data?.error || `Request failed (${res.status})`, res.status)

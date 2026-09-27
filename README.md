@@ -95,7 +95,8 @@ There is one administrator account — the teacher who runs the club:
 | --- | --- | --- |
 | `Sharp` | `sharp@school.ac.ug` | `SunnyDay@2026` |
 
-You can type **either the username or the email** on the sign-in screen (the field accepts both).
+You can type **either the username or the email** on the sign-in screen (the field accepts both). The
+password box has a reveal button and warns you if Caps Lock is on, because passwords are case-sensitive.
 
 Everyone else gets their own account, created in either of two ways:
 
@@ -142,8 +143,9 @@ You can reload it at any time:
 - **From the command line** — `npm run db:reset` wipes and reseeds, `npm run db:seed` fills an empty database.
 
 Reloading from the command line (`npm run db:reset`) replaces the `sessions` table as well, so any browser tab
-that was signed in is returned to the sign-in screen with an explanation — never a broken dashboard. A wrong
-password is reported as “Incorrect password”, not as an ended session.
+that was signed in is returned to the sign-in screen with a short explanation — never a broken dashboard. That
+notice disappears the moment you start typing, so it can never be confused with the result of the details you
+just entered, and a wrong password is reported as “Incorrect password” rather than as an ended session.
 
 ---
 
@@ -363,7 +365,7 @@ members ──┬─< cabinet            (student or teacher holds a position fo
 npm test              # API checks + every screen and interaction in the UI
 npm run test:api      # 69 API checks (needs the API running)
 npm run test:ui       # 42 screens + 8 interaction flows in jsdom
-npm run test:flows    # 13 write flows: every action is saved and read back
+npm run test:flows    # 16 write flows: every action is saved and read back
 npm run test:all      # everything above, in one go
 ```
 
@@ -379,15 +381,19 @@ npm run test:all      # everything above, in one go
   in headless jsdom, failing on React errors, empty screens or values the API no longer sends. It then
   drives real interactions: opening the create form, filtering a list, marking attendance, switching list
   views, recording a dues payment, opening the dues generator and generating a report draft.
-- **Write-flow test** (`client/test/flows.mjs`, 13 flows) proves the buttons really save: it fills the real
+- **Write-flow test** (`client/test/flows.mjs`, 16 flows) proves the buttons really save: it fills the real
   forms, submits them, and then re-reads the API to confirm the change — create/edit/delete a student
   (including the chip-style interests field), record a dues payment and check the receipt plus the
   collection total, save an attendance register, register a completer and issue their certificate, save a
   generated report, create a note, save the club profile, and verify a certificate on the public page.
-  Finally it reloads the demo school from Settings (and checks the user stays signed in), checks that an
-  expired session drops the user back to the sign-in screen with an explanation, and that a wrong password
-  is reported as a password problem rather than an ended session. It cleans up after itself, so it can be
-  run repeatedly.
+  It also signs in with the administrator username *and* the administrator email and checks the dashboard
+  opens, reloads the demo school from Settings (the user stays signed in), and checks that a stale session
+  notice is cleared as soon as typing starts, never comes back during sign-in, and that a wrong password is
+  reported as a password problem rather than an ended session. It cleans up after itself, so it can be run
+  repeatedly.
+
+> The suites are run against the **built** client (`client/dist` or the Vite dev server), so a stale browser
+> bundle can also be ruled out: `index.html` is served with `no-cache`, and the asset filenames are hashed.
 - Both UI suites are **role aware**: `AS=member node test/smoke.mjs` (or `cabinet`; the default is `admin`).
   For the cabinet and member runs they create a temporary account with that role, sign in with it, and
   delete it afterwards. Member runs skip the screens only an admin may open and *assert that write

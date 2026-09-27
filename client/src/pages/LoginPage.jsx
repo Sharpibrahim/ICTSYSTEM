@@ -22,9 +22,13 @@ export default function LoginPage() {
   const [form, setForm] = useState({ name: '', email: '', password: '' })
   const [error, setError] = useState('')
   const [busy, setBusy] = useState(false)
-  /* Shown when the app bounced the user back here (session expired, data reloaded). */
+  /* Shown when the app bounced the user back here (session expired, data reloaded).
+     It is cleared the moment the user touches the form, so it can never be
+     mistaken for a response to the sign-in details they just typed. */
   const [notice, setNotice] = useState(() => takeSessionNotice())
-  const [noticeDismissed, dismissNotice] = useState(false)
+  const [reveal, setReveal] = useState(false)
+  const [capsOn, setCapsOn] = useState(false)
+  const clearNotice = () => setNotice(null)
 
   useEffect(() => {
     if (user) navigate('/', { replace: true })
@@ -32,14 +36,20 @@ export default function LoginPage() {
 
   const run = async (event) => {
     event.preventDefault()
+    clearNotice()
     setError('')
     setBusy(true)
     try {
-      if (mode === 'login') await login(form.email, form.password)
+      if (mode === 'login') await login(form.email.trim(), form.password)
       else await signup(form)
       navigate('/', { replace: true })
     } catch (err) {
-      setError(err.message || 'Unable to sign in')
+      const message = err.message || 'Unable to sign in'
+      setError(
+        /incorrect password/i.test(message)
+          ? 'Incorrect password. Passwords are case-sensitive — check the capital letters, or use the ? to see what you typed.'
+          : message
+      )
     } finally {
       setBusy(false)
     }
@@ -78,7 +88,7 @@ export default function LoginPage() {
               : 'Student accounts can view club records and manage their own notes.'}
           </p>
 
-          {notice && !noticeDismissed && (
+          {notice && (
             <div
               className="card mb-2"
               style={{ background: 'var(--amber-soft, #fff7e6)', borderColor: 'var(--amber, #e0a300)' }}
@@ -90,7 +100,7 @@ export default function LoginPage() {
                 <button
                   type="button"
                   className="btn btn--ghost btn--sm"
-                  onClick={() => dismissNotice(true)}
+                  onClick={clearNotice}
                   aria-label="Dismiss message"
                 >
                   ×
@@ -122,7 +132,10 @@ export default function LoginPage() {
                 className="input"
                 type={mode === 'login' ? 'text' : 'email'}
                 value={form.email}
-                onChange={(e) => setForm({ ...form, email: e.target.value })}
+                onChange={(e) => {
+                  clearNotice()
+                  setForm({ ...form, email: e.target.value })
+                }}
                 placeholder={mode === 'login' ? 'e.g. Sharp' : 'you@school.ac.ug'}
                 autoComplete="username"
                 required
@@ -135,19 +148,42 @@ export default function LoginPage() {
             </div>
             <div className="field">
               <label className="field__label" htmlFor="password">Password</label>
-              <input
-                id="password"
-                className="input"
-                type="password"
-                value={form.password}
-                onChange={(e) => setForm({ ...form, password: e.target.value })}
-                placeholder="••••••••"
-                autoComplete={mode === 'login' ? 'current-password' : 'new-password'}
-                required
-              />
+              <div style={{ position: 'relative' }}>
+                <input
+                  id="password"
+                  className="input"
+                  type={reveal ? 'text' : 'password'}
+                  value={form.password}
+                  onChange={(e) => {
+                    clearNotice()
+                    setForm({ ...form, password: e.target.value })
+                  }}
+                  onKeyUp={(e) => setCapsOn(e.getModifierState ? e.getModifierState('CapsLock') : false)}
+                  placeholder="••••••••"
+                  autoComplete={mode === 'login' ? 'current-password' : 'new-password'}
+                  style={{ paddingRight: 46 }}
+                  required
+                />
+                <button
+                  type="button"
+                  className="btn btn--ghost btn--icon"
+                  onClick={() => setReveal((value) => !value)}
+                  title={reveal ? 'Hide the password' : 'Show the password'}
+                  aria-label={reveal ? 'Hide the password' : 'Show the password'}
+                  style={{ position: 'absolute', right: 4, top: '50%', transform: 'translateY(-50%)' }}
+                >
+                  <Icon name={reveal ? 'eyeOff' : 'eye'} size={16} />
+                </button>
+              </div>
+              {capsOn && <span className="field__help" style={{ color: 'var(--red)' }}>Caps Lock is on</span>}
             </div>
 
-            {error && <div className="field__error mb-2">{error}</div>}
+            {error && (
+              <div className="field__error mb-2" role="alert" style={{ display: 'flex', gap: 8, alignItems: 'flex-start' }}>
+                <Icon name="alert" size={15} style={{ flexShrink: 0, marginTop: 1 }} />
+                <span>{error}</span>
+              </div>
+            )}
 
             <Button type="submit" variant="primary" loading={busy} style={{ width: '100%', padding: '11px 14px' }}>
               {mode === 'login' ? 'Sign in' : 'Create account'}
