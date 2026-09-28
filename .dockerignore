@@ -1,0 +1,10 @@
+node_modules
+**/node_modules
+client/dist
+client/test/dist
+server/data
+.git
+.gitignore
+*.md
+!README.md
+.arena

@@ -449,8 +449,41 @@ npm run db:seed               # first time only
 npm --prefix server start     # serves API + client on http://localhost:4000
 ```
 
-Put it behind any reverse proxy (nginx, Caddy) or run it on a small VPS/Raspberry Pi in the school's
-computer lab. Notes:
+### A permanent web address
+
+To give the club one link that never changes, the repository ships a `Dockerfile` and a Render
+blueprint (`render.yaml`). Both start from the branch `main`, so merge this work into `main` first.
+
+**Render (free tier available, no command line):**
+
+1. Push the repository to GitHub (already done) and merge the branch into `main`.
+2. On [render.com](https://render.com): **New → Blueprint**, pick the repository, **Apply**.
+   Render reads `render.yaml`, builds the `Dockerfile` and gives you a fixed URL such as
+   `https://ict-club-management-system.onrender.com`.
+3. Sign in with the administrator account and change the password
+   (`npm --prefix server run admin -- --password "…"` locally, or *Administration → User Accounts*).
+
+On the free instance the service sleeps when idle, so the first visit after a quiet spell takes about
+thirty seconds to wake. It also has no persistent disk: each deploy rebuilds the container and the
+club data returns to the sample set. For real school data, upgrade the instance and enable the `disk:`
+block in `render.yaml` (it points `DB_PATH` at the mounted volume) — or simply keep downloading backups
+from *Settings → Download backup*.
+
+**Docker anywhere else** (VPS, school server, Fly.io, Railway…):
+
+```bash
+docker build -t ict-club .
+docker run -d -p 4000:4000 -v ict-club-data:/app/server/data --name ict-club ict-club
+```
+
+The image seeds itself on first start and skips seeding afterwards, and reads `PORT`/`HOST` from the
+environment, so it also fits hosts that assign their own port.
+
+### Running it in the school
+
+Put the app behind any reverse proxy (nginx, Caddy) or run it on a small VPS/Raspberry Pi in the
+computer lab — the school network then reaches it by IP address or an `ictclub.school.ac.ug` entry.
+Notes:
 
 - The database is a single file — back it up by copying `server/data/ictclub.db` (or use *Settings → Download backup*).
 - Sessions are opaque tokens stored in the `sessions` table (7-day expiry); signing out deletes the token.
