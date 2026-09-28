@@ -11,6 +11,7 @@
     "dev:web": "npm --prefix client run dev",
     "start": "npm run dev",
     "db:seed": "npm --prefix server run seed",
+    "db:demo": "npm --prefix server run demo",
     "db:reset": "npm --prefix server run reset",
     "test": "node scripts/run-tests.mjs",
     "test:api": "node scripts/run-tests.mjs api",
@@ -19,7 +20,8 @@
     "test:flows": "node scripts/run-tests.mjs flows",
     "admin": "npm --prefix server run admin --",
     "test:live": "node scripts/run-tests.mjs --live",
-    "serve": "node scripts/serve.mjs"
+    "serve": "node scripts/serve.mjs",
+    "test:empty": "node scripts/run-tests.mjs empty"
   },
   "devDependencies": {
     "concurrently": "^9.1.2"

@@ -56,6 +56,7 @@ const nodeFetch = global.fetch
    would mask exactly the session handling this suite tests. */
 global.fetch = (input, init = {}) => {
   const url = typeof input === 'string' && input.startsWith('/') ? `${API}${input}` : input
+  if (process.env.DEBUG_FETCH) console.log('  [fetch]', url)
   return nodeFetch(url, init)
 }
 window.fetch = global.fetch
@@ -236,7 +237,12 @@ async function clickButton(pattern, scope = window.document, { timeout = 10000 }
 /* ------------------------------------------------------------------ */
 
 const results = []
+/* FLOW_ONLY=Search runs just the flows whose label contains that text —
+   handy when debugging one flow without waiting for the other nineteen. */
+const FLOW_ONLY = process.env.FLOW_ONLY || ''
+
 async function flow(label, fn) {
+  if (FLOW_ONLY && !label.toLowerCase().includes(FLOW_ONLY.toLowerCase())) return
   const started = Date.now()
   try {
     const detail = (await fn()) || ''
@@ -312,6 +318,45 @@ await flow('Edit a student from the record page', async () => {
   }
 })
 
+await flow('Searching the student list shows only matching records', async () => {
+  if (!createdStudentId) throw new Error('no student to search for (create step failed)')
+  const page = await mount('/r/members')
+  try {
+    /* Type in the search box the way a teacher would. The list must end up
+       showing the matching record — and only it — even though the screen also
+       fired an unfiltered request while it was opening. */
+    /* The list's own filter bar — not the global search in the header, which
+       appears first in the DOM and navigates instead of filtering. */
+    const box = await waitFor(
+      () => page.container.querySelector('.filters-bar input[placeholder^="Search"]'),
+      { label: 'the list search box' }
+    )
+    await act(async () => {
+      setValue(box, 'Flow Test Student')
+    })
+    const rows = await waitFor(
+      () => {
+        const found = [...page.container.querySelectorAll('table.data tbody tr')]
+        return found.length === 1 && found[0].textContent.includes('Flow Test Student') ? found : null
+      },
+      { timeout: 15000, label: 'the list to narrow to the matching student' }
+    ).catch(() => {
+      const found = [...page.container.querySelectorAll('table.data tbody tr')]
+      throw new Error(
+        `the list showed ${found.length} row(s) instead of the matching one: ` +
+          found.slice(0, 3).map((tr) => tr.textContent.replace(/\s+/g, ' ').slice(0, 40)).join(' | ')
+      )
+    })
+    const matches = await list('members', '&q=Flow Test Student')
+    if (matches.total !== rows.length) {
+      throw new Error(`the screen shows ${rows.length} row(s) but the API matches ${matches.total}`)
+    }
+    return `typing a search narrowed the list to ${rows.length} record`
+  } finally {
+    await page.unmount()
+  }
+})
+
 await flow('Delete a student from the list row action', async () => {
   if (!createdStudentId) throw new Error('no student to delete (create step failed)')
   const page = await mount(`/r/members?q=Flow+Test+Student`)
@@ -324,7 +369,13 @@ await flow('Delete a student from the list row action', async () => {
           tr.textContent.includes('Flow Test Student')
         ),
       { label: 'the row for the student created above' }
-    )
+    ).catch(() => {
+      const rows = [...page.container.querySelectorAll('table.data tbody tr')].length
+      const tables = page.container.querySelectorAll('table').length
+      throw new Error(
+        `no row matched. tables=${tables} rows=${rows} text=“${page.text().replace(/\s+/g, ' ').slice(0, 240)}”`
+      )
+    })
     const del = row.querySelector('button[title="Delete"]')
     if (!del) throw new Error('delete action missing on the row')
     await act(async () => {
@@ -639,52 +690,28 @@ await flow('Verify a real certificate on the public page', async () => {
 if (createdNoteId) await api(`/api/notes/${createdNoteId}`, { method: 'DELETE' })
 
 /* ------------------------------------------------------------------ */
-/* 14. Settings: reload the demo school data (wipes and re-seeds)      */
+/* 14. Settings screen tells the administrator how to start again      */
 /* ------------------------------------------------------------------ */
 
-await flow('Reload the demo school data from Settings', async () => {
+await flow('Settings explains how to start the club again without sample data', async () => {
   const page = await mount('/settings')
   try {
-    const demoButton = await waitFor(
-      () => [...page.container.querySelectorAll('button')].find((b) => /Load demo school data/i.test(b.textContent)),
-      { label: 'the demo-data button' }
-    )
-    await act(async () => {
-      click(demoButton)
-    })
-    await flush(300)
-    const confirm = await waitFor(
-      () => [...window.document.querySelectorAll('.modal button')].find((b) => /Load demo data/i.test(b.textContent)),
-      { label: 'the confirmation dialog' }
-    )
-    await act(async () => {
-      click(confirm)
-    })
-    // The user must stay signed in: the API hands back a fresh session and the
-    // app lands on the dashboard with the reloaded school.
-    const landed = await waitFor(
-      () => (/Good (morning|afternoon|evening)/i.test(window.document.body.textContent || '') ? true : null),
-      { timeout: 25000, label: 'the dashboard after the reload' }
-    ).catch(() => null)
-    if (!landed) {
-      throw new Error(
-        `the app did not return to the dashboard. token=${Boolean(window.localStorage.getItem('ict-club-token'))} text=${(window.document.body.textContent || '').replace(/\s+/g, ' ').slice(0, 200)}`
-      )
+    const text = await waitFor(
+      () => (/Data & storage/i.test(page.text()) ? page.text() : null),
+      { label: 'the data and storage card' }
+    ).catch(() => page.text())
+    if (!/npm run db:reset/i.test(text)) {
+      throw new Error('the storage card no longer explains how to start again')
     }
-    if (/Sign in to your club/i.test(window.document.body.textContent || '')) {
-      throw new Error('the user was signed out by the reload')
+    /* The card and its button are gone — the activity log may still mention
+       past actions, so look for the control itself, not the words. */
+    const buttons = [...page.container.querySelectorAll('button')].map((b) => b.textContent.trim())
+    const demoButton = buttons.find((label) => /demo/i.test(label))
+    if (demoButton) throw new Error(`a demo-data control is still on the Settings screen: “${demoButton}”`)
+    if (/Load a complete set of sample records/i.test(text)) {
+      throw new Error('the sample-data card is still on the Settings screen')
     }
-    // …and the new token must be live against the reloaded data.
-    const token = window.localStorage.getItem('ict-club-token')
-    if (!token) throw new Error('no session token was stored after the reload')
-    const dashboard = await nodeFetch(`${API}/api/dashboard`, {
-      headers: { Authorization: `Bearer ${token}` }
-    }).then((r) => r.json())
-    if (!dashboard.cards?.members) throw new Error('the dashboard has no data after the reload')
-    const visible = /Members/i.test(window.document.body.textContent || '')
-    if (!visible) throw new Error('the dashboard widgets did not render')
-    TOKEN = token
-    return `${dashboard.cards.members} members, ${dashboard.cards.dues_records} dues records reloaded; stayed signed in`
+    return 'no sample-data control remains; the storage card documents db:seed and db:reset'
   } finally {
     await page.unmount()
   }

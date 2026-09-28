@@ -216,8 +216,6 @@ export const api = {
   markAllPresent: (body) => request('/api/attendance/mark-all', { method: 'POST', body }),
   importMembers: (rows) => request('/api/members/import', { method: 'POST', body: { rows } }),
   enrollCourse: (courseId, memberIds) => request(`/api/courses/${courseId}/enroll`, { method: 'POST', body: { member_ids: memberIds } }),
-  /* demo data */
-  loadDemoData: () => request('/api/demo/seed', { method: 'POST' }),
 
   /* Dues helpers */
   createDuesForTerm: (payload) => request('/api/dues/generate', { method: 'POST', body: payload }),

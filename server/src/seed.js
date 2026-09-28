@@ -90,7 +90,26 @@ function guardianName(studentSurname) {
 /* Seed steps                                                          */
 /* ------------------------------------------------------------------ */
 
+/**
+ * Club settings for a real installation: neutral defaults only. The school
+ * fills in its own name, contacts and patron on the Settings screen.
+ */
 function seedSettings() {
+  saveSettings({
+    ...DEFAULT_SETTINGS,
+    club_name: 'ICT Club',
+    club_tagline: 'Learn • Create • Innovate',
+    academic_year: String(TODAY.getFullYear()),
+    current_term: 'Term 1',
+    currency: 'UGX',
+    attendance_target: '75',
+    dues_per_term: '10000'
+  })
+  console.log('  • club settings (current year and term, dues per term, currency)')
+}
+
+/** The club profile used by the sample school (demonstrations and tests). */
+function seedDemoSettings() {
   saveSettings({
     ...DEFAULT_SETTINGS,
     club_name: 'ICT Club',
@@ -882,8 +901,43 @@ function seedActivityLog() {
 /* ------------------------------------------------------------------ */
 
 /**
- * Loads the demo school. Returns the record counts that were created.
- * Safe to call from the API as well as from the command line.
+ * Prepares a real installation: club settings and the single administrator
+ * account, and nothing else. No sample students, meetings or payments.
+ *
+ * `reset: true` clears the club's records first (accounts included) — the
+ * "start again" path on a computer that has already been used.
+ */
+export function seedInstall({ reset = false, quiet = false } = {}) {
+  const existing = all('SELECT id FROM users LIMIT 1')
+  if (existing.length && !reset) {
+    return { skipped: true, reason: 'The database already has an account on it.' }
+  }
+
+  const originalLog = console.log
+  if (quiet) console.log = () => {}
+  try {
+    console.log('\n  Preparing the club system for use…')
+    if (reset) wipe()
+
+    seedSettings()
+    seedUsers()
+
+    return {
+      skipped: false,
+      counts: {
+        members: all('SELECT COUNT(*) AS c FROM members')[0].c,
+        users: all('SELECT COUNT(*) AS c FROM users')[0].c
+      }
+    }
+  } finally {
+    console.log = originalLog
+  }
+}
+
+/**
+ * Loads the sample secondary school — 82 students, dues, attendance, meetings
+ * and the rest. Kept for demonstrations, training and the test suites; a real
+ * installation starts empty (see seedInstall).
  */
 export function seedDemo({ reset = true, quiet = false } = {}) {
   const existing = all('SELECT id FROM users LIMIT 1')
@@ -904,7 +958,7 @@ export function seedDemo({ reset = true, quiet = false } = {}) {
     console.log('\n  Seeding the secondary school ICT club…')
     if (reset) wipe()
 
-    seedSettings()
+    seedDemoSettings()
     const userIds = seedUsers()
     const members = seedMembers()
     seedCabinet(members, userIds)
@@ -931,18 +985,33 @@ export function seedDemo({ reset = true, quiet = false } = {}) {
 }
 
 function main() {
-  const reset = process.argv.includes('--reset')
-  const result = seedDemo({ reset })
+  const args = process.argv.slice(2)
+  const reset = args.includes('--reset')
+  const demo = args.includes('--demo')
+
+  if (demo) {
+    const result = seedDemo({ reset: true })
+    console.log(`  • ${result.counts.members} students and ${result.counts.dues} dues records in the sample school`)
+    console.log('\n  Sample school data loaded — for demonstrations and training only.')
+    console.log('  Start again with an empty system: npm run db:reset\n')
+    return
+  }
+
+  const result = seedInstall({ reset })
   if (result.skipped) {
-    console.log('\n  Database already contains data.')
-    console.log('  Run `npm run db:reset` to wipe and reload the demo school.\n')
+    console.log('\n  The database already has an account on it — nothing to do.')
+    console.log('  Start again with an empty system: npm run db:reset')
+    console.log('  Load the sample school (demonstrations): npm run db:demo\n')
     process.exit(0)
   }
-  console.log(`  • ${result.counts.dues} dues records in the finance register`)
-  console.log('\n  Done. Sign in as the administrator:')
+
+  console.log(`  • ${result.counts.users} account, ${result.counts.members} students on record`)
+  console.log('\n  The club system is ready. Sign in as the administrator:')
   console.log('    Sharp  (or sharp@school.ac.ug)')
   console.log('    password: SunnyDay@2026\n')
-  console.log('  Create executive and student accounts from Administration → User Accounts.\n')
+  console.log('  Change the password, then set the school name and term in Settings.')
+  console.log('  Add students from Students → New student, and create accounts for the')
+  console.log('  executive committee from Administration → User Accounts.\n')
 }
 
 /* Only run the CLI when this file is executed directly (not when imported). */

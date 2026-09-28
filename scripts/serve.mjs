@@ -6,7 +6,7 @@
  * It checks what is missing and fixes it, then starts the server:
  *   1. installs the root, server and client dependencies if node_modules is absent
  *   2. builds the client into client/dist if it is absent
- *   3. seeds the school data if the database file is absent
+ *   3. prepares the database (administrator account only) if it is absent
  *   4. starts the API, which also serves the built client on http://localhost:4000
  *
  * `npm run serve -- --check` only performs steps 1-3 and reports what it found,
@@ -56,7 +56,7 @@ if (!exists('client', 'dist', 'index.html')) {
 
 /* 3. database -------------------------------------------------------- */
 if (!exists('server', 'data', 'ictclub.db')) {
-  run('Loading the sample school data', 'npm', ['run', 'db:seed'])
+  run('Preparing the database (administrator account)', 'npm', ['run', 'db:seed'])
 } else {
   report('Database present', true)
 }
@@ -68,5 +68,6 @@ if (CHECK_ONLY) {
 
 /* 4. start the server ------------------------------------------------ */
 console.log('\n  Sign in with   Sharp  /  SunnyDay@2026')
-console.log('  App and API    http://localhost:4000\n')
+console.log('  App and API    http://localhost:4000')
+console.log('  Sample school  npm run db:demo   (training only)\n')
 run('Starting the app', 'npm', ['--prefix', 'server', 'start'])

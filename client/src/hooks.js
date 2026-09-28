@@ -53,15 +53,25 @@ export function useAsync(fn, deps = [], { immediate = true } = {}) {
   const [state, setState] = useState({ data: null, loading: immediate, error: null })
   const fnRef = useRef(fn)
   fnRef.current = fn
+  /* Requests can overlap: a screen that opens while it is still settling fires
+     an unfiltered fetch and a filtered one, and typing in a search box fires
+     one per keystroke. Only the newest request may write state — otherwise a
+     slower earlier reply lands last and the list shows results for the query
+     the user has already replaced. */
+  const runIdRef = useRef(0)
 
   const run = useCallback(async (...args) => {
+    const runId = runIdRef.current + 1
+    runIdRef.current = runId
     setState((s) => ({ ...s, loading: true, error: null }))
     try {
       const data = await fnRef.current(...args)
-      setState({ data, loading: false, error: null })
+      if (runId === runIdRef.current) setState({ data, loading: false, error: null })
       return data
     } catch (error) {
-      setState({ data: null, loading: false, error: error.message || 'Something went wrong' })
+      if (runId === runIdRef.current) {
+        setState({ data: null, loading: false, error: error.message || 'Something went wrong' })
+      }
       return null
     }
   }, [])

@@ -12,7 +12,8 @@
     "test": "node ../scripts/run-tests.mjs api",
     "admin": "node --disable-warning=ExperimentalWarning src/set-admin.js",
     "test:isolated": "node ../scripts/run-tests.mjs api",
-    "test:live": "node ../scripts/run-tests.mjs api --live"
+    "test:live": "node ../scripts/run-tests.mjs api --live",
+    "demo": "node --disable-warning=ExperimentalWarning src/seed.js --demo"
   },
   "dependencies": {
     "cors": "^2.8.5",

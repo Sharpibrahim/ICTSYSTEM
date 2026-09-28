@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Icon from '../icons'
-import { api, downloadAuthed, setStoredUser, setToken, triggerDownload } from '../api'
+import { api, downloadAuthed, triggerDownload } from '../api'
 import { useAuth } from '../auth'
 import { useAsync } from '../hooks'
-import { Badge, Button, Card, ConfirmDialog, EmptyState, Loading, useToast } from '../components/ui'
+import { Badge, Button, Card, EmptyState, Loading, useToast } from '../components/ui'
 import { relativeTime } from '../format'
 
 const PROFILE_FIELDS = [
@@ -24,15 +24,13 @@ const PROFILE_FIELDS = [
 ]
 
 export default function SettingsPage() {
-  const { user, settings, refreshSettings, reload: reloadSession } = useAuth()
+  const { user, settings, refreshSettings } = useAuth()
   const toast = useToast()
   const navigate = useNavigate()
   const [form, setForm] = useState(settings || {})
   const [saving, setSaving] = useState(false)
   const [password, setPassword] = useState({ current_password: '', new_password: '' })
   const [changing, setChanging] = useState(false)
-  const [demoOpen, setDemoOpen] = useState(false)
-  const [demoBusy, setDemoBusy] = useState(false)
 
   const isAdmin = user?.role === 'admin'
   const canEdit = user?.role === 'admin' || user?.role === 'cabinet'
@@ -54,35 +52,6 @@ export default function SettingsPage() {
       toast.error('Could not save settings', err.message)
     } finally {
       setSaving(false)
-    }
-  }
-
-  /**
-   * Reloads the demo school (administrators only). Every record is replaced,
-   * which recreates the user accounts too — the API hands back a fresh session
-   * for the matching demo account so the user stays signed in seamlessly.
-   */
-  const loadDemoData = async () => {
-    setDemoBusy(true)
-    try {
-      const result = await api.loadDemoData()
-      const { counts = {}, token, user: nextUser } = result?.data || {}
-      setDemoOpen(false)
-      if (token && nextUser) {
-        setToken(token)
-        setStoredUser(nextUser)
-        await reloadSession()
-      }
-      await refreshSettings()
-      const summary = counts.members
-        ? `${counts.members} members, ${counts.courses} courses and ${counts.dues} dues records`
-        : 'a fresh set of school records'
-      toast.success('Demo school data loaded', summary)
-      navigate('/', { replace: true })
-    } catch (err) {
-      toast.error('Could not load the demo data', err.message)
-    } finally {
-      setDemoBusy(false)
     }
   }
 
@@ -243,23 +212,6 @@ export default function SettingsPage() {
             </Button>
           </Card>
 
-          {isAdmin && (
-            <Card title="Demo school data" subtitle="Load a complete set of sample records" icon="sparkles">
-              <p className="small muted" style={{ marginTop: 0 }}>
-                Fills the system with a realistic secondary school: students in S1–S6 with guardians, teacher patrons,
-                the executive committee, class representatives, termly dues with payments and receipts, courses,
-                attendance registers, certificates, reports, notes and club projects.
-              </p>
-              <p className="small" style={{ color: 'var(--red)' }}>
-                This replaces <b>every record</b> currently in the database, including any user accounts created since.
-                Your administrator account (Sharp) is recreated and you stay signed in.
-              </p>
-              <Button variant="primary" icon="sparkles" onClick={() => setDemoOpen(true)}>
-                Load demo school data
-              </Button>
-            </Card>
-          )}
-
           <Card title="Data & storage" subtitle="Everything is stored locally in an SQLite database" icon="layers">
             <div className="small" style={{ lineHeight: 1.7 }}>
               <div>
@@ -269,10 +221,11 @@ export default function SettingsPage() {
                 <b>Backups:</b> keep the JSON backup with the club file every term
               </div>
               <div>
-                <b>Reload demo data:</b> the button above, or <code>npm run db:reset</code>
+                <b>Create the account if the file is empty:</b> <code>npm run db:seed</code>
               </div>
               <div>
-                <b>Seed if empty:</b> <code>npm run db:seed</code>
+                <b>Erase every club record and start again:</b> <code>npm run db:reset</code> (keeps a fresh
+                administrator account)
               </div>
             </div>
             <div className="flex gap-1 wrap mt-2">
@@ -386,16 +339,6 @@ export default function SettingsPage() {
         <Icon name="check" size={12} /> ICT Club Management System — students, executive committee, club dues, meetings,
         activities, courses, attendance, reports, certificates, notes and projects.
       </p>
-
-      <ConfirmDialog
-        open={demoOpen}
-        title="Load the demo school data?"
-        message="Every record currently in the database will be replaced with the sample secondary school data. Your administrator account is kept and you stay signed in. Continue?"
-        confirmLabel="Load demo data"
-        loading={demoBusy}
-        onCancel={() => setDemoOpen(false)}
-        onConfirm={loadDemoData}
-      />
     </>
   )
 }

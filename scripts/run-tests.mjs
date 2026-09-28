@@ -3,17 +3,20 @@
  *
  * Runs the API checks and the UI suites against their OWN database and API
  * server, so a test run can never touch the school's live data or sign out
- * anyone using the app. The suites include a demo-data reload, which replaces
- * every record — harmless on a throwaway database, disruptive on a real one.
+ * anyone using the app.
  *
- *   npm test               # all suites, isolated database + API on port 4100
+ *   npm test               # all suites, isolated databases + API on port 4100
  *   npm run test:api       # API checks only
  *   npm run test:ui        # UI smoke test only
  *   npm run test:flows     # write-flow test only
+ *   npm run test:empty     # the screens a brand-new installation shows
  *   npm run test:live      # run against an already running app (API_URL)
  *
- * The isolated server listens on TEST_PORT (default 4100) and uses
- * server/data/test.db, which is git-ignored.
+ * The main suites run against the sample school (server/data/test.db), loaded
+ * with `seed.js --demo --reset`; the empty suite uses server/data/empty.db,
+ * which holds nothing but the administrator account. Both files are
+ * git-ignored. The isolated API listens on TEST_PORT (default 4100); the empty
+ * suite moves it to TEST_EMPTY_PORT (4120) for its own run.
  */
 import { spawn } from 'node:child_process'
 import fs from 'node:fs'
@@ -23,12 +26,14 @@ import { fileURLToPath } from 'node:url'
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const ROOT = path.resolve(__dirname, '..')
 const TEST_PORT = process.env.TEST_PORT || '4100'
+const TEST_EMPTY_PORT = process.env.TEST_EMPTY_PORT || '4120'
 const TEST_DB = process.env.TEST_DB_PATH || path.join(ROOT, 'server', 'data', 'test.db')
+const EMPTY_DB = process.env.EMPTY_DB_PATH || path.join(ROOT, 'server', 'data', 'empty.db')
 const LIVE = process.argv.includes('--live') || process.env.TEST_LIVE === '1'
 const LIVE_URL = process.env.API_URL || 'http://127.0.0.1:4000'
 
 const requested = process.argv.slice(2).filter((a) => !a.startsWith('-'))
-const SUITES = requested.length ? requested : ['api', 'ui', 'flows']
+const SUITES = requested.length ? requested : ['api', 'ui', 'flows', 'empty']
 
 const colours = { reset: '\u001b[0m', dim: '\u001b[2m', cyan: '\u001b[36m', green: '\u001b[32m', red: '\u001b[31m' }
 const heading = (text) => console.log(`\n${colours.cyan}${'━'.repeat(84)}${colours.reset}\n${colours.cyan}  ${text}${colours.reset}\n`)
@@ -62,21 +67,29 @@ async function waitForHealth(url, timeoutMs = 60000) {
 let server = null
 let apiUrl = LIVE_URL
 
-async function startIsolatedServer() {
-  fs.mkdirSync(path.dirname(TEST_DB), { recursive: true })
-  if (fs.existsSync(TEST_DB)) fs.rmSync(TEST_DB)
+/**
+ * Starts an isolated API against its own database.
+ * @param {{ db: string, port: string, sample: boolean, label: string }} target
+ */
+async function startIsolatedServer({ db = TEST_DB, port = TEST_PORT, sample = true, label = 'test' } = {}) {
+  fs.mkdirSync(path.dirname(db), { recursive: true })
+  if (fs.existsSync(db)) fs.rmSync(db)
 
-  console.log(`  Preparing a fresh test database: ${path.relative(ROOT, TEST_DB)}`)
-  const seeded = await run(process.execPath, ['--disable-warning=ExperimentalWarning', 'src/seed.js', '--reset'], {
-    cwd: path.join(ROOT, 'server'),
-    env: { ...process.env, DB_PATH: TEST_DB },
-    stdio: 'ignore'
-  })
-  if (seeded !== 0) throw new Error('could not seed the test database')
+  const seedArgs = sample ? ['--demo', '--reset'] : ['--reset']
+  console.log(
+    `  Preparing a fresh ${label} database: ${path.relative(ROOT, db)} ` +
+      `(${sample ? 'with the sample school' : 'administrator account only'})`
+  )
+  const seeded = await run(
+    process.execPath,
+    ['--disable-warning=ExperimentalWarning', 'src/seed.js', ...seedArgs],
+    { cwd: path.join(ROOT, 'server'), env: { ...process.env, DB_PATH: db }, stdio: 'ignore' }
+  )
+  if (seeded !== 0) throw new Error(`could not prepare the ${label} database`)
 
   server = spawn(process.execPath, ['--disable-warning=ExperimentalWarning', 'src/index.js'], {
     cwd: path.join(ROOT, 'server'),
-    env: { ...process.env, DB_PATH: TEST_DB, PORT: TEST_PORT, HOST: '0.0.0.0' },
+    env: { ...process.env, DB_PATH: db, PORT: port, HOST: '0.0.0.0' },
     stdio: ['ignore', 'pipe', 'pipe']
   })
   let serverLog = ''
@@ -87,21 +100,25 @@ async function startIsolatedServer() {
     serverLog += chunk.toString()
   })
 
-  apiUrl = `http://127.0.0.1:${TEST_PORT}`
+  apiUrl = `http://127.0.0.1:${port}`
   const up = await waitForHealth(apiUrl)
   if (!up) {
     console.error(serverLog.slice(-2000))
-    throw new Error(`the test API did not start on ${apiUrl}`)
+    throw new Error(`the ${label} API did not start on ${apiUrl}`)
   }
-  console.log(`  Test API running on ${apiUrl} (port ${TEST_PORT}) — your app on port 4000 is untouched`)
+  console.log(`  ${label} API running on ${apiUrl} (port ${port}) — your app on port 4000 is untouched`)
 }
 
 function stopIsolatedServer() {
-  if (server && !server.killed) {
-    server.kill('SIGTERM')
+  /* Capture the child first: the delayed SIGKILL must target the server that
+     was just asked to stop, never a replacement started a moment later. */
+  const child = server
+  server = null
+  if (child && !child.killed) {
+    child.kill('SIGTERM')
     setTimeout(() => {
       try {
-        server.kill('SIGKILL')
+        child.kill('SIGKILL')
       } catch {
         /* already gone */
       }
@@ -144,7 +161,7 @@ if (SUITES.includes('api')) {
   results.push({ name: 'API checks', ok: code === 0 })
 }
 
-if (SUITES.includes('ui') || SUITES.includes('flows')) {
+if (SUITES.includes('ui') || SUITES.includes('flows') || SUITES.includes('empty')) {
   heading('Building the client test bundle')
   const build = await run('npm', ['run', 'test:build'], { cwd: path.join(ROOT, 'client'), env })
   if (build !== 0) {
@@ -168,6 +185,17 @@ if (SUITES.includes('flows')) {
   heading('Write flows (every action saved and read back)')
   const code = await run(process.execPath, ['test/flows.mjs'], { cwd: path.join(ROOT, 'client'), env })
   results.push({ name: 'Write flows', ok: code === 0 })
+}
+
+if (SUITES.includes('empty')) {
+  heading('Empty system (what the school sees on day one)')
+  stopIsolatedServer()
+  await startIsolatedServer({ db: EMPTY_DB, port: TEST_EMPTY_PORT, sample: false, label: 'empty-system' })
+  const code = await run(process.execPath, ['test/empty.mjs'], {
+    cwd: path.join(ROOT, 'client'),
+    env: { ...process.env, API_URL: `http://127.0.0.1:${TEST_EMPTY_PORT}` }
+  })
+  results.push({ name: 'Empty system', ok: code === 0 })
 }
 
 stopIsolatedServer()
