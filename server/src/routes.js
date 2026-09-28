@@ -5,7 +5,7 @@
  */
 import { Router } from 'express'
 import crypto from 'node:crypto'
-import { all, count, get, getSettings, insert, logActivity, run, saveSettings, updateRow } from './db.js'
+import { all, count, get, getSettings, insert, installId, logActivity, run, saveSettings, updateRow } from './db.js'
 import {
   attachUser,
   cleanupSessions,
@@ -23,6 +23,14 @@ import { OPTION_SETS, RESOURCES, resourceByKey } from '../../shared/schema.js'
 
 export const api = Router()
 
+/* Every API response says which installation answered. The web app stores this
+   when it signs in, so it can tell a genuinely expired session apart from the
+   system having been reinstalled (see installId() in db.js). */
+api.use((_req, res, next) => {
+  res.setHeader('X-Install-Id', installId())
+  next()
+})
+
 api.use(attachUser)
 cleanupSessions()
 
@@ -31,7 +39,7 @@ cleanupSessions()
 /* ------------------------------------------------------------------ */
 
 api.get('/health', (_req, res) => {
-  res.json({ ok: true, service: 'ICT Club Management System', time: new Date().toISOString() })
+  res.json({ ok: true, service: 'ICT Club Management System', install: installId(), time: new Date().toISOString() })
 })
 
 /** Public certificate verification — anyone can check a code. */
@@ -57,7 +65,7 @@ api.post('/auth/login', (req, res) => {
   if (!email || !password) return res.status(400).json({ error: 'Email and password are required' })
   const result = login(email, password)
   if (result.error) return res.status(401).json({ error: result.error })
-  res.json(result)
+  res.json({ ...result, install: installId() })
 })
 
 api.post('/auth/signup', (req, res) => {

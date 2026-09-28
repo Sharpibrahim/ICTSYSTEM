@@ -5,6 +5,7 @@
 const TOKEN_KEY = 'ict-club-token'
 const USER_KEY = 'ict-club-user'
 const NOTICE_KEY = 'ict-club-notice'
+const INSTALL_KEY = 'ict-club-install'
 
 /** A one-shot message shown on the sign-in screen (e.g. "your session ended"). */
 export function setSessionNotice(message) {
@@ -46,6 +47,26 @@ export function getStoredUser() {
 export function setStoredUser(user) {
   if (user) localStorage.setItem(USER_KEY, JSON.stringify(user))
   else localStorage.removeItem(USER_KEY)
+}
+
+/* Which installation of the club system we signed in against. The server sends
+   it with every response (X-Install-Id). If a later request fails and the id
+   has changed, the whole system was reinstalled — not an expired session. */
+export function getInstallId() {
+  try {
+    return localStorage.getItem(INSTALL_KEY) || ''
+  } catch {
+    return ''
+  }
+}
+
+export function setInstallId(id) {
+  try {
+    if (id) localStorage.setItem(INSTALL_KEY, id)
+    else localStorage.removeItem(INSTALL_KEY)
+  } catch {
+    /* storage unavailable — the app still works, it just cannot tell them apart */
+  }
 }
 
 export const SESSION_EXPIRED_EVENT = 'ict-club:session-expired'
@@ -128,6 +149,8 @@ export async function request(path, { method = 'GET', body, params, raw = false 
     return res
   }
 
+  const servedBy = res.headers?.get?.('X-Install-Id') || ''
+
   const text = await res.text()
   let data = null
   try {
@@ -139,16 +162,27 @@ export async function request(path, { method = 'GET', body, params, raw = false 
   if (!res.ok) {
     const isSignInAttempt = /\/auth\/(login|signup)$/.test(path)
     if (res.status === 401 && !isSignInAttempt) {
-      /* The stored token is no longer valid (signed out elsewhere, or the
-         demo data was reloaded). Drop it and let the app fall back to the
-         sign-in screen instead of leaving the user on a broken page. */
+      /* The stored token is no longer valid. Two different situations:
+         • the same installation rejected it — the session really ended
+           (signed out elsewhere, or 7 days passed), so explain why;
+         • a *different* installation answered — the system was reinstalled or
+           its database replaced, which is not an expired session and needs no
+           scare. Just clear the old details and show the sign-in screen. */
+      const known = getInstallId()
+      const reinstalled = Boolean(servedBy && known && servedBy !== known)
       setToken('')
       setStoredUser(null)
-      setSessionNotice('Your session ended, so you were signed out. Please sign in again to continue.')
+      if (servedBy && !reinstalled) setInstallId(servedBy)
+      if (!reinstalled) {
+        setSessionNotice('Your session ended, so you were signed out. Please sign in again to continue.')
+      }
       notifySessionExpired()
     }
     throw new ApiError(data?.error || `Request failed (${res.status})`, res.status)
   }
+
+  /* Remember which installation answered, so the check above works next time. */
+  if (servedBy && servedBy !== getInstallId()) setInstallId(servedBy)
   return data
 }
 

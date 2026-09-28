@@ -369,9 +369,9 @@ members ──┬─< cabinet            (student or teacher holds a position fo
 
 ```bash
 npm test              # every suite on an isolated database + its own API server
-npm run test:api      # 69 API checks
+npm run test:api      # 71 API checks
 npm run test:ui       # 42 screens + 8 interactions, for the admin, executive and member roles
-npm run test:flows    # 16 write flows: every action is saved and read back
+npm run test:flows    # 19 write flows: every action is saved and read back
 npm run test:live     # the same checks against the app you are already running (see the warning)
 ```
 
@@ -381,7 +381,7 @@ that. The app on port 4000 keeps its own database, records and logins — so run
 sign you (or a student) out. Use `npm run test:live` only when you deliberately want to exercise the
 running app; that mode reloads the demo data and therefore replaces every record and session.
 
-- **API tests** (`server/test/api-test.mjs`, 69 checks) cover authentication (sign-in by username *and*
+- **API tests** (`server/test/api-test.mjs`, 71 checks) cover authentication (sign-in by username *and*
   email, wrong passwords, username uniqueness), permissions, validation, filtering, sorting, pagination,
   CRUD, the dues register (generation, repeat generation, part-payments, receipts, summary, role guards),
   attendance bulk-save, analytics, exports, backups, certificate verification, the course/certificate
@@ -392,7 +392,7 @@ running app; that mode reloads the demo data and therefore replaces every record
   failing on React errors, empty screens or values the API no longer sends. It then drives real
   interactions: opening the create form, filtering a list, marking attendance, switching list views,
   recording a dues payment, opening the dues generator and generating a report draft.
-- **Write-flow test** (`client/test/flows.mjs`, 16 flows) proves the buttons really save: it fills the real
+- **Write-flow test** (`client/test/flows.mjs`, 19 flows) proves the buttons really save: it fills the real
   forms, submits them and re-reads the API to confirm the change — create/edit/delete a student (including
   the chip-style interests field), record a dues payment and check the receipt plus the collection total,
   save an attendance register, register a completer and issue their certificate, save a generated report,
@@ -502,7 +502,7 @@ Notes:
 | `Cannot find module 'node:sqlite'` | Node 22+ is required (the project uses the built-in SQLite driver) |
 | Port already in use | Start with `PORT=4100 npm run dev:api` and `API_URL=http://localhost:4100 npm run dev:web` |
 | Demo data has drifted | `npm run db:reset` restores the seeded school |
-| Login fails after a database reset | Sign in again — the app now returns you to the sign-in screen with a message when a stored token is no longer valid |
+| Login fails after a database reset | Sign in again. A token the server no longer knows returns you to the sign-in screen; if the whole system was reinstalled (a new database), you get the plain sign-in screen with no notice, because that is not an expired session |
 | Dashboard shows an error instead of statistics | The session ended (the demo data was reloaded, or you signed out elsewhere). Sign in again — the app returns you to the sign-in screen with a short explanation |
 | Signed out right after running the tests | Run `npm test` (isolated database). Only `npm run test:live` exercises the running app, and it replaces every record and session |
 

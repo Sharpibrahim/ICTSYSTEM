@@ -58,6 +58,17 @@ await check('health endpoint responds', async () => {
   return data.service
 })
 
+/* The web app uses the installation id to tell a reinstalled system apart from
+   a session that really expired, so it must be reported consistently. */
+let installId = ''
+await check('health reports which installation is answering', async () => {
+  const { data, headers } = await call('/api/health')
+  installId = data?.install
+  assert(typeof installId === 'string' && installId.length >= 8, `unexpected install id: ${installId}`)
+  assert(headers.get('x-install-id') === installId, 'the X-Install-Id header and the payload disagree')
+  return `installation ${installId}`
+})
+
 /* 2. Authentication --------------------------------------------------- */
 const ADMIN = { email: process.env.ADMIN_EMAIL || 'sharp@school.ac.ug', password: process.env.ADMIN_PASSWORD || 'SunnyDay@2026' }
 const ADMIN_USERNAME = process.env.ADMIN_USERNAME || 'Sharp'
@@ -66,8 +77,16 @@ const emailFor = (role) => `test-${role}-${Date.now()}@school.ac.ug`
 await check('admin can sign in with the username', async () => {
   const { data, status } = await call('/api/auth/login', { method: 'POST', body: { email: ADMIN_USERNAME, password: ADMIN.password } })
   assert(status === 200 && data.token, `login with the username failed (${status})`)
+  assert(data.install === installId, 'the sign-in response named a different installation')
   adminToken = data.token
   return `signed in as ${data.user.name} (${data.user.role})`
+})
+
+await check('a rejected token reports the installation too', async () => {
+  const { status, headers } = await call('/api/dashboard', { token: 'token-from-an-old-installation' })
+  assert(status === 401, `expected 401, got ${status}`)
+  assert(headers.get('x-install-id') === installId, 'the 401 did not say which installation rejected the token')
+  return 'the app can tell a reinstall apart from an expiry'
 })
 
 await check('admin can also sign in with the email', async () => {

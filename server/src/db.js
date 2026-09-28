@@ -4,6 +4,7 @@
  * older databases automatically (see SCHEMA_VERSION).
  */
 import { DatabaseSync } from 'node:sqlite'
+import crypto from 'node:crypto'
 import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -399,6 +400,41 @@ try {
 } catch (error) {
   // Another process holds the write lock (e.g. `npm run db:seed` running right now).
   console.warn(`  Could not record the schema version yet (${error.message}). The server will continue.`)
+}
+
+/**
+ * A fresh installation (a brand-new database file) gets its own id.
+ *
+ * The app stores the id it signed in against. If it later fails to
+ * authenticate and the server reports a *different* id, the whole system was
+ * reinstalled or its data replaced — that is not an expired session, so the
+ * user is returned to the sign-in screen without the "your session ended"
+ * notice. Sessions that really did expire (7 days, signed out elsewhere,
+ * data reloaded on the same installation) still show it.
+ *
+ * The id lives in `meta`, so a data reload keeps it (the installation is the
+ * same) while a deleted/rebuilt database does not.
+ */
+let cachedInstallId = null
+export function installId() {
+  if (cachedInstallId) return cachedInstallId
+  try {
+    const row = get("SELECT value FROM meta WHERE key = 'install_id'")
+    if (row?.value) {
+      cachedInstallId = row.value
+      return cachedInstallId
+    }
+    cachedInstallId = crypto.randomBytes(8).toString('hex')
+    run(
+      "INSERT INTO meta (key, value) VALUES ('install_id', ?) ON CONFLICT(key) DO UPDATE SET value = excluded.value",
+      [cachedInstallId]
+    )
+    return cachedInstallId
+  } catch (error) {
+    console.warn(`  Could not record the installation id (${error.message}).`)
+    cachedInstallId = cachedInstallId || 'unknown'
+    return cachedInstallId
+  }
 }
 
 /* ------------------------------------------------------------------ */

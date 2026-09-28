@@ -846,6 +846,71 @@ await flow('A stale session notice disappears once details are typed', async () 
 })
 
 /* ------------------------------------------------------------------ */
+/* 17b. A reinstalled system is not an expired session                  */
+/* ------------------------------------------------------------------ */
+
+/** The installation id the running server reports. */
+async function currentInstallId() {
+  const res = await nodeFetch(`${API}/api/health`)
+  const body = await res.json()
+  return body.install
+}
+
+await flow('A reinstalled club system signs you out quietly, without the expiry notice', async () => {
+  const liveToken = TOKEN
+  TOKEN = ''
+  /* The situation after the whole system is reinstalled (new database, new
+     installation id): the browser still holds details from the old one. */
+  window.localStorage.setItem('ict-club-token', 'token-from-a-previous-installation')
+  window.localStorage.setItem('ict-club-install', 'installation-that-no-longer-exists')
+  const page = await mount('/')
+  try {
+    const text = await waitFor(
+      () => (/Sign in to your club/i.test(page.text()) ? page.text() : null),
+      { timeout: 12000, label: 'the sign-in screen' }
+    ).catch(() => page.text())
+    if (!/Sign in to your club/i.test(text)) {
+      throw new Error(`expected the sign-in screen, saw: ${text.replace(/\s+/g, ' ').slice(0, 140)}`)
+    }
+    if (/session ended/i.test(text)) {
+      throw new Error('the expiry notice was shown even though the system had just been reinstalled')
+    }
+    if (window.localStorage.getItem('ict-club-token')) throw new Error('the dead token was kept in storage')
+    return 'old details cleared and the ordinary sign-in screen shown — no false expiry notice'
+  } finally {
+    await page.unmount()
+    window.localStorage.removeItem('ict-club-token')
+    window.localStorage.removeItem('ict-club-install')
+    TOKEN = liveToken
+  }
+})
+
+await flow('A session that really expired on the same installation still explains itself', async () => {
+  const liveToken = TOKEN
+  TOKEN = ''
+  /* Same installation, token no longer accepted (signed out elsewhere, or the
+     session passed its 7 days): this one must keep the explanation. */
+  window.localStorage.setItem('ict-club-token', 'token-that-this-server-does-not-know')
+  window.localStorage.setItem('ict-club-install', await currentInstallId())
+  const page = await mount('/')
+  try {
+    const text = await waitFor(
+      () => (/Sign in to your club/i.test(page.text()) ? page.text() : null),
+      { timeout: 12000, label: 'the sign-in screen' }
+    ).catch(() => page.text())
+    if (!/session ended/i.test(text)) {
+      throw new Error(`the expiry notice was missing: ${text.replace(/\s+/g, ' ').slice(0, 140)}`)
+    }
+    return 'the same installation still explains that the session ended'
+  } finally {
+    await page.unmount()
+    window.localStorage.removeItem('ict-club-token')
+    window.localStorage.removeItem('ict-club-install')
+    TOKEN = liveToken
+  }
+})
+
+/* ------------------------------------------------------------------ */
 /* 18. A server that cannot be reached explains itself                 */
 /* ------------------------------------------------------------------ */
 
