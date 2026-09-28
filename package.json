@@ -18,7 +18,8 @@
     "build": "npm --prefix client run build",
     "test:flows": "node scripts/run-tests.mjs flows",
     "admin": "npm --prefix server run admin --",
-    "test:live": "node scripts/run-tests.mjs --live"
+    "test:live": "node scripts/run-tests.mjs --live",
+    "serve": "node scripts/serve.mjs"
   },
   "devDependencies": {
     "concurrently": "^9.1.2"

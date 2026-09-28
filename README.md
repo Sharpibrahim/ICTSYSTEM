@@ -59,18 +59,24 @@ Everything is searchable, filterable, sortable and exportable to CSV.
 ## Quick start
 
 ```bash
-# 1. install the root, server and client dependencies (one command)
-npm run setup
-
-# 2. load the demo school (82 members, 210 dues records, 1,178 attendance rows,
-#    12 meetings, 16 activities, 11 courses, 48 certificates, 10 projects…)
-npm run db:seed
-
-# 3. start the API and the web app together
-npm run dev
+# one command does everything: installs what is missing, builds the web app,
+# loads the sample school and starts the server
+npm run serve
 ```
 
-Then open **http://localhost:5173** and sign in with a demo account.
+Or step by step, if you prefer to see each stage:
+
+```bash
+npm run setup      # install the root, server and client dependencies
+npm run db:seed    # load the sample school (82 members, 210 dues records,
+                   # 1,178 attendance rows, 12 meetings, 16 activities,
+                   # 11 courses, 48 certificates, 10 projects…)
+npm run dev        # start the API and the Vite dev server together
+```
+
+`npm run serve -- --check` just reports what is installed, built and seeded without starting anything.
+
+Then open **http://localhost:4000** (or **http://localhost:5173** when you used `npm run dev`) and sign in.
 
 | Service | URL | Notes |
 | --- | --- | --- |
