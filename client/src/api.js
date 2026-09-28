@@ -66,6 +66,18 @@ export class ApiError extends Error {
   }
 }
 
+/** The request never reached the server: explain it in plain language. */
+function unreachable(err) {
+  const offline = typeof navigator !== 'undefined' && navigator.onLine === false
+  return new ApiError(
+    offline
+      ? 'This computer appears to be offline. Reconnect to the internet (or the school network) and try again.'
+      : 'Cannot reach the club system server. It may still be starting up — wait a few seconds and press Sign in again. If this keeps happening, ask whoever looks after the system to restart it.',
+    0,
+    { cause: err }
+  )
+}
+
 function buildQuery(params) {
   if (!params) return ''
   const search = new URLSearchParams()
@@ -83,11 +95,33 @@ export async function request(path, { method = 'GET', body, params, raw = false 
   if (token) headers.Authorization = `Bearer ${token}`
   if (body !== undefined) headers['Content-Type'] = 'application/json'
 
-  const res = await fetch(`${path}${buildQuery(params)}`, {
-    method,
-    headers,
-    body: body === undefined ? undefined : JSON.stringify(body)
-  })
+  const send = () =>
+    fetch(`${path}${buildQuery(params)}`, {
+      method,
+      headers,
+      body: body === undefined ? undefined : JSON.stringify(body)
+    })
+
+  /* A cold start (the server waking up, a laptop just booted) can fail the very
+     first request. Reading data and signing in can safely be tried twice; other
+     writes cannot, because a retry could save the same change twice. */
+  const canRetry = method === 'GET' || /\/auth\/(login|signup)$/.test(path)
+
+  let res
+  try {
+    res = await send()
+  } catch (err) {
+    if (canRetry) {
+      await new Promise((resolve) => setTimeout(resolve, 1200))
+      try {
+        res = await send()
+      } catch (retryErr) {
+        throw unreachable(retryErr)
+      }
+    } else {
+      throw unreachable(err)
+    }
+  }
 
   if (raw) {
     if (!res.ok) throw new ApiError(`Request failed (${res.status})`, res.status)

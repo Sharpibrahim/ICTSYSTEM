@@ -845,6 +845,35 @@ await flow('A stale session notice disappears once details are typed', async () 
   }
 })
 
+/* ------------------------------------------------------------------ */
+/* 18. A server that cannot be reached explains itself                 */
+/* ------------------------------------------------------------------ */
+
+await flow('An unreachable server gives a plain explanation, not a browser error', async () => {
+  window.localStorage.clear()
+  window.sessionStorage.clear()
+  /* Pretend the API is down (the server restarting, a dead sandbox): every
+     request fails the way a browser reports a refused connection. */
+  const realFetch = global.fetch
+  global.fetch = () => Promise.reject(new TypeError('Failed to fetch'))
+  const page = await mount('/')
+  try {
+    await attemptSignIn(page, ADMIN_LOGIN.username, ADMIN_LOGIN.password)
+    const shown = await waitFor(
+      () => (/Cannot reach the club system server|appears to be offline/i.test(page.text()) ? page.text() : null),
+      { timeout: 15000, label: 'a readable message about the unreachable server' }
+    ).catch(() => page.text())
+    if (!/Cannot reach the club system server/i.test(shown)) {
+      throw new Error(`no helpful message was shown: ${shown.replace(/\s+/g, ' ').slice(0, 200)}`)
+    }
+    if (/Failed to fetch|TypeError/i.test(shown)) throw new Error('the raw browser error was shown instead')
+    return 'the sign-in screen explained that the server could not be reached'
+  } finally {
+    global.fetch = realFetch
+    await page.unmount()
+  }
+})
+
 const failed = results.filter((r) => !r.ok)
 console.log(`\n  ${results.length - failed.length}/${results.length} write flows worked.`)
 if (failed.length) {
