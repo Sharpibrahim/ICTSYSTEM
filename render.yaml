@@ -1,0 +1,35 @@
+# Render blueprint — one permanent address for the club system.
+#
+# In Render: New → Blueprint → pick this repository → Apply.
+# Everything below is filled in for you; the only manual step is choosing the
+# instance type. The free instance works and sleeps when idle (the first visit
+# after a quiet spell takes ~30s to wake).
+#
+# Data: without a disk attached, Render rebuilds the container on each deploy
+# and the club data returns to the seeded sample set. To keep real data,
+# upgrade the instance and uncomment the `disk:` block at the bottom — that
+# mounts a persistent volume and points the database at it.
+services:
+  - type: web
+    name: ict-club-management-system
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    plan: free
+    region: frankfurt
+    branch: main
+    healthCheckPath: /api/health
+    autoDeploy: true
+    envVars:
+      - key: NODE_ENV
+        value: production
+
+      # Uncomment together with the disk block to store the database on the
+      # persistent volume instead of inside the container.
+      # - key: DB_PATH
+      #   value: /var/data/ictclub.db
+
+    # Requires a paid instance type.
+    # disk:
+    #   name: club-data
+    #   mountPath: /var/data
+    #   sizeGB: 1
