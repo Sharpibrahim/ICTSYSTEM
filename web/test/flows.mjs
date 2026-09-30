@@ -245,19 +245,23 @@ await flow('Register a student for a course and issue their certificate', async 
 await flow('Generate a report and save it as a record', async () => {
   const window = await page('/reports')
   try {
-    const editor = await waitFor(window, (w) => w.document.querySelector('textarea.textarea'), { label: 'the report draft' })
-    await waitFor(window, () => editor.value.length > 500, { timeout: 25000, label: 'the generated report text' }).catch((error) => {
-      const state = window.document.querySelector('.page') ? 'a report page' : 'no report page'
-      throw new Error(`${error.message} — the draft held ${editor.value.length} characters on ${state}; page errors: ${JSON.stringify((window.__errors || []).slice(0, 2))}`)
+    /* The studio paints once while it collects the figures and again with the
+       text, so always take the editor that is on the page right now. */
+    const grownEditor = await waitFor(window, (w) => {
+      const box = w.document.querySelector('textarea.textarea')
+      return box && box.value.length > 500 ? box : null
+    }, { timeout: 25000, label: 'the generated report text' }).catch((error) => {
+      const box = window.document.querySelector('textarea.textarea')
+      throw new Error(`${error.message} — the draft held ${box ? box.value.length : 'no'} characters; page errors: ${JSON.stringify((window.__errors || []).slice(0, 2))}`)
     })
-    const characters = editor.value.length
+    const characters = grownEditor.value.length
+    if (!/Period:|MEMBERSHIP|Attendance/i.test(grownEditor.value)) throw new Error('the draft does not read like a report')
     const before = await api('/api/reports?pageSize=1', { headers: auth })
     click(window, byText(window, 'button', /Save as a report record/i))
     await waitFor(window, async () => {
       const res = await api('/api/reports?pageSize=1', { headers: auth })
       return res.body && res.body.total > before.body.total ? true : null
     }, { timeout: 15000, label: 'the report record to be created' })
-    if (!/Period:|MEMBERSHIP|Attendance/i.test(editor.value)) throw new Error('the draft does not read like a report')
     return `report saved with ${characters} characters of generated text`
   } finally {
     window.close()
