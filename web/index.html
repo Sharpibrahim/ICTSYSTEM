@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ICT Club Management System</title>
+    <meta name="description" content="Members, executive committee, club dues, meetings, attendance, certificates, reports and projects for a secondary school ICT club." />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%234f46e5'/%3E%3Ctext x='16' y='22' font-family='Arial' font-size='13' font-weight='bold' fill='white' text-anchor='middle'%3EICT%3C/text%3E%3C/svg%3E" />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div id="app">
+      <div class="boot-splash">
+        <div class="boot-splash__logo">ICT</div>
+        <div class="boot-splash__text">Starting ICT Club…</div>
+      </div>
+    </div>
+
+    <!-- Plain scripts, no build step and no framework. Load order matters:
+         helpers first, then the screen modules, then the shell that wires
+         them to the routes. -->
+    <script src="/js/util.js"></script>
+    <script src="/js/icons.js"></script>
+    <script src="/js/api.js"></script>
+    <script src="/js/store.js"></script>
+    <script src="/js/router.js"></script>
+    <script src="/js/ui.js"></script>
+    <script src="/js/forms.js"></script>
+    <script src="/js/views/login.js"></script>
+    <script src="/js/views/dashboard.js"></script>
+    <script src="/js/views/resource.js"></script>
+    <script src="/js/views/record.js"></script>
+    <script src="/js/views/attendance.js"></script>
+    <script src="/js/views/reports.js"></script>
+    <script src="/js/views/settings.js"></script>
+    <script src="/js/views/verify.js"></script>
+    <script src="/js/views/certificate.js"></script>
+    <script src="/js/app.js"></script>
+  </body>
+</html>

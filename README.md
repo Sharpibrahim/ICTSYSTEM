@@ -9,8 +9,9 @@ Built for the way a secondary school actually runs: **classes S1–S6**, streams
 class representatives, a **teacher patron**, **parent/guardian contacts** and termly club dues in
 local currency (UGX by default).
 
-Built with **React + Vite** on the front end and **Express + SQLite** (Node's built-in `node:sqlite`) on
-the back end. No external database, no cloud services, no native build steps — `npm run dev` and you're in.
+Built with **plain HTML, CSS and JavaScript** on the front end and **Express + SQLite** (Node's built-in
+`node:sqlite`) on the back end. No framework, no bundler, no build step, no external database and no
+cloud services — the files in `web/` are exactly what the browser runs, so `npm run serve` and you're in.
 
 ---
 
@@ -60,39 +61,34 @@ Everything is searchable, filterable, sortable and exportable to CSV.
 ## Quick start
 
 ```bash
-# one command does everything: installs what is missing, builds the web app,
-# prepares the database and starts the server
+# one command does everything: installs what is missing, prepares the database
+# and starts the server (there is nothing to build)
 npm run serve
 ```
 
 Or step by step, if you prefer to see each stage:
 
 ```bash
-npm run setup      # install the root, server and client dependencies
+npm run setup      # install the dependencies
 npm run db:seed    # create the administrator account (only if the database is empty)
-npm run dev        # start the API and the Vite dev server together
+npm run dev        # start the server and restart it when a file changes
 ```
 
 The system starts **empty**: one administrator account and the club settings, no students, meetings
 or payments. Load the sample school only for training or demonstrations — see
 [Starting empty, or with the sample school](#starting-empty-or-with-the-sample-school).
 
-`npm run serve -- --check` just reports what is installed, built and seeded without starting anything.
+`npm run serve -- --check` just reports what is installed and seeded without starting anything.
 
-Then open **http://localhost:4000** (or **http://localhost:5173** when you used `npm run dev`) and sign in.
+Then open **http://localhost:4000** and sign in — the one address serves both the app and the API.
 
 | Service | URL | Notes |
 | --- | --- | --- |
-| Web app (Vite dev server) | http://localhost:5173 | proxies `/api` to the API |
-| API | http://localhost:4000 | `GET /api/health` for a quick check |
+| Web app | http://localhost:4000 | the same server also answers `/api` |
+| API | http://localhost:4000/api | `GET /api/health` for a quick check |
 | SQLite database | `server/data/ictclub.db` | created on first run |
 
-Production-style single-port run:
-
-```bash
-npm run build              # builds the client into client/dist
-npm --prefix server start  # API + the built client served from http://localhost:4000
-```
+Editing the app is just editing `web/` — refresh the browser and the change is there.
 
 ---
 
@@ -183,12 +179,23 @@ shared/schema.js      ← single source of truth: every record type, field, opti
       │                                  reports data, certificate verification, exports, backups,
       │                                  settings
       │
-      └── client/src/pages/…   renders tables, forms, boards and charts from the same schema
+      └── web/js/views/…      renders tables, forms, boards and charts from the same schema
 ```
 
 Because both sides read one schema file, adding a field or a whole new module is a one-file change:
 add it to `shared/schema.js` (**and** add the matching `CREATE TABLE` line in `server/src/db.js`), and the
 API, list view, filters, form, detail page, CSV export and search pick it up automatically.
+
+The front end is plain ES5-safe JavaScript in small files loaded by `web/index.html`:
+
+| File | What it does |
+| --- | --- |
+| `web/js/api.js` | every call to the API, the bearer token, and the plain-language errors |
+| `web/js/store.js` | the signed-in user, the schema and the club settings, cached once and shared |
+| `web/js/router.js` | hash-free routes (`/`, `/r/:resource`, `/r/:resource/:id`, `/attendance`, `/reports`, `/settings`, `/login`, `/verify`) |
+| `web/js/ui.js` | cards, tables, badges, dialogs, toasts, stat tiles |
+| `web/js/forms.js` | builds every create/edit form from the schema (including pickers, tag fields and date fields) |
+| `web/js/views/*.js` | one file per screen: login, dashboard, resource list, record detail, attendance, reports, settings, verify, certificate |
 
 ---
 
@@ -338,7 +345,7 @@ curl "localhost:4000/api/search?q=robotics"
 | --- | --- | --- |
 | `POST` | `/api/auth/login` · `/api/auth/signup` · `/api/auth/logout` | Session handling |
 | `GET` | `/api/auth/me` · `POST /api/auth/password` | Current user · change password |
-| `GET` | `/api/meta` | The full schema, option lists and settings (used by the client) |
+| `GET` | `/api/meta` | The full schema, option lists and settings (used by the web app) |
 | `GET` | `/api/options/:resource` | Lightweight `{value,label,sub}` lists for dropdowns |
 | `GET` | `/api/dashboard` | Every dashboard widget in one payload (including dues finance and defaulter watchlist) |
 | `POST` | `/api/dues/generate` | Create a term's dues records for a class or the whole school |
@@ -389,9 +396,9 @@ members ──┬─< cabinet            (student or teacher holds a position fo
 ```bash
 npm test              # every suite on an isolated database + its own API server
 npm run test:api      # 71 API checks
-npm run test:ui       # 42 screens + 8 interactions, for the admin, executive and member roles
-npm run test:flows    # 20 write flows: every action is saved and read back
-npm run test:empty    # 24 screens on a brand-new, empty installation
+npm run test:ui       # 39 screens, run three times: admin, executive and member
+npm run test:flows    # 17 write flows: every action is saved and read back
+npm run test:empty    # 24 screens and 8 checks on a brand-new, empty installation
 npm run test:live     # the same checks against the app you are already running (see the warning)
 ```
 
@@ -408,27 +415,28 @@ running app; that mode runs the sample-data loader, which replaces every record 
   attendance bulk-save, analytics, exports, backups, certificate verification, the course/certificate
   automations and the sample-data loader endpoint. Role checks create their own executive and student
   accounts and delete them again, so the database always ends with a single administrator account.
-- **UI smoke test** (`client/test/smoke.mjs`, 42 screens + 8 interactions) renders **every screen and every
-  view mode** (table, cards, board, calendar, class-filtered registers, detail pages) in headless jsdom,
-  failing on React errors, empty screens or values the API no longer sends. It then drives real
-  interactions: opening the create form, filtering a list, marking attendance, switching list views,
-  recording a dues payment, opening the dues generator and generating a report draft.
-- **Empty-system test** (`client/test/empty.mjs`, 24 screens) renders the screens a school sees on the day
-  it installs the club system — nothing but the administrator account — and fails on crashes, blank screens,
-  "NaN", "Invalid Date" or a list that does not explain that there is nothing yet.
-- **Write-flow test** (`client/test/flows.mjs`, 20 flows) proves the buttons really save: it fills the real
-  forms, submits them and re-reads the API to confirm the change — create/edit/delete a student (including
-  the chip-style interests field), record a dues payment and check the receipt plus the collection total,
-  save an attendance register, register a completer and issue their certificate, save a generated report,
-  create a note, save the club profile, verify a certificate on the public page, sign in with the
-  administrator username and email, search the student list (only matching rows may remain) and check that
-  a stale session notice clears as soon as typing starts and that a wrong password is reported as a
-  password problem rather than an ended session.
+- **Screen test** (`web/test/ui.mjs`, 39 screens × 3 roles) loads **every screen and every view mode**
+  (table, cards, board, calendar, class-filtered registers, detail pages) in headless jsdom — the real
+  pages, the real scripts, the real DOM. It fails on a JavaScript error, a blank screen, or a value the API
+  no longer sends (`undefined`, `NaN`, `[object Object]`, "Invalid Date").
+- **Empty-system test** (`web/test/empty.mjs`, 24 screens + 8 checks) opens the screens a school sees on the
+  day it installs the club system — nothing but the administrator account — and fails on crashes, blank
+  screens, a leftover sample school, or a list that does not explain that there is nothing yet. It then
+  adds the first student through the API, checks the list shows them, and removes them again.
+- **Write-flow test** (`web/test/flows.mjs`, 17 flows) proves the buttons really save: it fills the real
+  forms, clicks the real buttons and re-reads the API to confirm the change — create/edit/delete a student
+  (including the chip-style skills field), record a dues payment and check the collection total, save an
+  attendance register, enrol a student and issue a certificate, save a generated report, create a note, save
+  the club profile, verify a certificate on the public page, sign in with the administrator username and
+  email, search the student list (only matching rows may remain) and check that a stale session notice
+  clears as soon as typing starts and that a wrong password is reported as a password problem rather than
+  an ended session.
 - The UI suites are **role aware**: the runner signs in as the administrator, a temporary executive and a
   temporary student (created and removed automatically). Member runs skip the screens only an admin may
   open and *assert that write controls are hidden* from read-only students.
 - Credentials for the tests can be overridden with `ADMIN_USERNAME` / `ADMIN_PASSWORD`, and the isolated
-  server's port with `TEST_PORT`.
+  server's port with `TEST_PORT`. `FLOW_ONLY=<word>` runs only the write flows whose name contains that
+  word, and `DEBUG=1` prints stack traces.
 
 ## Everyday tasks (recipes)
 
@@ -456,21 +464,19 @@ running app; that mode runs the sample-data loader, which replaces every record 
 | API port | `PORT` env var | `4000` |
 | Bind address | `HOST` env var | `0.0.0.0` |
 | Database file | `DB_PATH` env var | `server/data/ictclub.db` |
-| Web dev port | `PORT` env var for the client | `5173` |
-| API target for the dev proxy | `API_URL` env var | `http://localhost:4000` |
 | Club name, school name, patron, academic year, current term, **dues per term**, currency, contacts, meeting day, attendance target | Settings screen (stored in the DB) | Club name, current year and term (the school fills in the rest) |
 
 ---
 
 ## Deployment
 
-The simplest deployment is a single process serving both the API and the built client:
+The simplest deployment is a single process serving both the API and the web app — the same files that
+are in `web/`, with no build step:
 
 ```bash
 npm run setup
-npm run build                 # → client/dist
 npm run db:seed               # first time only (administrator account)
-npm --prefix server start     # serves API + client on http://localhost:4000
+npm --prefix server start     # serves the app + API on http://localhost:4000
 ```
 
 ### A permanent web address
@@ -538,34 +544,38 @@ Notes:
 
 ```
 .
-├── package.json                 root scripts (setup, dev, seed, test, build)
+├── package.json                 root scripts (serve, start, dev, seed, test)
 ├── shared/
 │   └── schema.js                every module, field, option list and permission rule
 ├── server/
 │   ├── src/
-│   │   ├── index.js             Express app, static client hosting
+│   │   ├── index.js             Express app, static web/ hosting + SPA routes
 │   │   ├── db.js                node:sqlite connection, schema, helpers, settings
 │   │   ├── auth.js              scrypt hashing, sessions, role guards
 │   │   ├── crud.js              generic REST engine (SQL, validation, permissions, CSV)
 │   │   ├── routes.js            dashboard, attendance registers, dues register, reports data, exports…
 │   │   └── seed.js              administrator + sample school (db:seed / db:reset / db:demo)
-│   ├── test/api-test.mjs        64 API regression checks
+│   ├── test/api-test.mjs        71 API regression checks
 │   └── data/ictclub.db          SQLite database (created on first run, git-ignored)
-└── client/
-    ├── src/
-    │   ├── App.jsx              routes + auth guard
-    │   ├── api.js               fetch wrapper (bearer token, downloads)
-    │   ├── auth.jsx             session context
-    │   ├── hooks.js             option cache, debounce, async loader
-    │   ├── icons.jsx            inline SVG icon set
-    │   ├── styles.css           design system (light UI, dark sidebar, print styles)
-    │   ├── components/          Layout, DataTable, RecordForm, RecordDetail, charts, certificate
-    │   └── pages/               Dashboard, ResourcePage, RecordDetailPage, AttendancePage,
-    │                            ReportsPage, SettingsPage, LoginPage, VerifyPage
+└── web/                         the app the browser runs — no build step
+    ├── index.html               loads the files below in order
+    ├── styles.css               design system (light UI, dark sidebar, print styles)
+    ├── js/
+    │   ├── icons.js             inline SVG icon set
+    │   ├── util.js              DOM helpers, dates, money and number formatting
+    │   ├── api.js               fetch wrapper (bearer token, plain-language errors)
+    │   ├── ui.js                cards, tables, badges, dialogs, toasts, stat tiles
+    │   ├── forms.js             every create/edit form, built from the schema
+    │   ├── store.js             signed-in user, schema and settings cache
+    │   ├── router.js            routes and screen mounting
+    │   ├── app.js               shell: sidebar, search, routes
+    │   └── views/               login, dashboard, resource, record, attendance, reports,
+    │                            settings, verify, certificate
     └── test/
-        ├── smoke.mjs            headless render + interaction test (role aware)
+        ├── harness.mjs          loads real pages in jsdom and drives the real DOM
+        ├── ui.mjs               screen test (every route, every role)
         ├── flows.mjs            write-flow test: every action saved and read back
-        └── ssr-entry.jsx        harness entry used by both test suites
+        └── empty.mjs            the day-one screens of a new installation
 ```
 
 ---

@@ -12,6 +12,9 @@
  *   npm run test:empty     # the screens a brand-new installation shows
  *   npm run test:live      # run against an already running app (API_URL)
  *
+ * The UI, flow and empty suites load the real pages of the vanilla app in
+ * jsdom — no build step, because the app has none.
+ *
  * The main suites run against the sample school (server/data/test.db), loaded
  * with `seed.js --demo --reset`; the empty suite uses server/data/empty.db,
  * which holds nothing but the administrator account. Both files are
@@ -161,29 +164,22 @@ if (SUITES.includes('api')) {
   results.push({ name: 'API checks', ok: code === 0 })
 }
 
-if (SUITES.includes('ui') || SUITES.includes('flows') || SUITES.includes('empty')) {
-  heading('Building the client test bundle')
-  const build = await run('npm', ['run', 'test:build'], { cwd: path.join(ROOT, 'client'), env })
-  if (build !== 0) {
-    console.error('  The client test bundle could not be built.\n')
-    process.exit(1)
-  }
-}
-
+/* The app is plain HTML/CSS/JS, so the suites load the real pages — there is
+   nothing to build between the code and the test. */
 if (SUITES.includes('ui')) {
   for (const role of ['admin', 'cabinet', 'member']) {
-    heading(`UI smoke test — ${role} view`)
-    const code = await run(process.execPath, ['test/smoke.mjs'], {
-      cwd: path.join(ROOT, 'client'),
+    heading(`Screens — ${role} view`)
+    const code = await run(process.execPath, ['web/test/ui.mjs'], {
+      cwd: ROOT,
       env: { ...env, AS: role }
     })
-    results.push({ name: `UI smoke (${role})`, ok: code === 0 })
+    results.push({ name: `Screens (${role})`, ok: code === 0 })
   }
 }
 
 if (SUITES.includes('flows')) {
   heading('Write flows (every action saved and read back)')
-  const code = await run(process.execPath, ['test/flows.mjs'], { cwd: path.join(ROOT, 'client'), env })
+  const code = await run(process.execPath, ['web/test/flows.mjs'], { cwd: ROOT, env })
   results.push({ name: 'Write flows', ok: code === 0 })
 }
 
@@ -191,8 +187,8 @@ if (SUITES.includes('empty')) {
   heading('Empty system (what the school sees on day one)')
   stopIsolatedServer()
   await startIsolatedServer({ db: EMPTY_DB, port: TEST_EMPTY_PORT, sample: false, label: 'empty-system' })
-  const code = await run(process.execPath, ['test/empty.mjs'], {
-    cwd: path.join(ROOT, 'client'),
+  const code = await run(process.execPath, ['web/test/empty.mjs'], {
+    cwd: ROOT,
     env: { ...process.env, API_URL: `http://127.0.0.1:${TEST_EMPTY_PORT}` }
   })
   results.push({ name: 'Empty system', ok: code === 0 })

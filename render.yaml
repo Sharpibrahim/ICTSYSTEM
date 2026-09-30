@@ -6,9 +6,10 @@
 # after a quiet spell takes ~30s to wake).
 #
 # Data: without a disk attached, Render rebuilds the container on each deploy
-# and the club data returns to the seeded sample set. To keep real data,
-# upgrade the instance and uncomment the `disk:` block at the bottom — that
-# mounts a persistent volume and points the database at it.
+# and the club data starts again from an empty installation (the administrator
+# account and the club settings; no sample data is ever loaded automatically).
+# To keep real data, upgrade the instance and uncomment the `disk:` block at
+# the bottom — that mounts a persistent volume and points the database at it.
 services:
   - type: web
     name: ict-club-management-system

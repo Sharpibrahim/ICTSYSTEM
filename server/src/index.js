@@ -36,22 +36,28 @@ for (const resource of RESOURCES) {
   app.use(`/api/${resource.key}`, resourceRouter(resource.key))
 }
 
-// Serve the built client when it exists (single-port deployment).
-const clientDist = path.resolve(__dirname, '../../client/dist')
-if (fs.existsSync(clientDist)) {
+/* Serve the web app: plain HTML, CSS and JavaScript from ./web — no build
+   step, so a deployment only needs this folder. Every unknown path returns
+   index.html so bookmarked screens (/r/members/3, /reports, /verify) open on a
+   refresh, while /api/* keeps returning JSON. */
+const webDir = path.resolve(__dirname, '../../web')
+if (fs.existsSync(webDir)) {
   app.use(
-    express.static(clientDist, {
-      /* The bundles are content-hashed, so they can be cached hard, but
-         index.html must always be revalidated or a browser can keep running
-         an old build after an upgrade. */
+    express.static(webDir, {
       setHeaders: (res, filePath) => {
-        if (filePath.endsWith('.html')) res.setHeader('Cache-Control', 'no-cache, must-revalidate')
+        /* The files carry no content hash, so the browser must always
+           revalidate them — otherwise an upgrade can leave an old screen
+           running in an open tab. */
+        res.setHeader('Cache-Control', 'no-cache, must-revalidate')
+        if (filePath.endsWith('.html') || filePath.endsWith('.js') || filePath.endsWith('.css')) {
+          res.setHeader('Content-Type', filePath.endsWith('.js') ? 'text/javascript; charset=utf-8' : filePath.endsWith('.css') ? 'text/css; charset=utf-8' : 'text/html; charset=utf-8')
+        }
       }
     })
   )
   app.get(/^(?!\/api).*/, (_req, res) => {
     res.setHeader('Cache-Control', 'no-cache, must-revalidate')
-    res.sendFile(path.join(clientDist, 'index.html'))
+    res.sendFile(path.join(webDir, 'index.html'))
   })
 }
 

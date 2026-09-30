@@ -3,27 +3,25 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "ICT Club Management System for secondary schools - students, executive committee, club dues, meetings, activities, courses, attendance, reports, certificates, notes and projects.",
+  "description": "ICT Club Management System for a secondary school \u2014 plain HTML, CSS and JavaScript front end on a Node + SQLite API",
   "scripts": {
-    "setup": "npm install --no-audit --no-fund && npm --prefix server install --no-audit --no-fund && npm --prefix client install --no-audit --no-fund",
-    "dev": "concurrently -n API,WEB -c cyan,magenta \"npm:dev:api\" \"npm:dev:web\"",
+    "serve": "node scripts/serve.mjs",
+    "start": "npm --prefix server start",
+    "dev": "npm --prefix server run dev",
     "dev:api": "npm --prefix server run dev",
-    "dev:web": "npm --prefix client run dev",
-    "start": "npm run dev",
+    "setup": "npm install --no-audit --no-fund && npm --prefix server install --no-audit --no-fund",
     "db:seed": "npm --prefix server run seed",
-    "db:demo": "npm --prefix server run demo",
     "db:reset": "npm --prefix server run reset",
+    "db:demo": "npm --prefix server run demo",
+    "admin": "npm --prefix server run admin --",
     "test": "node scripts/run-tests.mjs",
     "test:api": "node scripts/run-tests.mjs api",
     "test:ui": "node scripts/run-tests.mjs ui",
-    "build": "npm --prefix client run build",
     "test:flows": "node scripts/run-tests.mjs flows",
-    "admin": "npm --prefix server run admin --",
-    "test:live": "node scripts/run-tests.mjs --live",
-    "serve": "node scripts/serve.mjs",
-    "test:empty": "node scripts/run-tests.mjs empty"
+    "test:empty": "node scripts/run-tests.mjs empty",
+    "test:live": "node scripts/run-tests.mjs --live"
   },
   "devDependencies": {
-    "concurrently": "^9.1.2"
+    "jsdom": "^30.0.0"
   }
 }

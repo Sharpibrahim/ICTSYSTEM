@@ -3,13 +3,13 @@
  *
  *   npm run serve
  *
- * It checks what is missing and fixes it, then starts the server:
- *   1. installs the root, server and client dependencies if node_modules is absent
- *   2. builds the client into client/dist if it is absent
- *   3. prepares the database (administrator account only) if it is absent
- *   4. starts the API, which also serves the built client on http://localhost:4000
+ * The app is plain HTML, CSS and JavaScript — there is no build step, so
+ * getting started is short:
+ *   1. installs the dependencies if node_modules is absent
+ *   2. prepares the database (administrator account only) if it is absent
+ *   3. starts the API, which also serves the web app on http://localhost:4000
  *
- * `npm run serve -- --check` only performs steps 1-3 and reports what it found,
+ * `npm run serve -- --check` only performs steps 1-2 and reports what it found,
  * which is handy after a fresh clone or a machine restart.
  */
 import { spawnSync } from 'node:child_process'
@@ -39,20 +39,21 @@ function report(label, done) {
 console.log('\n  ICT Club Management System — starting up\n  ' + '─'.repeat(60))
 
 /* 1. dependencies ---------------------------------------------------- */
-const depsMissing =
-  !exists('node_modules') || !exists('server', 'node_modules') || !exists('client', 'node_modules')
+const depsMissing = !exists('node_modules') || !exists('server', 'node_modules')
 if (depsMissing) {
   run('Installing dependencies (first run only)', 'npm', ['run', 'setup'])
 } else {
   report('Dependencies installed', true)
 }
 
-/* 2. client build ---------------------------------------------------- */
-if (!exists('client', 'dist', 'index.html')) {
-  run('Building the web app', 'npm', ['run', 'build'])
-} else {
-  report('Web app built', true)
+/* 2. the web app (plain HTML/CSS/JS — nothing to build) --------------- */
+const appFiles = ['index.html', 'styles.css', 'js/app.js']
+const missing = appFiles.filter((file) => !exists('web', file))
+if (missing.length) {
+  console.error(`\n  ✗ The web app is incomplete: web/${missing.join(', web/')} is missing.\n`)
+  process.exit(1)
 }
+report('Web app ready (no build step needed)', true)
 
 /* 3. database -------------------------------------------------------- */
 if (!exists('server', 'data', 'ictclub.db')) {
