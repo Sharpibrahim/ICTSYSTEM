@@ -179,7 +179,7 @@ shared/schema.js      ← single source of truth: every record type, field, opti
       │                                  reports data, certificate verification, exports, backups,
       │                                  settings
       │
-      └── web/js/views/…      renders tables, forms, boards and charts from the same schema
+      └── web/js/screens/…   renders tables, forms, boards and charts from the same schema
 ```
 
 Because both sides read one schema file, adding a field or a whole new module is a one-file change:
@@ -190,12 +190,14 @@ The front end is plain ES5-safe JavaScript in small files loaded by `web/index.h
 
 | File | What it does |
 | --- | --- |
-| `web/js/api.js` | every call to the API, the bearer token, and the plain-language errors |
-| `web/js/store.js` | the signed-in user, the schema and the club settings, cached once and shared |
-| `web/js/router.js` | hash-free routes (`/`, `/r/:resource`, `/r/:resource/:id`, `/attendance`, `/reports`, `/settings`, `/login`, `/verify`) |
-| `web/js/ui.js` | cards, tables, badges, dialogs, toasts, stat tiles |
-| `web/js/forms.js` | builds every create/edit form from the schema (including pickers, tag fields and date fields) |
-| `web/js/views/*.js` | one file per screen: login, dashboard, resource list, record detail, attendance, reports, settings, verify, certificate |
+| `web/js/kit.js` | DOM helpers, the inline SVG icon set, dates, money and number formatting |
+| `web/js/net.js` | every call to the API, the bearer token, and the plain-language errors |
+| `web/js/state.js` | the signed-in user, the schema and the club settings, cached once and shared |
+| `web/js/widgets.js` | cards, tables, badges, dialogs, toasts, stat tiles and the small bar/column charts |
+| `web/js/fields.js` | builds every create/edit form from the schema (pickers, tag fields, dates, checkboxes) |
+| `web/js/nav.js` | the routes (`/`, `/r/<module>`, `/r/<module>/<id>`, `/attendance`, `/reports`, `/settings`, `/login`, `/verify`) and the sidebar shell |
+| `web/js/boot.js` | starts the app: restores the session, fetches the schema, paints the current address |
+| `web/js/screens/*.js` | one file per screen: signin, dashboard, list, detail, attendance, reports, settings, verify, certificate |
 
 ---
 
@@ -561,15 +563,14 @@ Notes:
     ├── index.html               loads the files below in order
     ├── styles.css               design system (light UI, dark sidebar, print styles)
     ├── js/
-    │   ├── icons.js             inline SVG icon set
-    │   ├── util.js              DOM helpers, dates, money and number formatting
-    │   ├── api.js               fetch wrapper (bearer token, plain-language errors)
-    │   ├── ui.js                cards, tables, badges, dialogs, toasts, stat tiles
-    │   ├── forms.js             every create/edit form, built from the schema
-    │   ├── store.js             signed-in user, schema and settings cache
-    │   ├── router.js            routes and screen mounting
-    │   ├── app.js               shell: sidebar, search, routes
-    │   └── views/               login, dashboard, resource, record, attendance, reports,
+    │   ├── kit.js               DOM helpers, icons, formatting
+    │   ├── net.js               fetch wrapper (bearer token, plain-language errors)
+    │   ├── state.js             signed-in user, schema and settings cache
+    │   ├── widgets.js           cards, tables, dialogs, toasts, charts
+    │   ├── fields.js            every create/edit form, built from the schema
+    │   ├── nav.js               routes and the sidebar shell
+    │   ├── boot.js              startup
+    │   └── screens/             signin, dashboard, list, detail, attendance, reports,
     │                            settings, verify, certificate
     └── test/
         ├── harness.mjs          loads real pages in jsdom and drives the real DOM
