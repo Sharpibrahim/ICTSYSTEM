@@ -428,6 +428,41 @@ await flow('A reinstalled club system signs you out quietly', async () => {
   }
 })
 
+await flow('Signing in works even when the browser refuses to keep storage', async () => {
+  /* A preview embedded in a frame, private browsing, or storage switched off:
+     the session must live in memory for the page instead of vanishing. */
+  const window = await open('/login', { blockStorage: true })
+  try {
+    await signIn(window, ADMIN.username, ADMIN.password)
+    await waitFor(window, (w) => /Good (morning|afternoon|evening)/i.test(w.document.body.textContent), { timeout: 20000, label: 'the dashboard with storage blocked' })
+    if (/Your session ended/i.test(text(window))) throw new Error('a session notice appeared')
+    return 'signed in and stayed signed in without localStorage'
+  } finally {
+    window.close()
+  }
+})
+
+await flow('An expired session never stops the next sign-in', async () => {
+  /* The reported situation: the old session really expired, the sign-in screen
+     explains it, and entering the credentials must still open the dashboard. */
+  const health = await api('/api/health')
+  const install = (health.body && health.body.install) || ''
+  const window = await open('/login', {
+    token: 'token-that-expired-on-this-installation',
+    user: { id: 1, name: 'Old Session', role: 'admin' },
+    install
+  })
+  try {
+    await waitFor(window, (w) => /session ended/i.test(w.document.body.textContent), { timeout: 15000, label: 'the expiry notice' })
+    await signIn(window, ADMIN.username, ADMIN.password)
+    await waitFor(window, (w) => /Good (morning|afternoon|evening)/i.test(w.document.body.textContent), { timeout: 20000, label: 'the dashboard' })
+    if (/Your session ended/i.test(text(window))) throw new Error('the old notice was still on screen after signing in')
+    return 'the notice explained the expiry, then the sign-in worked'
+  } finally {
+    window.close()
+  }
+})
+
 /* ------------------------------------------------------------------ */
 
 console.log(`\n  ${results.filter((r) => r.ok).length}/${results.length} write flows worked.`)

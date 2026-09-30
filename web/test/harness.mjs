@@ -21,7 +21,7 @@ console.error = (...args) => {
 
 /** Loads a route in jsdom with the app's own scripts, primed with a session. */
 export async function open(path, options = {}) {
-  const { token, user, install } = options
+  const { token, user, install, blockStorage } = options
   const dom = await JSDOM.fromURL(`${API}${path}`, {
     runScripts: 'dangerously',
     resources: 'usable',
@@ -44,13 +44,23 @@ export async function open(path, options = {}) {
         const url = typeof input === 'string' && input.startsWith('/') ? `${API}${input}` : input
         return fetch(url, init)
       }
-      if (token) {
-        window.localStorage.setItem('ict-club-token', token)
-        window.localStorage.setItem('ict-club-user', JSON.stringify(user || {}))
+      /* Some browsers refuse storage inside an embedded preview (a sandboxed
+         iframe, private mode, cookies blocked). The app must still work, so
+         this can be switched on to prove it. */
+      if (blockStorage) {
+        Object.defineProperty(window, 'localStorage', {
+          configurable: true,
+          get() { throw new Error('localStorage is blocked in this browser') }
+        })
+      } else {
+        if (token) {
+          window.localStorage.setItem('ict-club-token', token)
+          window.localStorage.setItem('ict-club-user', JSON.stringify(user || {}))
+        }
+        /* The installation id a previous installation left in this browser — used
+           to check that a replaced system signs out quietly. */
+        if (install) window.localStorage.setItem('ict-club-install', install)
       }
-      /* The installation id a previous installation left in this browser — used
-         to check that a replaced system signs out quietly. */
-      if (install) window.localStorage.setItem('ict-club-install', install)
       window.scrollTo = () => {}
       window.print = () => {}
       window.open = () => null

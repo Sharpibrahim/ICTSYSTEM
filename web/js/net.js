@@ -17,15 +17,56 @@
 
   var SESSION_NOTICE = 'Your session ended, so you were signed out. Please sign in again to continue.'
 
+  /**
+   * Where the session lives.
+   *
+   * The browser's storage is only a cache: some browsers refuse it completely
+   * (a preview embedded in a sandboxed frame, private browsing, storage turned
+   * off), and a school computer can have it full. If every read and write went
+   * straight to localStorage, signing in would appear to do nothing in those
+   * browsers — you would land back on the sign-in screen.
+   *
+   * So the truth for the page is an in-memory copy, and localStorage is a
+   * best-effort cache that lets the next visit stay signed in.
+   */
+  var memory = {}
+  var storageUsable = null
+
+  function storageWorks() {
+    if (storageUsable !== null) return storageUsable
+    try {
+      var probe = '__ict-club-probe__'
+      window.localStorage.setItem(probe, '1')
+      window.localStorage.removeItem(probe)
+      storageUsable = true
+    } catch (error) {
+      storageUsable = false
+    }
+    return storageUsable
+  }
+
   function read(key) {
-    try { return window.localStorage.getItem(key) } catch (error) { return null }
+    if (Object.prototype.hasOwnProperty.call(memory, key)) return memory[key]
+    if (!storageWorks()) return (memory[key] = null)
+    try {
+      return (memory[key] = window.localStorage.getItem(key))
+    } catch (error) {
+      storageUsable = false
+      return (memory[key] = null)
+    }
   }
 
   function write(key, value) {
+    var empty = value === null || value === undefined || value === ''
+    if (empty) delete memory[key]
+    else memory[key] = value
+    if (!storageWorks()) return
     try {
-      if (value === null || value === undefined || value === '') window.localStorage.removeItem(key)
+      if (empty) window.localStorage.removeItem(key)
       else window.localStorage.setItem(key, value)
-    } catch (error) { /* private mode — the app still works, it just forgets */ }
+    } catch (error) {
+      storageUsable = false
+    }
   }
 
   var getToken = function () { return read(TOKEN_KEY) || '' }
