@@ -87,7 +87,7 @@ The full matrix lives in `js/core/auth.js`.
 - **Toasts, confirmations and undo** — destructive actions ask first and can be undone from the toast.
 - **Empty, loading and error states** everywhere, with accessible labels, keyboard support and tooltips.
 - **Print previews** for member profiles, ID cards, certificates, meeting minutes, reports and attendance sheets, each downloadable as a standalone HTML document for PDF printing.
-- **Certificates** are print-first: an ornate built-in background (cream paper, double gold rule frame, corner scrollwork, damask texture and a faint centre medallion) under the club crest, recipient name, achievement, two signature lines and the serial number — identical on screen, on paper and in the exported HTML. Any A4-landscape PNG/JPEG can be uploaded as the background in **Settings → Club information → Certificate background** (a soft scrim keeps the text readable), and the built-in design is restored with one click. Preview: `docs/certificate-design-preview.png`.
+- **Certificates** are print-first and locked to **A4 landscape (297 × 210 mm)**, with the club crest, recipient name, achievement, two signature lines and the serial number on top of the background. Two vector built-in designs ship with the platform: the default **Navy & gold** club template (navy corner blocks, diagonal pinstripes, gold rule frame and corner hooks) and **Cream & ornate** (cream paper, double gold rule frame, corner scrollwork, damask texture and a faint centre medallion); any A4-landscape PNG/JPEG can also be uploaded in **Settings → Club information → Certificate background** (a soft scrim keeps the text readable over photos). Whatever is chosen renders identically on screen, on paper and in the exported HTML. Preview: `docs/certificate-design-preview.png`.
 - **Card studio** for member and cabinet cards: CR80 size (85.6 × 54 mm), front and reverse faces, photos or initials, barcode and membership code, signature lines, live preview, eight cards per A4 sheet (2 × 4) with cut guides, single-record printing from any detail page, and a self-contained HTML download for print shops.
 - **Administrator handbook** built into the app (`#/manual`, visible only to the Administrator role and linked from the account menu) with instant search, expandable Q&A, and a print/PDF version.
 - **Data tools** — full JSON backup/restore (merge or replace), CSV import, CSV export per module, and a one-click demo-data reset.
@@ -115,7 +115,7 @@ js/
     crud.js                create/edit/delete/duplicate flows, code previews, export
     print.js               printable documents + preview modal + print stylesheet
     cards.js               card studio: member ID cards and cabinet position cards
-    certbg.js              certificate backgrounds: built-in artwork + club-uploaded image
+    certbg.js              certificate backgrounds: 2 built-in designs + club-uploaded image
     metrics.js             every statistic used by dashboards and analytics
     router.js              hash router with params, guards and error boundaries
     module.js              declarative list/detail/CRUD module builder
@@ -126,7 +126,8 @@ js/
 assets/logo/logo.svg       club mark used in the app, login screen and printed documents
 docs/MRHS-ICT-Club-Master-User-Manual.pdf   printable copy of the in-app manual
 docs/certificate-design-preview.png        rendered preview of the certificate design
-docs/certificate-background.svg            the built-in background artwork (also generated at runtime)
+docs/certificate-template-background.svg   the default navy & gold certificate artwork
+docs/certificate-background.svg            the classic cream certificate artwork
 ```
 
 ### Data layer

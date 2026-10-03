@@ -20,9 +20,68 @@
   var custom = null;        /* { fileId, dataUrl } once resolved */
   var loading = null;
 
-  /* ══ Built-in design ═══════════════════════════════════════════════════ */
+  /* ══ Built-in designs ═════════════════════════════════════════════════ */
   var W = 1123, H = 794;              /* A4 landscape at 96 dpi */
 
+  /**
+   * Navy & gold template — the club's certificate design: white paper, gold
+   * double rule frame with bracket corners, navy angular blocks in the top
+   * right and bottom left with gold bevels, and diagonal grey pinstripes.
+   * Vector, so it prints sharp at any paper size.
+   */
+  function templateSVG() {
+    var navy = '#0d2a5e', navyLight = '#173a78', grey = '#dfe2e7', greySoft = '#f3f4f6';
+    return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ' + W + ' ' + H + '" preserveAspectRatio="none">' +
+      '<defs>' +
+        '<linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">' +
+          '<stop offset="0" stop-color="#a8842c"/><stop offset=".35" stop-color="#e8cd8b"/>' +
+          '<stop offset=".62" stop-color="#c9a24c"/><stop offset="1" stop-color="#f0dda6"/>' +
+        '</linearGradient>' +
+        '<linearGradient id="gold2" x1="0" y1="1" x2="1" y2="0">' +
+          '<stop offset="0" stop-color="#c9a24c"/><stop offset=".5" stop-color="#f4e3b4"/>' +
+          '<stop offset="1" stop-color="#b8912f"/>' +
+        '</linearGradient>' +
+        '<pattern id="pin" width="24" height="24" patternUnits="userSpaceOnUse">' +
+          '<path d="M0 24 L24 0" stroke="' + grey + '" stroke-width="2.4"/>' +
+        '</pattern>' +
+      '</defs>' +
+
+      /* paper */
+      '<rect width="' + W + '" height="' + H + '" fill="#ffffff"/>' +
+
+      /* grey pinstripe wedges — kept to the outer corners */
+      '<polygon points="0,0 470,0 0,300" fill="' + greySoft + '"/>' +
+      '<polygon points="0,0 392,0 0,246" fill="url(#pin)"/>' +
+      '<polygon points="1123,794 742,794 1123,606" fill="' + greySoft + '"/>' +
+      '<polygon points="1123,794 806,794 1123,668" fill="url(#pin)"/>' +
+
+      /* navy blocks with a lighter bevel along the diagonal */
+      '<polygon points="640,0 1123,0 1123,333 900,333" fill="' + navy + '"/>' +
+      '<polygon points="640,0 700,0 960,333 900,333" fill="' + navyLight + '"/>' +
+      '<polygon points="0,572 200,572 427,794 0,794" fill="' + navy + '"/>' +
+      '<polygon points="152,572 200,572 427,794 379,794" fill="' + navyLight + '"/>' +
+
+      /* gold accents following the diagonals */
+      '<path d="M600 0 L860 333" stroke="url(#gold)" stroke-width="3" fill="none"/>' +
+      '<path d="M427 794 L240 663" stroke="url(#gold)" stroke-width="3" fill="none"/>' +
+
+      /* rounded gold corner hooks (top left and bottom right, as on the club template) */
+      '<path d="M109 180 V109 Q109 83 135 83 H277" fill="none" stroke="url(#gold2)" stroke-width="11" stroke-linecap="round"/>' +
+      '<path d="M1014 614 V685 Q1014 711 988 711 H846" fill="none" stroke="url(#gold2)" stroke-width="11" stroke-linecap="round"/>' +
+
+      /* gold double rule frame */
+      '<rect x="88" y="67" width="947" height="660" fill="none" stroke="url(#gold)" stroke-width="2.6"/>' +
+      '<rect x="96" y="75" width="931" height="644" fill="none" stroke="url(#gold)" stroke-width="1.2" opacity=".85"/>' +
+
+      /* bracket corners: thicker, slightly extended ends */
+      '<g stroke="url(#gold2)" stroke-width="5.4" stroke-linecap="round" fill="none">' +
+        '<path d="M88 151 V67 H172"/><path d="M951 67 H1035 V151"/>' +
+        '<path d="M88 643 V727 H172"/><path d="M951 727 H1035 V643"/>' +
+      '</g>' +
+    '</svg>';
+  }
+
+  /** Classic cream design — cream paper, ornate scrollwork, centre medallion. */
   function svg() {
     var gold = '#b8933f', goldLight = '#d9c185', navy = '#1b3a8f', cream = '#fdfbf4';
 
@@ -118,10 +177,21 @@
     '</svg>';
   }
 
-  var cachedURI = null;
+  var cachedURI = null, cachedTemplateURI = null;
   function dataURI() {
     if (!cachedURI) cachedURI = 'data:image/svg+xml;utf8,' + encodeURIComponent(svg());
     return cachedURI;
+  }
+  function templateURI() {
+    if (!cachedTemplateURI) cachedTemplateURI = 'data:image/svg+xml;utf8,' + encodeURIComponent(templateSVG());
+    return cachedTemplateURI;
+  }
+  /** Which built-in design is active: 'template' (default) or 'classic'. */
+  function design() {
+    var m = settings().certificateBgMode;
+    if (m === 'custom') return 'custom';
+    if (m === 'classic') return 'classic';
+    return 'template';
   }
 
   /* ══ Club-supplied background ══════════════════════════════════════════ */
@@ -159,7 +229,7 @@
     var nodes = document.querySelectorAll('[data-cert-bg="layer"]');
     Array.prototype.forEach.call(nodes, function (node) {
       if (!useCustom()) {
-        node.className = 'cert-bg-layer cert-bg-builtin';
+        node.className = 'cert-bg-layer cert-bg-' + design();
         node.removeAttribute('style');
         var scrim = node.parentNode && node.parentNode.querySelector('[data-cert-bg="scrim"]');
         if (scrim) scrim.remove();
@@ -177,19 +247,19 @@
   }
 
   /* ══ Markup + CSS ══════════════════════════════════════════════════════ */
-  /** Background layers for the certificate (image + readability scrim). */
+  /** Background layers for the certificate (artwork + readability scrim). */
   function layerHTML() {
-    var id = settings().certificateBgFileId;
-    if (id) {
+    var mode = design();
+    if (mode === 'custom') {
       loadCustom();
       if (useCustom()) {
         return '<div class="cert-bg-layer custom" data-cert-bg="layer" style="background-image:url(' + custom.dataUrl + ')"></div>' +
           '<div class="cert-scrim" data-cert-bg="scrim"></div>';
       }
-      /* still loading — the built-in design shows first, then swaps */
-      return '<div class="cert-bg-layer cert-bg-builtin" data-cert-bg="layer"></div><div class="cert-scrim" data-cert-bg="scrim"></div>';
+      /* still loading — show the club template until the image resolves */
+      return '<div class="cert-bg-layer cert-bg-template" data-cert-bg="layer"></div><div class="cert-scrim" data-cert-bg="scrim"></div>';
     }
-    return '<div class="cert-bg-layer cert-bg-builtin" data-cert-bg="layer"></div>';
+    return '<div class="cert-bg-layer cert-bg-' + mode + '" data-cert-bg="layer"></div>';
   }
 
   function hasBackground() { return true; }
@@ -198,12 +268,31 @@
     return [
       '.cert-bg-layer{position:absolute;inset:0;z-index:0;background-repeat:no-repeat;background-position:center center;background-size:100% 100%;pointer-events:none}',
       '.cert-bg-layer.custom{background-size:cover}',
-      '.cert-scrim{position:absolute;inset:0;z-index:0;background:rgba(255,253,247,.72);pointer-events:none}',
-      '.cert-bg-builtin{background-image:url("' + dataURI() + '")}',
+      '.cert-scrim{position:absolute;inset:0;z-index:0;background:rgba(255,253,247,.75);pointer-events:none}',
+      '.cert-bg-template{background-image:url("' + templateURI() + '")}',
+      '.cert-bg-classic{background-image:url("' + dataURI() + '")}',
       '.cert-preview.has-bg::before,.cert-preview.has-bg::after{display:none}',
-      '.cert-preview.has-bg{padding:5.1% 5.6%;aspect-ratio:297/210;display:flex;flex-direction:column;justify-content:center;background:#fff}',
+      '.cert-preview.has-bg{padding:9% 10.4% 9.6%;aspect-ratio:297/210;display:flex;flex-direction:column;justify-content:center;background:#fff}',
       '.cert-preview.has-bg .cert-frame-deco{display:none}',
-      '@media (max-width:900px){.cert-preview.has-bg{padding:34px 30px 30px}}'
+      '@media (max-width:900px){.cert-preview.has-bg{padding:7.5% 8%}' +
+        '.cert-preview.has-bg .cert-crest{width:52px;height:52px}.cert-preview.has-bg .cert-title{font-size:1.6rem}' +
+        '.cert-preview.has-bg .cert-name{font-size:1.35rem}}' +
+      /* Phones keep the A4 landscape ratio: the frame never turns portrait, the
+         text inside simply scales down so everything still fits. */
+      '@media (max-width:640px){.cert-preview.has-bg{padding:6% 6.5%;aspect-ratio:297/210}' +
+        '.cert-preview.has-bg .cert-crest{width:40px;height:40px;margin-bottom:6px}' +
+        '.cert-preview.has-bg .cert-crest svg{width:22px;height:22px}' +
+        '.cert-preview.has-bg .cert-org{font-size:.5rem;letter-spacing:.2em}' +
+        '.cert-preview.has-bg .cert-school{font-size:.6rem}' +
+        '.cert-preview.has-bg .cert-title{font-size:1.05rem;margin:5px 0 1px}' +
+        '.cert-preview.has-bg .cert-type{font-size:.6rem}' +
+        '.cert-preview.has-bg .cert-lead{font-size:.6rem;margin-top:7px}' +
+        '.cert-preview.has-bg .cert-name{font-size:1rem;padding-bottom:5px;min-width:70%}' +
+        '.cert-preview.has-bg .cert-body{font-size:.6rem;margin-top:8px;line-height:1.5}' +
+        '.cert-preview.has-bg .cert-meta{margin-top:16px;gap:12px}' +
+        '.cert-preview.has-bg .cert-seal{width:44px;height:44px;font-size:.4rem;border-width:2px}' +
+        '.cert-preview.has-bg .cert-sign strong{font-size:.6rem}.cert-preview.has-bg .cert-sign span{font-size:.56rem}' +
+        '.cert-preview.has-bg .cert-no{font-size:.56rem;margin-top:8px}}'
     ].join('\n');
   }
 
@@ -232,16 +321,23 @@
 
   function clearCustom() {
     var old = settings().certificateBgFileId;
-    Store.saveSettings({ certificateBgFileId: null, certificateBgMode: 'builtin' });
+    Store.saveSettings({ certificateBgFileId: null, certificateBgMode: 'template' });
     if (old) { try { Store.files.remove(old); } catch (e) {} }
     custom = null;
   }
 
-  /** Small data URI of the built-in design for the settings preview tile. */
-  function thumbURI() { return dataURI(); }
+  /** Small data URI of a built-in design for the settings preview tiles. */
+  function thumbURI(which) { return which === 'classic' ? dataURI() : templateURI(); }
+
+  /** Switches to a built-in design ('template' | 'classic'). */
+  function useBuiltin(which) {
+    Store.saveSettings({ certificateBgMode: which === 'classic' ? 'classic' : 'template' });
+    refreshLayers();
+  }
 
   global.CertBG = {
-    svg: svg, dataURI: dataURI, thumbURI: thumbURI, cssRules: cssRules,
+    svg: svg, dataURI: dataURI, templateSVG: templateSVG, templateURI: templateURI,
+    thumbURI: thumbURI, cssRules: cssRules, design: design, useBuiltin: useBuiltin,
     layerHTML: layerHTML, hasBackground: hasBackground,
     useCustom: useCustom, loadCustom: loadCustom, refreshLayers: refreshLayers,
     setCustomFile: setCustomFile, clearCustom: clearCustom,

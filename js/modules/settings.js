@@ -67,39 +67,46 @@
   function certDesignCard() {
     var c = s();
     var hasCustom = !!c.certificateBgFileId;
-    var builtin = (global.CertBG && CertBG.thumbURI) ? CertBG.thumbURI() : '';
+    var active = (global.CertBG && CertBG.design) ? CertBG.design() : 'template';
+    var thumb = function (which) { return (global.CertBG && CertBG.thumbURI) ? CertBG.thumbURI(which) : ''; };
+    var tile = function (key, name, desc, img, inUse) {
+      return '<div class="cert-design-pick' + (inUse ? ' on' : '') + '" data-cert-design="' + key + '">' +
+        img +
+        '<div class="cd-text"><strong>' + name + '</strong>' +
+        '<span class="muted small">' + desc + '</span></div>' +
+        (inUse ? UI.badge('In use', 'success', { icon: 'check' }) : '') +
+      '</div>';
+    };
     return UI.card({
       title: 'Certificate background', icon: 'award',
-      sub: hasCustom ? 'Using your uploaded background image' : 'Using the built-in ornate design',
+      sub: 'Certificates print in A4 landscape (297 × 210 mm). Pick a design or upload your own.',
       body: '<div class="cert-design">' +
-          '<div class="cert-design-pick' + (hasCustom ? '' : ' on') + '" data-cert-design="builtin">' +
-            '<img src="' + builtin + '" alt="Built-in certificate background">' +
-            '<div class="cd-text"><strong>Built-in design</strong>' +
-            '<span class="muted small">Cream paper, gold rule frame, corner scrollwork and centre medallion. No file needed.</span></div>' +
-            (hasCustom ? '' : UI.badge('In use', 'success', { icon: 'check' })) +
-          '</div>' +
-          '<div class="cert-design-pick' + (hasCustom ? ' on' : '') + '" data-cert-design="custom">' +
-            (hasCustom && global.CertBG && CertBG.current()
+          tile('template', 'Navy &amp; gold', 'The club template: navy corner blocks, diagonal pinstripes, gold rule frame and gold corner hooks.', '<img src="' + thumb('template') + '" alt="Navy and gold certificate background">', active === 'template') +
+          tile('classic', 'Cream &amp; ornate', 'Classic certificate paper in cream with a double gold frame, corner scrollwork and a faint centre medallion.', '<img src="' + thumb('classic') + '" alt="Cream ornate certificate background">', active === 'classic') +
+          tile('custom', 'Your own image',
+            hasCustom ? 'Your uploaded image is stored in this browser and embedded in every certificate, print-out and download.'
+                      : 'Upload any A4 landscape image (PNG or JPEG, up to 4 MB). It is stored in this browser and embedded in every certificate, print-out and download.',
+            hasCustom && global.CertBG && CertBG.current()
               ? '<img src="' + CertBG.current().dataUrl + '" alt="Uploaded certificate background">'
-              : '<div class="cd-empty">' + Icons.svg('image', { size: 22 }) + '<span>No image yet</span></div>') +
-            '<div class="cd-text"><strong>Your own background</strong>' +
-            '<span class="muted small">Upload any A4 landscape image (PNG or JPEG, up to 4 MB). It is stored in this browser and embedded in every certificate, print-out and downloaded file.</span></div>' +
-            (hasCustom ? UI.badge('In use', 'success', { icon: 'check' }) : '') +
-          '</div>' +
+              : '<div class="cd-empty">' + Icons.svg('image', { size: 22 }) + '<span>No image yet</span></div>',
+            active === 'custom') +
         '</div>' +
         '<div class="flex gap-1 wrap mt-2 items-center">' +
           (Auth.can('settings', 'edit')
             ? '<label class="btn btn-primary btn-sm" style="cursor:pointer">' + Icons.svg('upload', { class: 'btn-ico' }) +
-              'Upload background image<input type="file" id="cert-bg-file" accept="image/png,image/jpeg,image/webp,image/*" hidden></label>'
+              (hasCustom ? 'Replace background image' : 'Upload background image') +
+              '<input type="file" id="cert-bg-file" accept="image/png,image/jpeg,image/webp,image/*" hidden></label>'
             : '') +
           (hasCustom && Auth.can('settings', 'edit')
-            ? '<button type="button" class="btn btn-outline btn-sm" data-set="cert-bg-clear">' + Icons.svg('x', { class: 'btn-ico' }) + 'Use built-in design</button>'
+            ? '<button type="button" class="btn btn-outline btn-sm" data-set="cert-bg-clear">' + Icons.svg('x', { class: 'btn-ico' }) + 'Remove my image</button>'
             : '') +
           '<button type="button" class="btn btn-ghost btn-sm" data-set="cert-bg-preview">' + Icons.svg('eye', { class: 'btn-ico' }) + 'Preview a certificate</button>' +
         '</div>',
-      foot: '<span class="muted small">' + Icons.svg('info') + ' Use a design with an empty centre so the recipient name and body text stay readable. Light patterns work best.</span>'
+      foot: '<span class="muted small">' + Icons.svg('info') + ' Choose a design with an open centre so the recipient name and body text stay readable. The built-in designs are vector graphics — they stay sharp at any print size.</span>'
     });
   }
+
+  function hasCertCustom() { return !!s().certificateBgFileId; }
 
   function previewCertificate() {
     var cert = Store.all('certificates').filter(function (c) { return c.status !== 'Revoked'; })[0] || Store.all('certificates')[0];
@@ -291,7 +298,7 @@
           if (!file) return;
           CertBG.setCustomFile(file).then(function (ok) {
             if (!ok) return;
-            UI.toast('Certificate background updated', 'Every certificate and print-out now uses “' + file.name + '”.', 'success');
+            UI.toast('Certificate background updated', 'Your image “' + file.name + '” is now the active certificate design.', 'success');
             Router.refresh();
           });
         });
@@ -299,6 +306,21 @@
       root.addEventListener('click', function (e) {
         var t = e.target.closest('[data-tab]');
         if (t) { tab = t.getAttribute('data-tab'); Router.refresh(); return; }
+        var pick = e.target.closest('[data-cert-design]');
+        if (pick) {
+          if (!Auth.can('settings', 'edit')) { UI.toast('Not allowed', 'Your role cannot change the certificate design.', 'warning'); return; }
+          var which = pick.getAttribute('data-cert-design');
+          if (which === 'custom' && !hasCertCustom()) {
+            var file = U.$('#cert-bg-file', root);
+            if (file) file.click();
+            return;
+          }
+          CertBG.useBuiltin(which);
+          UI.toast('Certificate design updated', 'Every certificate now uses the ' +
+            (which === 'classic' ? 'cream & ornate' : 'navy & gold') + ' design.', 'success');
+          Router.refresh();
+          return;
+        }
         var theme = e.target.closest('[data-theme-choice]');
         if (theme) {
           var choice = theme.getAttribute('data-theme-choice');
@@ -316,13 +338,13 @@
 
         if (what === 'cert-bg-clear') {
           UI.confirm({
-            title: 'Use the built-in design',
-            message: 'Remove your uploaded certificate background and go back to the built-in ornate design?',
-            confirmLabel: 'Use built-in design', icon: 'award', tone: 'warning'
+            title: 'Remove your image',
+            message: 'Remove your uploaded certificate background and go back to the built-in navy & gold design?',
+            confirmLabel: 'Remove image', icon: 'award', tone: 'warning'
           }).then(function (ok) {
             if (!ok) return;
             CertBG.clearCustom();
-            UI.toast('Certificate design updated', 'Certificates now use the built-in design.', 'success');
+            UI.toast('Certificate design updated', 'Certificates now use the built-in navy & gold design.', 'success');
             Router.refresh();
           });
           return;

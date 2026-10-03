@@ -1046,7 +1046,7 @@
       memberIdPrefix: 'MRHS-ICT-M',
       certificatePrefix: 'MRHSICT',
     certificateBgFileId: null,
-    certificateBgMode: 'builtin',
+    certificateBgMode: 'template',
       notifyMeetings: true,
       notifyActivities: true,
       notifyTasks: true,

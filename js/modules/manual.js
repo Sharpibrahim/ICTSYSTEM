@@ -248,7 +248,7 @@
       ],
       notes: [
         'The certificate design is print-first: colours, borders and the background are tuned for paper, not for the screen, and they are identical in the preview.',
-        'Certificates come with a built-in ornate background — cream paper, a double gold rule frame, corner scrollwork and a faint centre medallion. You can set your own image in <strong>Settings → Club information → Certificate background</strong>: the club crest, the recipient name, the two signature lines and the certificate number always stay on top of it.',
+        'Certificates are landscape and print at true A4 size (297 × 210 mm). Two built-in designs ship with the platform — the default <strong>Navy &amp; gold</strong> club template (navy corner blocks, diagonal pinstripes, gold rule frame and gold corner hooks) and <strong>Cream &amp; ornate</strong> (cream paper, double gold rule frame, corner scrollwork and a faint centre medallion). Pick either one, or set your own image, in <strong>Settings → Club information → Certificate background</strong>: the club crest, the recipient name, the two signature lines and the certificate number always stay on top of the background.',
         'When using your own background, choose a light, low-contrast design with an empty middle so the name and the achievement text stay easy to read — the app adds a soft white scrim over uploaded images to help.',
         'Changing the club name, school name or logo in Settings automatically updates every certificate and ID card.'
       ]
@@ -437,7 +437,7 @@
         'Open <strong>Settings → Club information</strong> to set the club name, school name, motto, description, contact details, academic year, current term, term dates, currency and document signatories. These values appear on certificates, ID cards, letters and printed reports.',
         'Use <strong>Appearance</strong> to pick light, dark or system theme and the accent colour.',
         'In <strong>Users &amp; roles</strong> create accounts for cabinet members: name, username, email, role, linked member profile and password. Reset a password, change a role or deactivate an account at any time.',
-        'Also in <strong>Settings → Club information</strong> you can replace the certificate background: upload a PNG or JPEG up to 4 MB, preview a real certificate, or switch back to the built-in design at any time.',
+        'Also in <strong>Settings → Club information</strong> you can change the certificate background: click the <strong>Navy &amp; gold</strong> or <strong>Cream &amp; ornate</strong> tile to switch between the two built-in designs, upload your own PNG or JPEG up to 4 MB, or preview a real certificate at any time.',
         'In <strong>Notifications</strong> choose which alerts the app raises (meetings, activities, tasks, announcements, low attendance) and set the low-attendance threshold.',
         'In <strong>Data</strong> download a full JSON backup, restore from a backup (merge or replace), import records from CSV, and reset or re-seed the demo data.'
       ],

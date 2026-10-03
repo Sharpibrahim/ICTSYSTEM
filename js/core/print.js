@@ -100,7 +100,7 @@
       '.cert-frame .cert-preview{margin:0 auto}',
       (global.CertBG && CertBG.cssRules ? CertBG.cssRules() : ''),
       (global.Cards && Cards.stylesCSS ? Cards.stylesCSS() : ''),
-      '@media print{body{background:#fff}.app-shell,.topbar,.sidebar,.modal-root,.drawer-root,.toast-root,.overlay,.login-screen,.boot-screen{display:none !important}.print-area{display:block !important}.print-page{box-shadow:none;margin:0;padding:12mm;width:auto;min-height:0}.print-page.landscape{width:auto}.cert-preview{box-shadow:none;border:0;max-width:none;width:auto;-webkit-print-color-adjust:exact;print-color-adjust:exact}.cert-preview.has-bg{background:#fff;padding:5.1% 5.6%;aspect-ratio:297/210;display:flex;flex-direction:column;justify-content:center}.cert-bg-layer{-webkit-print-color-adjust:exact;print-color-adjust:exact}@page{size:A4;margin:10mm}}'
+      '@media print{body{background:#fff}.app-shell,.topbar,.sidebar,.modal-root,.drawer-root,.toast-root,.overlay,.login-screen,.boot-screen{display:none !important}.print-area{display:block !important}.print-page{box-shadow:none;margin:0;padding:12mm;width:auto;min-height:0}.print-page.landscape{width:auto}.cert-preview{box-shadow:none;border:0;max-width:none;width:auto;-webkit-print-color-adjust:exact;print-color-adjust:exact}.cert-preview.has-bg{background:#fff;padding:9% 10.4% 9.6%;aspect-ratio:297/210;display:flex;flex-direction:column;justify-content:center}.cert-bg-layer{-webkit-print-color-adjust:exact;print-color-adjust:exact}@page{size:A4;margin:10mm}}'
     ].join('\n');
   }
 
