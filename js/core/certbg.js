@@ -375,6 +375,148 @@
     refreshLayers();
   }
 
+  /* ══ Content alignment ═════════════════════════════════════════════════ */
+  /** Where the text block sits inside the artwork, and how big it is. */
+  var LAYOUT_DEFAULT = { vertical: 'middle', horizontal: 'center', x: 0, y: 0, scale: 100 };
+  var LAYOUT_LABELS = {
+    vertical: { top: 'Top', middle: 'Middle', bottom: 'Bottom' },
+    horizontal: { left: 'Left', center: 'Center', right: 'Right' }
+  };
+
+  /** Current alignment, with sensible defaults for anything unset. */
+  function layout() {
+    var saved = settings().certificateLayout || {};
+    var out = {};
+    ['vertical', 'horizontal'].forEach(function (k) {
+      out[k] = LAYOUT_LABELS[k][saved[k]] ? saved[k] : LAYOUT_DEFAULT[k];
+    });
+    ['x', 'y', 'scale'].forEach(function (k) {
+      var n = Number(saved[k]);
+      out[k] = isFinite(n) ? n : LAYOUT_DEFAULT[k];
+    });
+    return out;
+  }
+
+  /** Ready-made inline styles that place the content inside the certificate. */
+  function layoutStyles() {
+    var l = layout();
+    return {
+      preview: ' style="justify-content:' + (l.vertical === 'top' ? 'flex-start' : l.vertical === 'bottom' ? 'flex-end' : 'center') + '"',
+      inner: ' style="text-align:' + l.horizontal + ';transform:' + shiftOf(l) + ';transform-origin:center center"'
+    };
+  }
+
+  function shiftOf(l) {
+    var shift = 'translate(' + l.x + '%,' + l.y + '%)';
+    if (l.scale !== 100) shift += ' scale(' + (Math.round(l.scale) / 100) + ')';
+    return shift;
+  }
+
+  /** Saves a partial alignment change and refreshes every certificate on screen. */
+  function setLayout(patch) {
+    var l = layout();
+    Object.keys(patch || {}).forEach(function (k) {
+      if (k === 'vertical' || k === 'horizontal') { if (LAYOUT_LABELS[k][patch[k]]) l[k] = patch[k]; }
+      else if (k in LAYOUT_DEFAULT) { var n = Number(patch[k]); if (isFinite(n)) l[k] = n; }
+    });
+    Store.saveSettings({ certificateLayout: l });
+    applyLayout();
+    return l;
+  }
+
+  /** Puts the alignment back to the shipped defaults. */
+  function resetLayout() {
+    Store.saveSettings({ certificateLayout: null });
+    applyLayout();
+    return layout();
+  }
+
+  /** Re-applies the alignment to every certificate already in the page. */
+  function applyLayout(root) {
+    if (!document.querySelectorAll) return;
+    var scope = root || document;
+    if (!scope.querySelectorAll) return;
+    var l = layout();
+    var justify = l.vertical === 'top' ? 'flex-start' : l.vertical === 'bottom' ? 'flex-end' : 'center';
+    var nodes = scope.querySelectorAll('.cert-preview.has-bg');
+    Array.prototype.forEach.call(nodes, function (preview) {
+      if (preview.classList.contains('cert-align-live')) return;   /* the sample frame scales itself */
+      preview.style.justifyContent = justify;
+      var inner = preview.querySelector('.cert-inner');
+      if (inner) {
+        inner.style.textAlign = l.horizontal;
+        inner.style.transform = shiftOf(l);
+        inner.style.transformOrigin = 'center center';
+      }
+    });
+  }
+
+  /** The alignment panel: two anchor pickers, nudge sliders and a text size. */
+  function alignHTML(compact) {
+    if (!canEdit()) {
+      return '<p class="help mt-1">' + Icons.svg('info') + ' Your role can view certificates but not move the content — ask the Administrator.</p>';
+    }
+    var l = layout();
+    var picker = function (key, label, hint) {
+      var options = LAYOUT_LABELS[key];
+      return '<div class="ca-row">' +
+        '<span class="ca-label">' + label + '</span>' +
+        '<div class="att-seg ca-seg" role="group" aria-label="' + label + '">' +
+          Object.keys(options).map(function (k) {
+            return '<button type="button" class="' + (l[key] === k ? 'active' : '') + '" data-cert-layout="' + key + '" data-value="' + k + '"' +
+              ' aria-pressed="' + (l[key] === k) + '">' + options[k] + '</button>';
+          }).join('') +
+        '</div>' +
+        (hint ? '<span class="ca-hint muted small">' + hint + '</span>' : '') +
+      '</div>';
+    };
+    var slider = function (key, label, min, max, step, suffix) {
+      return '<div class="ca-row">' +
+        '<label class="ca-label" for="ca-' + key + '">' + label + '</label>' +
+        '<input type="range" class="ca-range" id="ca-' + key + '" data-cert-layout="' + key + '"' +
+          ' min="' + min + '" max="' + max + '" step="' + step + '" value="' + l[key] + '">' +
+        '<output class="ca-out" data-out="' + key + '">' + l[key] + (suffix || '') + '</output>' +
+        '<button type="button" class="btn btn-ghost btn-sm" data-cert-layout="' + key + '" data-value="' + LAYOUT_DEFAULT[key] + '">Reset</button>' +
+      '</div>';
+    };
+    return '<div class="cert-align' + (compact ? ' compact' : '') + '">' +
+        '<div class="ca-head">' + Icons.svg('sliders') +
+          '<div><strong>Align the content</strong>' +
+          '<span class="muted small">Move the name, text, signatures and serial so they sit in the clear part of your background.</span></div>' +
+        '</div>' +
+        picker('vertical', 'Vertical', 'Where the content sits up and down') +
+        picker('horizontal', 'Horizontal', 'How the text lines are aligned') +
+        '<div class="ca-sliders">' +
+          slider('x', 'Nudge sideways', -8, 8, 0.5, '%') +
+          slider('y', 'Nudge up / down', -12, 12, 0.5, '%') +
+          slider('scale', 'Text size', 85, 115, 1, '%') +
+        '</div>' +
+        '<div class="flex gap-1 wrap mt-1 items-center">' +
+          '<button type="button" class="btn btn-outline btn-sm" data-cert-layout-reset>' + Icons.svg('refresh', { class: 'btn-ico' }) + 'Reset alignment</button>' +
+          '<span class="muted small">Default: centred, text size 100%.</span>' +
+        '</div>' +
+      '</div>';
+  }
+
+  /** Live certificate sample used inside the designer dialog. */
+  function sampleHTML() {
+    if (!global.Print || !Print.certificate) return '';
+    var cert = Store.all('certificates').filter(function (c) { return c.status !== 'Revoked'; })[0] || Store.all('certificates')[0];
+    if (!cert) return '<p class="muted small">Issue a certificate and it will appear here as you align the content.</p>';
+    return '<div class="cert-align-live"><div class="cert-frame">' + Print.certificate(cert) + '</div>' +
+      '<p class="muted small center mt-1">Live sample — exactly what prints.</p></div>';
+  }
+
+  /** Repaints the sample after an alignment change (keeps the same DOM node). */
+  function refreshSample(root) {
+    if (!root || !global.Print) return;
+    var host = root.querySelector('.cert-align-live .cert-frame') || (root.parentNode && root.parentNode.querySelector('.cert-align-live .cert-frame'));
+    if (!host) return;
+    var cert = Store.all('certificates').filter(function (c) { return c.status !== 'Revoked'; })[0] || Store.all('certificates')[0];
+    if (!cert) return;
+    host.innerHTML = Print.certificate(cert);
+  }
+
   /* ══ Design picker (shared by Settings, Certificates and previews) ═════ */
   /** Roles allowed to change the club certificate design. */
   function canEdit() {
@@ -420,6 +562,31 @@
       (canEdit() ? '' : '<p class="help mt-2">' + Icons.svg('info') + ' Your role can view certificates but not change the club design — ask the Administrator.</p>');
   }
 
+  /** Builds a one-key patch, converting numbers where the field is numeric. */
+  function kv(key, value) {
+    var patch = {};
+    patch[key] = (key === 'x' || key === 'y' || key === 'scale') ? Number(value) : value;
+    return patch;
+  }
+
+  /** Pushes the saved alignment back into the controls (after a reset or load). */
+  function syncLayoutControls(root) {
+    if (!root || !root.querySelectorAll) return;
+    var l = layout();
+    Array.prototype.forEach.call(root.querySelectorAll('[data-cert-layout][data-value]'), function (btn) {
+      var key = btn.getAttribute('data-cert-layout');
+      var on = String(l[key]) === btn.getAttribute('data-value');
+      btn.classList.toggle('active', on);
+      btn.setAttribute('aria-pressed', String(on));
+    });
+    Array.prototype.forEach.call(root.querySelectorAll('input[data-cert-layout]'), function (range) {
+      var key = range.getAttribute('data-cert-layout');
+      range.value = l[key];
+      var out = root.querySelector('[data-out="' + key + '"]');
+      if (out) out.textContent = l[key] + '%';
+    });
+  }
+
   /** Wires the tiles, upload, remove and preview buttons inside `root`. */
   function bindDesigner(root, opts) {
     opts = opts || {};
@@ -460,6 +627,42 @@
       done('Certificate design updated', 'Every certificate now uses ' + DESIGN_NAMES[which === 'custom' ? 'custom' : which] + '.');
     });
 
+    /* alignment pickers + sliders */
+    var repaint = function () {
+      applyLayout(root);
+      refreshSample(root);
+    };
+    root.addEventListener('click', function (e) {
+      var target = e.target;
+      if (!target || !target.closest) return;
+      if (target.closest('[data-cert-layout-reset]')) {
+        if (!canEdit()) { UI.toast('Not allowed', 'Your role cannot change the certificate layout.', 'warning'); return; }
+        resetLayout();
+        syncLayoutControls(root);
+        repaint();
+        UI.toast('Alignment reset', 'Certificate content is back to the centre.', 'info', { duration: 2400 });
+        return;
+      }
+      var btn = target.closest('[data-cert-layout][data-value]');
+      if (!btn || !root.contains(btn)) return;
+      if (!canEdit()) { UI.toast('Not allowed', 'Your role cannot change the certificate layout.', 'warning'); return; }
+      var key = btn.getAttribute('data-cert-layout');
+      var value = btn.getAttribute('data-value');
+      setLayout(kv(key, value));
+      syncLayoutControls(root);
+      repaint();
+    });
+    root.addEventListener('input', function (e) {
+      var range = e.target;
+      if (!range || !range.getAttribute || !range.getAttribute('data-cert-layout')) return;
+      if (!canEdit()) return;
+      var key = range.getAttribute('data-cert-layout');
+      setLayout(kv(key, range.value));
+      var out = root.querySelector('[data-out="' + key + '"]');
+      if (out) out.textContent = range.value + (key === 'scale' ? '%' : '%');
+      repaint();
+    });
+
     var input = root.querySelector('.cert-bg-file');
     if (input) {
       input.addEventListener('change', function () {
@@ -498,7 +701,9 @@
       title: 'Certificate background', subtitle: 'Certificates print in A4 landscape (297 × 210 mm). Pick a design, or upload your own image.',
       icon: 'award', size: 'lg',
       body: designerHTML() +
-        '<p class="help mt-2">' + Icons.svg('lightbulb') + ' Keep the centre of an uploaded image light and plain so the recipient name and text stay readable. Images are stored in this browser only.</p>',
+        '<p class="help mt-2">' + Icons.svg('lightbulb') + ' Keep the centre of an uploaded image light and plain so the recipient name and text stay readable. Images are stored in this browser only.</p>' +
+        alignHTML() +
+        sampleHTML(),
       actions: [
         { label: 'Preview a certificate', tone: 'ghost', icon: 'eye', onClick: function () { previewAny(); } },
         { label: 'Done', tone: 'primary', close: true }
@@ -506,7 +711,9 @@
       onClose: function () { refreshLayers(); if (opts.onChange) opts.onChange(); }
     });
     loadCustom();
-    bindDesigner(ctrl.body, { onChange: function () { refreshLayers(); } });
+    bindDesigner(ctrl.body, { onChange: function () { refreshLayers(); applyLayout(); } });
+    syncLayoutControls(ctrl.body);
+    applyLayout(ctrl.body);
     return ctrl;
   }
 
@@ -515,6 +722,8 @@
     thumbURI: thumbURI, cssRules: cssRules, design: design, useBuiltin: useBuiltin,
     canEdit: canEdit, designerHTML: designerHTML, bindDesigner: bindDesigner,
     defaultDesign: DEFAULT_DESIGN, designNames: DESIGN_NAMES, migrateDefault: migrateDefault,
+    layout: layout, layoutStyles: layoutStyles, setLayout: setLayout, resetLayout: resetLayout,
+    applyLayout: applyLayout, alignHTML: alignHTML, layoutDefaults: LAYOUT_DEFAULT,
     openDesigner: openDesigner, previewAny: previewAny,
     layerHTML: layerHTML, hasBackground: hasBackground,
     useCustom: useCustom, loadCustom: loadCustom, refreshLayers: refreshLayers,

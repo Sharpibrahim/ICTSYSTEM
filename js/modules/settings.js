@@ -66,7 +66,7 @@
   /* ══ Certificate design ═══════════════════════════════════════════════ */
   function certDesignCard() {
     var picker = (global.CertBG && CertBG.designerHTML)
-      ? CertBG.designerHTML()
+      ? CertBG.designerHTML() + CertBG.alignHTML()
       : '<p class="muted">Certificate backgrounds are unavailable in this browser.</p>';
     return UI.card({
       title: 'Certificate background', icon: 'award',

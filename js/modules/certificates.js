@@ -235,7 +235,7 @@
               : '') +
           '</div>' +
           '<p class="help mt-2">' + Icons.svg('award') + ' Background: <strong>' + designName + '</strong> · A4 landscape 297 × 210 mm. ' +
-            (CertBG.canEdit && CertBG.canEdit() ? 'Click <em>Change background</em> to switch design or upload your own image.' : 'Ask the Administrator to change the design.') + '</p>'
+            (CertBG.canEdit && CertBG.canEdit() ? 'Click <em>Change background</em> to switch design, upload your own image, or align the content.' : 'Ask the Administrator to change the design.') + '</p>'
       });
 
       var side = UI.card({

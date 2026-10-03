@@ -1154,6 +1154,28 @@ input[type="color"] { padding: 3px; height: 42px; cursor: pointer; }
 .items-center { align-items: center; }
 
 /* ── 22. Certificate design picker (Settings) ───────────────────────────── */
+/* ── Certificate content alignment panel ─────────────────────────────── */
+.cert-align { margin-top: 16px; padding: 14px 16px; border: 1px solid var(--border); border-radius: var(--r-md); background: var(--surface-2); }
+.cert-align .ca-head { display: flex; gap: 10px; align-items: flex-start; margin-bottom: 12px; }
+.cert-align .ca-head svg { color: var(--primary); flex: none; margin-top: 2px; }
+.cert-align .ca-head div { display: grid; gap: 2px; }
+.cert-align .ca-head strong { font-size: .92rem; }
+.cert-align .ca-row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; padding: 6px 0; }
+.cert-align .ca-label { min-width: 116px; font-size: .8rem; font-weight: 600; color: var(--text-2); }
+.cert-align .ca-seg button { min-width: 64px; }
+.cert-align .ca-hint { flex: 1 1 180px; }
+.cert-align .ca-sliders { display: grid; gap: 2px; margin-top: 4px; padding-top: 8px; border-top: 1px dashed var(--border); }
+.cert-align .ca-range { flex: 1 1 200px; accent-color: var(--primary); height: 22px; }
+.cert-align .ca-out { min-width: 52px; font-family: var(--font-mono); font-size: .78rem; color: var(--text-2); text-align: right; }
+.cert-align .btn-sm { padding: 4px 9px; font-size: .74rem; }
+.cert-align-live { margin-top: 16px; }
+.cert-align-live .cert-frame { padding: 10px; }
+.cert-align-live .cert-preview { max-width: 100%; }
+.cert-align-live .center { text-align: center; }
+@media (max-width: 640px) {
+  .cert-align .ca-label { min-width: 100%; }
+  .cert-align .ca-out { min-width: 44px; }
+}
 .cert-design { display: grid; grid-template-columns: repeat(auto-fit, minmax(288px, 1fr)); gap: 14px; }
 .cert-design-pick {
   display: flex; flex-direction: column; gap: 10px; padding: 12px;

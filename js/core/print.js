@@ -170,10 +170,12 @@
     var short = serial.replace(/^MRHSICT-?/, '').replace(/-/g, ' ');
     var issued = U.fmtDate(cert.issueDate, 'long');
     var bg = global.CertBG ? CertBG.layerHTML() : '';
+    /* Alignment travels inside the markup, so screen, print and downloads match. */
+    var lay = (global.CertBG && CertBG.layoutStyles) ? CertBG.layoutStyles() : { preview: '', inner: '' };
 
-    return '<div class="cert-preview has-bg">' +
+    return '<div class="cert-preview has-bg"' + lay.preview + '>' +
       bg +
-      '<div class="cert-inner">' +
+      '<div class="cert-inner"' + lay.inner + '>' +
         '<div class="cert-crest">' + Icons.svg('club-logo', { size: 34 }) + '</div>' +
         '<p class="cert-org">' + U.esc(s.clubName || 'MRHS ICT Club') + '</p>' +
         '<p class="cert-school">' + U.esc(s.schoolName || 'Mbazzi Riverside High School') + '</p>' +
