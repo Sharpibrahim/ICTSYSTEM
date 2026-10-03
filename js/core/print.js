@@ -100,7 +100,7 @@
       '.cert-frame .cert-preview{margin:0 auto}',
       (global.CertBG && CertBG.cssRules ? CertBG.cssRules() : ''),
       (global.Cards && Cards.stylesCSS ? Cards.stylesCSS() : ''),
-      '@media print{body{background:#fff}.app-shell,.topbar,.sidebar,.modal-root,.drawer-root,.toast-root,.overlay,.login-screen,.boot-screen{display:none !important}.print-area{display:block !important}.print-page{box-shadow:none;margin:0;padding:12mm;width:auto;min-height:0}.print-page.landscape{width:auto}.cert-preview{box-shadow:none;border:0;max-width:none;width:auto;-webkit-print-color-adjust:exact;print-color-adjust:exact}.cert-preview.has-bg{background:#fff;padding:9% 10.4% 9.6%;aspect-ratio:297/210;display:flex;flex-direction:column;justify-content:center}.cert-bg-layer{-webkit-print-color-adjust:exact;print-color-adjust:exact}@page{size:A4;margin:10mm}}'
+      '@media print{body{background:#fff}.app-shell,.topbar,.sidebar,.modal-root,.drawer-root,.toast-root,.overlay,.login-screen,.boot-screen{display:none !important}.print-area{display:block !important}.print-page{box-shadow:none;margin:0;padding:12mm;width:auto;min-height:0}.print-page.landscape{width:auto}.cert-preview{box-shadow:none;border:0;max-width:none;width:auto;-webkit-print-color-adjust:exact;print-color-adjust:exact}.cert-preview.has-bg{background:#fff;padding:9% 10.4% 9.6%;aspect-ratio:297/210;display:flex;flex-direction:column;justify-content:center}.cert-bg-layer{position:absolute;inset:0;-webkit-print-color-adjust:exact;print-color-adjust:exact}body.printing-landscape #print-area{width:297mm;height:210mm;margin:0;padding:0;overflow:hidden}body.printing-landscape #print-area .cert-preview,body.printing-landscape .cert-preview.has-bg{width:297mm;height:210mm;max-width:none;margin:0 auto;border:0;box-shadow:none}body.printing-landscape .cert-preview.has-bg .cert-bg-layer{background-size:100% 100%}@page{size:A4 portrait;margin:10mm}}'
     ].join('\n');
   }
 
@@ -121,24 +121,62 @@
     stylesNode.textContent = text;
   }
 
-  function print(html) {
+  /* @page cannot be conditioned on a class, so the sideways sheet is applied by
+     adding this rule just for the duration of one print job. */
+  var LANDSCAPE_PAGE = '@page{size:A4 landscape;margin:0}';
+
+  function setPageOrientation(landscape) {
+    var id = 'mrhs-print-orientation';
+    var node = document.getElementById(id);
+    if (landscape) {
+      if (!node) {
+        node = document.createElement('style');
+        node.id = id;
+        document.head.appendChild(node);
+      }
+      node.textContent = LANDSCAPE_PAGE;
+    } else if (node && node.parentNode) {
+      node.parentNode.removeChild(node);
+    }
+  }
+
+  /** True when the document being printed wants a sideways A4 sheet. */
+  function wantsLandscape(html, opts) {
+    if (opts && opts.orientation === 'portrait') return false;
+    if (opts && (opts.orientation === 'landscape' || opts.landscape === true)) return true;
+    return /class="[^"]*(cert-preview|print-page landscape)/.test(String(html || ''));
+  }
+
+  function print(html, opts) {
     injectStyles();
+    var landscape = wantsLandscape(html, opts);
+    setPageOrientation(landscape);
+    if (landscape) document.body.classList.add('printing-landscape');
     var area = document.getElementById('print-area');
     area.innerHTML = html;
     area.setAttribute('aria-hidden', 'false');
-    var done = function () { area.innerHTML = ''; area.setAttribute('aria-hidden', 'true'); window.removeEventListener('afterprint', done); };
+    var done = function () {
+      area.innerHTML = '';
+      area.setAttribute('aria-hidden', 'true');
+      setPageOrientation(false);
+      document.body.classList.remove('printing-landscape');
+      window.removeEventListener('afterprint', done);
+    };
     window.addEventListener('afterprint', done);
     setTimeout(function () { window.print(); }, 120);
-    setTimeout(done, 1500);
+    setTimeout(done, 2500);
   }
 
   /** Modal preview with print + download actions. */
   function preview(html, opts) {
     opts = opts || {};
     injectStyles();
+    var landscape = wantsLandscape(html, opts);
     var ctrl = UI.modal({
       title: opts.title || 'Document preview',
-      subtitle: opts.subtitle || 'Review the document, then print or save it as a PDF using your browser.',
+      subtitle: opts.subtitle || (landscape
+        ? 'Prints on A4 landscape (297 × 210 mm). Review the document, then print or save it as a PDF.'
+        : 'Review the document, then print or save it as a PDF using your browser.'),
       icon: opts.icon || 'print',
       size: 'xl',
       body: '<div class="print-preview-frame">' + html + '</div>',
@@ -148,12 +186,13 @@
           label: 'Download HTML', tone: 'outline', icon: 'download',
           onClick: function () {
             var doc = '<!DOCTYPE html><html><head><meta charset="utf-8"><title>' + U.esc(opts.title || 'MRHS ICT Club document') + '</title>' +
-              '<style>' + document.getElementById('mrhs-print-styles').textContent + '</style></head><body>' + html + '</body></html>';
+              '<style>' + (landscape ? LANDSCAPE_PAGE + '\n' : '') +
+              document.getElementById('mrhs-print-styles').textContent + '</style></head><body>' + html + '</body></html>';
             U.download((opts.fileName || 'mrhs-ict-document') + '.html', doc, 'text/html;charset=utf-8');
             UI.toast('Document downloaded', 'The document can be opened in a browser and printed to PDF.', 'success');
           }
         },
-        { label: 'Print', tone: 'primary', icon: 'print', onClick: function () { print(html); } }
+        { label: 'Print', tone: 'primary', icon: 'print', onClick: function () { print(html, { orientation: landscape ? 'landscape' : 'portrait' }); } }
       ])
     });
     return ctrl;
@@ -381,7 +420,8 @@
 
   global.Print = {
     preview: preview, print: print, page: page, stylesCSS: stylesCSS,
-    injectStyles: injectStyles,
+    injectStyles: injectStyles, wantsLandscape: wantsLandscape,
+    setPageOrientation: setPageOrientation, landscapePageRule: LANDSCAPE_PAGE,
     certificate: certificateHTML, idCard: idCardHTML, memberProfile: memberProfileHTML,
     minutes: meetingMinutesHTML, report: reportHTML, attendanceSheet: attendanceSheetHTML,
     certificatePreviewHTML: certificateHTML,

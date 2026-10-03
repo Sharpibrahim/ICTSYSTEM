@@ -248,6 +248,7 @@
       ],
       notes: [
         'The certificate design is print-first: colours, borders and the background are tuned for paper, not for the screen, and they are identical in the preview.',
+        'Certificates print on a <strong>landscape A4 sheet</strong> (297 × 210 mm). The app sets the page sideways for the print job automatically, so use the <strong>Print</strong> button in the preview rather than the browser menu; the certificate then fills the sheet edge to edge without clipping.',
         'Certificates are landscape and print at true A4 size (297 × 210 mm). Two built-in designs ship with the platform — the default <strong>Cream &amp; ornate</strong> (cream paper, double gold rule frame, corner scrollwork and a faint centre medallion) and <strong>Navy &amp; gold</strong> (navy corner blocks, diagonal pinstripes, gold rule frame and gold corner hooks). Pick either one, or set your own image, from <strong>Certificates → Certificate background</strong> or <strong>Settings → Club information → Certificate background</strong>: the club crest, the recipient name, the two signature lines and the certificate number always stay on top of the background.',
         'When using your own background, choose a light, low-contrast design with an empty middle so the name and the achievement text stay easy to read — the app adds a soft white scrim over uploaded images to help.',
         'Changing the club name, school name or logo in Settings automatically updates every certificate and ID card.'
@@ -445,6 +446,7 @@
       ],
       notes: [
         '<strong>Back up before every term.</strong> The app stores data in this browser only: clearing browsing data deletes it unless you have a backup file.',
+        'Where to keep those backups (and which cloud service to choose) is set out in <strong>docs/CLOUD-STORAGE.md</strong> in the project folder: the short answer is a shared school Google Drive folder with dated JSON backups every week, plus a USB copy and a printed termly report.',
         'Restore in <em>merge</em> mode to add a backup’s records to what is already there; <em>replace</em> mode wipes first — the app asks for confirmation and shows how many records each option will affect.',
         'A user who forgets their password cannot recover it; an administrator resets it here and tells them the new one.',
         'Deactivating a user immediately ends their access without deleting the audit trail of what they did.'
