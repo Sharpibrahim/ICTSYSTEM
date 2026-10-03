@@ -77,7 +77,7 @@ The full matrix lives in `js/core/auth.js`.
 | 18 | **Gallery** | Albums by category with placeholder imagery, lightbox and captions |
 | 19 | **Documents** | 9 document categories, versioning, confidentiality, search and filter |
 | 20 | **Analytics** | Membership growth, attendance trends, course completion, project progress, participation, certificates and income vs expenses with plain-language insights |
-| 21 | **Settings** | Club information, appearance (light/dark/system), user management with role matrix, notification preferences, backup/restore, CSV import, demo data reset |
+| 21 | **Settings** | Club information, appearance (light/dark/system), user management with role matrix, notification preferences, backup/restore, **Firebase shared database**, CSV import, demo data reset |
 | — | **User Manual** *(administrator only)* | 27-section searchable handbook: every module, the eight roles, term routines, troubleshooting, glossary — printable as a PDF (also shipped as `docs/MRHS-ICT-Club-Master-User-Manual.pdf`) |
 
 ### Cross-cutting features
@@ -91,6 +91,7 @@ The full matrix lives in `js/core/auth.js`.
 - **Card studio** for member and cabinet cards: CR80 size (85.6 × 54 mm), front and reverse faces, photos or initials, barcode and membership code, signature lines, live preview, eight cards per A4 sheet (2 × 4) with cut guides, single-record printing from any detail page, and a self-contained HTML download for print shops.
 - **Administrator handbook** built into the app (`#/manual`, visible only to the Administrator role and linked from the account menu) with instant search, expandable Q&A, and a print/PDF version.
 - **Data tools** — full JSON backup/restore (merge or replace), CSV import, CSV export per module, and a one-click demo-data reset.
+- **Shared database** — optional Firebase (Firestore) syncing so several officers work on the same live records. Local-first with an offline queue: edits are saved here and uploaded when there is internet, last write wins on `updatedAt`. Officer accounts, the audit log, verification codes and notifications are never uploaded. No SDK and no CDN — the connector uses the Firestore REST API (`docs/FIREBASE.md`).
 
 ---
 
@@ -117,6 +118,7 @@ js/
     cards.js               card studio: member ID cards and cabinet position cards
     certbg.js              certificate backgrounds: 2 built-in designs + club-uploaded image
     cloud.js               cloud backup connectors: synced folder + Microsoft OneDrive (Graph)
+    sync.js                shared-database sync (Firebase Firestore REST) with an offline queue
     metrics.js             every statistic used by dashboards and analytics
     router.js              hash router with params, guards and error boundaries
     module.js              declarative list/detail/CRUD module builder
@@ -133,6 +135,7 @@ docs/certificate-alignment-guide.png       the three content anchors side by sid
 docs/CLOUD-STORAGE.md                      where to keep backups and which cloud service to use
 docs/ONEDRIVE.md                           connecting Microsoft 365 / OneDrive (both routes, step by step)
 docs/DATABASE-OPTIONS.md                    shared-database choices (Supabase, Firebase, PocketBase, Sheets) and what each needs
+docs/FIREBASE.md                           the Firebase shared database: setup, rules, behaviour, troubleshooting
 ```
 
 ### Data layer
@@ -179,7 +182,7 @@ Attendance rate is always **Present ÷ Expected × 100**, with "Late" counting a
 
 ## Current limitations
 
-- There is **no server** — data is per-browser. Use backup/restore to move data between devices.
+- There is **no server required** — data is per-browser by default; use backup/restore to move data between devices, or connect the optional Firebase shared database (Settings → Data) so connected devices exchange records automatically.
 - QR check-in is a designed placeholder; the attendance data model and reporting are already in place.
 - Demo data is generated deterministically for a Ugandan secondary school; replace it from **Settings → Data → Reset** once real records are entered.
 

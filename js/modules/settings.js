@@ -285,10 +285,51 @@
         '</div>' +
       '</div>';
 
+    var fb = Sync.status();
+    var fbBody = '<div class="cloud-option' + (fb.connected ? ' on' : '') + '">' +
+        '<div class="co-head">' + Icons.svg('database') +
+          '<div><strong>Firebase shared database</strong>' +
+          '<span class="muted small">Give several officers the same live records. Edits are saved on this device first and uploaded whenever there is internet, so the club keeps working offline. Only the club’s own records are shared — officer accounts, the audit log and verification codes stay on the device.</span></div>' +
+          (fb.connected ? UI.badge('Connected', 'success', { icon: 'check' }) : fb.configured ? UI.badge('Ready to connect', 'info') : UI.badge('Not set up', 'neutral')) +
+        '</div>' +
+        '<form id="sync-form" class="form-grid mt-2">' +
+          field('firebaseProjectId', 'Firebase project ID', fb.projectId, { placeholder: 'mrhs-ict-club', help: 'Firebase console → Project settings → General → Project ID.' }) +
+          field('firebaseApiKey', 'Web API key', fb.apiKey, { help: 'Firebase console → Project settings → General → Web API key. This key is not a secret; the security rules protect the data.' }) +
+        '</form>' +
+        (fb.connected
+          ? '<p class="small mt-1">Signed in as <strong>' + U.esc(fb.account) + '</strong>' +
+              (fb.lastAt ? ' · last sync ' + U.esc(U.fmtDate(fb.lastAt, 'long')) + ' at ' + U.esc(String(fb.lastAt).slice(11, 16)) : '') +
+              (fb.pending ? ' · <strong>' + fb.pending + '</strong> change' + (fb.pending === 1 ? '' : 's') + ' waiting to upload' : ' · everything uploaded') +
+            '</p>'
+          : '') +
+        '<p class="help mt-1">' + Icons.svg('info') + ' ' + fb.collections + ' collections are shared; ' +
+          U.esc(fb.localOnly.join(', ')) + ' never leave this device.</p>' +
+        '<div class="flex gap-1 wrap mt-2 items-center">' +
+          (Auth.can('settings', 'edit') ? '<button type="button" class="btn btn-outline btn-sm" data-set="cloud-fb-save">' + Icons.svg('save', { class: 'btn-ico' }) + 'Save connection details</button>' : '') +
+          (fb.connected
+            ? (Auth.can('settings', 'edit')
+                ? '<button type="button" class="btn btn-primary btn-sm" data-set="cloud-fb-sync">' + Icons.svg('refresh', { class: 'btn-ico' }) + 'Sync now</button>' +
+                  '<button type="button" class="btn btn-outline btn-sm" data-set="cloud-fb-push">' + Icons.svg('upload-cloud', { class: 'btn-ico' }) + 'Upload everything</button>'
+                : '') +
+              '<button type="button" class="btn btn-outline btn-sm" data-set="cloud-fb-pull">' + Icons.svg('download', { class: 'btn-ico' }) + 'Load from Firebase</button>' +
+              (Auth.can('settings', 'edit')
+                ? '<button type="button" class="btn btn-ghost btn-sm" data-set="cloud-fb-disconnect">' + Icons.svg('log-out', { class: 'btn-ico' }) + 'Disconnect</button>'
+                : '')
+            : (fb.configured && Auth.can('settings', 'edit')
+                ? '<button type="button" class="btn btn-primary btn-sm" data-set="cloud-fb-connect">' + Icons.svg('log-in', { class: 'btn-ico' }) + 'Connect Firebase</button>'
+                : '')) +
+          '<button type="button" class="btn btn-ghost btn-sm" data-set="cloud-fb-help">' + Icons.svg('book-open', { class: 'btn-ico' }) + 'How to set it up</button>' +
+        '</div>' +
+        (Auth.can('settings', 'edit')
+          ? '<div class="mt-2">' + switchField('syncEnabled', 'Keep this device in sync automatically', fb.auto,
+              'Uploads changes by itself and picks up other officers’ edits within a few minutes. Leave it off to exchange records only when you press “Sync now”.') + '</div>'
+          : '') +
+      '</div>';
+
     return UI.card({
-      title: 'Cloud backup', icon: 'upload-cloud',
+      title: 'Cloud backup and shared database', icon: 'upload-cloud',
       sub: 'Get the club’s records off this one browser',
-      body: folderBody + graphBody +
+      body: folderBody + graphBody + fbBody +
         '<div class="alert alert-info mt-2">' + Icons.svg('shield-check') +
           '<div><strong>Keep one backup a week.</strong> Records live in this browser only; a dated backup in OneDrive plus a USB copy is a complete archive. Sign-in tokens are never included in a backup file.</div></div>',
       foot: '<span class="muted small">' + Icons.svg('book-open') + ' Guides: <span class="mono">docs/ONEDRIVE.md</span> (Microsoft 365) and <span class="mono">docs/CLOUD-STORAGE.md</span> (which service to choose).</span>'
@@ -325,6 +366,14 @@
       if (global.CertBG && CertBG.bindDesigner) {
         CertBG.bindDesigner(root, { onChange: function () { Router.refresh(); } });
       }
+      var autoBox = root.querySelector('#set-syncEnabled');
+      if (autoBox) {
+        autoBox.addEventListener('change', function () {
+          if (!CRUD.guard('settings', 'edit')) { this.checked = !this.checked; return; }
+          Sync.setAuto(this.checked);
+          Router.refresh();
+        });
+      }
       root.addEventListener('click', function (e) {
         var t = e.target.closest('[data-tab]');
         if (t) { tab = t.getAttribute('data-tab'); Router.refresh(); return; }
@@ -342,6 +391,8 @@
         var what = btn.getAttribute('data-set');
         var form = U.$('#settings-form', root) || U.$('#display-form', root) || U.$('#notif-form', root);
         var data = form ? Forms.collect(form) : {};
+        var syncForm = U.$('#sync-form', root);
+        var syncData = syncForm ? Forms.collect(syncForm) : {};
 
         if (what === 'save-club') savePartial(data, ['clubName', 'clubFullName', 'schoolName', 'motto', 'description', 'email', 'phone', 'address', 'academicYear', 'currentTerm', 'termStart', 'termEnd', 'currency', 'meetingDefaultVenue', 'reportSignatory', 'memberIdPrefix', 'certificatePrefix']);
         if (what === 'reset-club') {
@@ -362,7 +413,9 @@
         if (what === 'reset-pass') resetPassword(Store.find('users', btn.getAttribute('data-user')));
         if (what === 'del-user') deleteUser(Store.find('users', btn.getAttribute('data-user')));
         if (what === 'change-pass') changeMyPassword();
-        if (what.indexOf('cloud-') === 0) { cloudAction(what, data); return; }
+        if (what === 'cloud-fb-save' || what === 'cloud-fb-connect' || what === 'cloud-fb-disconnect' ||
+            what === 'cloud-fb-push' || what === 'cloud-fb-pull' || what === 'cloud-fb-sync' ||
+            what === 'cloud-fb-help') { cloudFirebase(what, syncData); return; }
         if (what === 'export') exportBackup();
         if (what === 'import') importBackup();
         if (what === 'strip-demo') stripDemo();
@@ -392,6 +445,99 @@
     var payload = Store.exportAll();
     U.download('mrhs-ict-club-backup-' + U.todayISO() + '.json', JSON.stringify(payload, null, 2), 'application/json');
     UI.toast('Backup exported', payload.counts ? Object.keys(payload.counts).length + ' collections written to the backup file.' : 'Backup file created.', 'success');
+  }
+
+  /* ══ Firebase shared database ═════════════════════════════════════════ */
+  function cloudFirebase(what, data) {
+    if (what === 'cloud-fb-help') { openFirebaseHelp(); return; }
+    if (what === 'cloud-fb-save') {
+      if (!CRUD.guard('settings', 'edit')) return;
+      if (!String(data.firebaseProjectId || '').trim() || !String(data.firebaseApiKey || '').trim()) {
+        UI.toast('Both values are needed', 'Paste the project ID and the web API key from the Firebase console.', 'warning');
+        return;
+      }
+      Sync.saveConfig({ projectId: data.firebaseProjectId, apiKey: data.firebaseApiKey });
+      UI.toast('Connection details saved', 'Now choose “Connect Firebase” and sign in with the club’s Firebase account.', 'success');
+      Router.refresh();
+      return;
+    }
+    if (what === 'cloud-fb-connect') {
+      if (!CRUD.guard('settings', 'edit')) return;
+      UI.formModal({
+        title: 'Sign in to Firebase', icon: 'database', size: 'sm',
+        subtitle: 'Use the account created for the club in Firebase Authentication (Email/Password).',
+        formHtml: Forms.render([
+          { name: 'email', label: 'Email address', type: 'email', required: true, colSpan: 2, placeholder: 'ict@mrhs.ac.ug' },
+          { name: 'password', label: 'Password', type: 'password', required: true, colSpan: 2, help: 'Kept only as a sign-in token in this browser; never written into a backup file.' }
+        ]),
+        submitLabel: 'Connect Firebase',
+        onOpen: function (c, form) { Forms.init(form); },
+        onSubmit: function (values, c) {
+          Sync.signIn(values.email, values.password).then(function (ok) {
+            if (!ok) return;
+            c.close();
+            Router.refresh();
+            if (Sync.settings().syncEnabled) Sync.sync({ quiet: false });
+          });
+          return true;
+        }
+      });
+      return;
+    }
+    if (what === 'cloud-fb-disconnect') {
+      if (!CRUD.guard('settings', 'edit')) return;
+      UI.confirm({
+        title: 'Disconnect Firebase', message: 'Remove the stored Firebase sign-in from this browser? Records already in the shared database are untouched, and automatic syncing stops.',
+        confirmLabel: 'Disconnect', icon: 'database', tone: 'warning'
+      }).then(function (ok) {
+        if (!ok) return;
+        Sync.signOut().then(function () { Router.refresh(); });
+      });
+      return;
+    }
+    if (what === 'cloud-fb-push') {
+      if (!CRUD.guard('settings', 'edit')) return;
+      UI.toast('Uploading', 'Sending every record to the shared database…', 'info', { duration: 2000 });
+      Sync.push({ full: true }).then(function () { Router.refresh(); });
+      return;
+    }
+    if (what === 'cloud-fb-sync') {
+      if (!CRUD.guard('settings', 'edit')) return;
+      UI.toast('Syncing', 'Exchanging records with Firebase…', 'info', { duration: 2000 });
+      Sync.sync().then(function () { Router.refresh(); });
+      return;
+    }
+    if (what === 'cloud-fb-pull') {
+      var pending = Sync.pending();
+      UI.confirm({
+        title: 'Load from Firebase',
+        message: (pending ? pending + ' local change' + (pending === 1 ? '' : 's') + ' will be kept and uploaded afterwards. ' : '') +
+          'Records in the shared database are applied to this device. Newer local edits are never overwritten.',
+        confirmLabel: 'Load records', icon: 'download', tone: 'primary'
+      }).then(function (ok) {
+        if (!ok) return;
+        Sync.pull().then(function () { Router.refresh(); });
+      });
+    }
+  }
+
+  /** In-app setup guide for Firebase. */
+  function openFirebaseHelp() {
+    UI.modal({
+      title: 'Setting up the Firebase shared database', subtitle: 'About twenty minutes, once, by the ICT teacher or club patron.',
+      icon: 'database', size: 'lg',
+      body: '<ol class="help-steps">' +
+          '<li><strong>Create the project.</strong> Sign in at <span class="mono">console.firebase.google.com</span> with a school Google account → <em>Add project</em> → name it e.g. “MRHS ICT Club”. Google Analytics is not needed.</li>' +
+          '<li><strong>Create the database.</strong> <em>Build → Firestore Database → Create database</em>. Choose the location closest to Uganda (e.g. <span class="mono">europe-west1</span>), and start in <em>Production mode</em>.</li>' +
+          '<li><strong>Turn on accounts.</strong> <em>Build → Authentication → Get started → Email/Password → Enable</em>. Then <em>Users → Add user</em> and create one account per officer who will enter data (for example <span class="mono">ict@mrhs.ac.ug</span>), plus a shared club account if the club prefers.</li>' +
+          '<li><strong>Copy the connection details.</strong> <em>Project settings → General → Your apps → Web app</em> (add a web app if there is none). Copy the <em>Project ID</em> and the <em>Web API key</em> into the fields above and press <em>Save connection details</em>.</li>' +
+          '<li><strong>Paste the security rules.</strong> <em>Firestore Database → Rules</em> → replace with the rules from <span class="mono">docs/FIREBASE.md</span> (they allow any signed-in club account to read and write, and nothing else) → <em>Publish</em>.</li>' +
+          '<li><strong>Connect</strong>, sign in with one of those accounts, then press <em>Sync now</em>. Every device the officers use repeats only the Connect step with its own account.</li>' +
+        '</ol>' +
+        '<div class="alert alert-info mt-2">' + Icons.svg('shield-check') +
+          '<div>Records are shared, but they are still yours: <span class="mono">users</span> (officer accounts and password hashes), <span class="mono">auditLog</span>, <span class="mono">verifications</span> and <span class="mono">notifications</span> never leave the device. Keep the OneDrive/Drive JSON backup running as well — a database is not a backup.</div></div>',
+      actions: [{ label: 'Close', tone: 'primary', close: true }]
+    });
   }
 
   /* ══ Cloud backup actions ═════════════════════════════════════════════ */

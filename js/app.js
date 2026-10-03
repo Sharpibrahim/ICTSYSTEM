@@ -186,6 +186,11 @@
         Cloud.graphHandleRedirect().then(function () { if (global.Router) Router.refresh(); });
       }
       if (global.Cloud && Cloud.folderRestore) Cloud.folderRestore(false);
+      /* Shared-database syncing (Firebase) — queued locally, pushed when online. */
+      if (global.Sync && Sync.init) {
+        Sync.init();
+        if (Sync.connected() && Sync.settings().syncEnabled) Sync.maybePull(true);
+      }
       var user = Auth.restore();
       initLogin();
       if (user) {
