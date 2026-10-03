@@ -104,14 +104,21 @@
     ].join('\n');
   }
 
-  var stylesInjected = false;
+  /* The certificate background, ID-card sheets and print rules live in this
+     stylesheet. It must be present even when nothing has been printed yet,
+     because certificates are also drawn inline on detail pages — so it is
+     injected once the document is parsed and kept in sync afterwards. */
+  var stylesNode = null;
   function injectStyles() {
-    if (stylesInjected) return;
-    stylesInjected = true;
-    var css = document.createElement('style');
-    css.id = 'mrhs-print-styles';
-    css.textContent = stylesCSS();
-    document.head.appendChild(css);
+    var text = stylesCSS();
+    if (stylesNode && stylesNode.textContent === text) return;
+    if (!stylesNode) stylesNode = document.getElementById('mrhs-print-styles');
+    if (!stylesNode) {
+      stylesNode = document.createElement('style');
+      stylesNode.id = 'mrhs-print-styles';
+      document.head.appendChild(stylesNode);
+    }
+    stylesNode.textContent = text;
   }
 
   function print(html) {
@@ -156,6 +163,7 @@
 
   function certificateHTML(cert, opts) {
     opts = opts || {};
+    injectStyles();
     var s = club();
     var type = String(cert.type || 'Certificate of Participation').replace(/^Certificate of /, '');
     var serial = String(cert.certificateNumber || '');
@@ -363,8 +371,15 @@
     );
   }
 
+  /* All core files are loaded before DOMContentLoaded fires, so this is the
+     earliest safe moment to build a stylesheet that also carries the card and
+     background rules. */
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', injectStyles);
+  else injectStyles();
+
   global.Print = {
     preview: preview, print: print, page: page, stylesCSS: stylesCSS,
+    injectStyles: injectStyles,
     certificate: certificateHTML, idCard: idCardHTML, memberProfile: memberProfileHTML,
     minutes: meetingMinutesHTML, report: reportHTML, attendanceSheet: attendanceSheetHTML,
     certificatePreviewHTML: certificateHTML,

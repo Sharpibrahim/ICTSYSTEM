@@ -178,12 +178,19 @@
   }
 
   var cachedURI = null, cachedTemplateURI = null;
+  /** Turns SVG markup into a data URI that works in every browser. */
+  function toDataURI(markup) {
+    if (/^[\x00-\x7F]*$/.test(markup) && global.btoa) {
+      try { return 'data:image/svg+xml;base64,' + global.btoa(markup); } catch (e) {}
+    }
+    return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(markup);
+  }
   function dataURI() {
-    if (!cachedURI) cachedURI = 'data:image/svg+xml;utf8,' + encodeURIComponent(svg());
+    if (!cachedURI) cachedURI = toDataURI(svg());
     return cachedURI;
   }
   function templateURI() {
-    if (!cachedTemplateURI) cachedTemplateURI = 'data:image/svg+xml;utf8,' + encodeURIComponent(templateSVG());
+    if (!cachedTemplateURI) cachedTemplateURI = toDataURI(templateSVG());
     return cachedTemplateURI;
   }
   /** Which built-in design is active: 'template' (default) or 'classic'. */
@@ -229,8 +236,9 @@
     var nodes = document.querySelectorAll('[data-cert-bg="layer"]');
     Array.prototype.forEach.call(nodes, function (node) {
       if (!useCustom()) {
-        node.className = 'cert-bg-layer cert-bg-' + design();
-        node.removeAttribute('style');
+        var built = design();
+        node.className = 'cert-bg-layer cert-bg-' + built;
+        node.setAttribute('style', "background-image:url('" + (built === 'classic' ? dataURI() : templateURI()) + "')");
         var scrim = node.parentNode && node.parentNode.querySelector('[data-cert-bg="scrim"]');
         if (scrim) scrim.remove();
       } else {
@@ -247,6 +255,12 @@
   }
 
   /* ══ Markup + CSS ══════════════════════════════════════════════════════ */
+  /** Inline background-image for a built-in design (never depends on CSS
+      being injected first — the artwork travels with the markup). */
+  function builtinStyle(which) {
+    return " style=\"background-image:url('" + (which === 'classic' ? dataURI() : templateURI()) + "')\"";
+  }
+
   /** Background layers for the certificate (artwork + readability scrim). */
   function layerHTML() {
     var mode = design();
@@ -257,9 +271,10 @@
           '<div class="cert-scrim" data-cert-bg="scrim"></div>';
       }
       /* still loading — show the club template until the image resolves */
-      return '<div class="cert-bg-layer cert-bg-template" data-cert-bg="layer"></div><div class="cert-scrim" data-cert-bg="scrim"></div>';
+      return '<div class="cert-bg-layer cert-bg-template" data-cert-bg="layer"' + builtinStyle('template') + '></div>' +
+        '<div class="cert-scrim" data-cert-bg="scrim"></div>';
     }
-    return '<div class="cert-bg-layer cert-bg-' + mode + '" data-cert-bg="layer"></div>';
+    return '<div class="cert-bg-layer cert-bg-' + mode + '" data-cert-bg="layer"' + builtinStyle(mode) + '></div>';
   }
 
   function hasBackground() { return true; }
