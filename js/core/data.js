@@ -1045,6 +1045,8 @@
       showDemoBadges: true,
       memberIdPrefix: 'MRHS-ICT-M',
       certificatePrefix: 'MRHSICT',
+    certificateBgFileId: null,
+    certificateBgMode: 'builtin',
       notifyMeetings: true,
       notifyActivities: true,
       notifyTasks: true,

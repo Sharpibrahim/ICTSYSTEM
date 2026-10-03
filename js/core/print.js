@@ -69,7 +69,6 @@
       '.cert-preview::before{content:"";position:absolute;inset:13px;border:2px solid #1b3a8f;border-radius:3px;pointer-events:none}',
       '.cert-preview::after{content:"";position:absolute;inset:18px;border:1px solid rgba(184,147,63,.85);border-radius:2px;pointer-events:none}',
       '.cert-inner{position:relative;z-index:1;text-align:center;padding:4px 6px 0}',
-      '.cert-bg-rosette{position:absolute;left:50%;top:53%;width:74%;max-width:560px;height:auto;transform:translate(-50%,-50%);pointer-events:none}',
       '.cert-frame-deco{position:absolute;inset:0;pointer-events:none}',
       '.cf-corner{position:absolute;width:40px;height:40px;border:2px solid rgba(27,58,143,.55)}',
       '.cf-corner.tl{top:26px;left:26px;border-right:0;border-bottom:0}.cf-corner.tr{top:26px;right:26px;border-left:0;border-bottom:0}',
@@ -99,8 +98,9 @@
       '.cert-seal{width:84px;height:84px;flex:none;border-radius:50%;display:grid;place-items:center;text-align:center;transform:rotate(-11deg);line-height:1.28;border:3px dashed #6d28d9;color:#6d28d9;font-family:Arial,Helvetica,sans-serif;font-size:.58rem;font-weight:700;letter-spacing:.1em}',
       '.cert-frame{background:#eef1f7;padding:16px;border-radius:14px;border:1px solid #dfe5f0;overflow:auto}',
       '.cert-frame .cert-preview{margin:0 auto}',
+      (global.CertBG && CertBG.cssRules ? CertBG.cssRules() : ''),
       (global.Cards && Cards.stylesCSS ? Cards.stylesCSS() : ''),
-      '@media print{body{background:#fff}.app-shell,.topbar,.sidebar,.modal-root,.drawer-root,.toast-root,.overlay,.login-screen,.boot-screen{display:none !important}.print-area{display:block !important}.print-page{box-shadow:none;margin:0;padding:12mm;width:auto;min-height:0}.print-page.landscape{width:auto}.cert-preview{box-shadow:none;border:0;max-width:none;width:auto;-webkit-print-color-adjust:exact;print-color-adjust:exact}.cert-bg-rosette{-webkit-print-color-adjust:exact;print-color-adjust:exact}@page{size:A4;margin:10mm}}'
+      '@media print{body{background:#fff}.app-shell,.topbar,.sidebar,.modal-root,.drawer-root,.toast-root,.overlay,.login-screen,.boot-screen{display:none !important}.print-area{display:block !important}.print-page{box-shadow:none;margin:0;padding:12mm;width:auto;min-height:0}.print-page.landscape{width:auto}.cert-preview{box-shadow:none;border:0;max-width:none;width:auto;-webkit-print-color-adjust:exact;print-color-adjust:exact}.cert-preview.has-bg{background:#fff;padding:5.1% 5.6%;aspect-ratio:297/210;display:flex;flex-direction:column;justify-content:center}.cert-bg-layer{-webkit-print-color-adjust:exact;print-color-adjust:exact}@page{size:A4;margin:10mm}}'
     ].join('\n');
   }
 
@@ -161,46 +161,25 @@
     var serial = String(cert.certificateNumber || '');
     var short = serial.replace(/^MRHSICT-?/, '').replace(/-/g, ' ');
     var issued = U.fmtDate(cert.issueDate, 'long');
+    var bg = global.CertBG ? CertBG.layerHTML() : '';
 
-    /* Print-only background: guilloche-style rosette (data URI, no network). */
-    var rosette = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300" ' +
-        'style="stroke:#1b3a8f;fill:none;opacity:.10" stroke-width=".4">' +
-        Array.apply(null, Array(36)).map(function (_, i) {
-          return '<ellipse cx="150" cy="150" rx="130" ry="46" transform="rotate(' + (i * 5) + ' 150 150)"/>';
-        }).join('') +
-        Array.apply(null, Array(12)).map(function (_, i) {
-          return '<circle cx="150" cy="150" r="' + (18 + i * 10) + '"/>';
-        }).join('') +
-        '</svg>';
-
-    return '<div class="cert-preview">' +
+    return '<div class="cert-preview has-bg">' +
       '<div class="cert-inner">' +
-        '<img class="cert-bg-rosette" alt="" src="data:image/svg+xml;utf8,' + encodeURIComponent(rosette) + '">' +
-        '<div class="cert-frame-deco" aria-hidden="true">' +
-          '<span class="cf-corner tl"></span><span class="cf-corner tr"></span>' +
-          '<span class="cf-corner bl"></span><span class="cf-corner br"></span>' +
-          '<span class="cf-rule"></span>' +
-        '</div>' +
-        '<div class="cert-head">' +
-          '<span class="cert-seal-mark">' + Icons.svg('club-logo', { size: 30 }) + '</span>' +
-          '<span class="cert-head-text"><strong>' + U.esc(s.clubName || 'MRHS ICT Club') + '</strong>' +
-          '<span>' + U.esc(s.schoolName || 'Mbazzi Riverside High School') + '</span></span>' +
-          '<span class="cert-serial">' + U.esc(short || 'Certificate') + '</span>' +
-        '</div>' +
+        bg +
         '<div class="cert-crest">' + Icons.svg('club-logo', { size: 34 }) + '</div>' +
-        '<p class="cert-org">Certificate of Achievement</p>' +
-        '<h1 class="cert-title">' + U.esc(type) + '</h1>' +
+        '<p class="cert-org">' + U.esc(s.clubName || 'MRHS ICT Club') + '</p>' +
+        '<p class="cert-school">' + U.esc(s.schoolName || 'Mbazzi Riverside High School') + '</p>' +
+        '<h1 class="cert-title">Certificate</h1>' +
+        '<p class="cert-type">' + U.esc(type) + '</p>' +
         '<p class="cert-lead">This certificate is proudly presented to</p>' +
         '<p class="cert-name">' + U.esc(cert.recipientName || '—') + '</p>' +
         '<p class="cert-body">' + U.esc(cert.achievement || 'For participation in the programmes and activities of the MRHS ICT Club.') + '</p>' +
         '<div class="cert-meta">' +
           '<div class="cert-sign"><div class="line"></div><strong>' + U.esc(cert.issuedBy || 'Club President') + '</strong><span>Club President</span></div>' +
+          '<span class="cert-seal">MRHS<br>ICT CLUB<br>VERIFIED</span>' +
           '<div class="cert-sign"><div class="line"></div><strong>' + U.esc(cert.signedByPatron || 'Club Patron') + '</strong><span>Club Patron</span></div>' +
         '</div>' +
-        '<div class="cert-foot">' +
-          '<span class="cert-seal">MRHS<br>ICT CLUB<br>VERIFIED</span>' +
-          '<span class="cert-no">Certificate No. ' + U.esc(serial || '—') + '<br>Issued ' + U.esc(issued) + '</span>' +
-        '</div>' +
+        '<p class="cert-no">Certificate No. ' + U.esc(serial || '—') + ' &middot; Issued ' + U.esc(issued) + '</p>' +
       '</div></div>';
   }
 

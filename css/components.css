@@ -683,11 +683,21 @@ input[type="color"] { padding: 3px; height: 42px; cursor: pointer; }
 .cert-preview::after {
   content: ""; position: absolute; inset: 18px; border: 1px solid rgba(184, 147, 63, .85); border-radius: 2px; pointer-events: none;
 }
-.cert-inner { position: relative; z-index: 1; text-align: center; padding: 4px 6px 0; }
-.cert-bg-rosette {
-  position: absolute; left: 50%; top: 53%; width: 74%; max-width: 560px; height: auto;
-  transform: translate(-50%, -50%); pointer-events: none; user-select: none;
+.cert-inner { position: relative; z-index: 1; text-align: center; padding: 0; width: 100%; }
+/* Lock the certificate to A4 landscape so the ornate frame never distorts,
+   and centre the text block inside it. */
+.cert-preview.has-bg {
+  padding: 5.1% 5.6%; aspect-ratio: 297 / 210;
+  display: flex; flex-direction: column; justify-content: center;
 }
+.cert-school { font-family: var(--font); font-size: .82rem; font-weight: 700; color: #1b3a8f;
+  letter-spacing: .1em; text-transform: uppercase; margin-top: 2px; }
+.cert-bg-layer { position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  background-repeat: no-repeat; background-position: center center; background-size: 100% 100%; }
+.cert-bg-layer.custom { background-size: cover; }
+.cert-scrim { position: absolute; inset: 0; z-index: 0; pointer-events: none; background: rgba(255, 253, 247, .72); }
+.cert-preview.has-bg::before, .cert-preview.has-bg::after { display: none; }
+.cert-preview.has-bg .cert-frame-deco { display: none; }
 .cert-frame-deco { position: absolute; inset: 0; pointer-events: none; }
 .cf-corner { position: absolute; width: 40px; height: 40px; border: 2px solid rgba(27, 58, 143, .55); }
 .cf-corner.tl { top: 26px; left: 26px; border-right: 0; border-bottom: 0; border-top-left-radius: 3px; }
@@ -731,23 +741,28 @@ input[type="color"] { padding: 3px; height: 42px; cursor: pointer; }
 .cert-name { font-size: clamp(1.45rem, 3vw, 1.85rem); font-weight: 700; color: #101a2e; margin: 6px 0 4px;
   border-bottom: 2px solid rgba(27, 58, 143, .28); padding: 0 22px 9px; display: inline-block; min-width: 56%; }
 .cert-body { font-family: var(--font); font-size: .84rem; color: #44536e; max-width: 64ch; margin: 13px auto 0; line-height: 1.72; }
-.cert-meta { display: flex; justify-content: space-between; gap: 22px; margin-top: 30px; font-family: var(--font); }
+.cert-meta { display: flex; align-items: flex-start; justify-content: space-between; gap: 18px; margin-top: 26px; font-family: var(--font); }
 .cert-sign { flex: 1; text-align: center; }
 .cert-sign .line { border-top: 1.5px solid #8fa1c0; margin-bottom: 6px; padding-top: 6px; }
 .cert-sign strong { display: block; font-size: .78rem; color: #16295f; }
 .cert-sign span { font-size: .7rem; color: #5b6b8c; letter-spacing: .04em; }
 .cert-foot { position: relative; display: flex; align-items: flex-end; justify-content: space-between;
-  gap: 16px; margin-top: 22px; padding-top: 12px; border-top: 1px solid rgba(27, 58, 143, .18); }
-.cert-no { font-family: var(--font-mono); font-size: .7rem; color: #5b6b8c; letter-spacing: .06em;
-  text-align: right; line-height: 1.5; }
+  gap: 16px; margin-top: 22px; padding-top: 12px; }
+.cert-no { font-family: var(--font-mono); font-size: .7rem; color: #5b6b8c; letter-spacing: .08em;
+  text-align: center; line-height: 1.5; margin-top: 16px; }
 .cert-seal {
-  width: 84px; height: 84px; flex: none; border-radius: 50%; display: grid; place-items: center;
-  text-align: center; transform: rotate(-11deg); opacity: .92; line-height: 1.28;
-  border: 3px dashed #6d28d9; color: #6d28d9; background: rgba(109, 40, 217, .04);
-  font-family: var(--font); font-size: .58rem; font-weight: 700; letter-spacing: .1em;
+  width: 68px; height: 68px; flex: none; border-radius: 50%; display: grid; place-items: center;
+  text-align: center; transform: rotate(-9deg); opacity: .9; line-height: 1.26;
+  border: 2.5px dashed #6d28d9; color: #6d28d9; background: rgba(109, 40, 217, .045);
+  font-family: var(--font); font-size: .52rem; font-weight: 700; letter-spacing: .09em;
+  margin: 6px 0 0;
+}
+@media (max-width: 900px) {
+  .cert-preview.has-bg { padding: 4.6% 5%; }
 }
 @media (max-width: 640px) {
   .cert-preview { padding: 20px 18px 18px; }
+  .cert-preview.has-bg { padding: 4.2% 4.6%; aspect-ratio: auto; }
   .cert-serial, .cert-head-text span { display: none; }
   .cert-meta { flex-direction: column; gap: 18px; }
   .cert-foot { flex-direction: column-reverse; align-items: center; }
@@ -1115,3 +1130,24 @@ input[type="color"] { padding: 3px; height: 42px; cursor: pointer; }
 
 /* Flex alignment helper (card studio rows, filter bars) */
 .items-center { align-items: center; }
+
+/* ── 22. Certificate design picker (Settings) ───────────────────────────── */
+.cert-design { display: grid; grid-template-columns: repeat(auto-fit, minmax(288px, 1fr)); gap: 14px; }
+.cert-design-pick {
+  display: flex; flex-direction: column; gap: 10px; padding: 12px;
+  border: 1px solid var(--border); border-radius: var(--r-md); background: var(--surface-2);
+  position: relative;
+}
+.cert-design-pick.on { border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-100); }
+[data-theme="dark"] .cert-design-pick.on { box-shadow: 0 0 0 3px rgba(59, 98, 238, .25); }
+.cert-design-pick img { width: 100%; height: 150px; object-fit: cover; border-radius: var(--r-sm);
+  border: 1px solid var(--border); background: #fff; display: block; }
+.cert-design-pick .cd-empty {
+  height: 150px; border: 1px dashed var(--border-2); border-radius: var(--r-sm);
+  display: grid; place-items: center; gap: 6px; color: var(--text-3); font-size: .8rem;
+  background: var(--surface);
+}
+.cert-design-pick .cd-empty svg { color: var(--text-3); }
+.cert-design-pick .cd-text { display: grid; gap: 3px; }
+.cert-design-pick .cd-text strong { font-size: .88rem; }
+.cert-design-pick .badge { position: absolute; top: 20px; right: 20px; }
