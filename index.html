@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="description" content="MRHS ICT CLUB MASTER — the digital management platform of the Mbazzi Riverside High School ICT Club: members, cabinet, meetings, attendance, courses, projects, reports, certificates, finance and analytics.">
+<meta name="application-name" content="MRHS ICT CLUB MASTER">
+<title>MRHS ICT CLUB MASTER &middot; Mbazzi Riverside High School ICT Club</title>
+<link rel="icon" href="assets/logo/logo.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/logo/logo.svg">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/components.css">
+<link rel="stylesheet" href="css/responsive.css">
+</head>
+<body data-route="boot">
+
+<a class="skip-link" href="#view-root">Skip to main content</a>
+
+<!-- ══════════════════════════════════════════════════════════════════
+     BOOT / SPLASH
+     ══════════════════════════════════════════════════════════════════ -->
+<div id="boot-screen" class="boot-screen" role="status" aria-live="polite" aria-label="Loading MRHS ICT Club Master">
+  <div class="boot-inner">
+    <div class="boot-logo" aria-hidden="true">
+      <svg viewBox="0 0 64 64" width="52" height="52"><use href="#i-club-logo"></use></svg>
+    </div>
+    <h1 class="boot-title">MRHS ICT CLUB MASTER</h1>
+    <p class="boot-sub">Mbazzi Riverside High School &middot; ICT Club</p>
+    <div class="boot-bar"><span></span></div>
+    <p class="boot-status" id="boot-status">Initialising data layer…</p>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════
+     LOGIN SCREEN
+     ══════════════════════════════════════════════════════════════════ -->
+<div id="login-screen" class="login-screen" hidden>
+  <div class="login-grid">
+    <!-- Brand panel -->
+    <section class="login-brand" aria-label="About the platform">
+      <div class="login-brand-top">
+        <div class="brand-mark brand-mark-lg">
+          <svg viewBox="0 0 64 64" width="46" height="46" aria-hidden="true"><use href="#i-club-logo"></use></svg>
+        </div>
+        <div>
+          <p class="brand-eyebrow">Mbazzi Riverside High School</p>
+          <h1 class="brand-name">MRHS ICT CLUB<br><span>MASTER</span></h1>
+        </div>
+      </div>
+      <p class="login-tagline">
+        The complete digital management platform for the operations, members, leadership,
+        training, projects, finances and achievements of the MRHS ICT Club.
+      </p>
+      <ul class="login-feature-list">
+        <li><span class="lf-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#i-users"></use></svg></span>
+          <div><strong>Members &amp; Cabinet</strong><span>Profiles, positions, terms and history</span></div></li>
+        <li><span class="lf-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#i-check-square"></use></svg></span>
+          <div><strong>Meetings &amp; Attendance</strong><span>Minutes, decisions, action items, rates</span></div></li>
+        <li><span class="lf-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#i-book-open"></use></svg></span>
+          <div><strong>Courses &amp; Projects</strong><span>Lessons, enrolment, progress tracking</span></div></li>
+        <li><span class="lf-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#i-award"></use></svg></span>
+          <div><strong>Reports &amp; Certificates</strong><span>Printable documents and verification</span></div></li>
+      </ul>
+      <p class="login-brand-foot">
+        <span class="dot" aria-hidden="true"></span> Demo environment &middot; all records are clearly labelled sample data
+      </p>
+    </section>
+
+    <!-- Form panel -->
+    <section class="login-panel" aria-label="Sign in">
+      <div class="login-card">
+        <header class="login-card-head">
+          <div class="brand-mark brand-mark-sm" aria-hidden="true">
+            <svg viewBox="0 0 64 64" width="26" height="26"><use href="#i-club-logo"></use></svg>
+          </div>
+          <h2>Welcome back</h2>
+          <p>Sign in to your MRHS ICT Club Master account.</p>
+        </header>
+
+        <form id="login-form" novalidate autocomplete="on">
+          <div class="field">
+            <label for="login-user">Username or email</label>
+            <div class="input-affix">
+              <span class="affix" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#i-user"></use></svg></span>
+              <input id="login-user" name="username" type="text" placeholder="e.g. admin@mrhsict.ac.ug"
+                     autocomplete="username" required aria-describedby="login-user-err">
+            </div>
+            <p class="field-error" id="login-user-err" hidden></p>
+          </div>
+
+          <div class="field">
+            <label for="login-pass">Password</label>
+            <div class="input-affix">
+              <span class="affix" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#i-lock"></use></svg></span>
+              <input id="login-pass" name="password" type="password" placeholder="Enter your password"
+                     autocomplete="current-password" required aria-describedby="login-pass-err">
+              <button type="button" class="affix-btn" id="toggle-pass"
+                      aria-label="Show password" aria-pressed="false" title="Show password">
+                <svg viewBox="0 0 24 24"><use href="#i-eye"></use></svg>
+              </button>
+            </div>
+            <p class="field-error" id="login-pass-err" hidden></p>
+          </div>
+
+          <div class="login-row">
+            <label class="check">
+              <input type="checkbox" id="remember-me" name="remember" checked>
+              <span>Remember me</span>
+            </label>
+            <button type="button" class="link-btn" id="forgot-link">Forgot password?</button>
+          </div>
+
+          <div id="login-alert" class="alert alert-error" role="alert" hidden></div>
+
+          <button type="submit" class="btn btn-primary btn-block btn-lg" id="login-btn">
+            <svg viewBox="0 0 24 24" class="btn-ico" aria-hidden="true"><use href="#i-log-in"></use></svg>
+            <span>Sign in</span>
+          </button>
+        </form>
+
+        <div class="login-demo">
+          <div class="login-demo-head">
+            <h3>Demo accounts</h3>
+            <span class="badge badge-info badge-soft">Role-based access</span>
+          </div>
+          <p class="muted small">Select a role to sign in instantly. Every account uses password <code>demo1234</code>.</p>
+          <div class="demo-chips" id="demo-chips"></div>
+          <button type="button" class="btn btn-ghost btn-sm btn-block" id="fill-credentials">
+            Fill administrator credentials
+          </button>
+        </div>
+
+        <p class="login-foot">MRHS ICT Club Master v1.0 &middot; Prototype build &middot; Data stored locally in this browser</p>
+      </div>
+    </section>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════
+     APPLICATION SHELL
+     ══════════════════════════════════════════════════════════════════ -->
+<div id="app-shell" class="app-shell" hidden>
+  <div class="scrim" id="scrim" hidden></div>
+
+  <!-- ── Sidebar ─────────────────────────────────────────────────── -->
+  <aside id="sidebar" class="sidebar" aria-label="Main navigation">
+    <div class="sidebar-head">
+      <a class="sidebar-brand" href="#/dashboard" aria-label="MRHS ICT Club Master home">
+        <span class="brand-mark brand-mark-xs" aria-hidden="true">
+          <svg viewBox="0 0 64 64" width="22" height="22"><use href="#i-club-logo"></use></svg>
+        </span>
+        <span class="sidebar-brand-text">
+          <strong>MRHS ICT</strong>
+          <span>CLUB MASTER</span>
+        </span>
+      </a>
+      <button class="icon-btn sidebar-close" id="sidebar-close" aria-label="Close navigation" type="button">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-x"></use></svg>
+      </button>
+    </div>
+
+    <div class="sidebar-club" id="sidebar-club">
+      <p class="sc-label">Active context</p>
+      <p class="sc-value" id="sc-club-name">MRHS ICT Club</p>
+      <p class="sc-meta" id="sc-term">Term 3 &middot; 2026 Academic Year</p>
+    </div>
+
+    <nav class="sidebar-nav" id="sidebar-nav" aria-label="Modules">
+      <!-- populated by shell.js -->
+    </nav>
+
+    <div class="sidebar-foot">
+      <div class="storage-meter" id="storage-meter" title="Local storage used by demo data">
+        <div class="storage-meter-head"><span>Local data</span><span id="storage-pct">—</span></div>
+        <div class="storage-meter-bar"><i id="storage-bar" style="width:0%"></i></div>
+      </div>
+      <p class="sidebar-version">v1.0.0 &middot; Prototype</p>
+    </div>
+  </aside>
+
+  <!-- ── Main column ─────────────────────────────────────────────── -->
+  <div class="shell-main">
+    <header id="topbar" class="topbar">
+      <button class="icon-btn only-mobile" id="sidebar-open" aria-label="Open navigation" aria-expanded="false" type="button">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-menu"></use></svg>
+      </button>
+
+      <div class="page-crumb" id="page-crumb" aria-live="polite"></div>
+
+      <button type="button" class="global-search-trigger" id="global-search-trigger" aria-label="Open global search">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-search"></use></svg>
+        <span>Search members, courses, projects, certificates…</span>
+        <kbd>Ctrl</kbd><kbd>K</kbd>
+      </button>
+
+      <div class="topbar-actions">
+        <div class="dropdown" data-dropdown>
+          <button class="icon-btn" id="theme-btn" data-dropdown-toggle aria-haspopup="true" aria-expanded="false"
+                  aria-label="Change appearance" title="Appearance" type="button">
+            <svg viewBox="0 0 24 24" aria-hidden="true" id="theme-icon"><use href="#i-sun"></use></svg>
+          </button>
+          <div class="dropdown-menu dropdown-menu-sm" role="menu" hidden>
+            <p class="dropdown-label">Appearance</p>
+            <button class="dropdown-item" role="menuitemradio" data-theme-choice="light" type="button">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-sun"></use></svg> Light</button>
+            <button class="dropdown-item" role="menuitemradio" data-theme-choice="dark" type="button">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-moon"></use></svg> Dark</button>
+            <button class="dropdown-item" role="menuitemradio" data-theme-choice="system" type="button">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-monitor"></use></svg> System</button>
+          </div>
+        </div>
+
+        <div class="dropdown" data-dropdown>
+          <button class="icon-btn" id="notif-btn" data-dropdown-toggle aria-haspopup="true" aria-expanded="false"
+                  aria-label="Notifications" title="Notifications" type="button">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-bell"></use></svg>
+            <span class="icon-badge" id="notif-count" hidden>0</span>
+          </button>
+          <div class="dropdown-menu dropdown-menu-lg" role="dialog" aria-label="Notification centre" hidden>
+            <div class="dropdown-head">
+              <h3>Notifications</h3>
+              <button class="link-btn xs" id="notif-mark-read" type="button">Mark all read</button>
+            </div>
+            <div class="notif-list" id="notif-list"></div>
+            <div class="dropdown-foot">
+              <a href="#/settings" class="link-btn xs" data-close-dropdown>Notification preferences</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="dropdown" data-dropdown>
+          <button class="user-chip" id="user-menu-btn" data-dropdown-toggle aria-haspopup="true" aria-expanded="false" type="button">
+            <span class="avatar avatar-sm" id="user-avatar">--</span>
+            <span class="user-chip-text">
+              <strong id="user-name">—</strong>
+              <small id="user-role">—</small>
+            </span>
+            <svg viewBox="0 0 24 24" class="chev" aria-hidden="true"><use href="#i-chevron-down"></use></svg>
+          </button>
+          <div class="dropdown-menu dropdown-menu-sm dropdown-right" role="menu" hidden>
+            <div class="dropdown-profile">
+              <span class="avatar" id="menu-avatar">--</span>
+              <div>
+                <strong id="menu-name">—</strong>
+                <small id="menu-email">—</small>
+                <span class="badge badge-primary badge-soft" id="menu-role">—</span>
+              </div>
+            </div>
+            <hr class="dropdown-sep">
+            <button class="dropdown-item" role="menuitem" data-close-dropdown id="menu-profile" type="button">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-user"></use></svg> My profile</button>
+            <a class="dropdown-item" role="menuitem" href="#/settings" data-close-dropdown>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-settings"></use></svg> Settings</a>
+            <a class="dropdown-item" role="menuitem" href="#/verify" data-close-dropdown>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-shield-check"></use></svg> Verify certificate</a>
+            <hr class="dropdown-sep">
+            <button class="dropdown-item danger" role="menuitem" id="logout-btn" type="button">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-log-out"></use></svg> Sign out</button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main id="view-root" class="view-root" tabindex="-1"></main>
+
+    <footer class="app-footer">
+      <span>&copy; <span id="footer-year">2026</span> Mbazzi Riverside High School ICT Club &middot; MRHS ICT CLUB MASTER</span>
+      <span class="foot-right">
+        <span class="badge badge-warning badge-soft" title="All records shipped with this prototype are fictional demonstration data">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-info"></use></svg> Demo data
+        </span>
+        <span class="muted" id="data-count">—</span>
+      </span>
+    </footer>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════
+     OVERLAYS
+     ══════════════════════════════════════════════════════════════════ -->
+<div id="search-overlay" class="overlay" hidden aria-hidden="true">
+  <div class="overlay-backdrop" data-overlay-close></div>
+  <div class="command-palette" role="dialog" aria-modal="true" aria-label="Global search">
+    <div class="cp-input-row">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-search"></use></svg>
+      <input id="cp-input" type="search" placeholder="Search members, cabinet, meetings, courses, projects, certificates…"
+             autocomplete="off" aria-controls="cp-results" aria-label="Global search query">
+      <kbd class="esc">Esc</kbd>
+    </div>
+    <div class="cp-filters" id="cp-filters"></div>
+    <div class="cp-results" id="cp-results" role="listbox" aria-label="Search results"></div>
+    <div class="cp-foot">
+      <span><kbd>↑</kbd><kbd>↓</kbd> navigate</span>
+      <span><kbd>Enter</kbd> open</span>
+      <span><kbd>Esc</kbd> close</span>
+      <span class="cp-foot-right" id="cp-count"></span>
+    </div>
+  </div>
+</div>
+
+<div id="modal-root" class="modal-root"></div>
+<div id="drawer-root" class="drawer-root"></div>
+<div id="toast-root" class="toast-root" role="status" aria-live="polite" aria-atomic="false"></div>
+<div id="print-area" class="print-area" aria-hidden="true"></div>
+
+<script src="js/core/icons.js"></script>
+<script src="js/core/utils.js"></script>
+<script src="js/core/store.js"></script>
+<script src="js/core/data.js"></script>
+<script src="js/core/auth.js"></script>
+<script src="js/core/ui.js"></script>
+<script src="js/core/forms.js"></script>
+<script src="js/core/charts.js"></script>
+<script src="js/core/crud.js"></script>
+<script src="js/core/print.js"></script>
+<script src="js/core/metrics.js"></script>
+<script src="js/core/router.js"></script>
+<script src="js/core/module.js"></script>
+<script src="js/core/shell.js"></script>
+<script src="js/modules/dashboard.js"></script>
+<script src="js/modules/members.js"></script>
+<script src="js/modules/cabinet.js"></script>
+<script src="js/modules/meetings.js"></script>
+<script src="js/modules/attendance.js"></script>
+<script src="js/modules/courses.js"></script>
+<script src="js/modules/activities.js"></script>
+<script src="js/modules/projects.js"></script>
+<script src="js/modules/reports.js"></script>
+<script src="js/modules/certificates.js"></script>
+<script src="js/modules/resources.js"></script>
+<script src="js/modules/announcements.js"></script>
+<script src="js/modules/tasks.js"></script>
+<script src="js/modules/calendar.js"></script>
+<script src="js/modules/equipment.js"></script>
+<script src="js/modules/finance.js"></script>
+<script src="js/modules/achievements.js"></script>
+<script src="js/modules/gallery.js"></script>
+<script src="js/modules/documents.js"></script>
+<script src="js/modules/analytics.js"></script>
+<script src="js/modules/settings.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
