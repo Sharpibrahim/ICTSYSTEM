@@ -57,6 +57,7 @@
     {
       group: 'System', items: [
         { key: 'settings', label: 'Settings', path: '/settings', icon: 'sliders', module: 'settings' },
+        { key: 'manual', label: 'User Manual', path: '/manual', icon: 'book', module: 'manual' },
         { key: 'verify', label: 'Verify Certificate', path: '/verify', icon: 'verified', module: 'certificates' }
       ]
     }
@@ -541,6 +542,8 @@
     set('menu-email', user.email);
     var roleBadge = document.getElementById('menu-role');
     if (roleBadge) roleBadge.textContent = info.label;
+    var man = document.getElementById('menu-manual');
+    if (man) man.hidden = !Auth.can('manual', 'view');
     var prof = document.getElementById('menu-profile');
     if (prof) {
       prof.onclick = function () {

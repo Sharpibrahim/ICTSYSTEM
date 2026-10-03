@@ -18,7 +18,7 @@
   var MODULES = [
     'dashboard', 'members', 'cabinet', 'meetings', 'attendance', 'courses', 'activities',
     'projects', 'reports', 'certificates', 'resources', 'announcements', 'tasks', 'calendar',
-    'equipment', 'finance', 'achievements', 'gallery', 'documents', 'analytics', 'settings'
+    'equipment', 'finance', 'achievements', 'gallery', 'documents', 'analytics', 'settings', 'manual'
   ];
 
   var V = 'view', M = 'manage', F = 'full';
@@ -31,49 +31,49 @@
       dashboard: V, members: M, cabinet: V, meetings: M, attendance: V, courses: V,
       activities: M, projects: V, reports: M, certificates: V, resources: V,
       announcements: M, tasks: V, calendar: V, equipment: V, finance: V,
-      achievements: M, gallery: M, documents: M, analytics: V, settings: V, users: V
+      achievements: M, gallery: M, documents: M, analytics: V, settings: V, users: V, manual: 'none'
     },
 
     President: {
       dashboard: F, members: F, cabinet: F, meetings: F, attendance: F, courses: M,
       activities: F, projects: F, reports: F, certificates: F, resources: M,
       announcements: F, tasks: F, calendar: F, equipment: M, finance: V,
-      achievements: F, gallery: F, documents: F, analytics: V, settings: V
+      achievements: F, gallery: F, documents: F, analytics: V, settings: V, manual: 'none'
     },
 
     Secretary: {
       dashboard: V, members: M, cabinet: V, meetings: F, attendance: F, courses: V,
       activities: M, projects: V, reports: F, certificates: M, resources: M,
       announcements: M, tasks: M, calendar: F, equipment: V, finance: V,
-      achievements: M, gallery: M, documents: F, analytics: V, settings: V
+      achievements: M, gallery: M, documents: F, analytics: V, settings: V, manual: 'none'
     },
 
     Treasurer: {
       dashboard: V, members: V, cabinet: V, meetings: V, attendance: V, courses: V,
       activities: V, projects: V, reports: M, certificates: V, resources: V,
       announcements: V, tasks: M, calendar: V, equipment: M, finance: F,
-      achievements: V, gallery: V, documents: M, analytics: V, settings: V
+      achievements: V, gallery: V, documents: M, analytics: V, settings: V, manual: 'none'
     },
 
     'Training Coordinator': {
       dashboard: V, members: V, cabinet: V, meetings: V, attendance: M, courses: F,
       activities: M, projects: V, reports: M, certificates: M, resources: F,
       announcements: V, tasks: M, calendar: V, equipment: V, finance: 'none',
-      achievements: V, gallery: M, documents: M, analytics: V, settings: V
+      achievements: V, gallery: M, documents: M, analytics: V, settings: V, manual: 'none'
     },
 
     'Project Coordinator': {
       dashboard: V, members: V, cabinet: V, meetings: V, attendance: V, courses: V,
       activities: F, projects: F, reports: M, certificates: V, resources: M,
       announcements: V, tasks: M, calendar: V, equipment: M, finance: 'none',
-      achievements: M, gallery: M, documents: M, analytics: V, settings: V
+      achievements: M, gallery: M, documents: M, analytics: V, settings: V, manual: 'none'
     },
 
     Member: {
       dashboard: V, members: 'own', cabinet: V, meetings: V, attendance: 'own', courses: V,
       activities: V, projects: V, reports: 'none', certificates: 'own', resources: V,
       announcements: V, tasks: 'none', calendar: V, equipment: 'none', finance: 'none',
-      achievements: V, gallery: V, documents: V, analytics: 'none', settings: 'own-profile'
+      achievements: V, gallery: V, documents: V, analytics: 'none', settings: 'own-profile', manual: 'none'
     }
   };
 

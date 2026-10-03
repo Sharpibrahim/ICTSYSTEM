@@ -44,13 +44,16 @@ each role.
 | `projects` | Project Coordinator | Projects, project tasks, activities |
 | `member` | Member | Club information plus their own records (attendance, certificates, profile) |
 
+Only the **Administrator** role can open the built-in **User Manual** (`#/manual`);
+every other role sees an access-restricted message there.
+
 Permissions are enforced in three places: the sidebar navigation, the router (restricted pages
 show an "access restricted" state) and every action button (`Auth.can(module, action)`).
 The full matrix lives in `js/core/auth.js`.
 
 ---
 
-## Modules (21)
+## Modules (21 + administrator manual)
 
 | # | Module | Highlights |
 |---|---|---|
@@ -75,6 +78,7 @@ The full matrix lives in `js/core/auth.js`.
 | 19 | **Documents** | 9 document categories, versioning, confidentiality, search and filter |
 | 20 | **Analytics** | Membership growth, attendance trends, course completion, project progress, participation, certificates and income vs expenses with plain-language insights |
 | 21 | **Settings** | Club information, appearance (light/dark/system), user management with role matrix, notification preferences, backup/restore, CSV import, demo data reset |
+| — | **User Manual** *(administrator only)* | 27-section searchable handbook: every module, the eight roles, term routines, troubleshooting, glossary — printable as a PDF (also shipped as `docs/MRHS-ICT-Club-Master-User-Manual.pdf`) |
 
 ### Cross-cutting features
 
@@ -83,6 +87,8 @@ The full matrix lives in `js/core/auth.js`.
 - **Toasts, confirmations and undo** — destructive actions ask first and can be undone from the toast.
 - **Empty, loading and error states** everywhere, with accessible labels, keyboard support and tooltips.
 - **Print previews** for member profiles, ID cards, certificates, meeting minutes, reports and attendance sheets, each downloadable as a standalone HTML document for PDF printing.
+- **Certificates** are print-first: cream paper, double navy + gold border, corner flourishes, a guilloche rosette watermark, medallion crest, embossed seal and two signature lines — identical on screen, on paper and in the exported HTML.
+- **Administrator handbook** built into the app (`#/manual`, visible only to the Administrator role and linked from the account menu) with instant search, expandable Q&A, and a print/PDF version.
 - **Data tools** — full JSON backup/restore (merge or replace), CSV import, CSV export per module, and a one-click demo-data reset.
 
 ---
@@ -111,9 +117,11 @@ js/
     router.js              hash router with params, guards and error boundaries
     module.js              declarative list/detail/CRUD module builder
     shell.js               sidebar, top bar, theme, command palette, notifications
-  modules/                 one file per module (21 files, same public shape)
+  modules/                 one file per module (22 files, same public shape)
+    manual.js              administrator handbook content + searchable, printable view
   app.js                   boot sequence and global wiring
 assets/logo/logo.svg       club mark used in the app, login screen and printed documents
+docs/MRHS-ICT-Club-Master-User-Manual.pdf   printable copy of the in-app manual
 ```
 
 ### Data layer

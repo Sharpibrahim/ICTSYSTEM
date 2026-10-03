@@ -258,6 +258,9 @@ hr { border: 0; border-top: 1px solid var(--border); }
   box-shadow: 0 12px 28px rgba(59, 98, 238, .38);
 }
 .brand-mark svg { stroke: #fff; }
+.brand-mark-lg svg { width: 34px; height: 34px; }
+.brand-mark-sm svg { width: 24px; height: 24px; }
+.brand-mark-xs svg { width: 20px; height: 20px; }
 .brand-mark-lg { width: 70px; height: 70px; border-radius: 21px; }
 .brand-mark-sm { width: 46px; height: 46px; border-radius: 14px; }
 .brand-mark-xs { width: 38px; height: 38px; border-radius: 11px; }
@@ -435,6 +438,8 @@ kbd {
 .page-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 18px; flex-wrap: wrap; }
 .page-head-text { display: grid; gap: 4px; min-width: 0; }
 .page-head-text h1 { font-size: 1.42rem; display: flex; align-items: center; gap: 10px; }
+.page-head-text h1 > svg { width: 20px; height: 20px; color: var(--primary-600); flex: none; }
+.page-head-text h1 > .badge { font-size: .68rem; }
 .page-head-text p { color: var(--text-3); font-size: .87rem; max-width: 78ch; }
 .page-actions { display: flex; align-items: center; gap: 9px; flex-wrap: wrap; }
 .breadcrumbs { display: flex; align-items: center; gap: 7px; font-size: .78rem; color: var(--text-3); flex-wrap: wrap; }

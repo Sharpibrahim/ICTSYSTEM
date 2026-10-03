@@ -185,7 +185,11 @@
   function svg(name, opts) {
     opts = opts || {};
     var cls = opts.class ? ' class="' + opts.class + '"' : '';
-    var size = opts.size ? ' width="' + opts.size + '" height="' + opts.size + '"' : '';
+    // Always emit width/height: an inline SVG without them falls back to the
+    // 300x150 replaced-element default, which made unsized icons huge.
+    // CSS rules (e.g. `.btn-ico { width:14px }`) still override these attributes.
+    var px = opts.size || 18;
+    var size = ' width="' + px + '" height="' + px + '"';
     var style = opts.style ? ' style="' + opts.style + '"' : '';
     var lbl = opts.label ? ' role="img" aria-label="' + String(opts.label).replace(/"/g, '&quot;') + '"'
                          : ' aria-hidden="true" focusable="false"';
