@@ -335,9 +335,146 @@
     refreshLayers();
   }
 
+  /* ══ Design picker (shared by Settings, Certificates and previews) ═════ */
+  /** Roles allowed to change the club certificate design. */
+  function canEdit() {
+    if (!global.Auth || !Auth.currentUser || !Auth.currentUser()) return false;
+    return Auth.can('settings', 'edit') || Auth.can('certificates', 'edit');
+  }
+
+  /** The three design tiles — identical wherever they are shown. */
+  function designerHTML() {
+    var active = design();
+    var hasCustom = !!settings().certificateBgFileId;
+    var tile = function (key, name, desc, img, inUse) {
+      return '<div class="cert-design-pick' + (inUse ? ' on' : '') + '" data-cert-design="' + key + '">' +
+        img +
+        '<div class="cd-text"><strong>' + name + '</strong><span class="muted small">' + desc + '</span></div>' +
+        (inUse ? UI.badge('In use', 'success', { icon: 'check' }) : '') +
+      '</div>';
+    };
+    var uploadBtn = canEdit()
+      ? '<label class="btn btn-primary btn-sm cert-bg-upload" style="cursor:pointer">' + Icons.svg('upload', { class: 'btn-ico' }) +
+        (hasCustom ? 'Replace my image' : 'Upload my image') +
+        '<input type="file" class="cert-bg-file" accept="image/png,image/jpeg,image/webp,image/*" hidden></label>'
+      : '';
+    var clearBtn = hasCustom && canEdit()
+      ? '<button type="button" class="btn btn-outline btn-sm" data-cert-bg-clear>' + Icons.svg('x', { class: 'btn-ico' }) + 'Remove my image</button>'
+      : '';
+    return '<div class="cert-design">' +
+        tile('template', 'Navy &amp; gold', 'The club template: navy corner blocks, diagonal pinstripes, gold rule frame and gold corner hooks.',
+          '<img src="' + templateURI() + '" alt="Navy and gold certificate background">', active === 'template') +
+        tile('classic', 'Cream &amp; ornate', 'Classic certificate paper in cream with a double gold frame, corner scrollwork and a faint centre medallion.',
+          '<img src="' + dataURI() + '" alt="Cream ornate certificate background">', active === 'classic') +
+        tile('custom', 'My own image',
+          hasCustom ? 'Your uploaded image is the one printed on every certificate and download.'
+                    : 'PNG or JPEG, up to 4 MB, A4 landscape (297 × 210 mm). Use the button below to choose the file.',
+          hasCustom && custom ? '<img src="' + custom.dataUrl + '" alt="Uploaded certificate background">'
+                              : '<div class="cd-empty">' + Icons.svg('image', { size: 22 }) + '<span>No image yet</span></div>',
+          active === 'custom') +
+      '</div>' +
+      '<div class="flex gap-1 wrap mt-2 items-center">' + uploadBtn + clearBtn +
+        '<button type="button" class="btn btn-ghost btn-sm" data-cert-bg-preview>' + Icons.svg('eye', { class: 'btn-ico' }) + 'Preview a certificate</button>' +
+      '</div>' +
+      (canEdit() ? '' : '<p class="help mt-2">' + Icons.svg('info') + ' Your role can view certificates but not change the club design — ask the Administrator.</p>');
+  }
+
+  /** Wires the tiles, upload, remove and preview buttons inside `root`. */
+  function bindDesigner(root, opts) {
+    opts = opts || {};
+    if (!root || root.__certBgBound) return;
+    root.__certBgBound = true;
+    var done = function (msg, sub) {
+      if (msg) UI.toast(msg, sub, 'success');
+      if (opts.onChange) opts.onChange();
+    };
+
+    root.addEventListener('click', function (e) {
+      var target = e.target;
+      if (!target || !target.closest) return;
+      var preview = target.closest('[data-cert-bg-preview]');
+      if (preview && root.contains(preview)) { previewAny(); return; }
+      var clear = target.closest('[data-cert-bg-clear]');
+      if (clear && root.contains(clear)) {
+        UI.confirm({
+          title: 'Remove my image', message: 'Remove your uploaded certificate background and go back to the built-in navy & gold design?',
+          confirmLabel: 'Remove image', icon: 'award', tone: 'warning'
+        }).then(function (ok) {
+          if (!ok) return;
+          clearCustom();
+          done('Certificate design updated', 'Certificates now use the built-in navy & gold design.');
+        });
+        return;
+      }
+      var pick = target.closest('[data-cert-design]');
+      if (!pick || !root.contains(pick)) return;
+      if (!canEdit()) { UI.toast('Not allowed', 'Your role cannot change the certificate design.', 'warning'); return; }
+      var which = pick.getAttribute('data-cert-design');
+      if (which === 'custom' && !settings().certificateBgFileId) {
+        var input = root.querySelector('.cert-bg-file');
+        if (input) input.click();
+        return;
+      }
+      useBuiltin(which);
+      done('Certificate design updated', 'Every certificate now uses the ' +
+        (which === 'custom' ? 'image you uploaded' : which === 'classic' ? 'cream & ornate design' : 'navy & gold design') + '.');
+    });
+
+    var input = root.querySelector('.cert-bg-file');
+    if (input) {
+      input.addEventListener('change', function () {
+        var file = this.files && this.files[0];
+        if (!file) return;
+        setCustomFile(file).then(function (ok) {
+          if (!ok) return;
+          done('Certificate background updated', 'Your image “' + file.name + '” is now the active certificate design.');
+        });
+      });
+    }
+  }
+
+  /** Opens a real certificate so the chosen design can be judged on paper. */
+  function previewAny() {
+    if (!global.Print || !Print.preview) return;
+    var cert = Store.all('certificates').filter(function (c) { return c.status !== 'Revoked'; })[0] || Store.all('certificates')[0];
+    if (!cert) { UI.toast('No certificate to preview', 'Issue a certificate first, then come back to see the design.', 'warning'); return; }
+    loadCustom(function () {
+      Print.preview(Print.certificate(cert), {
+        title: 'Certificate preview', icon: 'award',
+        subtitle: 'Exactly how the certificate prints — background included.',
+        fileName: 'mrhs-ict-certificate-' + (cert.certificateNumber || cert.id),
+        extraActions: canEdit() ? [{
+          label: 'Certificate background', tone: 'ghost', icon: 'image',
+          onClick: function () { openDesigner({ onChange: refreshLayers }); }
+        }] : []
+      });
+    });
+  }
+
+  /** Modal version of the design picker — reachable from the Certificates module. */
+  function openDesigner(opts) {
+    opts = opts || {};
+    var ctrl = UI.modal({
+      title: 'Certificate background', subtitle: 'Certificates print in A4 landscape (297 × 210 mm). Pick a design, or upload your own image.',
+      icon: 'award', size: 'lg',
+      body: designerHTML() +
+        '<p class="help mt-2">' + Icons.svg('lightbulb') + ' Keep the centre of an uploaded image light and plain so the recipient name and text stay readable. Images are stored in this browser only.</p>',
+      actions: [
+        { label: 'Preview a certificate', tone: 'ghost', icon: 'eye', onClick: function () { previewAny(); } },
+        { label: 'Done', tone: 'primary', close: true }
+      ],
+      onClose: function () { refreshLayers(); if (opts.onChange) opts.onChange(); }
+    });
+    loadCustom();
+    bindDesigner(ctrl.body, { onChange: function () { refreshLayers(); } });
+    return ctrl;
+  }
+
   global.CertBG = {
     svg: svg, dataURI: dataURI, templateSVG: templateSVG, templateURI: templateURI,
     thumbURI: thumbURI, cssRules: cssRules, design: design, useBuiltin: useBuiltin,
+    canEdit: canEdit, designerHTML: designerHTML, bindDesigner: bindDesigner,
+    openDesigner: openDesigner, previewAny: previewAny,
     layerHTML: layerHTML, hasBackground: hasBackground,
     useCustom: useCustom, loadCustom: loadCustom, refreshLayers: refreshLayers,
     setCustomFile: setCustomFile, clearCustom: clearCustom,

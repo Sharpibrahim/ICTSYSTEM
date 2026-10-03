@@ -135,7 +135,7 @@
       icon: opts.icon || 'print',
       size: 'xl',
       body: '<div class="print-preview-frame">' + html + '</div>',
-      actions: [
+      actions: (opts.extraActions || []).concat([
         { label: 'Close', tone: 'ghost', onClick: function (c) { c.close(); } },
         {
           label: 'Download HTML', tone: 'outline', icon: 'download',
@@ -147,7 +147,7 @@
           }
         },
         { label: 'Print', tone: 'primary', icon: 'print', onClick: function () { print(html); } }
-      ]
+      ])
     });
     return ctrl;
   }

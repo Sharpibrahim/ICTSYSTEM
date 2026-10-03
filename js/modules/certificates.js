@@ -104,7 +104,10 @@
       ];
     },
     headActions: function () {
-      return '<button type="button" class="btn btn-outline btn-sm" data-mod-action="verify">' + Icons.svg('shield-check', { class: 'btn-ico' }) + 'Verify certificate</button>';
+      return '<button type="button" class="btn btn-outline btn-sm" data-mod-action="verify">' + Icons.svg('shield-check', { class: 'btn-ico' }) + 'Verify certificate</button>' +
+        (global.CertBG && CertBG.canEdit && CertBG.canEdit()
+          ? '<button type="button" class="btn btn-primary btn-sm" data-mod-action="background">' + Icons.svg('image', { class: 'btn-ico' }) + 'Certificate background</button>'
+          : '');
     },
     schema: function (values) {
       var recipient = values.recipientId;
@@ -201,6 +204,7 @@
     },
     onAction: function (action) {
       if (action === 'verify') openVerify();
+      if (action === 'background' && global.CertBG) { CertBG.openDesigner({ onChange: function () { Router.refresh(); } }); }
     },
     empty: { icon: 'award', title: 'No certificates issued yet', message: 'Issue the first certificate to a member who has completed a course or represented the club.' },
 
@@ -219,13 +223,19 @@
       var member = Store.find('members', c.recipientId);
       var course = c.courseId ? Store.find('courses', c.courseId) : null;
 
+      var designName = (global.CertBG && CertBG.design) ? ({ template: 'Navy & gold', classic: 'Cream & ornate', custom: 'My uploaded image' })[CertBG.design()] : '';
       var preview = UI.card({
         title: 'Certificate preview', icon: 'award', sub: 'Exactly as it will print',
         body: '<div class="cert-frame">' + Print.certificate(certOf(c)) + '</div>' +
           '<div class="flex gap-1 wrap mt-2">' +
             '<button type="button" class="btn btn-primary btn-sm" data-detail-action="preview">' + Icons.svg('print', { class: 'btn-ico' }) + 'Print / save PDF</button>' +
             '<button type="button" class="btn btn-outline btn-sm" data-detail-action="download">' + Icons.svg('download', { class: 'btn-ico' }) + 'Download</button>' +
-          '</div>'
+            (global.CertBG && CertBG.canEdit && CertBG.canEdit()
+              ? '<button type="button" class="btn btn-outline btn-sm" data-detail-action="background">' + Icons.svg('image', { class: 'btn-ico' }) + 'Change background</button>'
+              : '') +
+          '</div>' +
+          '<p class="help mt-2">' + Icons.svg('award') + ' Background: <strong>' + designName + '</strong> · A4 landscape 297 × 210 mm. ' +
+            (CertBG.canEdit && CertBG.canEdit() ? 'Click <em>Change background</em> to switch design or upload your own image.' : 'Ask the Administrator to change the design.') + '</p>'
       });
 
       var side = UI.card({
@@ -252,10 +262,17 @@
       return '<div class="grid cols-2" style="grid-template-columns:minmax(0,1.7fr) minmax(0,1fr)">' + preview + side + '</div>';
     },
     onDetailAction: function (action, btn, c) {
+      if (action === 'background' && global.CertBG) {
+        CertBG.openDesigner({ onChange: function () { Router.refresh(); } });
+        return;
+      }
       if (action === 'preview') {
         Print.preview(Print.certificate(certOf(c)), {
           title: 'Certificate — ' + nameOf(c.recipientId), icon: 'award',
-          subtitle: c.certificateNumber, fileName: 'mrhs-ict-certificate-' + c.certificateNumber
+          subtitle: c.certificateNumber, fileName: 'mrhs-ict-certificate-' + c.certificateNumber,
+          extraActions: (global.CertBG && CertBG.canEdit && CertBG.canEdit())
+            ? [{ label: 'Certificate background', tone: 'ghost', icon: 'image', onClick: function () { CertBG.openDesigner({ onChange: function () { CertBG.refreshLayers(); } }); } }]
+            : []
         });
       }
       if (action === 'download') {
