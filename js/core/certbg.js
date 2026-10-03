@@ -193,12 +193,28 @@
     if (!cachedTemplateURI) cachedTemplateURI = toDataURI(templateSVG());
     return cachedTemplateURI;
   }
-  /** Which built-in design is active: 'template' (default) or 'classic'. */
+  /** The design used unless the club picks another one. */
+  var DEFAULT_DESIGN = 'classic';
+  /** Human names used in toasts and captions. */
+  var DESIGN_NAMES = { classic: 'Cream & ornate', template: 'Navy & gold', custom: 'your uploaded image' };
+
+  /** Which design is active: 'classic' (default), 'template' or 'custom'. */
   function design() {
     var m = settings().certificateBgMode;
     if (m === 'custom') return 'custom';
+    if (m === 'template') return 'template';
     if (m === 'classic') return 'classic';
-    return 'template';
+    return DEFAULT_DESIGN;
+  }
+
+  /** One-time switch: clubs that never chose a design themselves move from the
+      old navy & gold default to the cream design the club asked for. */
+  function migrateDefault() {
+    var st = settings();
+    if (st.certificateBgPicked) return;
+    if (st.certificateBgMode === 'template' || st.certificateBgMode === 'builtin' || !st.certificateBgMode) {
+      if (st.certificateBgMode !== DEFAULT_DESIGN) Store.saveSettings({ certificateBgMode: DEFAULT_DESIGN });
+    }
   }
 
   /* ══ Club-supplied background ══════════════════════════════════════════ */
@@ -326,7 +342,7 @@
     return U.readFileAsDataURL(file).then(function (dataUrl) {
       return Store.files.put(file.name, file.type, dataUrl).then(function (id) {
         var old = settings().certificateBgFileId;
-        Store.saveSettings({ certificateBgFileId: id, certificateBgMode: 'custom' });
+        Store.saveSettings({ certificateBgFileId: id, certificateBgMode: 'custom', certificateBgPicked: true });
         if (old && old !== id) { try { Store.files.remove(old); } catch (e) {} }
         custom = { fileId: id, dataUrl: dataUrl, name: file.name };
         return true;
@@ -336,7 +352,7 @@
 
   function clearCustom() {
     var old = settings().certificateBgFileId;
-    Store.saveSettings({ certificateBgFileId: null, certificateBgMode: 'template' });
+    Store.saveSettings({ certificateBgFileId: null, certificateBgMode: DEFAULT_DESIGN, certificateBgPicked: false });
     if (old) { try { Store.files.remove(old); } catch (e) {} }
     custom = null;
   }
@@ -346,7 +362,7 @@
 
   /** Switches to a built-in design ('template' | 'classic'). */
   function useBuiltin(which) {
-    Store.saveSettings({ certificateBgMode: which === 'classic' ? 'classic' : 'template' });
+    Store.saveSettings({ certificateBgMode: which === 'classic' ? 'classic' : 'template', certificateBgPicked: true });
     refreshLayers();
   }
 
@@ -376,11 +392,12 @@
     var clearBtn = hasCustom && canEdit()
       ? '<button type="button" class="btn btn-outline btn-sm" data-cert-bg-clear>' + Icons.svg('x', { class: 'btn-ico' }) + 'Remove my image</button>'
       : '';
+    var label = function (name, key) { return name + (key === DEFAULT_DESIGN ? ' <span class="muted small">(club default)</span>' : ''); };
     return '<div class="cert-design">' +
-        tile('template', 'Navy &amp; gold', 'The club template: navy corner blocks, diagonal pinstripes, gold rule frame and gold corner hooks.',
-          '<img src="' + templateURI() + '" alt="Navy and gold certificate background">', active === 'template') +
-        tile('classic', 'Cream &amp; ornate', 'Classic certificate paper in cream with a double gold frame, corner scrollwork and a faint centre medallion.',
+        tile('classic', label('Cream &amp; ornate', 'classic'), 'The club default: cream certificate paper with a double gold frame, corner scrollwork and a faint centre medallion.',
           '<img src="' + dataURI() + '" alt="Cream ornate certificate background">', active === 'classic') +
+        tile('template', label('Navy &amp; gold', 'template'), 'Navy corner blocks, diagonal pinstripes, gold rule frame and gold corner hooks.',
+          '<img src="' + templateURI() + '" alt="Navy and gold certificate background">', active === 'template') +
         tile('custom', 'My own image',
           hasCustom ? 'Your uploaded image is the one printed on every certificate and download.'
                     : 'PNG or JPEG, up to 4 MB, A4 landscape (297 × 210 mm). Use the button below to choose the file.',
@@ -412,12 +429,12 @@
       var clear = target.closest('[data-cert-bg-clear]');
       if (clear && root.contains(clear)) {
         UI.confirm({
-          title: 'Remove my image', message: 'Remove your uploaded certificate background and go back to the built-in navy & gold design?',
+          title: 'Remove my image', message: 'Remove your uploaded certificate background and go back to the club default, ' + DESIGN_NAMES[DEFAULT_DESIGN] + '?',
           confirmLabel: 'Remove image', icon: 'award', tone: 'warning'
         }).then(function (ok) {
           if (!ok) return;
           clearCustom();
-          done('Certificate design updated', 'Certificates now use the built-in navy & gold design.');
+          done('Certificate design updated', 'Certificates now use the club default, ' + DESIGN_NAMES[DEFAULT_DESIGN] + '.');
         });
         return;
       }
@@ -431,8 +448,7 @@
         return;
       }
       useBuiltin(which);
-      done('Certificate design updated', 'Every certificate now uses the ' +
-        (which === 'custom' ? 'image you uploaded' : which === 'classic' ? 'cream & ornate design' : 'navy & gold design') + '.');
+      done('Certificate design updated', 'Every certificate now uses ' + DESIGN_NAMES[which === 'custom' ? 'custom' : which] + '.');
     });
 
     var input = root.querySelector('.cert-bg-file');
@@ -489,6 +505,7 @@
     svg: svg, dataURI: dataURI, templateSVG: templateSVG, templateURI: templateURI,
     thumbURI: thumbURI, cssRules: cssRules, design: design, useBuiltin: useBuiltin,
     canEdit: canEdit, designerHTML: designerHTML, bindDesigner: bindDesigner,
+    defaultDesign: DEFAULT_DESIGN, designNames: DESIGN_NAMES, migrateDefault: migrateDefault,
     openDesigner: openDesigner, previewAny: previewAny,
     layerHTML: layerHTML, hasBackground: hasBackground,
     useCustom: useCustom, loadCustom: loadCustom, refreshLayers: refreshLayers,

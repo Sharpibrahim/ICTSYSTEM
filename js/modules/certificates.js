@@ -223,7 +223,7 @@
       var member = Store.find('members', c.recipientId);
       var course = c.courseId ? Store.find('courses', c.courseId) : null;
 
-      var designName = (global.CertBG && CertBG.design) ? ({ template: 'Navy & gold', classic: 'Cream & ornate', custom: 'My uploaded image' })[CertBG.design()] : '';
+      var designName = (global.CertBG && CertBG.design) ? (CertBG.designNames[CertBG.design()] || '') : '';
       var preview = UI.card({
         title: 'Certificate preview', icon: 'award', sub: 'Exactly as it will print',
         body: '<div class="cert-frame">' + Print.certificate(certOf(c)) + '</div>' +

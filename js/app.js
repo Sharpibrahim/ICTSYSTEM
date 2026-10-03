@@ -179,6 +179,7 @@
       return Auth.init();
     }).then(function () {
       bootStatus('Applying club settings…');
+      if (global.CertBG && CertBG.migrateDefault) CertBG.migrateDefault();
       var user = Auth.restore();
       initLogin();
       if (user) {
