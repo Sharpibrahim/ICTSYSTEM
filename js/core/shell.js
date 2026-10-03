@@ -504,7 +504,7 @@
   function highlightResult() {
     U.$$('.cp-result').forEach(function (el, i) { el.classList.toggle('active', i === cpState.activeIndex); });
     var active = U.$('.cp-result.active');
-    if (active) active.scrollIntoView({ block: 'nearest' });
+    if (active && active.scrollIntoView) active.scrollIntoView({ block: 'nearest' });
   }
 
   /* ── Footer status ────────────────────────────────────────────────────── */

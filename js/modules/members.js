@@ -164,6 +164,7 @@
         { key: 'cards', label: 'Cards', icon: 'grid' }
       ], state.view) + '</span>' +
         '<button type="button" class="btn btn-outline btn-sm" data-member-print>' + Icons.svg('print', { class: 'btn-ico' }) + 'Print register</button>' +
+        (Auth.can('members', 'export') ? '<button type="button" class="btn btn-primary btn-sm" data-member-cards-btn>' + Icons.svg('id-card', { class: 'btn-ico' }) + 'Create member cards</button>' : '') +
         (Auth.can('members', 'create') ? '<button type="button" class="btn btn-outline btn-sm" data-member-import>' + Icons.svg('upload', { class: 'btn-ico' }) + 'Import CSV</button>' : '');
     },
     afterTable: function () { return '<div data-member-cards hidden></div>'; },
@@ -189,7 +190,8 @@
     deleteDetails: 'Deleting a member also removes their attendance records, course enrolments, certificates and project memberships. The action can be undone immediately afterwards.',
 
     detailActions: function (m, moduleKey) {
-      return '<button type="button" class="btn btn-outline btn-sm" data-detail-action="idcard">' + Icons.svg('id-card', { class: 'btn-ico' }) + 'ID card</button>' +
+      return '<button type="button" class="btn btn-outline btn-sm" data-detail-action="idcard">' + Icons.svg('id-card', { class: 'btn-ico' }) + 'Membership card</button>' +
+        (Auth.can('members', 'export') ? '<button type="button" class="btn btn-outline btn-sm" data-detail-action="cardstudio">' + Icons.svg('grid', { class: 'btn-ico' }) + 'Card studio</button>' : '') +
         (Auth.can('certificates', 'create') ? '<button type="button" class="btn btn-outline btn-sm" data-detail-action="certificate">' + Icons.svg('award', { class: 'btn-ico' }) + 'Issue certificate</button>' : '') +
         (Auth.can('attendance', 'create') ? '<button type="button" class="btn btn-outline btn-sm" data-detail-action="attendance">' + Icons.svg('user-check', { class: 'btn-ico' }) + 'Attendance</button>' : '');
     },
@@ -349,16 +351,10 @@
 
     onDetailAction: function (action, btn, member) {
       if (action === 'idcard') {
-        var card = Print.idCard(member);
-        UI.modal({
-          title: 'Member ID card', subtitle: member.fullName + ' · ' + member.memberId, icon: 'id-card', size: 'sm',
-          body: '<div style="display:grid;place-items:center;padding:6px 0">' + card + '</div>' +
-            '<p class="help text-center mt-2">Print, cut and laminate the card. The QR placeholder on the reverse will link to certificate verification in a future release.</p>',
-          actions: [
-            { label: 'Close', tone: 'ghost', onClick: function (c) { c.close(); } },
-            { label: 'Print card', tone: 'primary', icon: 'print', onClick: function () { Print.print(Print.page(card, { meta: 'Member ID card' })); } }
-          ]
-        });
+        Cards.openOne(member, 'member');
+      }
+      if (action === 'cardstudio') {
+        Cards.openStudio({ type: 'member', ids: [member.id] });
       }
       if (action === 'attendance') {
         Modules.Attendance.openRecorder({ memberId: member.id });
@@ -402,6 +398,11 @@
       }
       var importBtn = root.querySelector('[data-member-import]');
       if (importBtn) importBtn.addEventListener('click', function () { openImport(table); });
+      var cardsBtn = root.querySelector('[data-member-cards-btn]');
+      if (cardsBtn) cardsBtn.addEventListener('click', function () {
+        var rows = table ? table.getFiltered() : Store.all('members');
+        Cards.openStudio({ type: 'member', ids: rows.map(function (m) { return m.id; }) });
+      });
       var printList = root.querySelector('[data-member-print]');
       if (printList) printList.addEventListener('click', function () {
         var rows = table ? table.getFiltered() : Store.all('members');
@@ -425,6 +426,7 @@
     if (state.view !== 'cards') { host.innerHTML = ''; host.hidden = true; return; }
     var rows = table ? table.getFiltered() : Store.all('members');
     host.hidden = false;
+    state.rows = rows;
     host.innerHTML = rows.length ? '<div class="record-grid">' + rows.map(function (m) {
       var att = attendanceStats(m.id);
       var pos = cabinetPosition(m.id);

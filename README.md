@@ -58,8 +58,8 @@ The full matrix lives in `js/core/auth.js`.
 | # | Module | Highlights |
 |---|---|---|
 | 1 | **Dashboard** | Greeting, 10 live KPI cards, attendance & membership charts, upcoming events, active projects with progress, recent activity, announcements, quick actions |
-| 2 | **Members** | Full member records, search/filter/sort, CSV export, ID cards, printable profile, linked courses, projects, attendance and certificates |
-| 3 | **Cabinet** | 13 club positions, responsibilities, terms, org chart view, appointment history, print |
+| 2 | **Members** | Full member records, search/filter/sort, CSV export, printable profile, linked courses, projects, attendance and certificates — plus the **card studio** for CR80 membership cards |
+| 3 | **Cabinet** | 13 club positions, responsibilities, terms, org chart view, appointment history, print, and **cabinet position cards** |
 | 4 | **Meetings** | Scheduling, agendas, attendance, minutes, decisions and action items that become club tasks |
 | 5 | **Attendance** | Recorder for meetings/courses/activities/training/events, Present/Absent/Late/Excused, dashboards, member history, monthly/term reports, printable sheets, QR check-in placeholder |
 | 6 | **Courses** | 11 club courses, enrolment, lessons, progress, completion rates and certificate eligibility |
@@ -88,6 +88,7 @@ The full matrix lives in `js/core/auth.js`.
 - **Empty, loading and error states** everywhere, with accessible labels, keyboard support and tooltips.
 - **Print previews** for member profiles, ID cards, certificates, meeting minutes, reports and attendance sheets, each downloadable as a standalone HTML document for PDF printing.
 - **Certificates** are print-first: cream paper, double navy + gold border, corner flourishes, a guilloche rosette watermark, medallion crest, embossed seal and two signature lines — identical on screen, on paper and in the exported HTML.
+- **Card studio** for member and cabinet cards: CR80 size (85.6 × 54 mm), front and reverse faces, photos or initials, barcode and membership code, signature lines, live preview, eight cards per A4 sheet (2 × 4) with cut guides, single-record printing from any detail page, and a self-contained HTML download for print shops.
 - **Administrator handbook** built into the app (`#/manual`, visible only to the Administrator role and linked from the account menu) with instant search, expandable Q&A, and a print/PDF version.
 - **Data tools** — full JSON backup/restore (merge or replace), CSV import, CSV export per module, and a one-click demo-data reset.
 
@@ -113,6 +114,7 @@ js/
     charts.js              dependency-free SVG chart renderers (line, bar, donut, hbar, heatmap)
     crud.js                create/edit/delete/duplicate flows, code previews, export
     print.js               printable documents + preview modal + print stylesheet
+    cards.js               card studio: member ID cards and cabinet position cards
     metrics.js             every statistic used by dashboards and analytics
     router.js              hash router with params, guards and error boundaries
     module.js              declarative list/detail/CRUD module builder

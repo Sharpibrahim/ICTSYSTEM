@@ -49,6 +49,7 @@
             '</div>' +
             '<div class="record-card-foot">' +
               '<a class="link-btn xs" href="#/cabinet/' + c.id + '">' + Icons.svg('eye') + ' View details</a>' +
+              ((Auth.can('cabinet', 'edit') || Auth.can('members', 'edit')) ? '<button type="button" class="mini-btn" data-cab="card" data-id="' + c.id + '" title="Position card">' + Icons.svg('id-card') + '</button>' : '') +
               (Auth.can('cabinet', 'edit') ? '<button type="button" class="mini-btn" data-cab="edit" data-id="' + c.id + '" title="Edit position">' + Icons.svg('edit') + '</button>' : '') +
             '</div></article>';
         }).join('') + '</div></div>';
@@ -221,7 +222,8 @@
           title: 'Cabinet', icon: 'crown',
           subtitle: 'Appoint leaders, publish responsibilities and keep a record of previous cabinets.',
           actions: (Auth.can('cabinet', 'create') ? '<button type="button" class="btn btn-primary" data-cab="new">' + Icons.svg('user-plus', { class: 'btn-ico' }) + 'Appoint a leader</button>' : '') +
-            (Auth.can('cabinet', 'export') ? '<button type="button" class="btn btn-outline" data-cab="export">' + Icons.svg('download', { class: 'btn-ico' }) + 'Export</button>' : '')
+            (Auth.can('cabinet', 'export') ? '<button type="button" class="btn btn-outline" data-cab="export">' + Icons.svg('download', { class: 'btn-ico' }) + 'Export</button>' : '') +
+            ((Auth.can('cabinet', 'edit') || Auth.can('members', 'edit')) ? '<button type="button" class="btn btn-primary" data-cab="cards">' + Icons.svg('id-card', { class: 'btn-ico' }) + 'Create cabinet cards</button>' : '')
         }) +
         '<div class="stat-grid">' +
           UI.statCard({ label: 'Cabinet positions', value: rows.length, icon: 'crown', tone: 'primary', foot: 'Of ' + Data.CABINET_ORDER.length + ' defined positions' }) +
@@ -237,6 +239,10 @@
         var tab = e.target.closest('[data-tab]');
         if (tab) { state.tab = tab.getAttribute('data-tab'); Router.refresh(); return; }
         if (e.target.closest('[data-cab="new"]')) { openForm(); return; }
+        if (e.target.closest('[data-cab="cards"]')) {
+          Cards.openStudio({ type: 'cabinet', ids: sorted().map(function (c) { return c.id; }) });
+          return;
+        }
         if (e.target.closest('[data-cab="export"]')) {
           CRUD.exportRows({
             rows: sorted(), module: 'cabinet', name: 'mrhs-ict-cabinet',
@@ -249,6 +255,8 @@
           });
           return;
         }
+        var cardBtn = e.target.closest('[data-cab="card"]');
+        if (cardBtn) { Cards.openOne(Store.find('cabinet', cardBtn.getAttribute('data-id')), 'cabinet'); return; }
         var edit = e.target.closest('[data-cab="edit"]');
         if (edit) { openForm(Store.find('cabinet', edit.getAttribute('data-id'))); return; }
         var del = e.target.closest('[data-history-del]');
@@ -332,6 +340,7 @@
               (c.demo ? UI.demoChip() : '') + '</div>' +
           '</div>' +
           '<div class="detail-actions no-print">' +
+            '<button type="button" class="btn btn-primary btn-sm" data-cab-act="card">' + Icons.svg('id-card', { class: 'btn-ico' }) + 'Create position card</button>' +
             '<button type="button" class="btn btn-outline btn-sm" data-cab-act="print">' + Icons.svg('print', { class: 'btn-ico' }) + 'Print</button>' +
             (Auth.can('cabinet', 'edit') ? '<button type="button" class="btn btn-outline btn-sm" data-cab-act="edit">' + Icons.svg('edit', { class: 'btn-ico' }) + 'Edit</button>' : '') +
             (Auth.can('cabinet', 'delete') ? '<button type="button" class="btn btn-danger-outline btn-sm" data-cab-act="remove">' + Icons.svg('trash', { class: 'btn-ico' }) + 'Remove from cabinet</button>' : '') +
@@ -345,6 +354,7 @@
       var c = Store.find('cabinet', ctx.params.id);
       if (!c) return;
       root.addEventListener('click', function (e) {
+        if (e.target.closest('[data-cab-act="card"]')) { Cards.openOne(c, 'cabinet'); return; }
         if (e.target.closest('[data-cab-act="edit"]')) openForm(c);
         if (e.target.closest('[data-cab-act="print"]')) {
           Print.preview(Print.page(

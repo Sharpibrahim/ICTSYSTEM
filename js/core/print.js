@@ -99,6 +99,7 @@
       '.cert-seal{width:84px;height:84px;flex:none;border-radius:50%;display:grid;place-items:center;text-align:center;transform:rotate(-11deg);line-height:1.28;border:3px dashed #6d28d9;color:#6d28d9;font-family:Arial,Helvetica,sans-serif;font-size:.58rem;font-weight:700;letter-spacing:.1em}',
       '.cert-frame{background:#eef1f7;padding:16px;border-radius:14px;border:1px solid #dfe5f0;overflow:auto}',
       '.cert-frame .cert-preview{margin:0 auto}',
+      (global.Cards && Cards.stylesCSS ? Cards.stylesCSS() : ''),
       '@media print{body{background:#fff}.app-shell,.topbar,.sidebar,.modal-root,.drawer-root,.toast-root,.overlay,.login-screen,.boot-screen{display:none !important}.print-area{display:block !important}.print-page{box-shadow:none;margin:0;padding:12mm;width:auto;min-height:0}.print-page.landscape{width:auto}.cert-preview{box-shadow:none;border:0;max-width:none;width:auto;-webkit-print-color-adjust:exact;print-color-adjust:exact}.cert-bg-rosette{-webkit-print-color-adjust:exact;print-color-adjust:exact}@page{size:A4;margin:10mm}}'
     ].join('\n');
   }
@@ -387,6 +388,7 @@
     preview: preview, print: print, page: page, stylesCSS: stylesCSS,
     certificate: certificateHTML, idCard: idCardHTML, memberProfile: memberProfileHTML,
     minutes: meetingMinutesHTML, report: reportHTML, attendanceSheet: attendanceSheetHTML,
-    certificatePreviewHTML: certificateHTML
+    certificatePreviewHTML: certificateHTML,
+    cards: function (records, opts) { return global.Cards ? Cards.sheetHTML(records, opts) : ''; }
   };
 })(window);

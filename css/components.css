@@ -1112,3 +1112,6 @@ input[type="color"] { padding: 3px; height: 42px; cursor: pointer; }
 
 /* Full-width helper used by the manual toolbar and stacked action rows */
 .w-full { width: 100%; }
+
+/* Flex alignment helper (card studio rows, filter bars) */
+.items-center { align-items: center; }

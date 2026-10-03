@@ -93,7 +93,8 @@
         'Click <strong>Add member</strong> to register somebody: name, gender, class, stream, student number, contact, email, join date, status, club role, skills, interests and notes. Required fields are marked and validated.',
         'Open a member to see the profile page: attendance rate, courses with progress, projects, certificates, achievements and discipline notes, all pulled from the other modules.',
         'From the profile use <strong>Print profile</strong> for the full A4 record or <strong>ID card</strong> for the credit-card sized membership card.',
-        'Use the row menu to edit, duplicate or delete a record, and <strong>Export</strong> to download the register as CSV for Excel.'
+        'Use the row menu to edit, duplicate or delete a record, and <strong>Export</strong> to download the register as CSV for Excel.',
+        'Click <strong>Create member cards</strong> to print club ID cards for the members currently listed — see the card section of this manual for sizes and printing tips.'
       ],
       notes: [
         'Member IDs are generated automatically in the form <em>MRHS-ICT-M001</em> and stay unique.',
@@ -114,7 +115,8 @@
         'Switch to the <strong>Organisational chart</strong> tab for the hierarchy view, or <strong>Cabinet history</strong> for previous holders.',
         'Click <strong>Appoint a leader</strong>, choose the position, then pick a registered member (their name, contact and email fill in automatically) or type an external appointment such as the patron.',
         'Record the responsibilities and the term of office — these appear on the printed cabinet list.',
-        'Editing a position that changes holder automatically writes an entry to the history archive so the club keeps a clean record of past cabinets.'
+        'Editing a position that changes holder automatically writes an entry to the history archive so the club keeps a clean record of past cabinets.',
+        'Use <strong>Create cabinet cards</strong> to print a position card for each leader, or the card button on a record for a single card.'
       ],
       notes: [
         'The app blocks two holders for the same position: it will offer to edit the existing record instead.',
@@ -264,6 +266,33 @@
       notes: [
         'Uploaded files live in IndexedDB and can be opened or saved straight from the resource page.',
         'View counts show which material members actually use.'
+      ]
+    },
+    {
+      id: 'cards',
+      title: 'Membership and cabinet cards',
+      icon: 'id-card',
+      tagline: 'Print CR80 cards for members and club leaders, one at a time or ten to a sheet.',
+      intro: 'The card studio turns your records into physical cards the size of a bank card ' +
+        '(CR80 — 85.6 × 54 mm). Member cards carry the member ID, class, role and status; cabinet cards ' +
+        'carry the position, term of office and mandate. Both have a reverse side with the club terms, ' +
+        'contact details and a scannable membership code.',
+      steps: [
+        'Open <strong>Members</strong> and click <strong>Create member cards</strong>. The studio opens with the members currently shown in the table already ticked — filter or search the register first to choose a group such as one class or the active members.',
+        'Or open <strong>Cabinet</strong> and click <strong>Create cabinet cards</strong> to card the whole leadership team.',
+        'In the studio, tick or untick records on the left, or use <strong>Select all</strong>, <strong>Clear</strong> and <strong>Active only</strong>. Use the search box to find one person quickly.',
+        'Choose the faces: <strong>Front only</strong>, <strong>Reverse only</strong> or <strong>Front + reverse</strong> (which prints one page of fronts followed by one page of reverses).',
+        'Check the live preview on the right, then click <strong>Print cards</strong>. Eight cards are laid out on each A4 page (two columns of four) with cutting guides.',
+        'To print a single card, open the member or cabinet record and use <strong>Membership card</strong> / <strong>Create position card</strong>.',
+        'Use <strong>Download HTML</strong> if you want to take the sheet to another computer or a print shop — the file contains the whole design and needs no internet.'
+      ],
+      notes: [
+        'Print on A4 card stock of 200 gsm or heavier and set the printer scale to <strong>100%</strong> — “fit to page” shrinks the cards below CR80 and they will not fit the laminating pouches.',
+        'For double-sided cards, print the front sheet first, then flip the paper and print the reverse sheet. Test the orientation with one sheet before printing the whole batch.',
+        'Cut on the dashed guides, then laminate. Circular corners (3 mm radius) make the cards last longer.',
+        'Photos are used automatically when a member has one; otherwise the card shows the member’s initials on a colour block.',
+        'Cards always follow the club name, school name, logo, term and signatory set in <strong>Settings → Club information</strong>, so reprint after any change there.',
+        'The membership code on the reverse is a scan-ready placeholder: the design and data are in place, and camera check-in will be enabled in a later release.'
       ]
     },
     {
@@ -548,7 +577,7 @@
 
   function tocHTML(visible) {
     return '<nav class="manual-toc" aria-label="Manual contents">' +
-      '<div class="manual-search search-field">' + Icons.svg('search') +
+      '<div class="search-field">' + Icons.svg('search') +
         '<input type="search" id="manual-q" class="input" placeholder="Search the manual…" aria-label="Search the manual" value="' + U.attr(state.query) + '">' +
       '</div>' +
       '<p class="manual-toc-label">' + visible + ' of ' + MANUAL.length + ' sections</p>' +
@@ -674,7 +703,7 @@
           e.preventDefault();
           var target = root.querySelector('#manual-' + jump.getAttribute('data-manual-jump'));
           if (target) {
-            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            if (target.scrollIntoView) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
             target.classList.add('is-flash');
             setTimeout(function () { target.classList.remove('is-flash'); }, 1400);
           }
