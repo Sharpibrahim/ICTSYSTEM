@@ -254,12 +254,13 @@
       if (!useCustom()) {
         var built = design();
         node.className = 'cert-bg-layer cert-bg-' + built;
-        node.setAttribute('style', "background-image:url('" + (built === 'classic' ? dataURI() : templateURI()) + "')");
+        node.setAttribute('style', "background-image:url('" + (built === 'classic' ? dataURI() : templateURI()) +
+          "');position:absolute;inset:0;z-index:0;pointer-events:none");
         var scrim = node.parentNode && node.parentNode.querySelector('[data-cert-bg="scrim"]');
         if (scrim) scrim.remove();
       } else {
         node.className = 'cert-bg-layer custom';
-        node.setAttribute('style', 'background-image:url(' + custom.dataUrl + ')');
+        node.setAttribute('style', 'background-image:url(' + custom.dataUrl + ');position:absolute;inset:0;z-index:0;pointer-events:none');
         if (!node.parentNode.querySelector('[data-cert-bg="scrim"]')) {
           var s = document.createElement('div');
           s.className = 'cert-scrim';
@@ -271,10 +272,14 @@
   }
 
   /* ══ Markup + CSS ══════════════════════════════════════════════════════ */
-  /** Inline background-image for a built-in design (never depends on CSS
-      being injected first — the artwork travels with the markup). */
+  /** Inline styling for a background layer: the artwork plus the stacking that
+      keeps it behind the certificate text, so the design shows correctly even
+      before (or without) the print stylesheet. */
+  function layerStyle(image) {
+    return " style=\"background-image:url('" + image + "');position:absolute;inset:0;z-index:0;pointer-events:none\"";
+  }
   function builtinStyle(which) {
-    return " style=\"background-image:url('" + (which === 'classic' ? dataURI() : templateURI()) + "')\"";
+    return layerStyle(which === 'classic' ? dataURI() : templateURI());
   }
 
   /** Background layers for the certificate (artwork + readability scrim). */
@@ -283,7 +288,7 @@
     if (mode === 'custom') {
       loadCustom();
       if (useCustom()) {
-        return '<div class="cert-bg-layer custom" data-cert-bg="layer" style="background-image:url(' + custom.dataUrl + ')"></div>' +
+        return '<div class="cert-bg-layer custom" data-cert-bg="layer"' + layerStyle(custom.dataUrl) + '></div>' +
           '<div class="cert-scrim" data-cert-bg="scrim"></div>';
       }
       /* still loading — show the club template until the image resolves */
@@ -297,9 +302,13 @@
 
   function cssRules() {
     return [
+      /* Painter order: the artwork and scrim sit at the bottom of the .cert-preview
+         stacking context, the text block (.cert-inner) above them. */
+      '.cert-preview.has-bg{position:relative}',
       '.cert-bg-layer{position:absolute;inset:0;z-index:0;background-repeat:no-repeat;background-position:center center;background-size:100% 100%;pointer-events:none}',
       '.cert-bg-layer.custom{background-size:cover}',
       '.cert-scrim{position:absolute;inset:0;z-index:0;background:rgba(255,253,247,.75);pointer-events:none}',
+      '.cert-preview.has-bg>.cert-inner{position:relative;z-index:1}',
       '.cert-bg-template{background-image:url("' + templateURI() + '")}',
       '.cert-bg-classic{background-image:url("' + dataURI() + '")}',
       '.cert-preview.has-bg::before,.cert-preview.has-bg::after{display:none}',

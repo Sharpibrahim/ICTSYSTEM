@@ -696,6 +696,10 @@ input[type="color"] { padding: 3px; height: 42px; cursor: pointer; }
   background-repeat: no-repeat; background-position: center center; background-size: 100% 100%; }
 .cert-bg-layer.custom { background-size: cover; }
 .cert-scrim { position: absolute; inset: 0; z-index: 0; pointer-events: none; background: rgba(255, 253, 247, .72); }
+.cert-preview.has-bg { position: relative; }
+/* Painter order inside the certificate card: artwork + scrim at the bottom,
+   the text block above them, so the design never hides the content. */
+.cert-preview.has-bg > .cert-inner { position: relative; z-index: 1; }
 .cert-preview.has-bg::before, .cert-preview.has-bg::after { display: none; }
 .cert-preview.has-bg .cert-frame-deco { display: none; }
 .cert-frame-deco { position: absolute; inset: 0; pointer-events: none; }

@@ -172,8 +172,8 @@
     var bg = global.CertBG ? CertBG.layerHTML() : '';
 
     return '<div class="cert-preview has-bg">' +
+      bg +
       '<div class="cert-inner">' +
-        bg +
         '<div class="cert-crest">' + Icons.svg('club-logo', { size: 34 }) + '</div>' +
         '<p class="cert-org">' + U.esc(s.clubName || 'MRHS ICT Club') + '</p>' +
         '<p class="cert-school">' + U.esc(s.schoolName || 'Mbazzi Riverside High School') + '</p>' +
