@@ -132,6 +132,7 @@ docs/certificate-background.svg            the classic cream certificate artwork
 docs/certificate-alignment-guide.png       the three content anchors side by side
 docs/CLOUD-STORAGE.md                      where to keep backups and which cloud service to use
 docs/ONEDRIVE.md                           connecting Microsoft 365 / OneDrive (both routes, step by step)
+docs/DATABASE-OPTIONS.md                    shared-database choices (Supabase, Firebase, PocketBase, Sheets) and what each needs
 ```
 
 ### Data layer
