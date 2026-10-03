@@ -116,6 +116,7 @@ js/
     print.js               printable documents + preview modal + print stylesheet
     cards.js               card studio: member ID cards and cabinet position cards
     certbg.js              certificate backgrounds: 2 built-in designs + club-uploaded image
+    cloud.js               cloud backup connectors: synced folder + Microsoft OneDrive (Graph)
     metrics.js             every statistic used by dashboards and analytics
     router.js              hash router with params, guards and error boundaries
     module.js              declarative list/detail/CRUD module builder
@@ -130,6 +131,7 @@ docs/certificate-template-background.svg   the default navy & gold certificate a
 docs/certificate-background.svg            the classic cream certificate artwork
 docs/certificate-alignment-guide.png       the three content anchors side by side
 docs/CLOUD-STORAGE.md                      where to keep backups and which cloud service to use
+docs/ONEDRIVE.md                           connecting Microsoft 365 / OneDrive (both routes, step by step)
 ```
 
 ### Data layer

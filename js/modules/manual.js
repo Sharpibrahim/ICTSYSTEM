@@ -447,6 +447,8 @@
       notes: [
         '<strong>Back up before every term.</strong> The app stores data in this browser only: clearing browsing data deletes it unless you have a backup file.',
         'Where to keep those backups (and which cloud service to choose) is set out in <strong>docs/CLOUD-STORAGE.md</strong> in the project folder: the short answer is a shared school Google Drive folder with dated JSON backups every week, plus a USB copy and a printed termly report.',
+        'The platform can also put the backup into Microsoft OneDrive for you: <strong>Settings → Data → Cloud backup</strong>. Route one writes each backup into a folder you pick once — the OneDrive (or Drive) folder on the PC — and the sync client uploads it. Route two signs in to the school’s Microsoft 365 account and uploads straight into the app’s own OneDrive folder; it needs a one-time app registration (choose <strong>How to set it up</strong> in the same card, or read <strong>docs/ONEDRIVE.md</strong>). Whichever route you use, <strong>Restore from OneDrive / folder</strong> lists the backups and loads one back, in merge or replace mode.',
+        'Backups never contain sign-in tokens, and the OneDrive connection only ever sees the app folder <span class="mono">Apps/MRHS ICT Club Master</span> — never the rest of the school’s drive.',
         'Restore in <em>merge</em> mode to add a backup’s records to what is already there; <em>replace</em> mode wipes first — the app asks for confirmation and shows how many records each option will affect.',
         'A user who forgets their password cannot recover it; an administrator resets it here and tells them the new one.',
         'Deactivating a user immediately ends their access without deleting the audit trail of what they did.'

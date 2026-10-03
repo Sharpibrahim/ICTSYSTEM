@@ -216,7 +216,83 @@
             rows.map(function (r) { return '<tr><td>' + U.titleCase(r.name) + '</td><td>' + r.count + '</td></tr>'; }).join('') +
           '</tbody></table></div>'
       }) +
+      cloudCard() +
     '</div>';
+  }
+
+  /* ══ Cloud backup ═════════════════════════════════════════════════════ */
+  function cloudCard() {
+    var st = Cloud.status();
+    var last = st.lastBackup ? U.fmtDate(st.lastBackup, 'long') + ' at ' + String(st.lastBackup).slice(11, 16) : '';
+    var folderBody = st.folderSupported
+      ? '<div class="cloud-option' + (st.folderConnected ? ' on' : '') + '">' +
+          '<div class="co-head">' + Icons.svg('folder-open') +
+            '<div><strong>Save into a folder you already sync</strong>' +
+            '<span class="muted small">Pick the OneDrive (or Google Drive / Dropbox) folder once. The app writes each backup straight into it and your sync client uploads it — no Microsoft account setup, and it still works with no internet.</span></div>' +
+            (st.folderConnected ? UI.badge('Connected', 'success', { icon: 'check' }) : '') +
+          '</div>' +
+          (st.folderConnected
+            ? '<p class="small mt-1">Backing up into <strong>' + U.esc(st.folderName || 'your folder') + '</strong>' + (last ? ' · last cloud backup ' + U.esc(last) : '') + '</p>'
+            : '') +
+          '<div class="flex gap-1 wrap mt-2">' +
+            '<button type="button" class="btn ' + (st.folderConnected ? 'btn-outline' : 'btn-primary') + ' btn-sm" data-set="cloud-folder-connect">' +
+              Icons.svg('folder', { class: 'btn-ico' }) + (st.folderConnected ? 'Change folder' : 'Choose backup folder') + '</button>' +
+            (st.folderConnected
+              ? '<button type="button" class="btn btn-primary btn-sm" data-set="cloud-folder-backup">' + Icons.svg('save', { class: 'btn-ico' }) + 'Back up now</button>' +
+                '<button type="button" class="btn btn-outline btn-sm" data-set="cloud-folder-list">' + Icons.svg('refresh', { class: 'btn-ico' }) + 'Restore from folder</button>' +
+                '<button type="button" class="btn btn-ghost btn-sm" data-set="cloud-folder-forget">' + Icons.svg('x', { class: 'btn-ico' }) + 'Forget folder</button>'
+              : '') +
+          '</div>' +
+        '</div>'
+      : '<div class="cloud-option">' +
+          '<div class="co-head">' + Icons.svg('folder-open') +
+            '<div><strong>Save into a synced folder</strong>' +
+            '<span class="muted small">This browser cannot write to a folder directly, so download the backup and drop it into your OneDrive folder instead.</span></div>' +
+          '</div>' +
+          '<div class="flex gap-1 wrap mt-2">' +
+            '<button type="button" class="btn btn-outline btn-sm" data-set="export">' + Icons.svg('download', { class: 'btn-ico' }) + 'Download backup file</button>' +
+          '</div>' +
+        '</div>';
+
+    var graphBody = '<div class="cloud-option' + (st.onedriveConnected ? ' on' : '') + '">' +
+        '<div class="co-head">' + Icons.svg('cloud') +
+          '<div><strong>Microsoft OneDrive (Microsoft 365)</strong>' +
+          '<span class="muted small">Sign in with the school Microsoft account and the app uploads backups itself into its own folder in OneDrive (<span class="mono">/Apps/MRHS ICT Club Master</span>). It only ever sees that folder.</span></div>' +
+          (st.onedriveConnected ? UI.badge('Connected', 'success', { icon: 'check' }) : st.onedriveConfigured ? UI.badge('Ready to connect', 'info') : UI.badge('Not set up', 'neutral')) +
+        '</div>' +
+        '<form id="cloud-form" class="form-grid mt-2">' +
+          field('cloudOnedriveClientId', 'Application (client) ID', st.clientId, { help: 'From the school’s app registration in Microsoft Entra ID — see docs/ONEDRIVE.md for the five-minute setup.' }) +
+          field('cloudOnedriveTenant', 'Tenant', st.tenant, { help: 'Use “common” for any school account, or paste the school’s tenant ID / domain.' }) +
+        '</form>' +
+        (st.onedriveConnected
+          ? '<p class="small mt-1">Signed in as <strong>' + U.esc(st.onedriveAccount || 'your Microsoft account') + '</strong>' + (last ? ' · last cloud backup ' + U.esc(last) : '') + '</p>'
+          : '') +
+        '<p class="help mt-1">' + Icons.svg('info') + ' Redirect address to register: <span class="mono">' + U.esc(Cloud._redirectURI()) + '</span></p>' +
+        '<div class="flex gap-1 wrap mt-2">' +
+          (Auth.can('settings', 'edit') ? '<button type="button" class="btn btn-outline btn-sm" data-set="cloud-graph-save">' + Icons.svg('save', { class: 'btn-ico' }) + 'Save connection details</button>' : '') +
+          (st.onedriveConnected
+            ? (Auth.can('settings', 'edit')
+                ? '<button type="button" class="btn btn-primary btn-sm" data-set="cloud-graph-backup">' + Icons.svg('upload-cloud', { class: 'btn-ico' }) + 'Back up to OneDrive</button>'
+                : '') +
+              '<button type="button" class="btn btn-outline btn-sm" data-set="cloud-graph-list">' + Icons.svg('refresh', { class: 'btn-ico' }) + 'Restore from OneDrive</button>' +
+              (Auth.can('settings', 'edit')
+                ? '<button type="button" class="btn btn-ghost btn-sm" data-set="cloud-graph-disconnect">' + Icons.svg('log-out', { class: 'btn-ico' }) + 'Disconnect</button>'
+                : '')
+            : (st.onedriveConfigured
+                ? '<button type="button" class="btn btn-primary btn-sm" data-set="cloud-graph-connect">' + Icons.svg('log-in', { class: 'btn-ico' }) + 'Connect OneDrive</button>'
+                : '')) +
+          '<button type="button" class="btn btn-ghost btn-sm" data-set="cloud-help">' + Icons.svg('book-open', { class: 'btn-ico' }) + 'How to set it up</button>' +
+        '</div>' +
+      '</div>';
+
+    return UI.card({
+      title: 'Cloud backup', icon: 'upload-cloud',
+      sub: 'Get the club’s records off this one browser',
+      body: folderBody + graphBody +
+        '<div class="alert alert-info mt-2">' + Icons.svg('shield-check') +
+          '<div><strong>Keep one backup a week.</strong> Records live in this browser only; a dated backup in OneDrive plus a USB copy is a complete archive. Sign-in tokens are never included in a backup file.</div></div>',
+      foot: '<span class="muted small">' + Icons.svg('book-open') + ' Guides: <span class="mono">docs/ONEDRIVE.md</span> (Microsoft 365) and <span class="mono">docs/CLOUD-STORAGE.md</span> (which service to choose).</span>'
+    });
   }
 
   /* ══ Page ═════════════════════════════════════════════════════════════ */
@@ -286,6 +362,7 @@
         if (what === 'reset-pass') resetPassword(Store.find('users', btn.getAttribute('data-user')));
         if (what === 'del-user') deleteUser(Store.find('users', btn.getAttribute('data-user')));
         if (what === 'change-pass') changeMyPassword();
+        if (what.indexOf('cloud-') === 0) { cloudAction(what, data); return; }
         if (what === 'export') exportBackup();
         if (what === 'import') importBackup();
         if (what === 'strip-demo') stripDemo();
@@ -315,6 +392,151 @@
     var payload = Store.exportAll();
     U.download('mrhs-ict-club-backup-' + U.todayISO() + '.json', JSON.stringify(payload, null, 2), 'application/json');
     UI.toast('Backup exported', payload.counts ? Object.keys(payload.counts).length + ' collections written to the backup file.' : 'Backup file created.', 'success');
+  }
+
+  /* ══ Cloud backup actions ═════════════════════════════════════════════ */
+  function cloudAction(what, data) {
+    if (what === 'cloud-help') { openCloudHelp(); return; }
+    if (what === 'cloud-graph-save') {
+      if (!CRUD.guard('settings', 'edit')) return;
+      Store.saveSettings({
+        cloudOnedriveClientId: String(data.cloudOnedriveClientId || '').trim(),
+        cloudOnedriveTenant: String(data.cloudOnedriveTenant || 'common').trim() || 'common'
+      });
+      UI.toast('Connection details saved', 'Choose “Connect OneDrive” to sign in with the school Microsoft account.', 'success');
+      Router.refresh();
+      return;
+    }
+    if (what === 'cloud-graph-connect') {
+      if (!CRUD.guard('settings', 'edit')) return;
+      Cloud.graphConnect();
+      return;
+    }
+    if (what === 'cloud-graph-disconnect') {
+      if (!CRUD.guard('settings', 'edit')) return;
+      UI.confirm({
+        title: 'Disconnect OneDrive', message: 'Remove the stored Microsoft sign-in from this browser? Backups already in OneDrive are not touched.',
+        confirmLabel: 'Disconnect', icon: 'cloud', tone: 'warning'
+      }).then(function (ok) {
+        if (!ok) return;
+        Cloud.graphDisconnect().then(function () { Router.refresh(); });
+      });
+      return;
+    }
+    if (what === 'cloud-graph-backup') {
+      if (!CRUD.guard('settings', 'edit')) return;
+      UI.toast('Uploading backup', 'Sending the club records to OneDrive…', 'info', { duration: 2000 });
+      Cloud.graphBackup().then(function (name) { if (name) Router.refresh(); });
+      return;
+    }
+    if (what === 'cloud-graph-list') { listCloudBackups('onedrive'); return; }
+    if (what === 'cloud-folder-connect') {
+      if (!CRUD.guard('settings', 'edit')) return;
+      Cloud.folderConnect().then(function (ok) { if (ok) Router.refresh(); });
+      return;
+    }
+    if (what === 'cloud-folder-backup') {
+      if (!CRUD.guard('settings', 'edit')) return;
+      Cloud.folderBackup().then(function (name) { if (name) Router.refresh(); });
+      return;
+    }
+    if (what === 'cloud-folder-list') { listCloudBackups('folder'); return; }
+    if (what === 'cloud-folder-forget') {
+      if (!CRUD.guard('settings', 'edit')) return;
+      UI.confirm({
+        title: 'Forget this folder', message: 'Stop writing backups into this folder? Nothing inside the folder is deleted.',
+        confirmLabel: 'Forget folder', icon: 'folder', tone: 'warning'
+      }).then(function (ok) {
+        if (!ok) return;
+        Cloud.folderDisconnect().then(function () { Router.refresh(); });
+      });
+    }
+  }
+
+  /** Lists the backups found in OneDrive or in the chosen folder and restores one. */
+  function listCloudBackups(source) {
+    var loading = UI.modal({
+      title: source === 'onedrive' ? 'Backups in OneDrive' : 'Backups in your folder', icon: 'upload-cloud', size: 'md',
+      body: '<div class="loading-block"><span class="spinner"></span><span>Looking for backups…</span></div>',
+      actions: [{ label: 'Close', tone: 'ghost', close: true }]
+    });
+    var find = source === 'onedrive' ? Cloud.graphList() : Cloud.folderList().then(function (names) {
+      return names.map(function (n) { return { name: n }; });
+    });
+    find.then(function (items) {
+      if (!items.length) {
+        loading.setBody('<div class="empty-state"><div class="empty-icon">' + Icons.svg('upload-cloud') + '</div>' +
+          '<h3>No backups found</h3><p>' + (source === 'onedrive'
+            ? 'Nothing has been uploaded from this app yet. Use “Back up to OneDrive” first.'
+            : 'No backup files are in that folder yet. Use “Back up now” first.') + '</p></div>');
+        return;
+      }
+      loading.setBody('<p class="small">' + items.length + ' backup' + (items.length === 1 ? '' : 's') + ' found, newest first. Restoring is recorded in the audit log.</p>' +
+        '<div class="cloud-list">' + items.map(function (it, i) {
+          var when = it.modified ? U.fmtDate(it.modified, 'long') : '';
+          var size = it.size ? (it.size / 1024).toFixed(0) + ' KB' : '';
+          return '<div class="cloud-item">' +
+            '<span class="ci-ico">' + Icons.svg('database') + '</span>' +
+            '<span class="ci-text"><strong class="mono">' + U.esc(it.name) + '</strong>' +
+              '<span class="muted small">' + [when, size].filter(Boolean).join(' · ') + '</span></span>' +
+            '<button type="button" class="btn btn-primary btn-sm" data-cloud-restore="' + i + '" data-cloud-mode="merge">Merge</button>' +
+            '<button type="button" class="btn btn-outline btn-sm" data-cloud-restore="' + i + '" data-cloud-mode="replace">Replace</button>' +
+          '</div>';
+        }).join('') + '</div>');
+      loading.body.addEventListener('click', function (e) {
+        var btn = e.target.closest('[data-cloud-restore]');
+        if (!btn) return;
+        var item = items[+btn.getAttribute('data-cloud-restore')];
+        var mode = btn.getAttribute('data-cloud-mode');
+        var read = source === 'onedrive' ? Cloud.graphRead(item.id) : Cloud.folderRead(item.name);
+        btn.disabled = true;
+        read.then(function (text) {
+          btn.disabled = false;
+          if (!text) return;
+          UI.confirm({
+            title: mode === 'replace' ? 'Replace everything' : 'Merge this backup',
+            message: mode === 'replace'
+              ? 'Every record on this device will be replaced with the contents of ' + item.name + '. This cannot be undone.'
+              : 'Records from ' + item.name + ' will be added to this device. Existing records are kept.',
+            confirmLabel: mode === 'replace' ? 'Replace records' : 'Merge records',
+            icon: 'database', tone: mode === 'replace' ? 'danger' : 'primary'
+          }).then(function (yes) {
+            if (!yes) return;
+            if (Cloud.restore(text, mode)) { loading.close(); UI.toast('Restore complete', 'Records were loaded from ' + item.name + '.', 'success'); }
+          });
+        });
+      });
+    });
+  }
+
+  /** Short in-app instructions so nobody has to leave the app to set this up. */
+  function openCloudHelp() {
+    var redirect = Cloud._redirectURI();
+    UI.modal({
+      title: 'Connecting OneDrive (Microsoft 365)', subtitle: 'One-time setup by the ICT teacher or the school’s Microsoft administrator.',
+      icon: 'cloud', size: 'lg',
+      body: '<ol class="help-steps">' +
+          '<li><strong>Register the app.</strong> Sign in at <span class="mono">portal.azure.com</span> → <em>Microsoft Entra ID</em> → <em>App registrations</em> → <em>New registration</em>. Name it “MRHS ICT Club Master”, choose <em>Accounts in this organizational directory only</em>, and set the redirect URI type to <em>Single-page application (SPA)</em> with the address below.</li>' +
+          '<li><strong>Redirect address</strong><div class="code-line">' + U.esc(redirect) + '</div>' +
+            '<button type="button" class="btn btn-outline btn-sm" data-cloud-copy="' + U.attr(redirect) + '">' + Icons.svg('copy', { class: 'btn-ico' }) + 'Copy address</button></li>' +
+          '<li><strong>Add the permission.</strong> <em>API permissions</em> → <em>Add a permission</em> → <em>Microsoft Graph</em> → <em>Delegated permissions</em> → <span class="mono">Files.ReadWrite.AppFolder</span> (add <span class="mono">User.Read</span> and <span class="mono">offline_access</span> too). Then press <em>Grant admin consent</em> — the school administrator may need to do this.</li>' +
+          '<li><strong>Copy the Application (client) ID</strong> from the app’s <em>Overview</em> page into the field above and press <em>Save connection details</em>.</li>' +
+          '<li><strong>Connect OneDrive</strong>, sign in with the school account, and approve the request. The app can then only see its own folder, <span class="mono">Apps/MRHS ICT Club Master</span>.</li>' +
+          '<li><strong>Back up</strong> with the “Back up to OneDrive” button, and restore any time with “Restore from OneDrive”.</li>' +
+        '</ol>' +
+        '<div class="alert alert-info mt-2">' + Icons.svg('info') +
+          '<div>No client secret is needed — this uses the browser sign-in flow (OAuth 2.0 with PKCE) — and the club’s data goes straight from this browser to the school’s OneDrive. The full written guide, including the folder alternative, is in <span class="mono">docs/ONEDRIVE.md</span>.</div></div>',
+      actions: [{ label: 'Close', tone: 'primary', close: true }],
+      onOpen: function (ctrl) {
+        ctrl.body.addEventListener('click', function (e) {
+          var copy = e.target.closest('[data-cloud-copy]');
+          if (!copy) return;
+          U.copyToClipboard(copy.getAttribute('data-cloud-copy')).then(function () {
+            UI.toast('Address copied', 'Paste it into the redirect URI box in Microsoft Entra ID.', 'success');
+          });
+        });
+      }
+    });
   }
 
   function importBackup() {

@@ -180,6 +180,12 @@
     }).then(function () {
       bootStatus('Applying club settings…');
       if (global.CertBG && CertBG.migrateDefault) CertBG.migrateDefault();
+      /* Returns from a Microsoft sign-in (?code=…) and the last chosen backup
+         folder are resolved once the data layer is ready. */
+      if (global.Cloud && Cloud.graphHandleRedirect) {
+        Cloud.graphHandleRedirect().then(function () { if (global.Router) Router.refresh(); });
+      }
+      if (global.Cloud && Cloud.folderRestore) Cloud.folderRestore(false);
       var user = Auth.restore();
       initLogin();
       if (user) {

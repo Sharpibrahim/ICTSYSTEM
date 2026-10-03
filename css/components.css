@@ -1154,6 +1154,27 @@ input[type="color"] { padding: 3px; height: 42px; cursor: pointer; }
 .items-center { align-items: center; }
 
 /* ── 22. Certificate design picker (Settings) ───────────────────────────── */
+/* ── Cloud backup (Settings → Data) ─────────────────────────────────── */
+.cloud-option { padding: 14px 16px; border: 1px solid var(--border); border-radius: var(--r-md); background: var(--surface-2); }
+.cloud-option + .cloud-option { margin-top: 12px; }
+.cloud-option.on { border-color: var(--success); background: var(--surface); }
+.cloud-option .co-head { display: flex; gap: 10px; align-items: flex-start; }
+.cloud-option .co-head svg { flex: none; margin-top: 2px; color: var(--primary); }
+.cloud-option.on .co-head svg { color: var(--success); }
+.cloud-option .co-head div { flex: 1; display: grid; gap: 3px; }
+.cloud-option .co-head strong { font-size: .92rem; }
+.cloud-option .form-grid { margin-top: 10px; }
+.cloud-list { display: grid; gap: 8px; margin-top: 10px; max-height: 46vh; overflow: auto; }
+.cloud-item { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border: 1px solid var(--border);
+  border-radius: var(--r-sm); background: var(--surface-2); flex-wrap: wrap; }
+.cloud-item .ci-ico { display: grid; place-items: center; width: 30px; height: 30px; border-radius: 9px;
+  background: var(--primary-100); color: var(--primary); flex: none; }
+.cloud-item .ci-text { flex: 1; min-width: 160px; display: grid; gap: 2px; }
+.help-steps { display: grid; gap: 10px; padding-left: 20px; margin: 0; }
+.help-steps li { line-height: 1.6; }
+.help-steps .code-line { font-family: var(--font-mono); font-size: .78rem; background: var(--surface-3);
+  border: 1px solid var(--border); border-radius: var(--r-xs); padding: 8px 10px; margin: 6px 0; word-break: break-all; }
+@media (max-width: 640px) { .cloud-item .ci-text { min-width: 100%; } }
 /* ── Certificate content alignment panel ─────────────────────────────── */
 .cert-align { margin-top: 16px; padding: 14px 16px; border: 1px solid var(--border); border-radius: var(--r-md); background: var(--surface-2); }
 .cert-align .ca-head { display: flex; gap: 10px; align-items: flex-start; margin-bottom: 12px; }
