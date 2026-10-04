@@ -1,422 +1,929 @@
 %PDF-1.4
-%“Œ‹ž ReportLab Generated PDF document (opensource)
 1 0 obj
-<<
-/F1 2 0 R /F2 3 0 R /F3 6 0 R /F4 7 0 R /F5 8 0 R /F6 9 0 R
->>
+<< /Type /Catalog /Pages 2 0 R >>
 endobj
 2 0 obj
-<<
-/BaseFont /Helvetica /Encoding /WinAnsiEncoding /Name /F1 /Subtype /Type1 /Type /Font
->>
+<< /Type /Pages /Count 31 /Kids [7 0 R 9 0 R 11 0 R 13 0 R 15 0 R 17 0 R 19 0 R 21 0 R 23 0 R 25 0 R 27 0 R 29 0 R 31 0 R 33 0 R 35 0 R 37 0 R 39 0 R 41 0 R 43 0 R 45 0 R 47 0 R 49 0 R 51 0 R 53 0 R 55 0 R 57 0 R 59 0 R 61 0 R 63 0 R 65 0 R 67 0 R] >>
 endobj
 3 0 obj
-<<
-/BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding /Name /F2 /Subtype /Type1 /Type /Font
->>
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
 endobj
 4 0 obj
-<<
-/Contents 29 0 R /MediaBox [ 0 0 595.2756 841.8898 ] /Parent 28 0 R /Resources <<
-/Font 1 0 R /ProcSet [ /PDF /Text /ImageB /ImageC /ImageI ]
->> /Rotate 0 /Trans <<
-
->> 
-  /Type /Page
->>
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>
 endobj
 5 0 obj
-<<
-/Contents 30 0 R /MediaBox [ 0 0 595.2756 841.8898 ] /Parent 28 0 R /Resources <<
-/Font 1 0 R /ProcSet [ /PDF /Text /ImageB /ImageC /ImageI ]
->> /Rotate 0 /Trans <<
-
->> 
-  /Type /Page
->>
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Oblique >>
 endobj
 6 0 obj
-<<
-/BaseFont /Helvetica-Oblique /Encoding /WinAnsiEncoding /Name /F3 /Subtype /Type1 /Type /Font
->>
+<< /Length 725 >>
+stream
+0.85 0.85 0.85 RG 0.8 w 62.00 54.00 m 533.00 54.00 l S
+BT /F2 22.00 Tf 0 0 0 rg 62.00 652.00 Td (MRHS ICT CLUB) Tj ET
+BT /F1 13.00 Tf 0 0 0 rg 62.00 622.00 Td (Mbazzi Riverside High School) Tj ET
+BT /F2 16.00 Tf 0 0 0 rg 62.00 576.00 Td (Master User Manual) Tj ET
+BT /F1 10.50 Tf 0 0 0 rg 62.00 550.00 Td (Every module, in the order you will use it) Tj ET
+BT /F1 10.00 Tf 0 0 0 rg 62.00 490.00 Td (Academic year / term: Term 3 2026) Tj ET
+BT /F1 10.00 Tf 0 0 0 rg 62.00 475.50 Td (Generated 2026-10-04 from the built-in administrator handbook) Tj ET
+BT /F1 10.00 Tf 0 0 0 rg 62.00 461.00 Td (This manual is also available inside the app under "User Manual".) Tj ET
+BT /F2 10.50 Tf 0 0 0 rg 62.00 421.00 Td (28 sections) Tj ET
+endstream
 endobj
 7 0 obj
-<<
-/BaseFont /Courier /Encoding /WinAnsiEncoding /Name /F4 /Subtype /Type1 /Type /Font
->>
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 6 0 R >>
 endobj
 8 0 obj
-<<
-/BaseFont /ZapfDingbats /Name /F5 /Subtype /Type1 /Type /Font
->>
+<< /Length 2058 >>
+stream
+0.85 0.85 0.85 RG 0.8 w 62.00 54.00 m 533.00 54.00 l S
+BT /F2 15.00 Tf 0 0 0 rg 62.00 780.00 Td (Contents) Tj ET
+BT /F1 10.20 Tf 0 0 0 rg 62.00 754.00 Td ( 1.  Getting started) Tj ET
+BT /F1 10.20 Tf 0 0 0 rg 62.00 739.50 Td ( 2.  Roles and permissions) Tj ET
+BT /F1 10.20 Tf 0 0 0 rg 62.00 725.00 Td ( 3.  Dashboard) Tj ET
+BT /F1 10.20 Tf 0 0 0 rg 62.00 710.50 Td ( 4.  Members) Tj ET
+BT /F1 10.20 Tf 0 0 0 rg 62.00 696.00 Td ( 5.  Cabinet and leadership) Tj ET
+BT /F1 10.20 Tf 0 0 0 rg 62.00 681.50 Td ( 6.  Meetings and minutes) Tj ET
+BT /F1 10.20 Tf 0 0 0 rg 62.00 667.00 Td ( 7.  Attendance) Tj ET
+BT /F1 10.20 Tf 0 0 0 rg 62.00 652.50 Td ( 8.  Courses and training) Tj ET
+BT /F1 10.20 Tf 0 0 0 rg 62.00 638.00 Td ( 9.  Activities) Tj ET
+BT /F1 10.20 Tf 0 0 0 rg 62.00 623.50 Td (10.  Projects) Tj ET
+BT /F1 10.20 Tf 0 0 0 rg 62.00 609.00 Td (11.  Reports) Tj ET
+BT /F1 10.20 Tf 0 0 0 rg 62.00 594.50 Td (12.  Certificates) Tj ET
+BT /F1 10.20 Tf 0 0 0 rg 62.00 580.00 Td (13.  Notes & Resources) Tj ET
+BT /F1 10.20 Tf 0 0 0 rg 62.00 565.50 Td (14.  Membership and cabinet cards) Tj ET
+BT /F1 10.20 Tf 0 0 0 rg 62.00 551.00 Td (15.  Announcements) Tj ET
+BT /F1 10.20 Tf 0 0 0 rg 62.00 536.50 Td (16.  Tasks) Tj ET
+BT /F1 10.20 Tf 0 0 0 rg 62.00 522.00 Td (17.  Calendar) Tj ET
+BT /F1 10.20 Tf 0 0 0 rg 62.00 507.50 Td (18.  Equipment) Tj ET
+BT /F1 10.20 Tf 0 0 0 rg 62.00 493.00 Td (19.  Finance) Tj ET
+BT /F1 10.20 Tf 0 0 0 rg 62.00 478.50 Td (20.  Achievements) Tj ET
+BT /F1 10.20 Tf 0 0 0 rg 62.00 464.00 Td (21.  Gallery) Tj ET
+BT /F1 10.20 Tf 0 0 0 rg 62.00 449.50 Td (22.  Documents) Tj ET
+BT /F1 10.20 Tf 0 0 0 rg 62.00 435.00 Td (23.  Analytics) Tj ET
+BT /F1 10.20 Tf 0 0 0 rg 62.00 420.50 Td (24.  Settings, users and data) Tj ET
+BT /F1 10.20 Tf 0 0 0 rg 62.00 406.00 Td (25.  Search, notifications and shortcuts) Tj ET
+BT /F1 10.20 Tf 0 0 0 rg 62.00 391.50 Td (26.  Term routines and best practice) Tj ET
+BT /F1 10.20 Tf 0 0 0 rg 62.00 377.00 Td (27.  Troubleshooting and FAQ) Tj ET
+BT /F1 10.20 Tf 0 0 0 rg 62.00 362.50 Td (28.  Glossary) Tj ET
+endstream
 endobj
 9 0 obj
-<<
-/BaseFont /Symbol /Name /F6 /Subtype /Type1 /Type /Font
->>
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 8 0 R >>
 endobj
 10 0 obj
-<<
-/Contents 31 0 R /MediaBox [ 0 0 595.2756 841.8898 ] /Parent 28 0 R /Resources <<
-/Font 1 0 R /ProcSet [ /PDF /Text /ImageB /ImageC /ImageI ]
->> /Rotate 0 /Trans <<
-
->> 
-  /Type /Page
->>
+<< /Length 3009 >>
+stream
+0.85 0.85 0.85 RG 0.8 w 62.00 54.00 m 533.00 54.00 l S
+BT /F2 15.00 Tf 0 0 0 rg 62.00 780.00 Td (1. Getting started) Tj ET
+BT /F3 10.20 Tf 0 0 0 rg 62.00 756.00 Td (Sign in, find your way around and understand how the club data is organised.) Tj ET
+BT /F1 9.60 Tf 0 0 0 rg 62.00 734.00 Td (MRHS ICT CLUB MASTER is a single-page application. Everything you see - members, attendance,) Tj ET
+BT /F1 9.60 Tf 0 0 0 rg 72.00 719.50 Td (courses, money - is stored in this browser on this device. There is no server to log into,) Tj ET
+BT /F1 9.60 Tf 0 0 0 rg 72.00 705.00 Td (so the app works offline and loads instantly once it has opened once.) Tj ET
+BT /F2 11.00 Tf 0 0 0 rg 62.00 682.50 Td (How to use it) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 664.50 Td (1.  Open the app. The boot screen loads the club data \(a first run seeds the full demo) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 650.00 Td (    dataset and takes a few seconds\).) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 635.50 Td (2.  On the login screen enter your username or email and password, then click Sign in.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 621.00 Td (    Tick Remember me on a private device so you stay signed in.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 606.50 Td (3.  Forgot a password? Click Forgot password? to see who to contact \(the club) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 592.00 Td (    administrator\) - passwords are stored as hashes and cannot be read back.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 577.50 Td (4.  The first demo sign-in button below the form fills the credentials for you; every demo) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 563.00 Td (    account uses the password demo1234.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 548.50 Td (5.  After signing in you land on the Dashboard. The left sidebar lists every module you) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 534.00 Td (    are allowed to open; the top bar holds global search, the theme switch, notifications) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 519.50 Td (    and your account menu.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 505.00 Td (6.  Press Ctrl+K \(or ?+K on a Mac\) at any time to search the whole database.) Tj ET
+BT /F2 11.00 Tf 0 0 0 rg 62.00 484.50 Td (Notes) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 466.50 Td (- The sidebar collapses into a drawer on phones and tablets - tap the menu icon in the top) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 452.00 Td (  bar.) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 437.50 Td (- Every module page starts with headline numbers, then filters, then the record table.) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 423.00 Td (  Detail pages open when you click a record name.) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 408.50 Td (- Dark mode, light mode or follow the operating system: top-bar moon icon, or Settings ->) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 394.00 Td (  Appearance.) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 379.50 Td (- The footer shows the club name, the academic year and how many records are stored in) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 365.00 Td (  total.) Tj ET
+endstream
 endobj
 11 0 obj
-<<
-/Contents 32 0 R /MediaBox [ 0 0 595.2756 841.8898 ] /Parent 28 0 R /Resources <<
-/Font 1 0 R /ProcSet [ /PDF /Text /ImageB /ImageC /ImageI ]
->> /Rotate 0 /Trans <<
-
->> 
-  /Type /Page
->>
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 10 0 R >>
 endobj
 12 0 obj
-<<
-/Contents 33 0 R /MediaBox [ 0 0 595.2756 841.8898 ] /Parent 28 0 R /Resources <<
-/Font 1 0 R /ProcSet [ /PDF /Text /ImageB /ImageC /ImageI ]
->> /Rotate 0 /Trans <<
-
->> 
-  /Type /Page
->>
+<< /Length 1221 >>
+stream
+0.85 0.85 0.85 RG 0.8 w 62.00 54.00 m 533.00 54.00 l S
+BT /F2 15.00 Tf 0 0 0 rg 62.00 780.00 Td (2. Roles and permissions) Tj ET
+BT /F3 10.20 Tf 0 0 0 rg 62.00 756.00 Td (Who can see and change what.) Tj ET
+BT /F1 9.60 Tf 0 0 0 rg 62.00 734.00 Td (Permissions are attached to roles, not to people. When you change somebody's role in) Tj ET
+BT /F1 9.60 Tf 0 0 0 rg 72.00 719.50 Td (Settings -> Users & roles, their menu, pages and buttons change immediately. If a page is) Tj ET
+BT /F1 9.60 Tf 0 0 0 rg 72.00 705.00 Td (off-limits the app shows an "Access restricted" message instead of the data.) Tj ET
+BT /F2 11.00 Tf 0 0 0 rg 62.00 682.50 Td (Notes) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 664.50 Td (- Permission levels are view \(read only\), manage \(create and edit\) and full \(manage +) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 650.00 Td (  delete\).) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 635.50 Td (- Buttons you cannot use are hidden rather than disabled, so the interface stays clean.) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 621.00 Td (  Restricted pages show a clear explanation instead of an error.) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 606.50 Td (- Only Administrators can open this manual and the Settings module.) Tj ET
+endstream
 endobj
 13 0 obj
-<<
-/Contents 34 0 R /MediaBox [ 0 0 595.2756 841.8898 ] /Parent 28 0 R /Resources <<
-/Font 1 0 R /ProcSet [ /PDF /Text /ImageB /ImageC /ImageI ]
->> /Rotate 0 /Trans <<
-
->> 
-  /Type /Page
->>
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 12 0 R >>
 endobj
 14 0 obj
-<<
-/Contents 35 0 R /MediaBox [ 0 0 595.2756 841.8898 ] /Parent 28 0 R /Resources <<
-/Font 1 0 R /ProcSet [ /PDF /Text /ImageB /ImageC /ImageI ]
->> /Rotate 0 /Trans <<
-
->> 
-  /Type /Page
->>
+<< /Length 2288 >>
+stream
+0.85 0.85 0.85 RG 0.8 w 62.00 54.00 m 533.00 54.00 l S
+BT /F2 15.00 Tf 0 0 0 rg 62.00 780.00 Td (3. Dashboard) Tj ET
+BT /F3 10.20 Tf 0 0 0 rg 62.00 756.00 Td (The morning briefing: what is happening in the club right now.) Tj ET
+BT /F2 11.00 Tf 0 0 0 rg 62.00 734.00 Td (How to use it) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 716.00 Td (1.  Read the greeting and date at the top: "Good morning, [your name] - here's what's) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 701.50 Td (    happening in MRHS ICT Club.") Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 687.00 Td (2.  Scan the ten KPI cards: total members, active members, cabinet members, active) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 672.50 Td (    courses, active projects, upcoming meetings, upcoming activities, attendance rate,) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 658.00 Td (    reports submitted and certificates issued. Each card links to its module.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 643.50 Td (3.  Use the charts to follow attendance and membership over the last months; hover a bar) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 629.00 Td (    or point for exact figures.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 614.50 Td (4.  Check Upcoming events for the next meetings, activities and deadlines, and Active) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 600.00 Td (    projects for progress bars.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 585.50 Td (5.  Catch up with Recent activity and the announcements panel \(urgent and pinned notices) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 571.00 Td (    are featured first\).) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 556.50 Td (6.  Jump straight into work with the quick actions: Add member, Create meeting, Record) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 542.00 Td (    attendance, Add project, Create activity, Create report, Issue certificate, Add) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 527.50 Td (    course.) Tj ET
+BT /F2 11.00 Tf 0 0 0 rg 62.00 507.00 Td (Notes) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 489.00 Td (- The dashboard is personalised: a signed-in member sees their own attendance, courses and) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 474.50 Td (  certificates instead of club-wide totals.) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 460.00 Td (- Anything you change elsewhere in the app updates these numbers the moment you save.) Tj ET
+endstream
 endobj
 15 0 obj
-<<
-/Contents 36 0 R /MediaBox [ 0 0 595.2756 841.8898 ] /Parent 28 0 R /Resources <<
-/Font 1 0 R /ProcSet [ /PDF /Text /ImageB /ImageC /ImageI ]
->> /Rotate 0 /Trans <<
-
->> 
-  /Type /Page
->>
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 14 0 R >>
 endobj
 16 0 obj
-<<
-/Contents 37 0 R /MediaBox [ 0 0 595.2756 841.8898 ] /Parent 28 0 R /Resources <<
-/Font 1 0 R /ProcSet [ /PDF /Text /ImageB /ImageC /ImageI ]
->> /Rotate 0 /Trans <<
-
->> 
-  /Type /Page
->>
+<< /Length 2707 >>
+stream
+0.85 0.85 0.85 RG 0.8 w 62.00 54.00 m 533.00 54.00 l S
+BT /F2 15.00 Tf 0 0 0 rg 62.00 780.00 Td (4. Members) Tj ET
+BT /F3 10.20 Tf 0 0 0 rg 62.00 756.00 Td (The register of every club member, with linked courses, projects and certificates.) Tj ET
+BT /F2 11.00 Tf 0 0 0 rg 62.00 734.00 Td (How to use it) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 716.00 Td (1.  Open Members to see the full register. Use the search box for a name, member ID, class) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 701.50 Td (    or skill.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 687.00 Td (2.  Filter by membership status, class or club role, and sort any column by clicking its) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 672.50 Td (    header.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 658.00 Td (3.  Click Add member to register somebody: name, gender, class, stream, student number,) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 643.50 Td (    contact, email, join date, status, club role, skills, interests and notes. Required) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 629.00 Td (    fields are marked and validated.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 614.50 Td (4.  Open a member to see the profile page: attendance rate, courses with progress,) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 600.00 Td (    projects, certificates, achievements and discipline notes, all pulled from the other) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 585.50 Td (    modules.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 571.00 Td (5.  From the profile use Print profile for the full A4 record or ID card for the credit-) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 556.50 Td (    card sized membership card.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 542.00 Td (6.  Use the row menu to edit, duplicate or delete a record, and Export to download the) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 527.50 Td (    register as CSV for Excel.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 513.00 Td (7.  Click Create member cards to print club ID cards for the members currently listed -) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 498.50 Td (    see the card section of this manual for sizes and printing tips.) Tj ET
+BT /F2 11.00 Tf 0 0 0 rg 62.00 478.00 Td (Notes) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 460.00 Td (- Member IDs are generated automatically in the form MRHS-ICT-M001 and stay unique.) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 445.50 Td (- Deleting a member asks for confirmation and can be undone from the toast; linked records) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 431.00 Td (  stay behind for auditing.) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 416.50 Td (- Add photos by selecting a file - images are stored in the browser's IndexedDB, not in) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 402.00 Td (  LocalStorage, so the register stays fast.) Tj ET
+endstream
 endobj
 17 0 obj
-<<
-/Contents 38 0 R /MediaBox [ 0 0 595.2756 841.8898 ] /Parent 28 0 R /Resources <<
-/Font 1 0 R /ProcSet [ /PDF /Text /ImageB /ImageC /ImageI ]
->> /Rotate 0 /Trans <<
-
->> 
-  /Type /Page
->>
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 16 0 R >>
 endobj
 18 0 obj
-<<
-/Contents 39 0 R /MediaBox [ 0 0 595.2756 841.8898 ] /Parent 28 0 R /Resources <<
-/Font 1 0 R /ProcSet [ /PDF /Text /ImageB /ImageC /ImageI ]
->> /Rotate 0 /Trans <<
-
->> 
-  /Type /Page
->>
+<< /Length 2111 >>
+stream
+0.85 0.85 0.85 RG 0.8 w 62.00 54.00 m 533.00 54.00 l S
+BT /F2 15.00 Tf 0 0 0 rg 62.00 780.00 Td (5. Cabinet and leadership) Tj ET
+BT /F3 10.20 Tf 0 0 0 rg 62.00 756.00 Td (The thirteen club positions, their holders, terms of office and history.) Tj ET
+BT /F2 11.00 Tf 0 0 0 rg 62.00 734.00 Td (How to use it) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 716.00 Td (1.  Open Cabinet for the leadership directory, grouped into patron, executive committee) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 701.50 Td (    and officers.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 687.00 Td (2.  Switch to the Organisational chart tab for the hierarchy view, or Cabinet history for) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 672.50 Td (    previous holders.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 658.00 Td (3.  Click Appoint a leader, choose the position, then pick a registered member \(their) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 643.50 Td (    name, contact and email fill in automatically\) or type an external appointment such as) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 629.00 Td (    the patron.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 614.50 Td (4.  Record the responsibilities and the term of office - these appear on the printed) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 600.00 Td (    cabinet list.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 585.50 Td (5.  Editing a position that changes holder automatically writes an entry to the history) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 571.00 Td (    archive so the club keeps a clean record of past cabinets.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 556.50 Td (6.  Use Create cabinet cards to print a position card for each leader, or the card button) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 542.00 Td (    on a record for a single card.) Tj ET
+BT /F2 11.00 Tf 0 0 0 rg 62.00 521.50 Td (Notes) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 503.50 Td (- The app blocks two holders for the same position: it will offer to edit the existing) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 489.00 Td (  record instead.) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 474.50 Td (- Appointing a member also updates that member's club role on their profile.) Tj ET
+endstream
 endobj
 19 0 obj
-<<
-/Contents 40 0 R /MediaBox [ 0 0 595.2756 841.8898 ] /Parent 28 0 R /Resources <<
-/Font 1 0 R /ProcSet [ /PDF /Text /ImageB /ImageC /ImageI ]
->> /Rotate 0 /Trans <<
-
->> 
-  /Type /Page
->>
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 18 0 R >>
 endobj
 20 0 obj
-<<
-/Contents 41 0 R /MediaBox [ 0 0 595.2756 841.8898 ] /Parent 28 0 R /Resources <<
-/Font 1 0 R /ProcSet [ /PDF /Text /ImageB /ImageC /ImageI ]
->> /Rotate 0 /Trans <<
-
->> 
-  /Type /Page
->>
+<< /Length 2185 >>
+stream
+0.85 0.85 0.85 RG 0.8 w 62.00 54.00 m 533.00 54.00 l S
+BT /F2 15.00 Tf 0 0 0 rg 62.00 780.00 Td (6. Meetings and minutes) Tj ET
+BT /F3 10.20 Tf 0 0 0 rg 62.00 756.00 Td (Schedule meetings, take minutes, record decisions and turn them into tasks.) Tj ET
+BT /F2 11.00 Tf 0 0 0 rg 62.00 734.00 Td (How to use it) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 716.00 Td (1.  Click Schedule meeting: title, type \(General, Cabinet, Training, Project, Emergency,) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 701.50 Td (    Planning\), date, time, venue, chairperson, secretary and status.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 687.00 Td (2.  Open the meeting to build the agenda as a numbered list, then invite attendees -) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 672.50 Td (    members are selected from the register.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 658.00 Td (3.  During or after the meeting open Minutes and type the discussion points, decisions and) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 643.50 Td (    action items. Save as you go; the minutes can be printed on club letterhead.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 629.00 Td (4.  Action items become real club tasks: each one gets an owner and a deadline, and) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 614.50 Td (    appears in the Tasks module and on the owner's dashboard.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 600.00 Td (5.  Use Record attendance on the meeting page to mark present, absent, late or excused for) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 585.50 Td (    every invited member - the same recorder as the Attendance module.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 571.00 Td (6.  Print the agenda, the minutes or the attendance sheet from the meeting page, or export) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 556.50 Td (    the whole meetings register.) Tj ET
+BT /F2 11.00 Tf 0 0 0 rg 62.00 536.00 Td (Notes) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 518.00 Td (- Meeting types drive the colour badges you see in lists and on the calendar.) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 503.50 Td (- Minutes, decisions and action items are stored on the meeting record, so a search for a) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 489.00 Td (  decision finds the meeting too.) Tj ET
+endstream
 endobj
 21 0 obj
-<<
-/Contents 42 0 R /MediaBox [ 0 0 595.2756 841.8898 ] /Parent 28 0 R /Resources <<
-/Font 1 0 R /ProcSet [ /PDF /Text /ImageB /ImageC /ImageI ]
->> /Rotate 0 /Trans <<
-
->> 
-  /Type /Page
->>
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 20 0 R >>
 endobj
 22 0 obj
-<<
-/Contents 43 0 R /MediaBox [ 0 0 595.2756 841.8898 ] /Parent 28 0 R /Resources <<
-/Font 1 0 R /ProcSet [ /PDF /Text /ImageB /ImageC /ImageI ]
->> /Rotate 0 /Trans <<
-
->> 
-  /Type /Page
->>
+<< /Length 2453 >>
+stream
+0.85 0.85 0.85 RG 0.8 w 62.00 54.00 m 533.00 54.00 l S
+BT /F2 15.00 Tf 0 0 0 rg 62.00 780.00 Td (7. Attendance) Tj ET
+BT /F3 10.20 Tf 0 0 0 rg 62.00 756.00 Td (One recorder for meetings, courses, activities, training and events.) Tj ET
+BT /F2 11.00 Tf 0 0 0 rg 62.00 734.00 Td (How to use it) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 716.00 Td (1.  Open Attendance and click Record attendance.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 701.50 Td (2.  Choose the session type \(meeting, course, activity, training or event\), then the) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 687.00 Td (    specific session and the date.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 672.50 Td (3.  Mark each member Present, Absent, Late or Excused - or use All present / All absent) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 658.00 Td (    and adjust the exceptions. Remarks can be added per member.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 643.50 Td (4.  Click Save attendance. If the session was already recorded the app updates those) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 629.00 Td (    records instead of duplicating them, and tells you so before saving.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 614.50 Td (5.  Read the dashboards: attendance rate, best and weakest sessions, monthly trend and) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 600.00 Td (    members below the low-attendance threshold.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 585.50 Td (6.  Open a member's history from the member profile, or run a monthly, termly or) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 571.00 Td (    individual report and print the sheet.) Tj ET
+BT /F2 11.00 Tf 0 0 0 rg 62.00 550.50 Td (Notes) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 532.50 Td (- Attendance rate = Present ? Expected ? 100. "Late" counts as attended; "Excused" and) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 518.00 Td (  "Absent" do not.) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 503.50 Td (- The low-attendance threshold \(default 60%\) is set in Settings -> Notifications and) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 489.00 Td (  drives the alerts.) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 474.50 Td (- QR check-in is a designed placeholder for a later release - the recording and reporting) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 460.00 Td (  behind it already work.) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 445.50 Td (- Print an attendance sheet before a session so the secretary can take a paper register,) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 431.00 Td (  then key it in afterwards.) Tj ET
+endstream
 endobj
 23 0 obj
-<<
-/Contents 44 0 R /MediaBox [ 0 0 595.2756 841.8898 ] /Parent 28 0 R /Resources <<
-/Font 1 0 R /ProcSet [ /PDF /Text /ImageB /ImageC /ImageI ]
->> /Rotate 0 /Trans <<
-
->> 
-  /Type /Page
->>
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 22 0 R >>
 endobj
 24 0 obj
-<<
-/Contents 45 0 R /MediaBox [ 0 0 595.2756 841.8898 ] /Parent 28 0 R /Resources <<
-/Font 1 0 R /ProcSet [ /PDF /Text /ImageB /ImageC /ImageI ]
->> /Rotate 0 /Trans <<
-
->> 
-  /Type /Page
->>
+<< /Length 2096 >>
+stream
+0.85 0.85 0.85 RG 0.8 w 62.00 54.00 m 533.00 54.00 l S
+BT /F2 15.00 Tf 0 0 0 rg 62.00 780.00 Td (8. Courses and training) Tj ET
+BT /F3 10.20 Tf 0 0 0 rg 62.00 756.00 Td (Club courses, enrolment, lessons, progress and completion.) Tj ET
+BT /F2 11.00 Tf 0 0 0 rg 62.00 734.00 Td (How to use it) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 716.00 Td (1.  Open Courses for the course catalogue \(Computer Basics, Microsoft Office, Programming,) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 701.50 Td (    Web Development, Graphic Design, Networking, Cyber Security, Robotics, Data Entry,) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 687.00 Td (    Video Editing, Digital Literacy\).) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 672.50 Td (2.  Click Add course for course ID, name, description, instructor, level, duration, number) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 658.00 Td (    of lessons, start and end dates and status.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 643.50 Td (3.  Use Enrol members on a course to add learners; progress is tracked per enrolment with) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 629.00 Td (    a percentage and a status.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 614.50 Td (4.  Maintain the lesson list on the course page so the syllabus is visible to members.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 600.00 Td (5.  When a learner reaches 100% with attendance above the threshold the course becomes) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 585.50 Td (    certificate eligible - issue the certificate straight from the course page.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 571.00 Td (6.  Print or export the course register, the enrolment list or the completion summary.) Tj ET
+BT /F2 11.00 Tf 0 0 0 rg 62.00 550.50 Td (Notes) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 532.50 Td (- Completion rate on the dashboard counts enrolments marked completed against total) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 518.00 Td (  enrolments.) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 503.50 Td (- Instructors can be club members or external trainers; member instructors are linked to) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 489.00 Td (  their profile.) Tj ET
+endstream
 endobj
 25 0 obj
-<<
-/Contents 46 0 R /MediaBox [ 0 0 595.2756 841.8898 ] /Parent 28 0 R /Resources <<
-/Font 1 0 R /ProcSet [ /PDF /Text /ImageB /ImageC /ImageI ]
->> /Rotate 0 /Trans <<
-
->> 
-  /Type /Page
->>
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 24 0 R >>
 endobj
 26 0 obj
-<<
-/PageMode /UseNone /Pages 28 0 R /Type /Catalog
->>
+<< /Length 1633 >>
+stream
+0.85 0.85 0.85 RG 0.8 w 62.00 54.00 m 533.00 54.00 l S
+BT /F2 15.00 Tf 0 0 0 rg 62.00 780.00 Td (9. Activities) Tj ET
+BT /F3 10.20 Tf 0 0 0 rg 62.00 756.00 Td (Exhibitions, competitions, workshops, outreach and every club event.) Tj ET
+BT /F2 11.00 Tf 0 0 0 rg 62.00 734.00 Td (How to use it) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 716.00 Td (1.  Open Activities and click Add activity.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 701.50 Td (2.  Choose the type \(competition, exhibition, workshop, training, outreach, ceremony,) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 687.00 Td (    fundraising, meeting, social\) and enter title, date, time, venue and organiser.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 672.50 Td (3.  Write the objectives and expected outcomes, then select the participating members.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 658.00 Td (4.  Move the activity through Planned -> Ongoing -> Completed \(or Cancelled\) as it) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 643.50 Td (    happens.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 629.00 Td (5.  After the event record the outcomes, attach photos and write the activity report - it) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 614.50 Td (    can be printed and filed as an official club document.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 600.00 Td (6.  Record attendance for the activity from the Attendance module using the same session.) Tj ET
+BT /F2 11.00 Tf 0 0 0 rg 62.00 579.50 Td (Notes) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 561.50 Td (- Completed activities feed the participation charts in Analytics and the achievements you) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 547.00 Td (  record afterwards.) Tj ET
+endstream
 endobj
 27 0 obj
-<<
-/Author (MRHS ICT Club) /CreationDate (D:20261003140417+00'00') /Creator (\(unspecified\)) /Keywords () /ModDate (D:20261003140417+00'00') /Producer (ReportLab PDF Library - \(opensource\)) 
-  /Subject (Administrator handbook) /Title (MRHS ICT Club \204 User Manual) /Trapped /False
->>
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 26 0 R >>
 endobj
 28 0 obj
-<<
-/Count 18 /Kids [ 4 0 R 5 0 R 10 0 R 11 0 R 12 0 R 13 0 R 14 0 R 15 0 R 16 0 R 17 0 R 
-  18 0 R 19 0 R 20 0 R 21 0 R 22 0 R 23 0 R 24 0 R 25 0 R ] /Type /Pages
->>
+<< /Length 1929 >>
+stream
+0.85 0.85 0.85 RG 0.8 w 62.00 54.00 m 533.00 54.00 l S
+BT /F2 15.00 Tf 0 0 0 rg 62.00 780.00 Td (10. Projects) Tj ET
+BT /F3 10.20 Tf 0 0 0 rg 62.00 756.00 Td (Member projects from problem statement to results, with teams and tasks.) Tj ET
+BT /F2 11.00 Tf 0 0 0 rg 62.00 734.00 Td (How to use it) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 716.00 Td (1.  Open Projects and click Add project: name, description, the problem it solves,) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 701.50 Td (    objectives, leader, team, technologies, start and target dates.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 687.00 Td (2.  Set the status - Planning, Development, Testing, Completed or Archived - and the) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 672.50 Td (    progress percentage.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 658.00 Td (3.  Break the work into project tasks with owners, deadlines, priority and progress; the) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 643.50 Td (    project progress can then be reported per task.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 629.00 Td (4.  Keep documents, reference links and screenshots on the project record so everything) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 614.50 Td (    lives in one place.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 600.00 Td (5.  Record results on completion: what was built, who benefited, and the evidence. The) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 585.50 Td (    project then appears in reports and analytics.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 571.00 Td (6.  Print the project brief or the final project report.) Tj ET
+BT /F2 11.00 Tf 0 0 0 rg 62.00 550.50 Td (Notes) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 532.50 Td (- The leader and team are chosen from the member register, so a member's profile shows) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 518.00 Td (  every project they worked on.) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 503.50 Td (- Projects with deadlines feed the notification centre and the calendar.) Tj ET
+endstream
 endobj
 29 0 obj
-<<
-/Filter [ /ASCII85Decode /FlateDecode ] /Length 1465
->>
-stream
-Gau1.h/:t,&;BTO'Q^\,0!\aP?b/q[Cg3P][Z:1aZqXb>-..k=B%*[H8@B6ZNBmZP&\r?ZM<B7BUZ%"qKR^B+S<j4o;u#N_$C!if"=f4XoFp#UPPYZ[Oc3cSKJ>&("X6sB@fb'Q'*\u2$Fh2jQ!-A"O\?E8"9knfM.Oo)[W"/KRSg$sgd*HaE@3)T,a3C!U:RH0,EaBu8cM6-LbPtKBW5sO88Pd3K#[!a6,`s[^agU#7%u+#]Xk7ThQPfY1fLS)(^o&Q7mU<r6PFU9;/K]S_?j5)_Y&!O(LQWKVJpnTq<QS/59]t0l!NrSo1Ld#?X>[FU]XOmX;D/G]sE\QiL3@.].(!B`IR4('W8&^`/CQ\KWV6.l%_@qGb)]oZ'iG1BtUQpGL*HUm#FM%G?h.ME?G<]'?(eLO[SPt\\=H>&W:*L*5.Ec]6olj;a>%HZa-F04KJqNQ`_qA5JUp?p\klTB6tUT/JCiH>HnFu!+#?bpWos_7QU9#&L>q:.n%!^T`n&m9TePc'2br>7(mZu=_A'"!\8/\S!j*J1P]]D_q%PrYj`fCAT0TSS1FH*\0@+%5+egnfPk41;gh('*tg"G64ooS:dOcJL^8]4]6-eg9=@PH0(6kf`/3r(]F,$h%+[o4,0fZ_1/fc:c@#rp5@udV)R'MD#c1aA$4Cb)j`fS4je)UB7kE'Y&frf`5<m#^Z&niU^s+!C&,eY0RQ^ZSQ?67l6L?ZpYA=:FRmS]4fEHhe*mi*Q<jjpC/mqhoZJ,L>2ctDj1FS^RlNY^FRtZ%5XOfm)2a2H9,rDe%bs/^EdM*5S&X?D)[03Xi!\..&jq=!UC/_S_d-`r9hQ:P!cC,MYJHFXs$X:3BnTD<(/;uNYji3PN_DYpXE\NW-o3n@'f&;O'&\7?H[/5mZdTs;a?0*g59ir6Nj?)>gW*g2*1*7+RG)+&AL*Z#pl32T2r$35>hdqiu9L71%b'\+j(<Hn%De^hY+>RjSprSY$#^Ig[(4#2&I6lkFOuEhN>r^G\k)eZbi&h9/O<"`.c8=4uRJM^j91JQq@7:`N+?LA4es8*S7`)*K]#g/2arot7FtDpdR:2`^>tGj`/.`ctGF4o+1NY8b,Tk*f:U4iLfCio2o4m<&39)PuB4t^7`''>*bC/LBJ6J=TDSriMStU)A6/$nVkk]Il]%OK-S.bB";]b(eoF*<&$$$Pe7q[,8o,kNhO/Zhgcd9Z#h@T*?G:`03[JOS!7uU`4dW:@Q_7=?[4*h1;CKDUo8eZN*Ajq=Sf2-\`o4r-60AG*6,:],HkR@EI"p_9(mes2"H_01XmqZooMpDl)i=D=0#$]^W(hsqZTj,q&`&6%-dDUa68(Xa'];]>$"6U6si6aP'=E"`hlAk;a<TQ,`-C7694OP#3oYeTACT'=\3&StT0PM/BXb<=61cTIaFiVh\76>M>6!0CoD<03N_1?C#3u7PPIZpti.XjYkP@'ND)cc~>endstream
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 28 0 R >>
 endobj
 30 0 obj
-<<
-/Filter [ /ASCII85Decode /FlateDecode ] /Length 705
->>
+<< /Length 1639 >>
 stream
-Gau1->AqtU&;B$?/*=+0C>&LGYnU)tW'jk]`llBX-:X")^4?(K)98Fee5dO1M(DeqOu[0hZg1aMTQma/^"<=tcf*]3!TT8+!0]f;rWPLJfrp>gWiY;I3&a_i+A,RB-/;g<*<'J+#Y?FC7f@g5g^l(a"(MJ=apMeagh"ECVR/\oUSU7&/e(fu<$HW=,rniHiEr/t'Vg<hc+tff;H-Ch]64Y7@D@h]I;f!/6><J(&;fMuU6ftd6b=70fFAgr[,[0teAN3$($$;n]>"5c#G3Yj\?(E2Hq.H:eqFmBI6IAj%HK_rIlhtp8n1g1!V_hmqGdM:<SUuBs%9XEaFc`]&iV!MRgFk&ST#-C4Rp(Ir]Uks23ssoF6"'C/"c^ulAj:k7elS5dW1Klo6._M-/&!9[O>ou(LbY[791jo3BA[g8_1t,0'bs20#R.^$$G.%J[m&kpqSEe*;Rk`^@G8=g;c$#7J#QGng&#34.#V-;[eG`X@@P[Hs2Z,NI>GXjk<dsI9@OTX2PC"'Q2>5D<*dFp+Guc=g,DX(iZ!hi9Pa"pUsA?96#igV3:>1msKB;(@-%?S%a7u$f@:F4[m`"S$ju)6af,Fc4^UBS]i8JSXVtfg'tF6J3+oJr6*I[n?_ck^'Ns:9N,qg+_QrU7)#u`5lP=0E8d;VL"N9,\@>,9is4?g7\3>Za1ekjZ`<7Ns6MRpln:9t>s/~>endstream
+0.85 0.85 0.85 RG 0.8 w 62.00 54.00 m 533.00 54.00 l S
+BT /F2 15.00 Tf 0 0 0 rg 62.00 780.00 Td (11. Reports) Tj ET
+BT /F3 10.20 Tf 0 0 0 rg 62.00 756.00 Td (Weekly, monthly, termly, activity, project, training, meeting and annual reports.) Tj ET
+BT /F2 11.00 Tf 0 0 0 rg 62.00 734.00 Td (How to use it) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 716.00 Td (1.  Open Reports and click Create report.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 701.50 Td (2.  Pick the report type and the period it covers, then give it a clear title.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 687.00 Td (3.  Fill the standard structure: introduction, activities, achievements, challenges,) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 672.50 Td (    solutions, recommendations and conclusion.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 658.00 Td (4.  Record who prepared and who reviewed the report, add the date, and save.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 643.50 Td (5.  Use Preview & print to see the report on club letterhead, then print it or save it as) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 629.00 Td (    a PDF for the school administration.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 614.50 Td (6.  Export the whole reports register to CSV when the term ends.) Tj ET
+BT /F2 11.00 Tf 0 0 0 rg 62.00 594.00 Td (Notes) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 576.00 Td (- Figures such as membership, attendance and income can be copied from Analytics - keep) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 561.50 Td (  the analytics page open in another tab while writing.) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 547.00 Td (- Submitted reports are counted on the dashboard's "Reports submitted" card.) Tj ET
+endstream
 endobj
 31 0 obj
-<<
-/Filter [ /ASCII85Decode /FlateDecode ] /Length 3001
->>
-stream
-GauHNgN)%<&q/A5o[B+rV-r(3p-[!sbpHaY(/qA8l"(,18QYtI#)6a[n+ZJ46I6uHg0u?X70Mf%4ajn;G7X&%N??4=5:q[tNp5e4LE)Z#1NIldVstl$Apj:Eb&ZhkNa8qq2t@'+X<=mFfV_O6Y$>.;Q/qb,m0$:jr=HK$jnc\Y;<1l"&:7AJ]"PBnf*T:s4%,ba@40Zfllb8XXO(eF]2mi8R*pHi*8>MId%r,rZ'F]8>IE`c=9j6fMtK")>$_c[TgtE0j`V&8IU]ogc$>/p*ZA7:M46KcLK5*L@6ik)Y2=a*cRo+hC.ti%eV*@0>l(Le'tkFF9&rc]r.W/*Y`.O9CoRUCgtCqeQqQuS/,k2B]-Um%iB0(rkZ[,)C%6_=G87U/Z]'^<Dd@D-B:p"0frlEShFXiUE_a"XQ'Tl>"V.Qj4'&Xei>g>"jKm*6!tTPc>B_ga^V7tT-"Z1oAm%-jNET>h()mmO>2`WB(Op!"p$cspeta+F;RZ9uBL,cqWg\i$X6%hlWI1'mQFBkc:"LePiPVPa)SM\)]sl)_n^gE[s5J5"jqDMTW.m<RH*_$H`H%AZWR.%_/UI"_<ZA_[CZCpa9A+P`+c?Y%3$P'(/>o49jet8`FUF&V&qblfjec/\0st&ISAK6L#9G7X>-m+cp3A.&AZ<%M]TDW2Hr2B7X.TH,7CejsV,eh@Q*D^dUp[5jlX$Z]c17s##(Ts8BoN:TJ^-1cP%%3]$N]9@AI1NpX#%uG++D^`>V#6T2mF:$Bg$,,js.S;S+uGdd@St%XW[c4B(iNUqh>=#$n!E2VCOWPNeD37mgD;%h41u:m(UAcJ>G?3%'VQc8lM9]&d&S4]<Q@"/J(nf*NE-d]3@@,[`WZ98>487>&&\q(AAI0gO$_0Y-B<Rjg;aKEZ3[T8Z^je#'Nc[GUW4M@8l%8-Gb?hk.3M6^qL%NJ[HG$,>o(^Xc6nk&O2#E<X>R#'GBIoZ4L/V9XkdZNA-f]G\ma4ZLja4&K:*q!^"D;^[DoJ#,m1M4]>[:Ops^--b`s*VQor)f*Haib:<B9ZtuM0KA5mS#+sHXCA?cs,f?9N17(>U4,N#`kRf)d#Oa6B!^]9HJGb<&Hk;3ZAj:2E'W+MMlLdL67tcL1WCCRoTdHX*L@h5k!D:(Q@MlZeU2FHD(3m>8D9sW.F2?6.Vb'<[6A:7aPp3(^&aB63(jWP)>o4gd,Xqm0O2ct^X<At/7-pO)#dqcHC\[Hgk&%,jWN*bP4E&m^#"0GC!m_]m#CfL3'5Oq88<GT!blMPplliY&"2)p!4b#[=:Vu$;@@tn!"[d59L7utL81t=%kf66_`Jb+`U#6gmBJ=kqm%gYT_`cbfL*'3UW2>@&N;6DtOJ9%[S;<&C6qQ3d<N,.3QUUsFL<+p)63ACN'ufdi":_oHBW[T=Rk.O!BU\+!,'$)KW7$Bn>Q+dJfBZ-%2[HC!elH*OS/L2OgnTtml3qp4n5;ps0Esd$4GiJkk1>5co_E`\XCPU\T_U`-YB6&uiUuZQBts,#iS?@Xme_i:hZeGH9)8F]"%o15dNl9q+pG:[/lXa)ZU-RWbhsH,_9R!HY%B#ZB?gK8n:lA@,7DnC+$R?7nH\phIigkH(@AZEKrD?H;b)/j@m5%u7+!`mEqcE%<JgDigO:<gESZ=jWq'CGR;9@*!)h9<XIDCa\Nn&1\#&13QO&#g]P+Q,QuNC0L4n8;0n"_I7aF`eh,<k-:"Zf?))`IlI<7@HB#oS$<AY/0:#N2Y/Plb@p8_H+Xe@0lOTtLPM/?:e5d+>n>P)*6/k(&tVDIPEhjP?8fet^ekSA1JH\TA3GW3nG,<e2RqH,(l/ZO0+[N$Fubno)]k2LfdnugDk_,/%;]9#ahAat^BnqOij;!b#teIcZoDc"e>="$5\L3mUk\O$#hZ@7mA/=3"bDYnpX"S%(g2b3g&fF4Q^JkoulA\%G8W:cgAAaaGu]1<+JZn/$_/4JAp:r2Chn`65BRgDMtOe6&FIs[3.j%aR@$TH\3:InIp/]-D&XKK*#3N8sHp_UVeqi#t.SVQHH9GauGjd[!`d&4#.qYmb@CbEq.J&5/['`V;6q/L23VCL)/[MDS?=L$OQ?,o`6WKtbQT6jm[oWM7<-Yg4YVK$CXL7R;_&^,C22>q="8i7OT7Bl=>X>9$Xe5A(A]P2KQ:@YD6j>96qSo61VD.\+G\[f7LZe8'E'q)6%X1BWOJ0'a8]gu($Gs0WOjO7+pC,s8+&$^7o2C_",BJ7o[m)#UIBq/\&@?,ukkn9'W,:dJY94HXKN74').Yu3-*@m/6Qu9,Fps"9(QMf4Vn\W*^cYqug45mC33Bj^C_^G:\&9_I3cH]kr',tH<JOR"%65)uRonL.3outU=hF__mV_sGSLMdffjYY8!GnI[_!Fg"0@PG2U?U?Ls*/+J!^kV@_`JlfLoL?B*VIXgKY_rk."pJ=0ngetP<#t]qEh"5]SaW@6har)J]TY?m=$&IXV@/F+jECV11%813:YQLkH_%l'ca*.21tfTUGfG_c>@iCKq::^m-3sWoUdnhmL'L62g1dtM^37STV5fuB@5*Rd-n.tg&<B*CUX58U:I5eA(U25q71#@_ls##])ckb.F$]>9)Q\k\nm7S!HurTb4Dt8#\$(Jm.9i$)Wj?W3c2d!Wn/3Yr/5*B;&]rCg\Vj.1l^m6X"F.lk_3_=KG7Pi83#=goIZs;-h+:Er+jIZL?(Mb`KBN1u)g<"/\,7Gh<2sg(J;!o<Md%YXki).DJ-Xs#%7%l=e/+N.?p1TjXP0^+StJN#Dmmr:T8/kH/ib"jem"PCBI^(-BbJ+0[!*-6Bs.,(8aUL[T6_Q7_%n*0G"<T'A*F"n>;5p;Bp%U4.^)^_krr^KP'R,`+e8Oih_/&3lo7juN#FWLR?]beV3uhki1#5Sd*u+8[T;A-S8QT5N<+Cq9g?aKBZ4@[pGLQ7_\IF_LLAZk&0AHWE(@0P.g>%a?iX!I!+0#%;%a]tqM22!Y2_FMnp(2]NW3^Akj&1k2NBQ~>endstream
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 30 0 R >>
 endobj
 32 0 obj
-<<
-/Filter [ /ASCII85Decode /FlateDecode ] /Length 2677
->>
+<< /Length 4270 >>
 stream
-Gau`UgN)%.&q0LUoV42m,6[K-4=-RES!hM^EKo22>42Pf64snDO9s8Ps8=jkX";B@PZc\L&sFHb%J8o.BnV(j5Lf\%PlPacnG59OlG@oLe0dH(rrMTNBD6%l3^Fat5[68=!t$:ZSLF3jk/3SpRkk)::E19@_=/#G&TN5k654\j%Uoqu#%,\IjO,/E:dPlm&P@*Ba9`J(M1eoomui2J32M*1W'afCF<LuX']o+LW-5cbY/C2b`9c7HQZte5LE7!KQTHqene9&tC2'!\p<Y3;9\b;Q+-J%H@0#m3c9L._r@<9.R_r-&hn^lc(VV>!_5C8^C%2PmhdQMBd4pqt9U4N:[j6AsQONf>MD&Y`DFkZY4HBlDk7N'ZX>EsQ4S&eK@eWNYf^TTdDdc]B+o!c<ELasdJW%n]MdK;Vq<@%Orb.>T[rXT%ptPPAO1u?\?ahM)p+=u2*:24(7'="C1QJk/",:qWa1@bp4'QVK*:,6:`1`)a7;1_*`/@k'oa.FmOgrF+YMZr'PB`19INo6/KuFl<lF85rSl"8@EQthsJ<_[+<ZP0+d[3!8%49SPPmYUo6&fPV-YcYLE,Hj%S^D16W.dDu?c>oC=3hkg\*4UlCbY.L3dYop_9"`PE(K6j\gUt&74L%sV9J7W>lkh1/D1HaT5,bf;_q62eZ<:Jj)`0p`n+Dmg26AMj]j;U?d$ScaCSE,\WD[gfR;#rk*8&]=6*'V=3:[_9=U.jb4/#+*_1*G`<Ap+j1'eb.bld^<sVT[RmBO&87hip[:UUAW6QMqQ0&G_<K1>icpT/fK8W0t?qO"aT#8WB?>cdhQ2Jo_rKeXq:p2nlU+'&FK[u^N%\e+HFK0dHnW@FP5B+m#Zc8mV,a_B/]K7F-9q^e*U0BcIAs-?n]].f7;^A^h"Sb<@U/fIW6<7Zt\J28#C'AW&$j[5YcnI+?U_l)fn1^KSJ[5lWhsp101D3V)+WhnJ6h3c7%I:?2caRGgTf(rI'?k6CjK;uKANQ_-F.*^=dYnSBmGpENqB9M;HS<4grnon9^LotJU,PJ3d*<J7H^ud3]>AGt%'QFi,[5#I6#Wu=OC22LD=,BufoEDHR=;c]G%YS@mIr80"0/,nDUMJ4^#,B"9O1Gfg^^j6+WK-u&9m3)+0MesKD@D&n^$NN*KKenFV"e4Bj0%=M+k!%a,"Y;J-0Z.dg`_$EdgZVkQ"\Fh-I/WgJWFJJs<-DZDXrHC:]SA!K0O9<@(_hKO2J9=Fp8Xag'[;lh=_pq##]L9fq!#4GV[4A3r;D8A9L0gKdgV!dfuVlS;_D=i3CaR,#E]O#mCYR%O+)DZmu8+D1l,m.SscBt8jGTHom/.[l`ZoL,cMC/<$AET`bgM*!Q?hptsU!J![C6^A'&2:RLd`)]"HR=Hd;.r5jkb)gPEd^t+ma:'AT0[-kl<JqQT-rS#SKuo[XK"qgo]&K,i3NUW.W_]g5,r^q>BpIYF"^9_/BeGXY^b66W?r\MR'*.MMnU>qgN3p;U<j#09HBX[d,gg(U(F]Fg87^Xl@#bZ42WrYXNPSiNFaMa=b-XVNWcig%i>s@Kd2gN=n%0[^U[oP</_T4k6'i%[I9mbF@9h)&n6;nnG;?91F0]+455aM9gqk`Pqqg5n/(<rdQFGaOS7)r8]S+NZeUYYGV/%p#q8S+G[j;\&?`l3k\N+P#5BNJK/A;op=BN;_hgL6grs&)lpstPi7H7cqGD#!FD#8$;ae;i,GEom!='[f(M-]#40]+^?cU,"?(c)b36R9,e5hcfQXtS$OQhNeg]E<Qds1qZ9JOiH-hrYCWZQ$de='7IqT!fWTgm`HLFKG'$&rkgcs/>%m_!aR=U#eG@EU@iAR,u@\:F#PhTc3IOA0bqf9M0e^reMGlb1.dV=CYrX=MF#_9h3*UpFO#<K'Ag4D>W&#pU-]1RV#C"1KbXVQOU=^TqQBCGIs_EfhU2V7=_E,9!1na0hsIco=[%m-oK0S]M#Sr4V/<4?uMngn@im(*q15j_UMHE*Q<2toYh6s)jYi?l;jl=*M.a(Mo(_CXU_=_EQ-NP+"SRC:o"HgPsV\(YHY=M.GS?GQPHSJOopq[l9'[L)h,ViFnKS&gR?\^:?kPi>5st(a%Ggp)tERcI^NY<O55utXn-+7a$T6ogr=$I]Rp*]7kl^-IZs(O"/=,q5T#mVT]Sr^DI$B3<AP+K9Vb8uoM34LE43BC$*X_r@P^pYEbnX5JR>Th_t@crGW.1[G@Z]T+*W^r&Mh7lCQ+D<k&[(#<a[j`=3L#hD9[dM7"idQB<:?O(>,To%-41NW0BKBj`"qDh/Z1sp[G-;7nR-YDLSe42&NK38JS*.#od%GBOELu]rsF#NA3Qh-'q/_]@8WhX/<jO,@ZCE7OBj0O"WY9qU:&EYNs!j#F]ZfK9)lFN6?m>dh\tDT[:UrgZN5+(=42WVA;Co"WaXlYt#X'Sp(Wp@GtuQ1K("P="M,)Jti#Q,No2s=Q9[[(^:WL$Ep%+jj!Y6n\]L!BJ^1/^Y&%G2,*.cZq%h)s)9tSep<Lequ16[fPe\Q[ZssACr;;srK713'\aH?giYbNIPEVs/oAjl"@:PGptN!K[/YP^"K:tOPk]3QrU9WTfXn%@R&\!p#rHk_lKHfn^_!JOod&p9`Ko0#URS!9@>3UQ%A,M7c>ZLD%og(=%tgd/Hec2@1`YJt)4^X9Ze5:?~>endstream
+0.85 0.85 0.85 RG 0.8 w 62.00 54.00 m 533.00 54.00 l S
+BT /F2 15.00 Tf 0 0 0 rg 62.00 780.00 Td (12. Certificates) Tj ET
+BT /F3 10.20 Tf 0 0 0 rg 62.00 756.00 Td (Issue, print and publicly verify club certificates.) Tj ET
+BT /F2 11.00 Tf 0 0 0 rg 62.00 734.00 Td (How to use it) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 716.00 Td (1.  Open Certificates and click Issue certificate.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 701.50 Td (2.  Choose the type - Participation, Completion, Excellence, Leadership, Training or) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 687.00 Td (    Appreciation - then pick the recipient \(member\) and, for course certificates, the) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 672.50 Td (    course.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 658.00 Td (3.  Describe the achievement, set the issue date and signatories \(club president and) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 643.50 Td (    patron\), then save.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 629.00 Td (4.  The certificate number is generated automatically in the form MRHSICT-2026-CERT-0001) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 614.50 Td (    and never repeats.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 600.00 Td (5.  Click Print to preview the certificate: cream background, double navy border, crest,) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 585.50 Td (    decorative seal and two signature lines. Print it on A4 landscape paper or download it) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 571.00 Td (    as HTML for PDF conversion.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 556.50 Td (6.  Use Verify to check any certificate number, or give people the public page - open) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 542.00 Td (    Verify Certificate in the sidebar \(no sign-in needed\) and type the number.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 527.50 Td (7.  If a certificate was issued in error open the record, mark it Revoked and add the) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 513.00 Td (    reason; verification then reports it as revoked.) Tj ET
+BT /F2 11.00 Tf 0 0 0 rg 62.00 492.50 Td (Notes) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 474.50 Td (- The certificate design is print-first: colours, borders and the background are tuned for) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 460.00 Td (  paper, not for the screen, and they are identical in the preview.) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 445.50 Td (- Certificates print on a landscape A4 sheet \(297 ? 210 mm\). The app sets the page) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 431.00 Td (  sideways for the print job automatically, so use the Print button in the preview rather) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 416.50 Td (  than the browser menu; the certificate then fills the sheet edge to edge without) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 402.00 Td (  clipping.) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 387.50 Td (- Certificates are landscape and print at true A4 size \(297 ? 210 mm\). Two built-in) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 373.00 Td (  designs ship with the platform - the default Cream & ornate \(cream paper, double gold) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 358.50 Td (  rule frame, corner scrollwork and a faint centre medallion\) and Navy & gold \(navy corner) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 344.00 Td (  blocks, diagonal pinstripes, gold rule frame and gold corner hooks\). Pick either one, or) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 329.50 Td (  set your own image, from Certificates -> Certificate background or Settings -> Club) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 315.00 Td (  information -> Certificate background: the club crest, the recipient name, the two) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 300.50 Td (  signature lines and the certificate number always stay on top of the background.) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 286.00 Td (- When using your own background, choose a light, low-contrast design with an empty middle) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 271.50 Td (  so the name and the achievement text stay easy to read - the app adds a soft white scrim) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 257.00 Td (  over uploaded images to help.) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 242.50 Td (- Changing the club name, school name or logo in Settings automatically updates every) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 228.00 Td (  certificate and ID card.) Tj ET
+endstream
 endobj
 33 0 obj
-<<
-/Filter [ /ASCII85Decode /FlateDecode ] /Length 2650
->>
-stream
-Gau`UgN)%.&q0LUoV8ahE(#QtV<l*c@llKL)93UfZVt)i(Pm_q`$E/!TJ-38gC95YA][Bc9$(&TQGO"J32cZG`BF_#T5T3,3P`Zqr:J)95CiPBr6Pg[rYo+f:VNBEr\0d7!q:da%O3(.BKV5$+l*'E'#;sf!Me!\qGA67^I1BS"_$U^*07a(1`:l(0K\ga^lQK6>Tk/D0s24DnM$E[9&A2Q'aA"*:[sS@9B6Vs?o/?9NlJTY0Q]t<gPt_dh!`afIG=^HUM)b-O2).np#-$jL!sH1lCM>PlU0]1j(U4?+WPiKm#NBYkAY`qqo]DNcKB/<<=?=Sj2)n,/%B1[`Nj\ArsJ@IOH&[#"P"1s\?XHuG0_>s]^\)CfXru2G^(8lcoCac&X/_]hIk_5#eUIHput_-LNZqUPFp._QXA\2It0^A%.?$4]:INM/X!W4?#*!S3um-crUkmhg'&PNpYImt,i#j(D0(\u=NnnQlrf.sW?]uh%6,VPQ$NOOH;jA9X??fAIJ3<%k6nG7ID&qH'T<1>3LCP:AX-ij62*\bXut^q?IkXGA-EA:$qmRM6,@S*JD@:5<u1s018Zqe4oHM/bj1$D5_h<O`'H&p*Ll7i]<L#rHj?a-K@<U?6\Jk;;M1WDU',>#WH8B(KH`k,%'a81$<ep3?X=k;=d9fqG*7^C5ns&9N.r'[.DjpL*X8N$3Y$E6Pb\`8)tfoV2>YH]rJ:oorB9eCNkOhSB5(Q0\^O1ja$_%k^6%U&LY<@/H%Ec]^^lM3`E>s.<QY[O77Bl/D-7^AQiZ]HM/:NYq"1U$"f0B36&3=C3U>(;8JGj,CZL>^/>V7YK3S>W&rNTk'Kf%Y(<UR@e,s$NV]JtfB]4%D;PX"hU=58Dp6+,a\lVEZ<:>\N.m'h0KoW0t8hNPeT;_W/J/Nu]Yp//"/EVejPi`mUKNZ^/pP:TaNShJ@`"3ek)6jk^5-<G<Z",0U,L;K\7nG1P,0ERngp)JtLMBkaU_,g`k&rNnIjrHM>%L645:s^mMiLJ(e4WHTkeXOtWB#5k6\VPS'ma4$qKMPPG4^p`[gD&QWf0?GPVd8nV5jtpQqH7B,JeU:jukj1>5X_b*=Zl=V7Z]m7$D=h,TM`5E?@8JUBe-SUf\q8&;HpR\06)$OB1SgjR\%Fato(8=:Mpd-X4r)5*qXGG%tY>T8H=Je/<%TP\E+LrL90gJ\QS-p`9`(MS`jLn.ti0(\s*=n!/ON0m=bg[>L(cmOjo")_a0Ge/ket&$PpLP"I0fVsFRB_E2m?F!HT[PS!1"V,#)5j:^nfNCef'C:b\/Lf69KPH"d2b!!*^)Yr3@kJ.`,kF7qKR,>]_T5X_q2spL3ZKZ;>`uFEk>P6gC+3/<q8$Hk'cm&=t.;iEh`tF#']#)*d)4<:5Tp[(/=?0JhPU^U!Bs]M'Z"86B/^sU_iR$KU,$P^!p&\5;^/_h<cnLJ=jmN.=[10]1@-sCG\4X7R,pOLL.g;dl>j,RD[M4V'`BYPb&r&h1-EJDVR+0k)DC!]nT,:K1eQGWZ[6nuN=/&eeQ0hU%PZ'EK#JA\ia+"3(*O?!g9-n\jP"'2$0/S9Oe7dUlDZr\m=GSuHej`R1>'oc@ZOjS;pe[XB$>\p>SmHda:cUt*r$KhSBD;\FNchUC@G]'S_uoRe'^^H2icI;:qYcJug&1-to*io.?f98sccb'GmiFs's#R)*DJCs+Mhu7LMp+A\GHJTBWmPKYWIc1f3bndGj%BJ8=\5$,0O)XK9Aum"*K[&o?`u?.ZM.K[H-+E36If?QA[sBa4/:)$Chq_[l+.X85CHO>^Ejr1$d-)**rI5'qaa4=4i(a<DcK&BWbUf!B*fnb]X;VZMR8RgW<lsDaVe\tWu''qc+eU9bgC[[b0Kn#UoT1GqLo_C%dVm<kcqDcfZ8\d[_RpBfTToj!77j#hqmU:UN>0CEnZ)aBM1;HUoQ#>%*'^?<]-`'Js7,L.-D<qRF1Hl^Kflh.M]K^T"*VQb*)SK%rj:o[N"+L59BjtK,nUm(IUb89(gL.\i.=Lgokn*\,3G<f4";Z2C0CLE3EePg=/C,/i-*8"2KSO<&UB^RHFXHf!4Z`61#7m_.\4tIX:J!?e=G6(see,8QI*r"PjjG2sQtL-p\P,W,'M4mHhmGU.'PXYc^sIl3/44Ii@ZiW>ghqK5<K3V;dP&U28G$\d'%hi99!<mi8TJoXi?[b>M5^`bODf!XuCDB$%XWDM6=#>QH-&akD'<*D^(#F#rMsNqG)ggqV*&G-4Ai<^u3!7\aqsNgM[W,m=^s&["e;_V@n#L]t@Va23klm`>Z<5DB*T5PC^!HA@5\Rto;:DquDT'p-#FCa0]>6TXMfDp*Q&2k=bpCDFLBm(#e#ZDcqj1nphL_*nanr&kT"iu^MDlP_prjM,g8%Jjo$aTr,-,X)C^q+_H,orV"^\G?QZp!cVZBXP\W.2'b8G*f0NBYF=po+Ks!M]?)B-@nh^=`#)HpJ;qRCS;h6]B^@ub3\Puq,-1*I068TBm(Uk9$S:]JQ"1j&"6o=/1P.C7T?aI5kk#_ob7`2+EJ(f'/1F>'U.a!(_;UC%HpLc\FEDIlCl'`oeOZ#/2EVUTOpF1-L\C2?"9I>g&1of^_:8`PVMpq&K:8p#Pg/F*CXqlW@0IjYUp(<jF?[9-L(~>endstream
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 32 0 R >>
 endobj
 34 0 obj
-<<
-/Filter [ /ASCII85Decode /FlateDecode ] /Length 2215
->>
+<< /Length 1560 >>
 stream
-GauHMgN):C&:O:SoHThLA).<X-a39-<7\<aP=h[o07u*3f"16>ZGYRtHU\X#_2C4U/lrpAR-s3&e#,tL)_Conec.$"GW19HO#GW#bSFT5b_+S]pb4f,HH'dET1g54NY?`Q%Eo?aE8n_$V_\RLc>mkeB%_XsD_?DbA<,j+&;Dg,p_+I>J@dTQ3jp,(d6\[p+^/p!d.4)FM$;%dk:kebi`GsahmSp4"qH<8J>OknRqfDOi]>l`PgR4qI[TL,PJ@@aiGr^c^:^H,J6^M8]+#ZQ"]K&KK,:aGZi_C^)2t_9J%^Kl/n]-k2KQCKE8dum8@[Z)_p^OuqZ=*raG4Jd;DlDn[k-A)V1??`nL*J(>7sUH`e+9q*h-&`;:^FW<QV`&U^Q==KPa4hJ^5=tpYHCt(VEM5?*@VEXa$)SN5/N:<#a9]AV@cm,[+(/b9`*"b-FS/3m!`(+VWNKPJu"NJ>S9N/Lm]#]P_Xq3h6W-k0?3&S`*F6WKot&g,m!k&JR7.(Q!fC(5jFQCb)g))>,qnmChu@7dMe!lfZB4R0*'ZUB@s97YjB'cmW:@,m;1o!RG8sP.\W8&+@uQ=h*/*O;$BD@jJ5[C318o7,4R>;lt7"L71>_DEhV^RAc3%`$.gRUr`4HlUIl_B7Lg7\>";J%d,g=])CL[h@HaWO3O@3Y>[PpRXs26AfkpKh*40.LUZCMbV]dNfe'.RR+kO`5ccB']i7eaY1%%VA5@;L_[G`b9qmEG8=[C.T&[F].rV+Vl;SnmlVbOsk`a)AjQRL6q)lbf4bfBc8WHHaE$L8o,/TC)A3qn;*j+t=Pim/_rll:YElVJ4UH6NDm%_W@I#1ldOen.>OcQ1KOVB[>CNZ#ERb,fGj($csUium!S:_Y]p.LqMr>8h,6Bt7M#%6iBRj=!DLHF-s-cff3bAJ;X&FtRS;8ePC'dA56E\,5NU_^c3)A``+;:UIZM;fF&H>G'n,*9<\+cB$>QXYf+KKP3G+,%j&0b3Up*)*8#j7'dFPl1Yfc2pAiJtsNJG+c?#k]n*T@RI.8Z4SHae5Si"TXl)jk;I8LW2?$i;RSUTUHAH'#h4"E^p<`(DaumBM!$H.fZ2>Y_M*nJgIh]Z/6@GD"7U>:AtKnnmiYqke"cHE0[b^/Ll./:.o1:?<;1YGJk%?8O+=(*.GIZ]jWl<(m0EfT;l$b)IUACm@mq[=rkb.e`TL>RW3SaP.2gMO6[R2f-0E`m?>qn)'@_GYX#h%CrZOs/Vak6Knocs3[ot=r!oeLtU,;2ZXX(H81mi:YJ>ZXO,"FQOF8_P:6_Q7Ms'f7G>LE,=^rE(I0(*MRQ&pmmaF;+Y)56HE+fNnG(]D'5"$$?0e@_[p#/NTu%&YM,p&VB>4sSOi_RguV:uU_h1>_#W6F5PR0rS+Yc)*.]5`IW:AKeItVcBY/2$C%Q*SsD-c8,Pc;Xo1H^4$U!C\[jhlb<tB7R:t-q?UYY*JA5^h04F`l9kc`+!_qr4R+O5'ku&dR.GPOFAo/l+Kcrc:mp)RnWZil!0fPO[e]4gB<*\<!U2Aq*aK%Qh+7-X:F;'SHF/bXISNk292N59fM3o4+4tFdNd,IP(.fQK)u7+Bo83Q/%YJ\[8$;$DaZ+SL%@KM<LNhpkL&a;an@[$UI\oMN#1*X:Daco'1e@3E?.\HXU+jJ+JEgl78o;?#oY14JeG9*::,?lNTl[6RddbZ"J^a7:liWdD]fPuK)kEUOMtTrGLNULCX;s6IrUJ6VH8IonY)8t%*0/'H;+`p7\$aVK7UI$KUFro1b%hp6eMO5kPXnQ-,jGi=H"FBtg,-)GaK=R<rlA_54^,!pOhOd>6E:f=3j!\TC<b),f)3m09dM+UIBu`5?DM;5<d,)Nq>Thu;7jRqGl4D;l7HOCo88]7;oRZqO?W*15p"(V_,A?4R)8pX_=[D55h"s.HbQ=gkAThor3k7XW$cn;P2c*NYIje/+2?`1BKU[>6I`JY9LLb];%Y?;A^cmR+0M+18n<7NX@8SdMQ9"4YcH.onq^WkJ<9*1r^:E\4ds*&.7`YX82ge6<,N*[P+E.m>4A%\ZCV2KT^*@1D"1Yjf;j"QPU<=Skc&h(k\;`uib;%giVT5Vg[to3&Z:`lUUP)CY<UF&:/CHuO`11XZ:[ZqY0F4GZ!@2'LDnrY6`YA[W6I@]%3[OO5(4/f/9[Aii@3=X9m_4YX2h"%-VQBZ%f!:TUh!0s+$TD7fmh($)-d~>endstream
+0.85 0.85 0.85 RG 0.8 w 62.00 54.00 m 533.00 54.00 l S
+BT /F2 15.00 Tf 0 0 0 rg 62.00 780.00 Td (13. Notes & Resources) Tj ET
+BT /F3 10.20 Tf 0 0 0 rg 62.00 756.00 Td (The club library: lesson notes, tutorials, past papers, templates and useful links.) Tj ET
+BT /F2 11.00 Tf 0 0 0 rg 62.00 734.00 Td (How to use it) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 716.00 Td (1.  Open Notes & Resources and click Add resource.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 701.50 Td (2.  Choose the category \(Lesson Notes, Tutorials, Past Papers, Code Samples, Templates,) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 687.00 Td (    Guidelines, Syllabi, Software, Links, Other\), give it a title and description.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 672.50 Td (3.  Attach a file, paste a link, or simply write a note in the rich description.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 658.00 Td (4.  Add tags so related material groups together, and set the author and date.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 643.50 Td (5.  Use search and the category filter to find material quickly; open a resource from the) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 629.00 Td (    member view too - courses and resources are visible to ordinary members.) Tj ET
+BT /F2 11.00 Tf 0 0 0 rg 62.00 608.50 Td (Notes) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 590.50 Td (- Uploaded files live in IndexedDB and can be opened or saved straight from the resource) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 576.00 Td (  page.) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 561.50 Td (- View counts show which material members actually use.) Tj ET
+endstream
 endobj
 35 0 obj
-<<
-/Filter [ /ASCII85Decode /FlateDecode ] /Length 2539
->>
-stream
-Gau`U?#SIY&q/*0R$S2j$WiU(IFu'^LX\o-`AUG.in\'p][.:.o0s?mP"P"h^GD*#/$X/tXGnjd`/5j]aE(t=bYT@jps6:]P8rN@$pK(0_"2!C!&&9mR!j\3g"DEBa)f/gfE]Ikiun!0#pVAM#B9S9b_N+&!_.b$H=7e201%mHr#kJON^qAS*03@)\3"b@h[?1cc4EK3N&18qm"Q1Babf@`Ja\9K"<V>26I0fP;<1(a7Q?YPe5L4M)rin_n&1oBg\!V&0H*G+Duq$INmUl]EICYV)WGTlNDi7ZJ)Wa*3H=CS+j=sD>i#D>%_bVL0[6UXguES:?^`LT@R\8AG;/n-Aq)$Eh3ePK$#]7c9K-e0+mt<a"*&.36t6Jr6Q:':R'rCCc#tELI+K5pRs>1AkI\R&$1W_(n%JKRZX\L:m#Mt3N6-*8oNO<BP%oXjikL3\Vm60#,n/(YiC1nHKS*`g_r&:6s7"-K"qGMbf=WeV5Dip[r)rU/n.bmhF?S734Pnd03!B0C.o(hk!@4s#N!>%:XXTk@DBHCdR8fWQp)-o,p:KoV)7!VGZ9_nq8E2gbA1n`Df*P6j77c)(UnVAl"Vh'SnJ3H`.h7tpHI'$YQk_s&Or9uM8GRj;R=WHXmJ\+3%@S4I`@bG?g_`m>F`SpFmPIQSh"tOPE`dZ%^.BOb,%3s^6LV-o\Or-3j;OB*JRr((I@-X?&ingPO-QkN'Z,:>muO-eSf;A"]8l2I,<(A1'+FlMKk//dL\JjjZG@[F=tC&?N&"lL-e;+>(/j+n%"gj>lt)]$?L&54Vg'CcMHj:\'ecC-k$ZJ9!l#9Nd8c^5lXl?`[JV<#6P$sWn,FP+?*hQQNliSCG?=m:R*[@DN^)]_/:&C-J_'%`TV[?Ao0dT9e/Ar>B%R2K;mOig^D%T3(t+$?4Rb3O/;dJ@fE1M*0pVHPkA\&X^%ZMN*>i*S^b;r03FNAN&"^I(/7OOUfR^$''^jQKMG[%]kUHhh),A0lJa/M(>Nu"RBsbd69rpq"Os0<]aXfs(*^YTDTO&&#<-!hq<Ne3@H'rYMP/EB9PHC/=]cY43hhp;N(C=AQ):]\:RpFmda8Z-f*aTbj3U+PH^Dfgo.3@$t%Qrp^8.'O"rcgHFgJZ4;anI'<NC3)*4GagW;p@*fP$sb`<iB7_-8-k^Z]@e<"R3W5M3;$p$sYG>C[`M&O9;^L8,""?G<Ts*l[h@l9U<*$Hrd=RM$,H4C(B2A2l(54cu_E@$[4_4PVDDHgr_Y>,dMTE97b:'./`er,39Fi;do$c$aCCX>N?7-$="oNf(\VC]3^#TLSs+?eOoiQ^KmU)QZ:JJ,S.L$T;Uq.`Vh?+)#eP1KS&;V*[\-[M39'+Lt\eeWY-Nk`A`s8pFF5JRmiSU96.9HI>u*Z[W78qc`($^jB&A_hD\FFE=K.fohJ3$kTCldUIWda?,nQ8Q_]q/F2Dcie6ru"%3\1B6gCm^:^'&\qc6_%e3NP"*iR@LpfdoV-Xg&?laTRV:MaC0&]+<rmnZ]TF\O#"*5oR$ZWGQ$AuOOSi<hB9_&o^c[;/*`M4a;)Lg!@Z?;i\^Z]*-Z$gse:@\-^,2G>-GCbuGo/g'$qbdp9)p=Jb4&[B@5YZ,(6gM1KlIbQj5[K'fYq8b.*g\.EFll:r;SEjJT:U!]p)iLh6ndJM;iSKOu>9jTYX4gNc0R>KT5Kf=CKp)7):4'2[LX,+j%NZW9X(1a'#Hs%p'Q<u7)MTjEcUuuQ2Uq``,k\#["'t"KQHD?5$iTMaO"@t.?XI0Ull,m!mJ?]gdj+llIH):CqQA@Yq3l1%[jN^G*D2`+bp@NPbm?s7QNguS"F`]Q?EkfOA;mOA,u3XF*n5JlF#j7XpiWYZMr0l0$IQ;]S"gKm(UB1d3YKg($Ui#.75eT*G<7)ZQ6=g6AtgDYN>6o9.'G6kejhUQm>gnrpS2W6IXK$lESrr6iXr6G9o8jNX7LsVmH2f5hW<(KQj\6B1ph.Vrk%uaWcSsR&hdg-Co4GU*S-"qFV?QU=nF\Zo)n_?HYD;phnH)=1jn.*5#k'jU?5juf<onj=lTF8mtF-r*:"oS2\E,4]&#U;4cEr/3dET4Yds$;4o-"1\ros08tL/sD/^jJL8[:1Y\^(EfH/FV_dl;<%*rL9c0M)R;LCaa#BJ+,&)3C==sei4p[@C_.]D5o@i=rPQpG\/6+n1+)-09"Lf@#J#gH?[2?Np.jo*$HWb_4YD"(_=?Z2p*o056\jefTLc&2m]gK'u:F$@i)r8*G^YrrhY.%*50m9SRq^An*VobV^<?(8ll_,XF;2aL,k]<%=!-Ic8u+5CD.THieeY7>`^#$_s;8^RHt_l$5BZ_nf\@%*]cs,gkTV9%#*HFmW4.U<Ppa($T,a5J[gdCMf.(8:>RPl[oN.D9V**n6>!H9AWMP`O"Q1pRULV`%jbp?NM(Rh!Uu2-!4b"dPNFg?K677]CfY=+I+,4]J7=`MYJjnm5H?5J7^Rhn._0g,rDTDJPb(%<-ANg&g"%Tq.OL\P0&_6U_>h+#:'j2fC3QU'>91"laOV-N~>endstream
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 34 0 R >>
 endobj
 36 0 obj
-<<
-/Filter [ /ASCII85Decode /FlateDecode ] /Length 2214
->>
+<< /Length 4053 >>
 stream
-Gau`UgMYb8&:O:SbYt2N.`;-0I7g"h/^i.OXY_GfQSl;d2^Z)ZEb/7#hjGc>;3>,2OH:YO9SqiUcC$J$Al]Dops1\pV^9.E)8*J"^i<d@#KO<$R/IM5B,=o./B87[fEKH@,<p._$:6h3ICO]LiPOlS!me>l-]!BA7GpY$lh_/[O_;X!m"+/8G@<qC'8-[p&;>Rd/%L+>#77MCKk;dk[/q_l7lD07@p?)P\e##g/nOqI;VcL@Hk5t@=L<"Q?crho3:t#WnT?o_>CL%nTGI0WdlEC\Ko)9Yi.k>I3FMoo&ge]<J%^Kl/n]-+/FVOR\dKT!Y2BD_QE9inAm\s>'A45*6r52ni6FqRCr%89]^[B/fY8'=(A`XnKooqO9M7]tbe@q5XdCZP\8p!]2HIihah-m)2__jupO?Ftg+e!%[-(UiB=^Gc0l,ILI#I"uZ2/W2:-qoGT0GD7oRt8i]5JHJ-;([Pib_&^]uB$g?//g,C;d`,pemE#_)9PhV-5tg/U.A=Nh:I>Tk6oT<7FSL=[AM:`s+p8Y:<SSnP01fC7f$N0)-YEH%f%qjV%BS8sT(P9\<Tk[:1V$XQ-h%>6b\p&*%1+^_;Rt/IJ'aoJ(R6251X"$nu",UZ<5_lK7<m_D&6HkOQkFeB,/.(P!%/]Z9B;48U^5ZD::j"YZRs9H-Yk916-i(:opN9'@6OB4V<4CE>s<)MZOLis5%"nadcJ16M!:Df=S,h`u[PDp@u73G]>Mh+si/;;NR]@m-)Hrk?d`LD/f_gTm"S;4+ID!?3<3_:4+ZFj2Ej``lQhZ]cD]%2PA!(oE!X+80&fQ"<*7p>1-&'eB(o1>\g!e<HZU2JG8D#RubE*]YuFhU<+S>SioA>YPZYVEIC,\N%u!bpur<KqJ[5HqJSk;[]`O6SaZE)X?.]/=n#Rm]gF8NLh\YGN^S$8a3^#g)>-5Yc8>d@L@$Mk6b?j>#&MG)f<=F$E7"o8td4gijF'>f16=o!g@l(0pA','N`++2Zcu4Ye2cel5`<9@.]9q)4q_K'k\$]Lm:pM=@Q-9p))\l]bRsR>VXYS<u"dG0qW$2W/.L^&lK%L2H]]5s3dZ[<np&,AJI@)_*(;*XehcM@7Z@E&HQm'F,<p_&7Rd"U[]2R*6%JCiRoUSHd6EJA@aTTH\rBY\`-W3!AT"99+*3Wk>d^=/53A'J[;KIW%`bdT[l0E/AO2A@]2SS'g>d)F9JlIfKQoP"NQ$4)Eh4UDHeO#qFj/NXVd]V^P#V41osd]pIeAV@]XU,N2u_Y+Q'%8ESum%,P3RT%8\C#DL8=nk"HY?>J@O3@XU$j!pe4ieG(h>2EV?>^uhVd]htNP4#FTOK$R#/l-$V&-jC)+N(/?W7;$FaSi&h/[^W:\he.NXRQ[);7+\lFBXs(="YcH!dp+dZY,7hfi08)RX8#"<RMla%%b?&dA^YEDE-"lag!/WYBk:kRqk5"FQ.Dg]:nb"O#M2>8POfpP1O]JB6`[,+^7,O)mG$.'m>t@?/`n8EAi(3C"M\$'PSLjRQl6!)[,(;hqd)%"l1C[mZ/E&jZ/^1PG+-%,B<G%#58<E4Pd8^t>p(4^qV091lY4[,]VV!/qnA57C@sX4V8J6uL.@npmf(g/lc/Jd4Zq'[jbE<9CVnKPCM<>*_6BIkD@NR&G1sOG#$(E2i80sDKC&I)\Q\VHaeNq'd,rGB6`?)]Zj;1gf39Q;``U<@L<<IZReGM.c3s"6kY$Z'@WMTSk[Hs/kFrk?hg:e0)EkXt?&><>LI>$BCk]9#VL#6:9:B^^bj^f6b-ra6e"(Qc.@mCP.*r>XDTcK\cSq>eHpTu>=d"<))_H8FPnqP4N%'3Nigm-X*^-5+D4XA@Y-Fja\OK>'=-4@/kR3(R1LG8NYU(ipS$emQUnV_.)tl7CN_Y\+ICMI%K+*a24C!APpn9Jk!ttMso5V/kBlpB-E'DKkC*Dfr*iBf*ME,i!?)!f'.+>HQ-;[Fb,:2=2bn\I7#/%dL:DV]9,qH6D@U9oNNX,a\(hXnhO,bSTS#>iMm6@^jdLeu%$bdM-qPKSZ^V'FOn+(XjVT&]l_+1jDNYDD!5BOi@H&71B4JiP3SuUCaPT'h8':=Et/$V@1DP1.03O-)b6CM0/W#A3S<*VHi+TW/iC+qNnk+!ib[6Vtk6d><p&9H"g5j'TYVi^oTh8@d3Ia+&*XPj$%Y\DG.;:@[kJVKb]'%C39b6,9L(IYn$Er~>endstream
+0.85 0.85 0.85 RG 0.8 w 62.00 54.00 m 533.00 54.00 l S
+BT /F2 15.00 Tf 0 0 0 rg 62.00 780.00 Td (14. Membership and cabinet cards) Tj ET
+BT /F3 10.20 Tf 0 0 0 rg 62.00 756.00 Td (Print CR80 cards for members and club leaders, one at a time or ten to a sheet.) Tj ET
+BT /F1 9.60 Tf 0 0 0 rg 62.00 734.00 Td (The card studio turns your records into physical cards the size of a bank card \(CR80 - 85.6) Tj ET
+BT /F1 9.60 Tf 0 0 0 rg 72.00 719.50 Td (? 54 mm\). Member cards carry the member ID, class, role and status; cabinet cards carry the) Tj ET
+BT /F1 9.60 Tf 0 0 0 rg 72.00 705.00 Td (position, term of office and mandate. Both have a reverse side with the club terms, contact) Tj ET
+BT /F1 9.60 Tf 0 0 0 rg 72.00 690.50 Td (details and a scannable membership code.) Tj ET
+BT /F2 11.00 Tf 0 0 0 rg 62.00 668.00 Td (How to use it) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 650.00 Td (1.  Open Members and click Create member cards. The studio opens with the members) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 635.50 Td (    currently shown in the table already ticked - filter or search the register first to) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 621.00 Td (    choose a group such as one class or the active members.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 606.50 Td (2.  Or open Cabinet and click Create cabinet cards to card the whole leadership team.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 592.00 Td (3.  In the studio, tick or untick records on the left, or use Select all, Clear and Active) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 577.50 Td (    only. Use the search box to find one person quickly.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 563.00 Td (4.  Choose the faces: Front only, Reverse only or Front + reverse \(which prints one page) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 548.50 Td (    of fronts followed by one page of reverses\).) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 534.00 Td (5.  Check the live preview on the right, then click Print cards. Eight cards are laid out) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 519.50 Td (    on each A4 page \(two columns of four\) with cutting guides.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 505.00 Td (6.  To print a single card, open the member or cabinet record and use Membership card /) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 490.50 Td (    Create position card.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 476.00 Td (7.  Use Download HTML if you want to take the sheet to another computer or a print shop -) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 461.50 Td (    the file contains the whole design and needs no internet.) Tj ET
+BT /F2 11.00 Tf 0 0 0 rg 62.00 441.00 Td (Notes) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 423.00 Td (- Print on A4 card stock of 200 gsm or heavier and set the printer scale to 100% - "fit to) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 408.50 Td (  page" shrinks the cards below CR80 and they will not fit the laminating pouches.) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 394.00 Td (- For double-sided cards, print the front sheet first, then flip the paper and print the) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 379.50 Td (  reverse sheet. Test the orientation with one sheet before printing the whole batch.) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 365.00 Td (- Cut on the dashed guides, then laminate. Circular corners \(3 mm radius\) make the cards) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 350.50 Td (  last longer.) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 336.00 Td (- Photos are used automatically when a member has one; otherwise the card shows the) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 321.50 Td (  member's initials on a colour block.) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 307.00 Td (- Cards always follow the club name, school name, logo, term and signatory set in Settings) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 292.50 Td (  -> Club information, so reprint after any change there.) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 278.00 Td (- The membership code on the reverse is a scan-ready placeholder: the design and data are) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 263.50 Td (  in place, and camera check-in will be enabled in a later release.) Tj ET
+endstream
 endobj
 37 0 obj
-<<
-/Filter [ /ASCII85Decode /FlateDecode ] /Length 2662
->>
-stream
-Gau`UhfIO1&q9R^Ytl8!7cogIIu*>flD/9o8aJM'F`,2P&.(q,8V-t7X1H(FFob2Z9tFd`?#Mi8b9DK@p=oP[?,-I[IiSDKc2bRc^d!<f^i<ef!lqW0=F>erMlX$_Q=Kg`\I4_hL7[jajTfrgpYc%k.i5Wq3QsV/G5T]OIdl1?E]qa"0Uu9eIm*tRiQIK$\rIk#3("O-+jT.pU$Y?,P83;\4P0.p#[]T>n/^8(B7UGa+5g,,B;TF0)r`h^De.8,om3a.+3]?T=<7s]k@i%sC_tTiL,dGTEN1.%,6tls$:?31@?JCee,<'Li5<e@DUNh;&%Gp?[H%ZYZ+O]5CKUKEMgphJp.XPI#WLD(l&Ml+7'.'9THEnqK"6U4_$pR>("!fWCqlN345[L/qoue3YjQCFn1@_rI;m'm"fl^RD\]N'=H/+*Z%hrIg`F!c1WqT2`[ttE:VP?%9N2a&&<fG\WW\(7`3R\Q4./IDiK19aZ]n-0kYS`6\'FE2\'+_pr6g37hm#5C+7u"O>lW`'f4j^BL"LgfadM7[9tK9Hca_.pn'Q,,\DaG#.hT+FQ_tX54'$T2^mK(W3I01snqXNPq%O/^nd8Kj5Z'15&Z7^8i_$:q&6#sUXX0Q^@M$coCE.^Cg>BULQbq>K0X;+H1h!\7Ig=m2)sHbTV>7R]\$Ns=B>mD<pK?HW0BIl=\+t.XQou@i//V&$R+rH>#AqdH6GGVH78RcoM+0?l9HX-62>V03H_X*(m0&_r)4*Ar#m:%R4mCF]d8<$dbkLYV-^pNaPU4q';XFg/\G;/Y;drV.9#uAe2_lm]DEbi8,N`^_o,&/(,A.<aj[Kq_==>M:Ofq&#GZtl>a$PhF'B8Z[ITM_bi#m[E;B\"Hhnp`"foiCkf7_cj<]CJMSLQ]$PuBii4?*e1+8K1W3'Z84Vm'mi4BDXAnM4-SBu"0I7dqdsTspmqnk+B\F9j8X)BJ%<=QccK8oPJsM'akYU(dpko,F`pbTC/,5NYeJV_N&tS4h8L+i_3ZIV]o#3ZQE)M.<gTKG!9&`>X%5ei`,QOef:oOr6`*bYmMO@0@@`0^BAW'f/t8>e@E`>i33/?X2?om0n&3NgQe5jJ/#^<fKofWq%de/,i,4[u?pGo:'1:]d'ZH];h#.WDA+a9njb+H3:G3/;#7,+4gkc+(U-pU.uqlltH\tWK;b0oN$g:OmlHsT]1f<P-C0)3-`3lasKPlXJJgWURm*E&;Z3YWja%F31u3J&n-@+'X:db[s9H+68,SVITh-qW;5]Gh%*%F3T=6ec^i)*MqisU?OG9?'W,`BB4HfFHQUXbku)4,dWiYa#$ASYaM'+6G"jq2>b\fCgeIa$Y$X+S,R5XQQu(B7IIlHs2`*=Qi0#Ob`S:U425YWDH%Hd:ef:H6oVu'O#X!P5E+(lHPBaNpSrMog'sJ0)>E!L&.1%^O<sg\1&2\-]\Mf/#WCP*b*\@'`8Nu]UQj?iX1paDak22R6S#g)e[#rKA%?F(>AL8Dua38IIk1miMa4o?mYdfCZ5MuH`g9b^(Wnfd*_MEZID>*<Wn@;"8S?df);R]0J/"t)ma]PE>I8([;/PYNgfHWWH::7*C$mME;c(e4YAYoFGG7SY&H,DYnPg(104]5?3,f=s@DM6tj"O)8&Rui+?L=se8ARf+]S,N22RVrnb<it,`V'o!<T5$la6Hpu=S.B;u_o.O$GaKY6\rI5&p@-c;Jsd>W<KO'I/o`JJj-K)T*^XHJ^WU2t5/IY+6J]!X@l8^<<u(/#M^kB%D`AVGk52!<><3Y=6FZrsZ^,cVC8+ge1c:cL*WVei<`!u3hlWh8ZEC/%.gkW9:5=mg-)YgPn-Oa;VabO0cb_(%^U6Mu";#.n0i2ujDb`?tGu1mT*Ut6N6D._k[&c]"O\crO."PPbmFcB=Uo`"0o"NYlpK+Fk#:/:uf5e&kqt!,(`i_bFd?$grkcJEbJ?&.g9!JdD:D>"SgB%+;VWh-]7jBaD's/>?1I`QS(M#YEQke-Fkgt-=qFl%m.rAj27Cp]Z/1sj=59ftNJurUE*/1(d<_=(URm(%gVtSWdRRsaDIOrU]G>oc-TbB]R>aIk.g?ju2!NSs,).k7>_b(EG+W[YRVa6Bq+'_$T54n?K=$k;4O%eF)"tm-hN\A&F0Z!bb)Q6FH3CT#i0fXY9n0`R-@lb$HZ=eK<c;DNr%CqKUI4it:)\0/4crRGO;e]C>SNa!;"j#4MN?#c(Nn`s4ruNn1RiPL-(l931.'@F1N]\DahSg6W^Cao+,omO;U:]70`TA"pTmPB1`$CW&CM^.'`QDq&MeM*9RG_4Fm3!'6JuOJkUl0CaCVM`2>MLIQ3]M\Js%sYAYR93K<Zp-B8)>G$`'P3t`HbN"Cc;E8V,N`i,Z_!C(XrahGtaW_iZf!(ZJfM;)HJ5U?V4kCV,V9#]tfaRbL_F.+d#I$PQYHqrun+-j][i$+8DOV`)7D.AhH+ekr+?NgkU)Dh&gcbi<71A%R.r,i!#NcDCE`27/NS8jn9-1p^V\;["2:tcV'5]Gf1&Gj)hG[cG%+slk)e-;DGS+"">n.^S5aQ+.(Q#*6;%U=AU>Y?)@!ELJh%rTX1nd>Lb/WgZ+*r.E;qtoU9GWUW7HUs)GrMmp:t;^[6cNAb1Cm__E-CA$7oL-?P#V7\79OJ?/\OGV@_7~>endstream
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 36 0 R >>
 endobj
 38 0 obj
-<<
-/Filter [ /ASCII85Decode /FlateDecode ] /Length 2756
->>
+<< /Length 1331 >>
 stream
-Gau`UmrRL0&cM.4U;*L]9fS[h,Qudr]A=X=Q//dQAs5h%?Nt4pa\!I&NQaD4I9t5*&-i>cG&?O0=P;8!cb/[prON<Va+&[=9FIT('DhMl5X@r)3<bN]dH!*sT3U2ZH%@&u7Nm%cQpbpZ?9IkD;++bU?A5c#.VTH>ILmmsmNE&R08uWUP%<L1imE9+8U"6B&dIlFN#e'iP[LCC9)NqX4*a3*<>9b!0ZGWtLH+e:E%h\LM20a+O5*e'E>,FkH,gtugRd"9`5BuA5[K-*rWos,YoclOi$C[9Bl#XHLZ<oZTpI%@0W%E-]e<`B\YDsP'=uJY),5*VqGtds^50',q(%p3RjNVs)r7([GR<6^gZ_`i,R&X0akm-[B$G;UiBho:hb3a)C#SIndb(;_H_\i&:11hd*W/-6LV\#pSM3*^%ZS?7]X:*4Im1U>LegrO\Ao(sKSP8nGJ2M;Q=Q;E;ISWQ=-#3*I?o#X9DVX-=ncXY(gSSQj7-1""s5?uiJ23>_3(Hojn:9_#@SErCfDa&<T8:FQepP.Sr9$%e"*)"[A[W.5-+69hS+R2CAOr+$hYW6)%pJEaX)d!UJ06QV,g(MEZ^XCmMP_*r%d\r)'=*5E7PsKRhp>p@LjH&`Z&DU]#=R1.L/-fJ.31u8:L#kY,GBOplX-mZG/'O*`AhW?DXmqBj^t,_97EFSHZ'(o@[M_)&]]XWR`1+NkC;XHuc%2U=.;d-DMB?UT8<CWKtP5,oX)mRPqg_i&juV,kf52SEB?%XL^lnS`X<G>[LGM?+BT7\g,jX)R.(Wftm0l;<diQnMTQr/.lcbXE@I<P3/#^lkY:+Am"l%j;Q4L-/<@SVg,b<[C*JHMP%]_&#rYdj>SXT.T<1Z+l$,k"hof1/hE@=$D50E12rcHlD)8Yj3>h1RbZ9II_GR?H..CbTC%9K0K;oO:M%a,8<Qnk&0>#'DU*W6j]Z1c'IK1c`:@:BjAVJghdlHKX`[Yo8t&?;FhGi',9H>NRnBWudd5c(%>YaVjTV4`_L6V,1%9=e4r:q_E1eGY9*<aJl8>]19Y9&<BnMd@C*5INe4k>t0)k9la8QQ6\i7-\BEheU$2MA#iuX&j"g14"ge!iIe[g-_C2NHYQ.9LX%/d[fIT["q@3$?'H<[Asd.Q"Qmg_U("Pjhd4s$c8>U"2kG3BPQmSlLr3Bdo9$!\\4'.M1O^`u\Bdm>6unTHH1-C.7ScAs;NRS6YF2*E-<O<:IalelrT<m/NeV$I]X7F%N/r<MMXj5;^jIWrCtHPQi:>t6Vc9a>p#,:\T8X6nG`c@>4fp]Q4m#l2r]4tmX-^oDK,UhV,J;nq15F_Br2f8>8L+)k6a+%srC.[=5%_UaIi<_Rh?c'"CN"^;cai"s*;jPX5#&%9-TcZgr[,1RumNIa8J6KQLjn.phW'O1p$D)?F97s72`7)P\`a_)BA]?0qSHM]ATJ'XSo_O&[RK7V4*?>rXQFH,/WIM:RI':,1[4W<5-]A]K%brHp5]5:g'mI.N2o\)-T+?3VI>tMuQ-MDTsdTu;Rk=M-e>Zp>tUhheLD5p3o#.2M->&H^$<Og&'MTB3X6ce78-qZBn=olO+b"3RSS//-e?dD`+Scp"!\lM<\ECb5i@]6_W@["c/ag)TLWT!\uYqd2U_j>*B2tcQS0A*[XJ!=oE&.t1+HA;uRPjq7qiioZRD89IdemjK;QV:C2bB%)I;A9q?*fjX-NS/(<ZV=fYkl#K9IQ?hg>^X0EkhF2@:k[!LVbIcNm]Ba>NU6lm/IkXmPIUhB6@0\[h*9mDJ6a2ilG:)N>VbLuIlrnLhqAZobJ.luc1Gr/[Xute`s0%DgK7_=gMlZAIFm-n[;5Ef^?pk\joYM-?Or:t:n]ok#PNu"^:)#Skkc>9-hdS`VG&'aReE81?*OfZI)po2-,?&&D?XHeY4Go%6+aJD^":u?l]+:ll-jT.I]440jh5cfkR!m\jEpkCmfYIM5KU_S8SU&Fo4%qP\4P&:W=0]B5!P@2Lsh.;;cWG&mC8Zej464,$E;No]TD2Wd@84&@G3MQ]g9Kt4$Z-o9n>XSIY8]3^2bMYD2_?RJegJE]:c6ZEU3i^m',GOLNSP>3sd:g`AVL,gcTe4^$ht,7lK[J>H]%4=t2X,[%72QpGu!JT21ckNR6NRh.%C/i0WrpB@"\&^P)S8^%$3ZHom)L4%MRW;U@(\0:rbp<HIT1BIuiWl&>Do<ZZ/WC_p2gT(o#B-rs%m$UsB2kfT0SN0]Q*^(Yk%78[XPOWqjV[4#l#PYr\+9?jT/XNF2)b[?r_a#6/&:)+0Bqi^0(%pHE(EP\HIC\E7>D!8dtdn&&0,Ua1>fCmpe7FI\mhkrnKY`kDOJ9n908[!7uIYUtQbo721/b&^'*@Zgb,PW,"Pmo4?=Ss!ZJh$cJU>%'&A8<W?-;bl@,blBd5([nJS4E6_pYnL_$<7GV_(1Klj:W(8_U6(1qEZb$R!nZ:q?*7PkltGK:HU,J>ZpC%\S3kJ8em]8[V]eQk<.pNJGmUI4BZ?AMmhXN48be/XNb&jV^mJ(;D@4D!m&O'fpKmlY1b:4GO0@"-;;"`^b,QLs"G&Q>(,g0o@dmb^3M&U9%N9Z(ATjhV+9.;8t0'>Z%;u'Y"sBH.LN1DVA^jI.Q18m;Bb4A$?KK*A9G_4;%YV)./q'Ah)5)rn@i1CURb#0AB=OM-=%b\;EG1k0C<s3XjU=_\\i3g[;)i/*HH>u;0QOWGUMPi,".()G?S8CG*$r2BUn1W_r%4_=8rH=-Qd+~>endstream
+0.85 0.85 0.85 RG 0.8 w 62.00 54.00 m 533.00 54.00 l S
+BT /F2 15.00 Tf 0 0 0 rg 62.00 780.00 Td (15. Announcements) Tj ET
+BT /F3 10.20 Tf 0 0 0 rg 62.00 756.00 Td (Noticeboard messages for the whole club.) Tj ET
+BT /F2 11.00 Tf 0 0 0 rg 62.00 734.00 Td (How to use it) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 716.00 Td (1.  Open Announcements and click New announcement.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 701.50 Td (2.  Write the title and message, set the priority - Normal, Important or Urgent - and the) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 687.00 Td (    expiry date if the notice is temporary.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 672.50 Td (3.  Pin important notices so they stay at the top; they are also featured on the) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 658.00 Td (    dashboard.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 643.50 Td (4.  Publish or unpublish with the status field rather than deleting, so the history of) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 629.00 Td (    what the club announced is preserved.) Tj ET
+BT /F2 11.00 Tf 0 0 0 rg 62.00 608.50 Td (Notes) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 590.50 Td (- Urgent and pinned announcements appear first on every member's dashboard.) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 576.00 Td (- The notification centre picks up new announcements for members who are signed in.) Tj ET
+endstream
 endobj
 39 0 obj
-<<
-/Filter [ /ASCII85Decode /FlateDecode ] /Length 2124
->>
-stream
-Gau`TgN)%,&:O:Sm%`!+);[q2:PkR:RF[_Eb%*Qn(Pm_i1aKj:OB)7-(Ec.DQ5n<t2&VHkRCMVCm-`O/HJmeDB7FP?^tU<NI.)XL_fQApk_(Yg'AcG:^0N^i)l9MENpe?(jFIu`DN]bDl,/2clO+1gkdXr`7(Y+7T/_9:HB9D'P=B6dP/?%/PPAGu:N2(7%MRX>%hgmjR%9c"DAE"Cj@sScq^(f<`t)W$Osn>Pgp#Y8EAt^VkjQGEITq;m+H"W-!%5_HDMkm>M<fe!QmH'[B\Y)/p_+1TfLZ]/NaQ&-kj$XcGOY-C$CA_H#5<@IpoLEI/&GA`GQH9C@/>eddG;pSQf-*$SSlQ$K'.9Br.RCRf>OY@#;RZIS]%$Q/%=]0=S,lHh4Ea8`:f7ET8<jk>/'`oj9`/lIq\Q1UMWn=\MWicGZpGKL`MZZ23tb39`V_Sd3Xpc!`H,A7_r=DKiit6;TK9"S<S+(.U*6W2#e8!+i^1S/:m:1'O,ONL"q3Q)Ai_Fqoea5f'MU\C<cN?D+EUQaO\DZ]cY4SQaMH(Q<QUDN6d2/M.V>u/)'TScr#A)<Ct1fO?'n.*c<*)&rsfH1J-lu+aZ&A?L.eZ+f$-b=Koh4FZe"k!*[I@(qu0!1Fgq<<KN'-K&APeP!7f&$4K:^E@(Na8P-XIWZW0bMB\thQ(=:@'3Q:6S7hs,M\`('kDdaH2C'0;Kd6p[c+a17;qA#u?q,]f1+R$U<Y6a9$&>;[-#,sbg`7BT`a`PU%U;g!gLJG/-`S?]_6`#2Zc"'M71Quh>c`0>9?O[-oe;C-a4kknKX4nh9q[FI_*Q;JKk;3n$*6UTSPmNnVAuEA`Yp(#=(FO;E>Z*D*?FnQk<&*MPKhTih-b!,n##PkiU,N1rq<tdHHr<j>Q/&J%1HfY]YMtdS>Q]E4LFqOBJbHBj\81)nCqC.F@jST:fagelf$!%]#N^bl@[(Sd>m5)M9Z3;936QaVHorEPLUJkZt3ms9OjA-]UAm=gR_l/OOFBYgXJCbg9cB>$m3Yb85535YtdL+"[Z<e0RK0uo\YO7B0lYensZ%</Sf?1Dh\KS2;8\Q)1Zmtlo0^K'0,1Z]45mnfIb2b@XX/>bZ`A.#aFSBL^Z1\9f>7O^pU+If1ukGP60pk.FBZ&K\j)!S>`:GWr]_Urj`BNc-ig4\;nt#Zh/Du/!sM/6sK2]q.ItEdR&N+knVW(UI>ZU(o`)4$-+Z%:a:G/%EPbab).K"7oF90[Rt>Y"1u:)WEDfMo(@PDJ2g4Mh:%rdlQ:"^IY6kor,I/VV;HAW3L:*0<lG'Xe?sU;>r:>FBVT%,@ubbI)5U52;'Ia/;JD?o7RV)3M1pWCX610a(f'cRqo?M&Z$Im)7UI))R'Y!dEQA\;UkoGjS:X`Er)$t)PtWDoNLI,R@K`RYLBB4<G2=;]8%fb1;\-kX9SrW"Y60E!:Um$u"2>s<=S]Kmf!#iCL=ldGciGNu8bu`C*(83GI6EY`$[h^8*M?L2FcDu?:HgE1G"FGgoY&@DS)C<!7Bc!:^a[NtplB9k0Pt`DW[S`9lGjcKgpALPb`Jqh)Rms9a'2icGV,hL\]n]K<Mik'UlkQ<XiBTTVcQc>D4X?qGM&7g-!in1RaPB?eG#sJL:hUmb!`Ka\MA;-2t$PZX^]5_Y3U@:J6K4h6a'?(D8Ze46@S=BcVNA<C%B(iZ"rs\CX/2i^q?pDC/ARV[ABnN7h3"+/5VfUaaE1FK*@U9XAB-Zg1J)rPf[j,57hWGl8>5KRBNPHY&'G,ZGj,bO3)OMd_`Zpa[f8;OR%A^Sm/AlWm7cl;\Sta>4DkDZX"@88Ys6k15q9>S$e<t:6(2h\*q%Of[2r]^ZWE@eH"Ak[s^\a-JY>%gc@>h`U,f=bhFJGmtN^aNZq2L2KBgZ)[1CrP0Cu\!Z@CL<Z6[L`I.__??4&0.F/X_BO\`MrX]gt[<cSPDY?`:QIr;$lXT4cGo=V4-bl/8D`B1(=9bcP/[[(O62,XXM1<CeV/,`D;S9\iJ6Ii<!_T]oeREk1(^QmD/CjoBM0C!^*=mbi#u6iAM$'*?TKFU-h`8%<N/IK:l*1pB\^U8#]U@O?SR*6"c"i<XgPbn.nD*6>G83dR*)<:/?%p28ItB&be,~>endstream
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 38 0 R >>
 endobj
 40 0 obj
-<<
-/Filter [ /ASCII85Decode /FlateDecode ] /Length 2372
->>
+<< /Length 1563 >>
 stream
-GauHMgN)&W(4GpYlpmnIo'e,dm8N=U:?Jp+)Cq`QN*fs*&eTa!%>%LNpY?d]A@f3BAu'#oYonY6#1gMi"Xj?mrrr+7?30u6K)`Im+:)D`L*62!=T&A@<YtKH?Jm3SAI)TZVK!6!QRr&V)8jL=(Er,tC5??F&!AbpBI%$OKlJ(tRRZ-h=[o&E>[M_i(aP"JB1NhYMDKs+l6dIoj=T^tETe]7L9DR98`4r(Zj7gL(-%R$];bYgVDo(;RsDAY]3[-_(<],L?Auf#-/+5456SZn+[NkWS8+1?=TJ!/9@I:2^oE">cQE16%IYrOE%/D'\A@RLVj;,nRFN=AY@.#@<o9!uiCpVk']49pdg*>?#j#I8Y6a2tb[ThqL1j)kQdQrHb3^R0bbFQQbJS4(_#EkIn:*n;6d(&TK$e0-eEHkg-<ZMfMS*lT,_.ZUYX_?*8E)K)&n#n5n/AAo]6O)<m#jqH(JOQDa%9lN'XXAt`OQTRVO[h4NS"R_34=fYU;k5pi*0M,I*u^$RHFcV?(fdgV%"-/'iNPo[1@>]NED+/)1L63bRK;-'HD#bp@C!ccak=k^#V;Y8-h?M6oaIgJPF@ok7E))F%e8g6UVHVRUM_<.60)aeZL3g/%*@pF0jojU.Wt5llhQ:^VeVD&15)g=$Ln/6_=Egdl^^CQiIsI':frDBG@\%bu4YT<)Rkm5pC>L,A(1QMrC5*$g_Po2W*6oP&E%G0p3*?XtHq&d*msi'6%-NM3jbna5\nIL.3NkFiaLDOSWW8@ZYi/[em7-d7O7nmAf8gMp7aE+_(o(85.r*d19U]*,`8%Wb?<W\JgA>*0W>M9*`2Rcj=Ki.Vf#dB2lhYVRi#h3OFYb,85kK<%[k>LI3:hc7+kD3,b<]/22@IYr0?rMs(H#Zi-8o"&L@+/b0MZC^>T/,I4;f'etJ&pRPtI9Z6JO"iIW/M<"m2+$K/Z$9aaic*=_=#3"Epeo3bQ-9jUFjLP78c+\S!i?A,T7%=<ubIh/pq#EYY!VAC`Zm8Dl<Kj<Ol-SY/`2AZkj:S(L<:hQ5IOGQ]095t5GPq?iF0,8ORKJ]97VPQ!qi92r(i3Vh/<HE&4U7tU"l%arlBncl:^5oY@T2k"Et:jSds9&sO!k%b!`a$U",iDn\LZbi#7lfc>U_<HJgb5Mb?Ld!>ZFLR=bW\JZGrj*6.76.W)_`EZ\iO1)n1t[j]\suKL1SKIH(r1BN9uG'%RYC75`F,;23ra,GThDe^gEn4?8c*EStiOkE;O&WI/CNAF7ju80^kj`[cf)6gt2Xnb,'>L%"0n:8q\4DjesnGg.`).6qVBA81ueDm3^Q@d2Rri[C]8D4ZR9\%WX]iA*bYg;3,'[39#!NB9"N-_@H]M7!j^O0[R1Rajs3:*0-$lNebK2$Gk;bu3q6<G>l3gan`%6[7:181ZqBI2U`!m'8Aa75d/qX@-Ut+A7@2,(!I5/Be6];233,ibk1N&3>P"mRg7,+o%Mq5!jSM'cV&Qef>3C)5llhE/?[dCCJnIW;Q'f_bdLRVP5"]O#qcuh]Hml)'hu>_-:=mB/HN\A`<l+'KGPsXM,ZikF]hpD1>l>5aY,HeTe)aBmO%8Zi*Jnji]iKgkhch>_ICDPu4qF[!D\Q02<6D_g%S!Fo!>?YV(Dd&sMFR+anGp))E<N@@!IB"/a8,U!](cMT_*6mLr!N'sDLPOHcJj2(.K_W7n78Cpje%.,0UT"OFoQM3c;M-&oQ:8j_8iFMbqJblCghY'VjCjQ3p&DNCrJ*\N#"FEC5g&>.LT4ZSZS49aa?Oi_cuO74^k[4`t`2G[=2D[6DGq^^2/@&.o.=D^Z1o[dP4(QF!W,L<pt$I.0n^I6\Pbr<;tF9!pEBqRka!*^FmrB#q2d??rp2eMX/0lMmu(s;jK_U<>V?TV@b(-PC%DbnHKkD<MTpCH'sfX;<7Ne_V!o$J,r3aikt>B5eIS>"2+"7q-[-*4l'5q.BdAsG9nR"\geeomKt">4NfMk<"0ihdfD#[A:aJ-q.od',Z-1BBa*5.:T#MukuCH#dNsC$V1>$EG-%KB&r-6uf-[V<m=:s,Ujeeb-B"/^jj^TnCnfb<um03,68b)"-<MZ1@>Jl8>ZGi.&LHrAJP>&Nh\b_,H-&nE\Fo%_E%qoHfiX:T^5RZ6*lh`mTAbRlcXmMoVSg)ls?jrjaY8Pk9k<grqsqqu,Xlm"?hX.##g8d95?Ak.K/BQhMWU/XKG-8^ZQ\fA,"#6mfDt%ZYl,/)iOmH?/4f3CW]clJ8/>V2HX-NBKq/Qud(>cT'=FI5Ctsn8Gd,?O*4m$a5]l!?\n@>rrYRhm$+QPbKR&/gD&sF1HKRj'&u$G\0bem@dS#rk)i=30gN>KZfuqDuo[u"^Ls/"*e8#~>endstream
+0.85 0.85 0.85 RG 0.8 w 62.00 54.00 m 533.00 54.00 l S
+BT /F2 15.00 Tf 0 0 0 rg 62.00 780.00 Td (16. Tasks) Tj ET
+BT /F3 10.20 Tf 0 0 0 rg 62.00 756.00 Td (Who is doing what, by when.) Tj ET
+BT /F2 11.00 Tf 0 0 0 rg 62.00 734.00 Td (How to use it) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 716.00 Td (1.  Open Tasks and click Add task: what needs doing, who it is assigned to, who created) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 701.50 Td (    it, priority, deadline and a description.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 687.00 Td (2.  Switch between the board view \(columns by status\) and the list view to suit the way) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 672.50 Td (    you work.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 658.00 Td (3.  Move a task to In Progress or Completed as it advances; overdue tasks are highlighted) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 643.50 Td (    automatically.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 629.00 Td (4.  Meeting action items arrive here automatically with the owner and deadline already) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 614.50 Td (    set.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 600.00 Td (5.  Filter by assignee, priority or status to prepare for a cabinet meeting.) Tj ET
+BT /F2 11.00 Tf 0 0 0 rg 62.00 579.50 Td (Notes) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 561.50 Td (- Overdue tasks appear in the notification centre for their owner and in the Analytics) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 547.00 Td (  task summary.) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 532.50 Td (- The dashboard shows each member their own open tasks.) Tj ET
+endstream
 endobj
 41 0 obj
-<<
-/Filter [ /ASCII85Decode /FlateDecode ] /Length 1932
->>
-stream
-GauHLgN)%,&:O:Sm%`!K&-BL':JToFR5V;hX4-<l?Q]uI=H`kTJs,g$h'FM<MI_pMP`06KN^-tgB.rEJ*%_$Jc2T0oGVb%Tml>=fdlZItF("hL>Y`VZShY,n5p1[aiB&Xsk'E=83:Q%IR=Ngj%^s8+meZA3M^s0%*/B18gFR:G)bL8mB?V1Iog2p"pDb8V&rpn@+g&\qAgp5(Q\Y@Xp;Q,/'=K:(G<K3REn[?NGC?!:re?C0DZ"(SlNNjhbe`OEJ@:up&l?kf$L]m496m3:3B/)OII=X"c!^,,bAT?/na.%IVY(@8EP(^AV+UM.o3/"E@/;NMIj#d0Q,l*1^YDuV>0[k%]/ShI"EH<=$Q*aeGN9(]lnQYSJU,jg$Z+DHGkGC9"a\4.q6]sSYS^V5MaT-sVK,W&Qp9eb_cccu^_l,`E!UKiD^4UTQRr[CPA.!(1gcf+>feb(5isdh3\-Fd9VQS:>udd,a&e+#J6=;A<&RZd"\HGXku,K:fP0*s3dkre,P'Z[&hM[c)R?dSg+D,S0<a?Z5=!O\f=]I>IV65`:gC,*bG++QoGe`[Qb:+-ip;LI$ClO6?OoV@'-=0?/n0bZBT^)13X9&5<N$lUHS#fR\!+Lil7Fi,6_#LNrVj_g.ahl:no=Zco\jb9^;\mV@O_R:mFfDl3X""I28T$%i\EIF67CBh##]U#]HS?+BjY@a<!2,p+UtM`[D=A2`cJ(XWZncJ/?=I/U\-baZ8<dKF=h*s(.*?Z_Of"^+hTK50nEf-NNPOUBL]!Ya^#MkI'J]H8hWI%e1uk\*iTaUf[dM0Sd6*E&=/p4,@Pk30h[<V5[RU)71-=KPUlhSDOY(b@]$CPK>'G"F.;epg5ff?>_e<Md%tF\A1l?=8YTt32iB4N%4_st><Fb1#4?2.O#-PRdo;Uu_2u:#F&Kle88!'G&Zu^;L*f:NV(<D4E;I*n6D!3l\&WPSRE&Qcph02#hr^!YZ$qjpV6J9\"d4JM5Kd_r9%A$%e2Sm7Bp(HbP<8,-l9T#NW^oP3UaRl<(<NZ.5f+-Trp8FS(sW`6%o:`dGt=*I%/]^WIM3#=m3]THpMf#4IHgsm)&J^MLcu(@73&eUZj6K3:`$*se<V6!87j+#pIZ/ppF9&YWJ+)W<Hd`>.[)bWZ=qTTUH<=/;NLu"+s%=.2`rs3%!$(>k-81f[K0XqlP<jM@SK]C"O^hp0Ji[S6!%-fV1c/(X/a-ah%C%>b4LjO93okJ-/SiJ"Ft["D/2@oFo+(X"V=I_m8b`(+\C.o11eo<Yl9uG=a/ZS*e#$(K%,;S0.JC8)8Zo(;IQ<&7rX.!h%OhELT@J"0YN(q5@=@PB\EskY3tHLEI-V(s((H+jhCaoW5QF';5)^NUdMDuIcP"_@auGenH`<@P,C(H</pJER)eJX`UDZrrjIfZC/7hk];BkSKu2GHpY$9uB!O\`3E&m69m=Gbf4oso\,FA'*ZW5=F\f!%"G:oh=<>0tYRt+:Ph-"C0u.(X-M\X.ngqmQ_8IE+'8ORri.&M:ViaTgo2!U9K2S[eo>aCuh&I:_QADq-8$W)6dMIpfC1\=43dmJf;_,/h>aL;AP835*9FWAQnCV*3oVg'/cj3lt5F*d/n-F1I=d%BkI[SaV>g_(=2BVc2<FgiF5+-*N:#uX#Km.;)4t';)2NPh^]/Jq[RHRXGJrUQ!3@kcO:<=*^GBDV!M+j%X45hC<qZ9q$4&)I]-&S2iIMb-fMN\G96$^m;H8Og@i5m'"5?i'pS)g(NLt_3#^YT!.>H]WtA[8sM<8Y2V\qWfjM!JY$f*85Y7KR\GV7d435R;U>Qdj>;V$oOXkSbL)hpAp?e'O0=4e':,jrS$b443N#a7J/qUgh[),0'1Kns<J=o9rE-8R@PEXro>C@XD2A%+`!B.Hdu2W=m5/ahqc[>XFL+"8@Qa,b4f<>k1.?~>endstream
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 40 0 R >>
 endobj
 42 0 obj
-<<
-/Filter [ /ASCII85Decode /FlateDecode ] /Length 2760
->>
+<< /Length 1109 >>
 stream
-GauHM?$G&5&UjDWR&;"'7qP/H+&_sBG1(38)`s%emHHW[JOi>K"pAT@[%dQrc2]+a>B6Rkb+>-J;Z%@31O&9BR=m965G@s90**]gnFj%/KFuFp&B7!Eo3^Ior9XD6#fk&/)F4p'=e(-V,j@:X`piZ]=Tk3M"d:n_LImdo?6iA`6ua25Q;)sF17^\TiV"hDU+f/OBH^%/$nXnf2GRjp.7g#/3!tgfL9L4c8N73S8K'm\UhFK_HW0<T1].aW3t#`ZDSO"58Z1eUJf$]o:N<L]2NFG:d3i@LBJc""U0.bA)J!!<-87+3r:AO4DrK0q*3NhYJ3,kGr+:0_T:'G]Hirut@K'nC@q^_-Qf4E0/:CqWN_URAnoo1dpJ![Xn3D)iEKJQco?s6YJsl6031+leH,95NO+[JW-t'Q*(qd*:1u;O1rgAltX]n]qSN"[,1[j7P[bs<*B%eiPq+\gC\-:^NrO_5W.42N)jJI@R><)qc$B-&W^of['A]/>#+_Pq+?n#i#^";f5(ARVr18/*^B%FYuRW?5["!qU&)=gQ['Y6Bt\`2N6;\/5;I$b,%'0AB=kkMugQrNr&\j%/:#Bl4i^KRtt)T_RRij7^k0l'Y&Wn&-$*W`U5X+I=@K<=[dN:>Z#2B96,[4Jkoc@re]/'4p?C'7P=J*4B0I>P^?2)k:ZbH6"#Fpf%f.WSB@s$b6'k>LBbEoY@MKa'P"(lBA9L7?)s87uWJSgG9\Gm@h63>@D1RRb=@-NENF`Qp.@9PkrNTE(>6\Tb#goE)T6OhGMVOafY-$[gn#=1\+(2GI>[HL"n8hj2ljggZGn)b5-+%8Y7mnNlmY(4A')O^d._$&Yf"7Ot]Z+V@S=g4jZBF-3Y1p_r^0$V*LUZaM1sPCZUVJ$cc5ncO?n_mt,g3%rYEeWKj%9SZ,$VRVR.l:t!BkR4CTlc5KapFs@5^KoapoC12gpaJji]:jYHTY;8s].hE7$?!5_m&PcnQN@`<&c[PcM!i4t$BF2N4Pqs*@9Z+pUK/EEN@K0)[mI4dX'ASO^f#\Y6k+I;0\/Z;0mPV3lU/<#`bN^DA'*M0.rL@QEADl'nD<>ap45SkbbdsnF;P;>20pQi5)J8!DRm0"398Z1FDrh!AVW2`LI:2b%Z`c"9m-mN8KCYN@3NB1doR8s2:W.FIEX]_EK<`$1lna,pUXc.\#)4'\!'Cuh7_,Hbl@9S?;.QWq1gVBq(JE@+5C%Y@80M7S9W-I3;#.6o_uC`;eW?E=P]0_-fT>IP!8oIJ*<`4:fr]L([bQ8k?-CnDGDi8<[(X>^=HJr5>#dp*`7gX[A[92TTs'jF]!,$KQQ4*'tb5@C_:sf?;oHT5,f$Pgu">5giQ?_X\T_'2m1@;M_NA$X9J^Lf,Uj5"-X0QrCS-[J9>G%=%;]D]iUdM5Qt]1/9Eb<(Ms1:6GHotF"/otl'I$+Ek(91hHW8d7oXt^-%+#@HN?s"r#80>mhfV:J"s#[[`7m$E.J@X4@ofE%\Y$,>%7:k_O':>R%7@(*#+%C7:4j_IG0mK^H%2O';4jWH[;D+l_<K(h)ZjLZ\;5gQS\*a`1g`"YBYoW1NFfS^I!?9aSM6YqL'fgO%%$HfjG[,i%(_lAc8/s=*Buf7Zf73;cmp9WnS=^/LPS@./Dge:?)%JU-?kM$kCJ/iM+Z),4hdVHm"PDi4_LIUP8c5-Ns<t5bS78bnfT/GG+[cn^W/+p,Bk!Ubj92s6\j_;U<Ut0J==i>6Sl-Cioo-kq4J)6JS-lA^*eq1$!1^i<#F/',tuY>IHmooO%AWcCcN:I:IdZrZM!umZ$73-j5`["_Okq`c#@^@F5?p02T*&WFrlpgH@%'^VoKcLhs\YDM3;:2$I?m7O%*`=Li#S>;WY6EkdrE.nj-h+@J0_gSn^N]Y>h./#aEKe.tH/DV<iIlZ^M&/WuTeV-gAi;?HgfjhjT%.Y:>&T.^_Q9/K::Y!nL@kqZN9Q!/hp@$$^_,?1?q%W)_I:t3OJE<"lPjo;c1<1]YAYa;.:_EdiEO<\Lf#'3'jL<M'V;b%d8Z!hKHNuZD;rP1Qe*0s'IOZ%iJFuba^dW!:7P[4I:jE`/[j=;o6)_$00]T]@jp6O/`(V9/.*e+\fU^5dH!-8dDC:qpbG^9pgK10.lj.DXoo8h9f\]5c<COub(P,+eN=AI+OaaKPe1qqW1&Oqp-i9(iR':%B@=T8+=+5T/4#$!FISKgeBL!QJA&2J1_P4WeZ!q\!M>.ep1Q4[#5iN!btW[YNr,;hr^kh5XQLa45aYD>+cZWW2m^K=jG/H8ICq;2IVT27.&\F!;+p^hWW/hqR^Z_89kBY3cO4l]@?e8.":Y+'l:!Z:om:,hOVk2-!^9l*r_"hdI)+W,Mn8s"9RfQD)49ut<8?Ir3e`lqlDY%]dZ61+SE6F/jBRY8$3abRXa+\3+[r?3*NHJ"t\d?ku!I[%htVr=n]LK+L8'/Wh'4"iU4LD#X]2Jg3sq*qiX_W8hpCm/$L]m4FuqI0!O)^"LV5K&m@L6LgY!aq!&qM68jPERp,dt9q)/G__coY-ga4GceQ``NS6%49+K[l;q+J;&jcNO1YrCEeT.[Yn/!Eag'd<6<5Q,:kHbWn\'-k`\2"=1A2H[K$(id;^77(`J*+TWeIKDZ4`GAE*-p8Uoqh1rMj8q;V^S_ds@q,!#^^94BH2i.<U2XM,b)PU"fa`k5#BLB-Aoj2hemeY5O4c"X1$\*n\^F+d)nl,(,=E655_F?L*PKfu@^o/0Rb7n?LXpcSClp)aIIhF7~>endstream
+0.85 0.85 0.85 RG 0.8 w 62.00 54.00 m 533.00 54.00 l S
+BT /F2 15.00 Tf 0 0 0 rg 62.00 780.00 Td (17. Calendar) Tj ET
+BT /F3 10.20 Tf 0 0 0 rg 62.00 756.00 Td (One month view of everything dated in the club.) Tj ET
+BT /F2 11.00 Tf 0 0 0 rg 62.00 734.00 Td (How to use it) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 716.00 Td (1.  Open Calendar to see meetings, activities, training, events, project and report) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 701.50 Td (    deadlines and certificate events side by side.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 687.00 Td (2.  Use the arrows to move between months and click any entry to jump to its record.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 672.50 Td (3.  Colours and icons tell the kinds apart; the legend sits under the grid.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 658.00 Td (4.  Record deadlines in the modules themselves \(project dates, meeting dates, report) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 643.50 Td (    periods\) - the calendar reads from them automatically, so there is only one place to) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 629.00 Td (    keep dates accurate.) Tj ET
+endstream
 endobj
 43 0 obj
-<<
-/Filter [ /ASCII85Decode /FlateDecode ] /Length 3304
->>
-stream
-GauHM?#uK-&q/*0kXT8e`W?Gi,u=M4DY>E^f2af;<IPh%=Q159_E\h6q`R(E#TJ&c,d(@N;D=Q-r]YaVjO+V>>k8i16t^R%H0:@VdJTTkYqr9Q8%P5*qY&'OL]2D\OlL`'fQYI--c9=QVOR=`4BfMBBJameXrmGn#N#n/D`i1l#Y*+hT8ok3FSj2e4P-4LE'c5r#<9gE#=F!\-TMi]eC\hiGD7F2KC99jD`$u4n0^2134;?-l3>lGI:j&UD=hs?ra\&-OYb#Ni=rT;Z_9n.P..s/d5Ykro4BV7-Vb5_';+D9*IYNpj-Dm!cfmQk(3Be&l&1i2I1f[/P1MPjMrt%I);UKY]`9Q)STHHLP$Gc.jkk#fZY)%9?k=k-9cTdB%+E4fRIU:'R5WVYj0?Ye$u%P-7mQX9)[+KCSU,^hhjtn,LEQH5RmnRe@#)X<4c)O"pkpF=I9fE4UK$k.APV>ZBh8[E5#f(i]-EG,ZsL`1MS_b]&]'gkj3Xk<<sia3?;mrq\g1:@'PEEb-h"];n55uJI<,>WlH@0:mJQ83o_kVM7V6(!]d%?JGY*1SrfU\]pF;#1n]&5j.ohfZ1;-..+]%$U-m\Fn/J<B5e2!/.;8h@'UVW'UJC\_NU.CMNrNFtVc`M3X].>kIQL\HLGuF1+?Z+1<<;D:$C]R8iN45(X8<XLG2MW'nUX8AMM94Co7PBr=_1]^N=AEtW508Ys\#FLp<m3Q8M(%gmO]!S_&rBYR,K(Q3lTt^_C%*P]$`2C%8QV<:!C5]Qg8O9GeM5om_Q>B43*Y\1Rn<3GUY4%ck>.[eCVQYQ;2S`:Hd2rQ-AOIPQ\5k)+HIhJ9[^M.98PbCaSr?]U/"FkOn(JZ^hT*e!?:`-l\E(s35ReP9'SR>XcOc6H[Tf+EPe,3hddm&/XBO2<LtTNBo:)'X)b=5a3./G>#BHuW;mptktWd!5VWk*Wlhhf>-j9FcHlqgkQ(33*Amn?=bq=5.]muDW5s%,U0;3c\?ZEZTb(d57U.\;dr?8'Ad8ZR)=q!BX>1W2!MZ1hJ#G5hDc@Vn<>[u12YgKXciR*3;+(M<<spIOrlG@XY!-3!gjJnC:5l`1mEeph1G4,+N)M`oQ'R(%EApd^$K-/9W3hOfl]%+^++9+^GX6N\7@WdM?ZT]HgB$&oaoY;WR"Jj8%](Y<#650oAG.bYj3F#<*!e5=Z(MfCJE+c1;q<>`3i=RMZe@4'M+";J;SXHGgrCbN+(V5RD-=5@a2/80JJ1^g^gscU9<"Dfm089^FdhLij=r1[,W$(get!Q%HOBtGe:"Nt,*oi*-N;AA.3^Gb*ZgNJfI*=VSQYENR\0F$T*oMj!PCQ9i*BU/L![-i[-407s*"87%LRd6YpVsA(Z'ce'UmGW%UH,eiR)nXhDf7/RZ^E*XG%'_&aB;B(*(LqAs$J_h86)/%5+Q+L!KeUa'$*o8;j9m-rk.\W7/b6&L%Igi7=@Md#P#Co7h;2QUe"16]12Uo7r7<$(SoH%:A4K:9Qm4FDZ=c5Y$opH:R]DO"2?9.%6t#[/jKnp%P*1?>+03XXi"2LWCJRrq+i_XjcPNj6Y-X)d0&hI2VTG\.[I--!Nn<X`ZVaT[EHCqU<kjOM47(lH(`2_d!(-<N6`r-PT/#G@oSu/`!b-BsBt5d5&6k(5FA2i"lj".r:4oHkb=7[_!_N,p=<45d">eBq1lV^l"`K?]8YKR5ZaB1cK:(P.5-m&dF$9E?+$t(r5:$)h+n0!ffHB2"`h9=q8]5c;cPqYBAZI`C<>S]`s?p;-\QLb5jnm)!aS<)Jm`!fm.)d0Thl=[YWStqpB=E*'3NFO+(B>c_01A;-n,_49oR&>_nc<*\t^a8/@UEhiNLIlU\fc&XiIZ4ta3N>'7Q!Z>^8A\nN\'ND:Y?WlR#\&MnhYbe7P&;95&[.;Ao17t=\F-<MbB%5us_L1iC*S0E_SamNJZ9"8T4!]1%6@Sb)+g,)#k6_4I-1B>D*D2e_:Uf`P7Ki78qp"%8(D);!_CrLC>3WuSr`a"B+<4Z3$FBG!-VRg/MepJ0`bE]@pq@0CpNj6UPYbhL387l=nCa&U0"Upu-$a&%#;$O8,8M[B_i\A&FM*rrF:fGO7Gd09ks(PWTO^s[8*JeD8jgu$^QY35*]8'F1l9_5T>E7O;]!S*c,4QYaZD`uA=u>*MXn(3.CDB%So#s5BX$S<>P\sQ#,4K;O'WPb%LgfV:2F3qBmG`5:b-i<t?-b`?ID4NKj8SVi[,D.;59]EOrO/2A*a\gTg#'AU92l<qn&LIA3epd)>Zd<XgBLf)2ZD.s'Y^kDG\5WJZjZ]<0;BQhSrp==F&\)e)%Q6_3l7gAoRh!,5T;7Im1<n+q+@bHiIb$jD-GK6=DMseV^Ddscol.4J7+GnQb)&KWF0qgrq>u(CAK8dUY'3PBudWk@-B9e_KR&7NQ,02K5p^Qp_G+VGhEtd9Pp5BU9Y5cRpe`4M)d*JO#BTq>+YX%E3AN@<$V&H^H1XP4ik*BH_7[g[22B81B&p$Sd/8(r#DU`)@d=L-akR@S.1Lq4I98'[tdL$dd/_Lc('L_@Y.+-QC2S<MPC:/38>FZl['-Q*J9up*Uhh23ki#U,M,&qm(aJ*q:tF,&Zu=6(fajm72].&hQ&S%fc@=.\HhR+A(1n+H[FX^5cUu7drG.($%F*4qgI^gB!"fi^NV%iYHuj1-MJb^H\L#FG(+^2BE':WJ$3Sun[S%4rG">H[S=0>c?$BKm`YO:1D#?9SEoU52r;hoAWcW]^d!1hrnKFmDO6s]=N\<$iS.!uPW3r&TmehWKP0J%-oc?K%OSe]e,mS90&3'VmWeRFaF69/m11GuhUmdbcclPVqm4@kP;AqO-j'Vp@'Bn9Nm#AremW7T*oRYi6^?0=^p6d:DRk#6HOUicA\%l>#GDlj(t6A&D[aYM_4rO6U$kb#I0PG76;'ITW%c\DL=<Ykq(2f()I3%j`#?fdIKZ(>;QsrM]hUI_ZSu*cm`dl2Q^p&"Wgsml:!,8[F3/LL02P!e$Qe2&rdJRAp4hH4IdVgYs0T$ag.i4GlD66p#BA$VK'%'H;_h#W&e%:/P>$L]YFF97cA_^NRZ7+ADX+ueT3=-1hWLi?d,3t`=&#8<^jRV#="uhe9SK$<Ltp7t6GC8MKX$3";H!pG0^WC2]/6PGAL=fUH;bL3RglH:0'a]Xl3)fp<D9ZbZW3AB9dL3%lE7aCLV2%6L:?!J5=!&@C$1BWW(CNL?[TF?IlEKSM;mJC-dhY^'+D#4GuX=Q)<71D.A/M=q:kc/MeL6,I`QWE^!GW/2gD'ZBjP\K3fm\H&)S>Ld/~>endstream
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 42 0 R >>
 endobj
 44 0 obj
-<<
-/Filter [ /ASCII85Decode /FlateDecode ] /Length 2745
->>
+<< /Length 1300 >>
 stream
-Gatm=8UK2O'#"0DeC!+4cieQAI7cRm:HBMC@O[L6/eA>GN(JUq5h>_f:DKOVZF)B'`h1*O5]%n`hBNlIprCVY=Ujlt'WsYS?li#)^]Gm6l!Nq/HL^``_qZq;4E*D9%RL@p(qFW!_#5>k*ipt4n,p^B@3"]Q68*Mp+CGc$^6=5,&"S6mKbJeaN)GlO7mW)s]HDC8PU&8O&J]OcaAVB1]a:+mG^e^>*(D@!%BQM9\M9+3HW,^d2YK1\(aY:T:4U7<"EamIlTr"Q+`-O&MMb:bAIq7)*4%&HBapE$n,GP%O#L"IWKo@8Npabc,s(hFRjG7eJa!]4r^o6JP/t9QHgXK%%poTM;/aMl%-2"oPW7k<H5$NX8j6jpouD^77,N-MNAj@:^[I0jU#R$0O`Np''"l_N;bN9jJ?\jBjFAFZRp`-PfU*X*fU"NsR6A?L>^!n)\`Oos%Hp-/Q7^>ME@s?-gid^E<oOINd(4$/l3];ol#L*B>RPcjS\6Ud"2)`AQ&Fda>j?`U%`L,Bp\[U2q?Kc1I7b1):X.rZ1b&nV8=5SdB``3l0P8c2<tn5URm+Q1W6[pG?3?f'5WUW)gJQ0X.lg3#J`%q;.lTHOe/>gR5qcLW>akbk(q=1l]ko4N7N^Y)Y=%_)ObZTd@5`TT5GjBcO[m.1:eL;3dX*55E`0tRB1mYpW`eOpg>`m.Vt4-/23]#".Fdl%_eBPbYEQ(@p.X(tmOIuJI"H,fWieR>c[%G6pWl@XVu]a5_oTGj1pEq>N*!MYH']6n_NOc!=*T/MYqab@oF&B?XpTR08.GEp`F;58Mo31A<W;r`'5liboic^F5=Eg+r9f9tZ0C-mb^i(MiB\gn3e@I#TB.<KpS*kp7Bq\_-e,HMV\W/aI(q\Aq0f#,G<Tf^:h?qe2R9&^'G^VSaOaa)!UaZ:3NKE2:_--'EM':-GjiTrGd"FE^5nuOVNOOgf@I9d'AcaekmD0nj!mCio8^"L9LT(/'Vm1M@K'&[EiuYUimW2A8'l"VHRAAWi2gOrd@I?Q8=L#>K";%br/&01(J_hLN9JSZ/>RDd7Ms`BgV?'YMa-L_^.XM%6J9B2eSB-u?G!n2]e2eX&Urt'iT%A'm>k^<4bugY/bl\e5lB#F^o'moYieW_1VhbomqpR\+L&1?2JaHnQ@CoPmbBD*44G=K_<LZLp!M_`0^Us\"u\/VO80BWr9tm8VP:*llQ>+gTaY+q$)J6nnk>D'TaZ3Y;o"oJB@@F'dR3!m$P`RUd;n&D!]")=-:c]?kE$:.iH\]eV:(n8f&s;[kkeT-%^l2Xmot5RCO9jtekZ)je.2amm4^OWC1"7_qub(*Gn;&<e9sfhJ'aRT!Scj`^fN>p+Q\FU&85j95l28>N^kMR'BGdS;BJcQn]c=A@Pf'1ZLF70YAI&4Fg>Ve-h(;]%-6r;kFsRbGf&k!PS8';8?R!k?7^$rM[gZ1Jm-Y[d@$H0EU\!_/Z8f%Ua?NCgM0kMV#rZ^R?o=Y[]YS8YZb`cT!tgQ)\%k,))&*k-'\^XU-;ti)$)e47gkph\(6<8e)LmmEQ=tiOqf0J@VMot=FYL=&5NN!CJD4Bafqm`QC9<!SDl)E7^uJJ%*96eeAi1(:EXQpER!$dXnu8;&LnAVb*R@lmGML`h(`<1M.)Cbj>]H[&ZF[3l?Ea+74,VdA!Y5?(q7Ka0H:q(/)9_EOZ4bK3EV1Dd4n*QHg$6O06l.u"."-S/.bJkZHA0>\Z@9kJn;Pgn5UW_;jHED70IHSMR(?""ZIKR/,h.4`s[!Mf>kGGN_GG*EEta`\a2#4g.j7S/f<3/G7X#K$EphKCE*.KWMS7[U9A.AcY+]40-"I&UB,uTX?X]+rmm@gOqCSq4lM!/AZ%JTf6?))kMnWTF^:"N`$E<^E&7;C7]S,GSLj6k@#\lWibWnZ!P)GmQ/n<qnE8m#(1o[U^m$Y^>%.e(^:,S7Z"=&.$r-gQ_MbU1Tk=+fI:5h?1F1\eTeG9WBG1n-+1HNNA/KC\LWHi^3W\,.gdJ(dcuWhl`\u7I;+pFml@ZAsC^[3sf6LR?bh:s6MGRoWD6SSMC=hu0UZr42PhN$0Boc,FaZ^6i&LTo<r?cG10\oZmmVIgTUd[@RrgkZ*36A-X[NFO/^71]^q-F^44?r?aOXpK+*Ntf.J)&knKBXD(]"RuaQ@O4RkP4uX&bbc\jN%q]M_%Zg"KP#Y`T$[FR>CT8mB@n$CtsGa..TrcQEU@r=B6]4(tBhA.VDjNkWD8[B.VcdYk2uE2[C&Lj!MBYPhGtFKCt6T=@ek/Q.G&cG&EY4h&*,j5#:W0hfIF0dG5d$%1-oJlY@$$DR#.BO:/Z@Y+nFQ(U*U!:o)*Wc6'uC+S([ZnXJuiAj<-4`fqsbQ1@&H0bmq&@E4tKF6$.Z9@CPLYQ*/b4#"V[a2C9F,RM4(]0Et,En49G2sH^e(`KecdgNK"(P_<j,'O5,&pBIrkSN6mo:\Q1H1J9NoAcH%s(D`8o(DrlqXNus!cN#7iG\;SrVbfYNB!D0'9]T/=qZ23*<"sOXM583OO_e2qY)d#4pfn9M07:kd_RdEQ_0mdM9/DEPRg%_DVLK;AB5N\$)4u#F`O<HkA9tY>,nPT;o/TQMZ=i]Yl\*X:M01b8T1T:_r52Pe@aHM\5(OEO;+i],-s`KbWAt^F(%C=]4,@a(J9.uVk5?t*i"2@#k(U]Dc"_N#o(I>TtuV6AYBREK>\Q8H_Z7u,le7][,riP`_ZnO4t%9EniW]+ir<lkk\p~>endstream
+0.85 0.85 0.85 RG 0.8 w 62.00 54.00 m 533.00 54.00 l S
+BT /F2 15.00 Tf 0 0 0 rg 62.00 780.00 Td (18. Equipment) Tj ET
+BT /F3 10.20 Tf 0 0 0 rg 62.00 756.00 Td (The club asset register.) Tj ET
+BT /F2 11.00 Tf 0 0 0 rg 62.00 734.00 Td (How to use it) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 716.00 Td (1.  Open Equipment and click Add equipment: asset ID, item, category, quantity, condition,) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 701.50 Td (    location, who it is assigned to, purchase date and cost.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 687.00 Td (2.  Categories cover computers, laptops, projectors, routers, cameras, cables, flash) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 672.50 Td (    drives, electronics and other - add your own items freely.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 658.00 Td (3.  Update the condition as equipment ages: New, Good, Fair, Damaged or Under Repair.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 643.50 Td (4.  Log repairs and servicing in the maintenance record so the club can prove how assets) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 629.00 Td (    were looked after.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 614.50 Td (5.  Check the total asset value card when preparing the club budget, and print the asset) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 600.00 Td (    list for stock-taking.) Tj ET
+endstream
 endobj
 45 0 obj
-<<
-/Filter [ /ASCII85Decode /FlateDecode ] /Length 2736
->>
-stream
-GauHM>BAQ/%Xua-^se]na&,:]h0h8HVTE_![^0i1SMN?k(L!PMD'Vt)WAsnO#G>TrDLH<\Bq6T:-j&<3hucM)E:Lj4n$E4B5Cp:&%%%9`)6gm_@.G[M:X6\E3Qqqr_un'OiZMdiKTR3$!SmWsk/$Vi!^CX/(<5=VQdCX20*iE5Z0rrHie%k_J*+Zj$_oFKLnc(^8R;t?iKtlNOVJUU:<:HM8H0uHY2f>?#B:TS-oYg.Flp\'&+(B!A@Jtun\Zc3HuK.WmO"k_(qUif3DEr<U/=lHp;RMmaGFCBKeOt7r8ZW%pMbI:JZGN5_?2D,rmjEP7p\'cGQX.Z@Iafj(eQ"D@XN2`dO.3p^uE1pcNrTX:6[`J+C($N3?bLZ/_B;[g=8UW`U&,(F#>QN+'HPn/Dd3\n\3QMjXW&L#sm`Y0]1`3XXQ'UO$>4X.&8X"c>O/*^=!.LIrD-W<>TqK)tX_<(F$bJ^p3U[i]:LYg\GA'@&i:NnC?@E09%e.EXf@P-lfaGY,*nh@ER'>VB1:kL^Gn7#_Qm%_AV,Ge5M7ITFpA[65lgnONFl7pI8pHcKDhgKN^ZJU*BR*#$/$\8jX]%3Ef5cOZDo4O`e5lE/ZR%#E;4)6eW6^b)N_.m5C;#8aMCc\k@f^?g6!3W6#df>;+H)BT<#@7cgW&kL+ijUHlpfTEBj:F:I;2=u7*?aUOIiCC9%9V1&PR!RJp$b#'][pOeU,j!bd;nk:DXYM`_(P?2f7S]5?FEP8+<#;;%M2Q%Y(q5`I=I2n>RI=rR<Z/bk32\*4/2DZN<'mTes[\=a6KeiHT:H@Q4X^j"_Z.eWcX+cdA^h&$V<b4>R[D8$L24pU9(4p1P.#u):8jhL`9p@*/VC^naS<*"=VGS)LfusZK%C-$rRA,U+#dgC1]jmp;TjUKAZ8sT.\u(^^=M\i^kQTB<LhE<J@KfC3WF]BMXl:RQl38V.:!][$Gbe+?>/0VW9:Y)?]K01f-q--Be//%^ALPer!>YUf7C7jaEGAg:[\bL9,1nKdjVdV7`e?\?>BR71p;=st!Uj.$PXSX'm0CF+9acu?YTu!TJua!E$$mHf&1]e'$2d)EgG/1.[=/:/&/4Ef"90+AQ9c>:6Il=*L)(M1f-%=Pjg1@O#UcFRX;acks).!kTj($_ZDp<-XH8oVM((rOH@^Oe+QJ42lP#B<#F&d5;ERecm*q129W[k4#K:bqi)gN_98GDoQJ<U"'ZFfTo..mpemQ]^TdjL/;$a7i)0/>DJH5_nbsF<*EsAQLkc9+.>]+Ye:G+.SVFJCuHpVn?3:etbrP?&5D=P)3h$N@=`"@"V`_QH\Bk=79e[.Y_I;?_<I>3,T+B@b:?#5_)ZjhE;.4i!K/deXGL.RI6@ZHf-kX$lAoH7bd/k]`i!X=jJD[UY:Ys0?\.O7L:@D%53Hm0X-T$faNqUuG&(f=k75YP`VSSKD1,:o*be*+7U=eq*H\-TZ\3?NT'!d2W:\VfmGAPW"6W(M/2:(JlA]&(7NCuL2?*rIF`f",FC#9S5I\aINc?_<a9;O_'r_c-b<;KoH=q"8]cZ%?f_Cn!M&"I(J-WYKf4#D3gD[uRe.JG%=HFR7S:n7VGV-?a4Sg.NF\XcQ_-[5quk57RqkqP_XaQBF.fhVS%bE6:SI;M2rhl]Y6#>S<(j)Uh$VZk;D.h#'I)^MTLOChW[tVgmW`gB\cHY!9@l=2Zs&ePYHSaZ+hZS;[b6qZTF:BDkMk%%d!Am[:I.r#>D^!7H]Fl"=FC[q4-FA2\U\5V`_BK/PMMf_3N4ailgpq1hX-_IA!F>d!a:)e\kH`jJ\*onP<9o>/?>Cd%25OV`f2YVnig5:66[Ot#6K;f&F8bI+Ud1C@:K@d7BDSPJ'4_(4T5h16)C^cGcU\9*KEp1);:`^d(=i@\Dc@?W:t#0AE\5c.:r4&pg91sdtmhfDNr!-jB4Zcl?M@2fXdekfa!Y^a?Q_[ChY5J5Z:&_K4aY=Im7.)Ct[MN,Le@!1/i,j%_Il-9^H(:^n*WO9J7iI0*qq\<t:bb"<GnC\7H3u']b0Z?+rOjd`kOZd=1/nNp@+3T<:HH<8a'Y>Z4"D6'OTtD=#g(0+9XkgFI'^^X&Ok9&<OgZ4?&N0oo&dAa##RC^l.%s+4dBQWk.lqXS>POOp&^_><m.I!(*Wbup8dk"ZE=^^1H3X81]kI8_kKcm[5?Tj6J9_K5KVbs:P`#0RP.K4\^#1M]#DZ:.D]-)TVD%%X0juG#b!Edu<er!93JH%:m388oVm(oEGEkD_6FREaTNg1Vc$(k_:)gAe,muct4cIK3e6R7\,=kEJ[GCG@\A01]bK%\;4)#%_>QO52CF//$c;:M'e!ORg?<0)n.1HdaWeP=RN6o]1WN#GA8DSDE/[2T2@1Pe)>8B/X+\*ZF\HDKPjn<G0iON9:EHQ[g\StgjM]fFO4[2e\^q=Gqk51#!'\%*$2==dh59,FF<(,60B)'"BWm4%kR:U[6V9/&O14'Pc"eg,<ftt/3be;lMO+Q5s]S/FE(Haj4K20f9r%=?7b9&c/;!jB=p't4c,:XJTR";V1m>e5:F?6tVCXMO#mGjS'`G5"Cfh1$(fcU"hh_QWG#*#jj:"m(?cC!#F9)Fo0Y\tuFrDWO?\C5!ipND>sgqfQ\TtN5d:T\QarbFIq0DcpJA.==`E]lg;X2,?Qp-Z>1)%PV:5NH_gUs"2mh(]ndbOs5ZWe%$A70>]BC3hH_#hld3Jc3P+UX/W9BE&4F&Xjg~>endstream
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 44 0 R >>
 endobj
 46 0 obj
-<<
-/Filter [ /ASCII85Decode /FlateDecode ] /Length 1269
->>
+<< /Length 1906 >>
 stream
-Gatm:gN)%,&:N/3m%]c$@0"6*m8KL2PBQ5Z`+Iot!gA_eKGTE>X=@T7"aJF+,hk,[23pf$mb,S4"(E-Er35[]<WIUrE-9EUECcD2";-an"!<]FNs/rk)T.,FY(^COUnZQK\G`qqYZ]He#st'0Ed&\;-<pf\>"?M%'1(sBDF$*l;T4HbQ-b?*Kr-X!843V0_22\W]$(tR;8OQs5tco.<")T5\JjM4hO+)L6bOb.b,>T%^i4$BQ\[)GG3)*D\7gOn0om1X7C6Z!6;kY=c0_Djq!3>0n&tAeI)Y3a^R]0!`n"p0^4G>a,]A*kI3`0k7aD14cZ\E#RD"\88E:J[%)E*e:n3ZP`jG:na-$B(&r2'1ChON<_J:5>%1'k-0sQ:&$q;"uD\:EI-D*irq$8kS9M"q/+sue<p'mOd@_*?iM,V2fST8u[(Mc-10F]!1h$A>%6#V-OgIr6;OH%I\UH#92YX*LZdN#lFe5H\diL^"KCCZ)d*UZAUg?P=IqqYYCU8"n#YF"^tft++`B2dgDf[P&YY6KiX-pkMOC"Q:Ol_8Or[W?Bkrj(jZeigdl=M?c$ho2KlIr(QRl#;RM%[O5<O>gJ61<=9MI7XR)gd16"dCOB>'KpOIFRIPa[Y/8'/5k)CY\Dh[d+$G*F5[q+XW3SEUI3"r9q-:?HS]4#&S'b2Et:VX''t1lU39r1%+Yr#@l(LR/c_X&MJbm8lJAqVlcBf7dF#/ljDJ2":cFm,qk2T"ZS?_Xh1u$Ygt!udGU*YT7@sh%]%j`@*Vg/e-:R>Ms&F]1]aLEkB5;*oC6!6#m%$&ePcWQf:[o77Ju1cE3qJm_'0f8;^3Y9s`_/o@UIsR7[t0IlO\(lS?ID,2I;XDQ/W-iOHFS/IYsE<lY]]n`=KFSH-H[p/;i@[5PO5^c)A6k&2_"JM3a]Tsca*Ae)V9M!5Q<4%H$k<^I`i9!%!=Jl&_B$YW'[r>5)=9<YD_ZdDWccrQ;%`F9q-9b;D$%chk$S(DuBXD+GMV1V^sR?kWiV>B8J</LbM.(B4\J4I/Ii<,K"Uk<hmk1N"/Y11-F4n#3QXZo-8QhT+U:\JKCXP&]',;&#%pd]A9MD4ogRdW:Bpfm]+&3]P#$lULa!>eQC%^@j+Ur$IeUREn\g1ZqJ;lq<a\XEM>r"O$glX5NPo%;b/?ch+?aAe0)@hLLCTR48[u`V0*=-I<`L9!XqS_c)RKj]"YRsFQ+?B)NJGqs6/>=r)pfe*_C3MTS>ZGWuUQU]P6N%nFEfl;7<_(+,qVR%0~>endstream
+0.85 0.85 0.85 RG 0.8 w 62.00 54.00 m 533.00 54.00 l S
+BT /F2 15.00 Tf 0 0 0 rg 62.00 780.00 Td (19. Finance) Tj ET
+BT /F3 10.20 Tf 0 0 0 rg 62.00 756.00 Td (Income, expenses and the club balance.) Tj ET
+BT /F2 11.00 Tf 0 0 0 rg 62.00 734.00 Td (How to use it) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 716.00 Td (1.  Open Finance and click Record income or Record expense.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 701.50 Td (2.  Income categories: membership fees, donations, sponsorship, fundraising and school) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 687.00 Td (    support. Expense categories: equipment, printing, events, training, internet,) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 672.50 Td (    transport and materials.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 658.00 Td (3.  Enter the amount, date, method and receipt number; the reference is generated for you.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 643.50 Td (4.  Watch the three headline cards - total income, total expenses and the balance - and) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 629.00 Td (    the income vs expenses chart.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 614.50 Td (5.  Print a period statement for the treasurer's report, or print a receipt for a single) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 600.00 Td (    payment.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 585.50 Td (6.  Export the transaction history to CSV for the school bursar or for the annual report.) Tj ET
+BT /F2 11.00 Tf 0 0 0 rg 62.00 565.00 Td (Notes) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 547.00 Td (- Amounts are kept in Ugandan Shillings \(UGX\) with separators; the currency label is set) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 532.50 Td (  in Settings.) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 518.00 Td (- Every transaction records who approved it and who entered it.) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 503.50 Td (- The finance module is hidden entirely from roles that may not see club money.) Tj ET
+endstream
+endobj
+47 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 46 0 R >>
+endobj
+48 0 obj
+<< /Length 916 >>
+stream
+0.85 0.85 0.85 RG 0.8 w 62.00 54.00 m 533.00 54.00 l S
+BT /F2 15.00 Tf 0 0 0 rg 62.00 780.00 Td (20. Achievements) Tj ET
+BT /F3 10.20 Tf 0 0 0 rg 62.00 756.00 Td (Trophies, awards and competition results, with the members involved.) Tj ET
+BT /F2 11.00 Tf 0 0 0 rg 62.00 734.00 Td (How to use it) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 716.00 Td (1.  Open Achievements and click Record achievement.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 701.50 Td (2.  Enter the title, the event, the date and what was achieved, then select the members) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 687.00 Td (    who took part.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 672.50 Td (3.  Attach photos or the certificate document as evidence.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 658.00 Td (4.  Achievements appear on the dashboard of the members involved and in the annual report) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 643.50 Td (    and analytics.) Tj ET
+endstream
+endobj
+49 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 48 0 R >>
+endobj
+50 0 obj
+<< /Length 1277 >>
+stream
+0.85 0.85 0.85 RG 0.8 w 62.00 54.00 m 533.00 54.00 l S
+BT /F2 15.00 Tf 0 0 0 rg 62.00 780.00 Td (21. Gallery) Tj ET
+BT /F3 10.20 Tf 0 0 0 rg 62.00 756.00 Td (Albums of club photographs.) Tj ET
+BT /F2 11.00 Tf 0 0 0 rg 62.00 734.00 Td (How to use it) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 716.00 Td (1.  Open Gallery and click New album to create a collection \(for example "ICT Exhibition) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 701.50 Td (    2026"\).) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 687.00 Td (2.  Open an album and click Add photo: upload an image or keep the placeholder, then write) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 672.50 Td (    a caption and pick the date.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 658.00 Td (3.  Click any photo to open the lightbox, then use the arrows or keyboard to move through) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 643.50 Td (    the album.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 629.00 Td (4.  Use albums to illustrate activity reports and the club's public displays.) Tj ET
+BT /F2 11.00 Tf 0 0 0 rg 62.00 608.50 Td (Notes) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 590.50 Td (- Photographs are compressed and stored in IndexedDB; the placeholder tiles are used where) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 576.00 Td (  no photo has been uploaded yet.) Tj ET
+endstream
+endobj
+51 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 50 0 R >>
+endobj
+52 0 obj
+<< /Length 978 >>
+stream
+0.85 0.85 0.85 RG 0.8 w 62.00 54.00 m 533.00 54.00 l S
+BT /F2 15.00 Tf 0 0 0 rg 62.00 780.00 Td (22. Documents) Tj ET
+BT /F3 10.20 Tf 0 0 0 rg 62.00 756.00 Td (The club filing cabinet.) Tj ET
+BT /F2 11.00 Tf 0 0 0 rg 62.00 734.00 Td (How to use it) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 716.00 Td (1.  Open Documents and click Add document.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 701.50 Td (2.  Categories include constitutions, policies, letters, minutes, budgets, plans, forms,) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 687.00 Td (    reports and other.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 672.50 Td (3.  Record the title, owner, date, version and confidentiality, then attach the file or a) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 658.00 Td (    link.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 643.50 Td (4.  Search by title, tag or category; confidential documents are marked clearly so they) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 629.00 Td (    are not shown on screen during meetings.) Tj ET
+endstream
+endobj
+53 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 52 0 R >>
+endobj
+54 0 obj
+<< /Length 1468 >>
+stream
+0.85 0.85 0.85 RG 0.8 w 62.00 54.00 m 533.00 54.00 l S
+BT /F2 15.00 Tf 0 0 0 rg 62.00 780.00 Td (23. Analytics) Tj ET
+BT /F3 10.20 Tf 0 0 0 rg 62.00 756.00 Td (Patterns and plain-language insights drawn from your own records.) Tj ET
+BT /F2 11.00 Tf 0 0 0 rg 62.00 734.00 Td (How to use it) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 716.00 Td (1.  Open Analytics and read the insight cards first - they explain what the numbers mean) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 701.50 Td (    and what to do next.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 687.00 Td (2.  Charts cover membership growth, attendance trends, course enrolment and completion,) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 672.50 Td (    project progress, activity participation, certificates and income vs expenses.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 658.00 Td (3.  Hover any chart element for exact figures; print or export the summary for the termly) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 643.50 Td (    report.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 629.00 Td (4.  Use the comparison tables to see which courses or activities attract the most members) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 614.50 Td (    and which members need support.) Tj ET
+BT /F2 11.00 Tf 0 0 0 rg 62.00 594.00 Td (Notes) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 576.00 Td (- Analytics is read-only by design - always change the underlying records in their own) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 561.50 Td (  module so the history stays honest.) Tj ET
+endstream
+endobj
+55 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 54 0 R >>
+endobj
+56 0 obj
+<< /Length 5671 >>
+stream
+0.85 0.85 0.85 RG 0.8 w 62.00 54.00 m 533.00 54.00 l S
+BT /F2 15.00 Tf 0 0 0 rg 62.00 780.00 Td (24. Settings, users and data) Tj ET
+BT /F3 10.20 Tf 0 0 0 rg 62.00 756.00 Td (Club identity, appearance, accounts, notifications and backup.) Tj ET
+BT /F1 9.60 Tf 0 0 0 rg 62.00 734.00 Td (The platform is styled like the school's own stationery: warm paper, one ink green for) Tj ET
+BT /F1 9.60 Tf 0 0 0 rg 72.00 719.50 Td (actions, brass for emphasis, a book serif for headings and hairline rules on the tables.) Tj ET
+BT /F1 9.60 Tf 0 0 0 rg 72.00 705.00 Td (Choose light, dark or the system setting in Appearance; both themes follow the same palette.) Tj ET
+BT /F2 11.00 Tf 0 0 0 rg 62.00 682.50 Td (How to use it) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 664.50 Td (1.  Open Settings -> Club information to set the club name, school name, motto,) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 650.00 Td (    description, contact details, academic year, current term, term dates, currency and) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 635.50 Td (    document signatories. These values appear on certificates, ID cards, letters and) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 621.00 Td (    printed reports.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 606.50 Td (2.  Use Appearance to pick light, dark or system theme and the accent colour.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 592.00 Td (3.  In Users & roles create accounts for cabinet members: name, username, email, role,) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 577.50 Td (    linked member profile and password. Reset a password, change a role or deactivate an) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 563.00 Td (    account at any time.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 548.50 Td (4.  The quickest way to change the background: open Certificates and click the Certificate) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 534.00 Td (    background button at the top of the page \(there is a second one on every certificate) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 519.50 Td (    page and inside every certificate preview\). The dialog shows the two built-in designs) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 505.00 Td (    - Cream & ornate is the club default, Navy & gold is the alternative - plus an Upload) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 490.50 Td (    my image button for your own PNG or JPEG up to 4 MB.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 476.00 Td (5.  The same window is available in Settings -> Club information -> Certificate) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 461.50 Td (    background, where you can click either tile to switch designs, remove your image, or) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 447.00 Td (    preview a real certificate at any time. The design you pick applies to every) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 432.50 Td (    certificate, every print-out and every download.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 418.00 Td (6.  If your background leaves its clear space somewhere else, use Align the content in the) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 403.50 Td (    same window: choose Top / Middle / Bottom and Left / Center / Right, nudge the block) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 389.00 Td (    sideways or up and down, and change the text size. A live sample certificate below the) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 374.50 Td (    controls updates as you drag, so you can see exactly where the name and signatures) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 360.00 Td (    will land. Reset alignment puts everything back in the centre.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 345.50 Td (7.  In Notifications choose which alerts the app raises \(meetings, activities, tasks,) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 331.00 Td (    announcements, low attendance\) and set the low-attendance threshold.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 316.50 Td (8.  In Data download a full JSON backup, restore from a backup \(merge or replace\), import) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 302.00 Td (    records from CSV, and reset or re-seed the demo data.) Tj ET
+BT /F2 11.00 Tf 0 0 0 rg 62.00 281.50 Td (Notes) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 263.50 Td (- Back up before every term. The app stores data in this browser only: clearing browsing) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 249.00 Td (  data deletes it unless you have a backup file.) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 234.50 Td (- Empty every module is the switch-over button: it deletes every record in every module so) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 220.00 Td (  the club starts on its own data. The sign-in accounts, club information, appearance, the) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 205.50 Td (  certificate design and the Firebase connection are kept, and the confirmation asks you) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 191.00 Td (  to type EMPTY so it cannot be pressed by accident. Press Sync now afterwards and the) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 176.50 Td (  shared database is emptied too.) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 162.00 Td (- Remove sample records deletes exactly the demonstration dataset the platform ships with,) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 147.50 Td (  so the club can start on its own records. The sign-in accounts are never touched, and) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 133.00 Td (  anything the club entered itself - including records an earlier version labelled as) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 118.50 Td (  sample data - is kept. Reload sample data puts the demonstration club back, and Reset) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 104.00 Td (  everything wipes this browser and rebuilds it.) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 89.50 Td (- Where to keep those backups \(and which cloud service to choose\) is set out in) Tj ET
+endstream
+endobj
+57 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 56 0 R >>
+endobj
+58 0 obj
+<< /Length 4653 >>
+stream
+0.85 0.85 0.85 RG 0.8 w 62.00 54.00 m 533.00 54.00 l S
+BT /F1 9.40 Tf 0 0 0 rg 62.00 780.00 Td (  docs/CLOUD-STORAGE.md in the project folder: the short answer is a shared school Google) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 765.50 Td (  Drive folder with dated JSON backups every week, plus a USB copy and a printed termly) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 751.00 Td (  report.) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 736.50 Td (- The platform can also put the backup into Microsoft OneDrive for you: Settings -> Data) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 722.00 Td (  -> Cloud backup. Route one writes each backup into a folder you pick once - the OneDrive) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 707.50 Td (  \(or Drive\) folder on the PC - and the sync client uploads it. Route two signs in to the) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 693.00 Td (  school's Microsoft 365 account and uploads straight into the app's own OneDrive folder;) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 678.50 Td (  it needs a one-time app registration \(choose How to set it up in the same card, or read) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 664.00 Td (  docs/ONEDRIVE.md\). Whichever route you use, Restore from OneDrive / folder lists the) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 649.50 Td (  backups and loads one back, in merge or replace mode.) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 635.00 Td (- Backups never contain sign-in tokens, and the OneDrive connection only ever sees the app) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 620.50 Td (  folder Apps/MRHS ICT Club Master - never the rest of the school's drive.) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 606.00 Td (- Firebase shared database. When several officers must work on the same live records -) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 591.50 Td (  attendance on one phone, finance on the desktop - connect the club's own Firebase) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 577.00 Td (  project in the same card: the club's Project ID and Web API key are already filled in) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 562.50 Td (  \(overwrite them only if the club moves to a different Firebase project\), so press Save) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 548.00 Td (  connection details, then Connect Firebase and sign in with the club's Firebase account.) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 533.50 Td (  Sync now exchanges records; the switch Keep this device in sync automatically uploads) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 519.00 Td (  every change by itself and collects what the other officers changed within a few) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 504.50 Td (  minutes; Upload everything is for after a restore. Twenty-two collections are shared,) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 490.00 Td (  while users \(officer accounts\), auditLog, verifications and notifications never leave) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 475.50 Td (  the device.) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 461.00 Td (- The app keeps working with no internet: edits are saved here first and uploaded when the) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 446.50 Td (  connection returns. Where two officers changed the same record, the later edit \(compared) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 432.00 Td (  by its updatedAt time\) wins, and a local edit newer than the shared copy is never thrown) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 417.50 Td (  away - it is uploaded on the next sync. Setup takes about twenty minutes once \(create) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 403.00 Td (  the project, create the Firestore database, enable Email/Password, paste the security) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 388.50 Td (  rules\); the step-by-step guide is in docs/FIREBASE.md and behind How to set it up in the) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 374.00 Td (  app. Other options - Supabase, PocketBase, Turso, a Sheets mirror - are compared in) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 359.50 Td (  docs/DATABASE-OPTIONS.md.) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 345.00 Td (- Restore in merge mode to add a backup's records to what is already there; replace mode) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 330.50 Td (  wipes first - the app asks for confirmation and shows how many records each option will) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 316.00 Td (  affect.) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 301.50 Td (- A user who forgets their password cannot recover it; an administrator resets it here and) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 287.00 Td (  tells them the new one.) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 272.50 Td (- Deactivating a user immediately ends their access without deleting the audit trail of) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 258.00 Td (  what they did.) Tj ET
+endstream
+endobj
+59 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 58 0 R >>
+endobj
+60 0 obj
+<< /Length 1666 >>
+stream
+0.85 0.85 0.85 RG 0.8 w 62.00 54.00 m 533.00 54.00 l S
+BT /F2 15.00 Tf 0 0 0 rg 62.00 780.00 Td (25. Search, notifications and shortcuts) Tj ET
+BT /F3 10.20 Tf 0 0 0 rg 62.00 756.00 Td (Getting to a record in two seconds.) Tj ET
+BT /F2 11.00 Tf 0 0 0 rg 62.00 734.00 Td (How to use it) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 716.00 Td (1.  Press Ctrl+K, press /, or click the search box in the top bar to open global search.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 701.50 Td (2.  Type any name, ID, title or keyword. Results are grouped by type - members, cabinet,) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 687.00 Td (    meetings, courses, projects, activities, certificates, resources, documents - and open) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 672.50 Td (    the record when you click or press Enter.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 658.00 Td (3.  Use the category chips inside the search overlay to narrow the results.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 643.50 Td (4.  Open the bell icon for the notification centre: upcoming meetings and activities,) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 629.00 Td (    overdue tasks, course and project deadlines, new announcements, low attendance and) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 614.50 Td (    report deadlines.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 600.00 Td (5.  Mark notifications as read individually or all at once; the badge clears when the list) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 585.50 Td (    is empty.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 571.00 Td (6.  Click your avatar in the top bar for your profile, settings, certificate verification) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 556.50 Td (    and sign-out.) Tj ET
+endstream
+endobj
+61 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 60 0 R >>
+endobj
+62 0 obj
+<< /Length 689 >>
+stream
+0.85 0.85 0.85 RG 0.8 w 62.00 54.00 m 533.00 54.00 l S
+BT /F2 15.00 Tf 0 0 0 rg 62.00 780.00 Td (26. Term routines and best practice) Tj ET
+BT /F3 10.20 Tf 0 0 0 rg 62.00 756.00 Td (A simple calendar of club administration.) Tj ET
+BT /F2 11.00 Tf 0 0 0 rg 62.00 734.00 Td (Notes) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 716.00 Td (- Keep one person responsible for entering data each week - records are only as good as) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 701.50 Td (  the routine behind them.) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 687.00 Td (- Never delete a record to correct a mistake; edit it, or mark it inactive and add the) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 672.50 Td (  reason.) Tj ET
+endstream
+endobj
+63 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 62 0 R >>
+endobj
+64 0 obj
+<< /Length 227 >>
+stream
+0.85 0.85 0.85 RG 0.8 w 62.00 54.00 m 533.00 54.00 l S
+BT /F2 15.00 Tf 0 0 0 rg 62.00 780.00 Td (27. Troubleshooting and FAQ) Tj ET
+BT /F3 10.20 Tf 0 0 0 rg 62.00 756.00 Td (Answers to the things that come up most often.) Tj ET
+endstream
+endobj
+65 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 64 0 R >>
+endobj
+66 0 obj
+<< /Length 208 >>
+stream
+0.85 0.85 0.85 RG 0.8 w 62.00 54.00 m 533.00 54.00 l S
+BT /F2 15.00 Tf 0 0 0 rg 62.00 780.00 Td (28. Glossary) Tj ET
+BT /F3 10.20 Tf 0 0 0 rg 62.00 756.00 Td (Terms used in the club and in this system.) Tj ET
+endstream
+endobj
+67 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 66 0 R >>
 endobj
 xref
-0 47
+0 68
 0000000000 65535 f 
-0000000061 00000 n 
-0000000142 00000 n 
-0000000249 00000 n 
-0000000361 00000 n 
-0000000566 00000 n 
-0000000771 00000 n 
-0000000886 00000 n 
-0000000991 00000 n 
-0000001074 00000 n 
-0000001151 00000 n 
-0000001357 00000 n 
-0000001563 00000 n 
-0000001769 00000 n 
-0000001975 00000 n 
-0000002181 00000 n 
-0000002387 00000 n 
-0000002593 00000 n 
-0000002799 00000 n 
-0000003005 00000 n 
-0000003211 00000 n 
-0000003417 00000 n 
-0000003623 00000 n 
-0000003829 00000 n 
-0000004035 00000 n 
-0000004241 00000 n 
-0000004447 00000 n 
-0000004517 00000 n 
-0000004822 00000 n 
-0000005004 00000 n 
-0000006561 00000 n 
-0000007357 00000 n 
-0000010450 00000 n 
-0000013219 00000 n 
-0000015961 00000 n 
-0000018268 00000 n 
-0000020899 00000 n 
-0000023205 00000 n 
-0000025959 00000 n 
-0000028807 00000 n 
-0000031023 00000 n 
-0000033487 00000 n 
-0000035511 00000 n 
-0000038363 00000 n 
-0000041759 00000 n 
-0000044596 00000 n 
-0000047424 00000 n 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000325 00000 n 
+0000000395 00000 n 
+0000000470 00000 n 
+0000000548 00000 n 
+0000001324 00000 n 
+0000001470 00000 n 
+0000003580 00000 n 
+0000003726 00000 n 
+0000006788 00000 n 
+0000006936 00000 n 
+0000008210 00000 n 
+0000008358 00000 n 
+0000010699 00000 n 
+0000010847 00000 n 
+0000013607 00000 n 
+0000013755 00000 n 
+0000015919 00000 n 
+0000016067 00000 n 
+0000018305 00000 n 
+0000018453 00000 n 
+0000020959 00000 n 
+0000021107 00000 n 
+0000023256 00000 n 
+0000023404 00000 n 
+0000025090 00000 n 
+0000025238 00000 n 
+0000027220 00000 n 
+0000027368 00000 n 
+0000029060 00000 n 
+0000029208 00000 n 
+0000033531 00000 n 
+0000033679 00000 n 
+0000035292 00000 n 
+0000035440 00000 n 
+0000039546 00000 n 
+0000039694 00000 n 
+0000041078 00000 n 
+0000041226 00000 n 
+0000042842 00000 n 
+0000042990 00000 n 
+0000044152 00000 n 
+0000044300 00000 n 
+0000045653 00000 n 
+0000045801 00000 n 
+0000047760 00000 n 
+0000047908 00000 n 
+0000048876 00000 n 
+0000049024 00000 n 
+0000050354 00000 n 
+0000050502 00000 n 
+0000051532 00000 n 
+0000051680 00000 n 
+0000053201 00000 n 
+0000053349 00000 n 
+0000059073 00000 n 
+0000059221 00000 n 
+0000063927 00000 n 
+0000064075 00000 n 
+0000065794 00000 n 
+0000065942 00000 n 
+0000066683 00000 n 
+0000066831 00000 n 
+0000067110 00000 n 
+0000067258 00000 n 
+0000067518 00000 n 
 trailer
-<<
-/ID 
-[<579683c9247a86292d32d92e465fb0e6><579683c9247a86292d32d92e465fb0e6>]
-% ReportLab generated PDF document -- digest (opensource)
-
-/Info 27 0 R
-/Root 26 0 R
-/Size 47
->>
+<< /Size 68 /Root 1 0 R >>
 startxref
-48785
+67666
 %%EOF

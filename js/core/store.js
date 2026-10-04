@@ -386,6 +386,22 @@
    *  the demo flag cleared.
    *  Returns { removed, kept }.
    */
+  /** Empties every collection while keeping the club's settings and, unless
+   *  opts.keepUsers is false, the sign-in accounts. Used to start on real data.
+   *  Returns the number of records removed. */
+  function clearRecords(opts) {
+    opts = opts || {};
+    var removed = 0;
+    COLLECTIONS.forEach(function (c) {
+      if (opts.keepUsers !== false && c === 'users') return;
+      removed += all(c).length;
+      replace(c, []);
+    });
+    if (opts.clearFiles) idb.clear();
+    audit('reset', 'all', null, { scope: 'records', removed: removed });
+    return removed;
+  }
+
   function stripDemo(collection, opts) {
     opts = opts || {};
     var ids = seedIdIndex()[collection] || null;
@@ -416,6 +432,7 @@
     all: all, find: find, where: where, count: count,
     insert: insert, insertMany: insertMany, update: update, remove: remove,
     removeWhere: removeWhere, replace: replace, save: save,
+    clearRecords: clearRecords,
     settings: settings, saveSettings: saveSettings,
     on: on, emit: emit,
     exportAll: exportAll, importAll: importAll, stats: stats,

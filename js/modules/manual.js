@@ -434,6 +434,7 @@
       title: 'Settings, users and data',
       icon: 'sliders',
       tagline: 'Club identity, appearance, accounts, notifications and backup.',
+      intro: 'The platform is styled like the school’s own stationery: warm paper, one ink green for actions, brass for emphasis, a book serif for headings and hairline rules on the tables. Choose light, dark or the system setting in <strong>Appearance</strong>; both themes follow the same palette.',
       steps: [
         'Open <strong>Settings → Club information</strong> to set the club name, school name, motto, description, contact details, academic year, current term, term dates, currency and document signatories. These values appear on certificates, ID cards, letters and printed reports.',
         'Use <strong>Appearance</strong> to pick light, dark or system theme and the accent colour.',
@@ -446,6 +447,7 @@
       ],
       notes: [
         '<strong>Back up before every term.</strong> The app stores data in this browser only: clearing browsing data deletes it unless you have a backup file.',
+        '<strong>Empty every module</strong> is the switch-over button: it deletes every record in every module so the club starts on its own data. The sign-in accounts, club information, appearance, the certificate design and the Firebase connection are kept, and the confirmation asks you to type EMPTY so it cannot be pressed by accident. Press <strong>Sync now</strong> afterwards and the shared database is emptied too.',
         '<strong>Remove sample records</strong> deletes exactly the demonstration dataset the platform ships with, so the club can start on its own records. The sign-in accounts are never touched, and anything the club entered itself — including records an earlier version labelled as sample data — is kept. <strong>Reload sample data</strong> puts the demonstration club back, and <strong>Reset everything</strong> wipes this browser and rebuilds it.',
         'Where to keep those backups (and which cloud service to choose) is set out in <strong>docs/CLOUD-STORAGE.md</strong> in the project folder: the short answer is a shared school Google Drive folder with dated JSON backups every week, plus a USB copy and a printed termly report.',
         'The platform can also put the backup into Microsoft OneDrive for you: <strong>Settings → Data → Cloud backup</strong>. Route one writes each backup into a folder you pick once — the OneDrive (or Drive) folder on the PC — and the sync client uploads it. Route two signs in to the school’s Microsoft 365 account and uploads straight into the app’s own OneDrive folder; it needs a one-time app registration (choose <strong>How to set it up</strong> in the same card, or read <strong>docs/ONEDRIVE.md</strong>). Whichever route you use, <strong>Restore from OneDrive / folder</strong> lists the backups and loads one back, in merge or replace mode.',

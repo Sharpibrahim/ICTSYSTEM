@@ -208,6 +208,7 @@
             'All records are labelled <strong>sample / demo</strong> and contain no real personal information.</p>' +
           '<div class="flex gap-1 wrap mt-2">' +
             '<button type="button" class="btn btn-outline" data-set="strip-demo">' + Icons.svg('eraser', { class: 'btn-ico' }) + 'Remove sample records</button>' +
+            '<button type="button" class="btn btn-outline" data-set="empty-club">' + Icons.svg('package', { class: 'btn-ico' }) + 'Empty every module</button>' +
             '<button type="button" class="btn btn-outline" data-set="reload-demo">' + Icons.svg('refresh', { class: 'btn-ico' }) + 'Reload sample data</button>' +
             '<button type="button" class="btn btn-danger-outline" data-set="factory-reset">' + Icons.svg('alert-triangle', { class: 'btn-ico' }) + 'Reset everything</button>' +
           '</div>' +
@@ -420,6 +421,7 @@
         if (what === 'export') exportBackup();
         if (what === 'import') importBackup();
         if (what === 'strip-demo') stripDemo();
+        if (what === 'empty-club') emptyClub();
         if (what === 'reload-demo') reloadDemo();
         if (what === 'factory-reset') factoryReset();
       });
@@ -737,6 +739,24 @@
           (kept ? kept + ' record' + (kept === 1 ? '' : 's') + ' you had entered were kept. ' : '') +
           'Your sign-in accounts and settings are untouched.', 'success');
         Shell.refresh();
+        Router.refresh();
+      }
+    });
+  }
+
+  /** Start on real data: everything empty, accounts and settings kept. */
+  function emptyClub() {
+    if (!CRUD.guard('settings', 'delete')) return;
+    UI.confirm({
+      title: 'Empty every module', tone: 'danger', confirmLabel: 'Empty the system',
+      confirmWord: 'EMPTY', icon: 'package',
+      message: 'Delete every record in every module, keeping your sign-in accounts and settings?',
+      details: 'Members, meetings, attendance, courses, projects, reports, certificates, finance, equipment, gallery and documents are all emptied so the club can enter its own data. <strong>Accounts, club information, appearance, the certificate design and the Firebase connection are kept.</strong> Export a backup first — this cannot be undone. Type EMPTY to confirm.',
+      onConfirm: function () {
+        var removed = Store.clearRecords({ clearFiles: true });
+        UI.toast('Everything cleared', removed + ' record' + (removed === 1 ? '' : 's') + ' deleted. Your accounts and settings were kept.',
+          'success', { duration: 6000 });
+        if (typeof Shell !== 'undefined' && Shell.refresh) Shell.refresh();
         Router.refresh();
       }
     });
