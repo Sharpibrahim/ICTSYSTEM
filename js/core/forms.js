@@ -166,7 +166,7 @@
           (f.image ? '<p class="help">Images are stored in the browser database (IndexedDB) for this prototype.</p>' : '');
 
       case 'color':
-        return '<input id="' + id + '" type="color" name="' + name + '" value="' + U.attr(value || '#235236') + '"' + dis + '>';
+        return '<input id="' + id + '" type="color" name="' + name + '" value="' + U.attr(value || '#1d3f70') + '"' + dis + '>';
 
       case 'hidden':
         return '<input type="hidden" name="' + name + '" value="' + U.attr(value) + '">';

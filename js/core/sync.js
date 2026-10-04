@@ -66,7 +66,34 @@
       return true;
     } catch (e) { return false; }
   }
-  function readState() { return readLocal(STATE_KEY) || { collections: {}, lastPull: null, lastPush: null }; }
+  function readState() {
+    var st = readLocal(STATE_KEY) || {};
+    st.collections = st.collections || {};
+    /* deleted[collection][id] = a record removed here that has not been
+       uploaded yet. It stops a download from bringing the record back. */
+    st.deleted = st.deleted || {};
+    return st;
+  }
+
+  /** Remembers local deletions so a pull cannot resurrect them. */
+  function noteDeleted(state, ops) {
+    ops.forEach(function (op) {
+      if (op.op !== 'delete') return;
+      state.deleted[op.col] = state.deleted[op.col] || {};
+      state.deleted[op.col][op.id] = true;
+    });
+    return state;
+  }
+  function forgetDeletes(state, ops) {
+    ops.forEach(function (op) {
+      if (op.op !== 'delete' || !state.deleted[op.col]) return;
+      delete state.deleted[op.col][op.id];
+    });
+    return state;
+  }
+  function isPendingDelete(state, col, id) {
+    return !!(state.deleted[col] && state.deleted[col][id]);
+  }
   function writeState(state) { return writeLocal(STATE_KEY, state); }
   function online() { return global.navigator ? global.navigator.onLine !== false : true; }
   function toast(title, message, tone) { UI.toast(title, message, tone || 'info'); }
@@ -257,6 +284,13 @@
         /* hasOwnProperty, not truthiness: records without a timestamp are '' */
         if (!Object.prototype.hasOwnProperty.call(seen, id)) ops.push({ col: col, id: id, op: 'delete', stamp: null });
       });
+      /* A deletion that has not been uploaded yet is still pending even if a
+         download has already put the record back in the snapshot. */
+      Object.keys(readState().deleted[col] || {}).forEach(function (id) {
+        if (seen[id]) return;
+        if (ops.some(function (op) { return op.col === col && op.id === id; })) return;
+        ops.push({ col: col, id: id, op: 'delete', stamp: null });
+      });
     });
     return ops;
   }
@@ -268,8 +302,10 @@
     state.collections = state.collections || {};
     ops.forEach(function (op) {
       state.collections[op.col] = state.collections[op.col] || {};
-      if (op.op === 'delete') delete state.collections[op.col][op.id];
-      else state.collections[op.col][op.id] = op.stamp || '';
+      if (op.op === 'delete') {
+        delete state.collections[op.col][op.id];
+        if (state.deleted[op.col]) delete state.deleted[op.col][op.id];   /* the cloud now knows */
+      } else state.collections[op.col][op.id] = op.stamp || '';
     });
     writeState(state);
   }
@@ -301,6 +337,10 @@
       if (opts.quiet !== true) toast('Offline', 'Changes are saved on this device and will upload when the internet is back.', 'info');
       return Promise.resolve({ pushed: 0, pending: ops.length, offline: true });
     }
+    var st0 = readState();
+    noteDeleted(st0, ops);          /* survive a download before this upload lands */
+    writeState(st0);
+
     var batches = chunk(ops, BATCH);
     var pushed = 0;
     var chain = Promise.resolve();
@@ -328,9 +368,9 @@
     });
   }
 
-  /** Every record, ignoring the diff — used by “Back up now”. */
+  /** Every record, plus any deletion still outstanding — used by “Upload everything”. */
   function fullOps() {
-    var ops = [];
+    var ops = diff().filter(function (op) { return op.op === 'delete'; });
     syncedCollections().forEach(function (col) {
       (Store.all(col) || []).forEach(function (rec) {
         if (rec && rec.id) ops.push({ col: col, id: rec.id, op: 'set', rec: rec, stamp: rec.updatedAt || rec.createdAt || '' });
@@ -394,7 +434,7 @@
       return Promise.resolve({ pulled: 0, offline: true });
     }
     var mode = opts.mode === 'replace' ? 'replace' : 'merge';
-    var applied = 0, removed = 0, conflicts = 0;
+    var applied = 0, removed = 0, conflicts = 0, keptDeleted = 0, removedElsewhere = 0;
     var chain = Promise.resolve();
     var state = readState();
     state.collections = state.collections || {};
@@ -407,8 +447,12 @@
           var byId = {};
           local.forEach(function (r) { byId[r.id] = r; });
           var incoming = {};
+          var snapCol = state.collections[col] || {};
           docs.forEach(function (doc) {
             incoming[doc.id] = true;
+            /* Deleted on this device and not uploaded yet: the club's decision
+               stands. The delete stays queued and goes up on the next push. */
+            if (isPendingDelete(state, col, doc.id)) { keptDeleted++; return; }
             var here = byId[doc.id];
             var took = false;
             if (!here) {
@@ -436,6 +480,20 @@
             for (var i = local.length - 1; i >= 0; i--) {
               if (!incoming[local[i].id]) { local.splice(i, 1); removed++; }
             }
+          } else {
+            /* Deleting on another device must delete here too. Only records this
+               device has not touched since the last sync: a local edit is kept
+               and uploaded instead (last write wins). */
+            for (var j = local.length - 1; j >= 0; j--) {
+              var rec = local[j];
+              if (!rec || !rec.id || incoming[rec.id]) continue;
+              if (!Object.prototype.hasOwnProperty.call(snapCol, rec.id)) continue;
+              if (isPendingDelete(state, col, rec.id)) continue;
+              if (String(snapCol[rec.id]) !== String(rec.updatedAt || rec.createdAt || '')) continue;
+              local.splice(j, 1);
+              delete snapCol[rec.id];
+              removedElsewhere++;
+            }
           }
           Store.replace(col, local);      /* store save() is silent per collection here */
         });
@@ -449,11 +507,15 @@
       Store.saveSettings({ syncLastAt: state.lastPull });
       Store.emit({ type: 'sync', action: 'pull' });
       if (opts.quiet !== true) {
-        toast('Shared database read', applied + ' record' + (applied === 1 ? '' : 's') + ' applied' +
-          (removed ? ', ' + removed + ' removed' : '') +
-          (conflicts ? '. ' + conflicts + ' local edit' + (conflicts === 1 ? '' : 's') + ' kept and will be uploaded.' : '.'), 'success');
+        var bits = [];
+        bits.push(applied + ' record' + (applied === 1 ? '' : 's') + ' applied');
+        if (removed) bits.push(removed + ' removed');
+        if (removedElsewhere) bits.push(removedElsewhere + ' deleted here because another officer deleted them');
+        if (keptDeleted) bits.push(keptDeleted + ' deletion' + (keptDeleted === 1 ? '' : 's') + ' of yours kept and still to upload');
+        if (conflicts) bits.push(conflicts + ' local edit' + (conflicts === 1 ? '' : 's') + ' kept');
+        toast('Shared database read', bits.join(' · ') + '.', 'success');
       }
-      return { pulled: applied, removed: removed, conflicts: conflicts };
+      return { pulled: applied, removed: removed + removedElsewhere, conflicts: conflicts, keptDeleted: keptDeleted };
     })['catch'](function (err) {
       applying = false;
       if (opts.quiet !== true) toast('Firebase download failed', (err && err.message) || 'The shared records could not be read.', 'error');
@@ -467,7 +529,10 @@
     return push(opts).then(function (up) {
       if (up.error || up.offline) return up;
       return pull(opts).then(function (down) {
-        return { pushed: up.pushed, pulled: down.pulled, conflicts: down.conflicts, removed: down.removed };
+        return {
+          pushed: up.pushed, pulled: down.pulled, conflicts: down.conflicts,
+          removed: down.removed, keptDeleted: down.keptDeleted
+        };
       });
     });
   }
@@ -476,6 +541,17 @@
   var timer = null;
   var bound = false;
   var lastPullAt = 0;
+
+  /** Records a local deletion the moment it happens, so that even a download
+   *  that arrives before the upload cannot bring the record back. */
+  function rememberDeletes() {
+    var ops = diff().filter(function (op) { return op.op === 'delete'; });
+    if (!ops.length) return 0;
+    var st = readState();
+    noteDeleted(st, ops);
+    writeState(st);
+    return ops.length;
+  }
 
   function schedule(delay) {
     if (!autoEnabled() || !connected() || applying) return;
@@ -495,7 +571,10 @@
     bound = true;
     Store.on(function (evt) {
       if (!evt) return;
-      if (evt.type === 'change' && !applying) schedule();
+      if (evt.type === 'change' && !applying) {
+        rememberDeletes();
+        schedule();
+      }
       if (evt.type === 'import' || evt.type === 'reset') schedule(1500);
     });
     if (global.addEventListener) {
@@ -548,6 +627,7 @@
 
   global.Sync = {
     init: init, status: status, settings: settings,
+    rememberDeletes: rememberDeletes,
     configured: configured, saveConfig: saveConfig,
     connected: connected, account: account, signIn: signIn, signOut: signOut,
     push: push, pull: pull, sync: sync, pending: pending, diff: diff,

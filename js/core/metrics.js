@@ -135,11 +135,11 @@
       active: (by['Development'] || []).length + (by['Testing'] || []).length + (by['Planning'] || []).length,
       avgProgress: all.length ? Math.round(U.avg(all.map(function (p) { return p.progress || 0; }))) : 0,
       byStatus: [
-        { label: 'Planning', value: (by['Planning'] || []).length, color: '#33556f' },
-        { label: 'Development', value: (by['Development'] || []).length, color: '#235236' },
-        { label: 'Testing', value: (by['Testing'] || []).length, color: '#a87c1c' },
-        { label: 'Completed', value: (by['Completed'] || []).length, color: '#2f6444' },
-        { label: 'Archived', value: (by['Archived'] || []).length, color: '#6c6a5e' }
+        { label: 'Planning', value: (by['Planning'] || []).length, color: '#3d5a80' },
+        { label: 'Development', value: (by['Development'] || []).length, color: '#24518f' },
+        { label: 'Testing', value: (by['Testing'] || []).length, color: '#8a6412' },
+        { label: 'Completed', value: (by['Completed'] || []).length, color: '#2c6b45' },
+        { label: 'Archived', value: (by['Archived'] || []).length, color: '#66748a' }
       ],
       tasks: Store.all('projectTasks')
     };

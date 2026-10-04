@@ -690,13 +690,13 @@ endobj
 << /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 54 0 R >>
 endobj
 56 0 obj
-<< /Length 5671 >>
+<< /Length 5679 >>
 stream
 0.85 0.85 0.85 RG 0.8 w 62.00 54.00 m 533.00 54.00 l S
 BT /F2 15.00 Tf 0 0 0 rg 62.00 780.00 Td (24. Settings, users and data) Tj ET
 BT /F3 10.20 Tf 0 0 0 rg 62.00 756.00 Td (Club identity, appearance, accounts, notifications and backup.) Tj ET
-BT /F1 9.60 Tf 0 0 0 rg 62.00 734.00 Td (The platform is styled like the school's own stationery: warm paper, one ink green for) Tj ET
-BT /F1 9.60 Tf 0 0 0 rg 72.00 719.50 Td (actions, brass for emphasis, a book serif for headings and hairline rules on the tables.) Tj ET
+BT /F1 9.60 Tf 0 0 0 rg 62.00 734.00 Td (The platform is styled like the school's own stationery: club blue on cool paper: navy ink) Tj ET
+BT /F1 9.60 Tf 0 0 0 rg 72.00 719.50 Td (for actions, azure for emphasis, a book serif for headings and hairline rules on the tables.) Tj ET
 BT /F1 9.60 Tf 0 0 0 rg 72.00 705.00 Td (Choose light, dark or the system setting in Appearance; both themes follow the same palette.) Tj ET
 BT /F2 11.00 Tf 0 0 0 rg 62.00 682.50 Td (How to use it) Tj ET
 BT /F1 9.80 Tf 0 0 0 rg 62.00 664.50 Td (1.  Open Settings -> Club information to set the club name, school name, motto,) Tj ET
@@ -745,7 +745,7 @@ endobj
 << /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 56 0 R >>
 endobj
 58 0 obj
-<< /Length 4653 >>
+<< /Length 5178 >>
 stream
 0.85 0.85 0.85 RG 0.8 w 62.00 54.00 m 533.00 54.00 l S
 BT /F1 9.40 Tf 0 0 0 rg 62.00 780.00 Td (  docs/CLOUD-STORAGE.md in the project folder: the short answer is a shared school Google) Tj ET
@@ -770,21 +770,25 @@ BT /F1 9.40 Tf 0 0 0 rg 62.00 519.00 Td (  every change by itself and collects w
 BT /F1 9.40 Tf 0 0 0 rg 62.00 504.50 Td (  minutes; Upload everything is for after a restore. Twenty-two collections are shared,) Tj ET
 BT /F1 9.40 Tf 0 0 0 rg 62.00 490.00 Td (  while users \(officer accounts\), auditLog, verifications and notifications never leave) Tj ET
 BT /F1 9.40 Tf 0 0 0 rg 62.00 475.50 Td (  the device.) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 461.00 Td (- The app keeps working with no internet: edits are saved here first and uploaded when the) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 446.50 Td (  connection returns. Where two officers changed the same record, the later edit \(compared) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 432.00 Td (  by its updatedAt time\) wins, and a local edit newer than the shared copy is never thrown) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 417.50 Td (  away - it is uploaded on the next sync. Setup takes about twenty minutes once \(create) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 403.00 Td (  the project, create the Firestore database, enable Email/Password, paste the security) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 388.50 Td (  rules\); the step-by-step guide is in docs/FIREBASE.md and behind How to set it up in the) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 374.00 Td (  app. Other options - Supabase, PocketBase, Turso, a Sheets mirror - are compared in) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 359.50 Td (  docs/DATABASE-OPTIONS.md.) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 345.00 Td (- Restore in merge mode to add a backup's records to what is already there; replace mode) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 330.50 Td (  wipes first - the app asks for confirmation and shows how many records each option will) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 316.00 Td (  affect.) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 301.50 Td (- A user who forgets their password cannot recover it; an administrator resets it here and) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 287.00 Td (  tells them the new one.) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 272.50 Td (- Deactivating a user immediately ends their access without deleting the audit trail of) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 258.00 Td (  what they did.) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 461.00 Td (- Deletions are final. A record deleted here is marked as deleted immediately, so loading) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 446.50 Td (  from the shared database never brings it back; the deletion uploads on the next sync. A) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 432.00 Td (  record deleted by another officer is removed on this device too, unless it was edited) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 417.50 Td (  here after that - in which case the edit is kept and uploaded.) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 403.00 Td (- The app keeps working with no internet: edits are saved here first and uploaded when the) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 388.50 Td (  connection returns. Where two officers changed the same record, the later edit \(compared) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 374.00 Td (  by its updatedAt time\) wins, and a local edit newer than the shared copy is never thrown) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 359.50 Td (  away - it is uploaded on the next sync. Setup takes about twenty minutes once \(create) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 345.00 Td (  the project, create the Firestore database, enable Email/Password, paste the security) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 330.50 Td (  rules\); the step-by-step guide is in docs/FIREBASE.md and behind How to set it up in the) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 316.00 Td (  app. Other options - Supabase, PocketBase, Turso, a Sheets mirror - are compared in) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 301.50 Td (  docs/DATABASE-OPTIONS.md.) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 287.00 Td (- Restore in merge mode to add a backup's records to what is already there; replace mode) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 272.50 Td (  wipes first - the app asks for confirmation and shows how many records each option will) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 258.00 Td (  affect.) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 243.50 Td (- A user who forgets their password cannot recover it; an administrator resets it here and) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 229.00 Td (  tells them the new one.) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 214.50 Td (- Deactivating a user immediately ends their access without deleting the audit trail of) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 200.00 Td (  what they did.) Tj ET
 endstream
 endobj
 59 0 obj
@@ -911,19 +915,19 @@ xref
 0000051680 00000 n 
 0000053201 00000 n 
 0000053349 00000 n 
-0000059073 00000 n 
-0000059221 00000 n 
-0000063927 00000 n 
-0000064075 00000 n 
-0000065794 00000 n 
-0000065942 00000 n 
-0000066683 00000 n 
-0000066831 00000 n 
-0000067110 00000 n 
-0000067258 00000 n 
-0000067518 00000 n 
+0000059081 00000 n 
+0000059229 00000 n 
+0000064460 00000 n 
+0000064608 00000 n 
+0000066327 00000 n 
+0000066475 00000 n 
+0000067216 00000 n 
+0000067364 00000 n 
+0000067643 00000 n 
+0000067791 00000 n 
+0000068051 00000 n 
 trailer
 << /Size 68 /Root 1 0 R >>
 startxref
-67666
+68199
 %%EOF

@@ -121,9 +121,9 @@
 }
 .hero > * { position: relative; z-index: 1; }
 .hero-text h1 { font-size: clamp(1.24rem, 2.2vw, 1.66rem); color: #fff; }
-.hero-text p { color: #c5cbba; font-size: .9rem; margin-top: 5px; max-width: 60ch; }
+.hero-text p { color: #c2cee2; font-size: .9rem; margin-top: 5px; max-width: 60ch; }
 .hero-meta { display: flex; gap: 22px; flex-wrap: wrap; margin-top: 14px; }
-.hero-meta div span { display: block; font-size: .7rem; letter-spacing: .1em; text-transform: uppercase; color: #a9b39c; }
+.hero-meta div span { display: block; font-size: .7rem; letter-spacing: .1em; text-transform: uppercase; color: #a2b3cd; }
 .hero-meta div strong { font-size: 1.05rem; color: #fff; }
 .hero-actions { display: flex; gap: 9px; flex-wrap: wrap; }
 .hero .btn-outline { background: rgba(255, 255, 255, .1); border-color: rgba(255, 255, 255, .3); color: #fff; }
@@ -794,7 +794,7 @@ input[type="color"] { padding: 3px; height: 42px; cursor: pointer; }
 }
 .id-card-top {
   padding: 13px 15px; color: #fff; display: flex; align-items: center; gap: 11px;
-  background: linear-gradient(120deg, #12241c, #1b412b 60%, #24405f);
+  background: linear-gradient(120deg, #142c4f, #1d3f70 60%, #2f6ea8);
 }
 .id-card-top .brand-mark { background: rgba(255, 255, 255, .16); box-shadow: none; }
 .id-card-top strong { display: block; font-size: .85rem; letter-spacing: .06em; }
@@ -1263,7 +1263,7 @@ table.data-table td.num, table.data-table th.num { font-variant-numeric: tabular
 
 /* Sidebar: an ink panel with a brass marker on the current item. */
 .sidebar { border-right: 1px solid var(--sidebar-bg-2); }
-.sidebar-brand { padding-bottom: 14px; border-bottom: 1px solid rgba(255, 255, 255, .08); }
+.sidebar-brand { padding-bottom: 14px; border-bottom: 1px solid rgba(255, 255, 255, .1); }
 .nav-item { border-radius: var(--r-sm); }
 .nav-item.active, .nav-item[aria-current="page"] { background: var(--sidebar-active); box-shadow: inset 3px 0 0 var(--secondary-400); }
 .nav-section-label { letter-spacing: .13em; text-transform: uppercase; font-size: .68rem; }

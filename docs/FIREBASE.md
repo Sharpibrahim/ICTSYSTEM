@@ -126,9 +126,12 @@ settings are shared only through a JSON backup.
 - **Offline behaviour.** With no internet the app keeps working; the queue waits,
   and the top of the card says how many records are pending. The moment the
   connection returns (or the app is reopened), they upload.
-- **Deletes** are uploaded as deletes; a push never deletes anything locally.
-  "Load from Firebase" only removes local records in the *replace* mode, which the
-  app does not use by default — it merges.
+- **Deletes are final.** A record deleted on a device is noted as deleted
+  immediately, so a download can never bring it back; the deletion itself uploads
+  on the next push (and “Upload everything” includes pending deletions too).
+  A record deleted by another officer is removed here as well, unless it was
+  edited on this device after that — then the edit is kept and uploaded, because
+  the later change wins.
 - **“Upload everything”** ignores the queue and sends all 22 collections; use it
   after importing a backup.
 - **No SDK, no CDN.** The connector talks to the Firebase REST APIs directly, so
