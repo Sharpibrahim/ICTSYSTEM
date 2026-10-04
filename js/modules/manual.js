@@ -434,7 +434,7 @@
       title: 'Settings, users and data',
       icon: 'sliders',
       tagline: 'Club identity, appearance, accounts, notifications and backup.',
-      intro: 'The platform is styled like the school’s own stationery: club blue on cool paper: navy ink for actions, azure for emphasis, a book serif for headings and hairline rules on the tables. Choose light, dark or the system setting in <strong>Appearance</strong>; both themes follow the same palette.',
+      intro: 'The platform is styled like the school’s own stationery: a layered blue system: azure for actions, cyan for accents, indigo for secondary data, raised white cards, gradient data marks and quiet motion. Choose light, dark or the system setting in <strong>Appearance</strong>; both themes follow the same palette.',
       steps: [
         'Open <strong>Settings → Club information</strong> to set the club name, school name, motto, description, contact details, academic year, current term, term dates, currency and document signatories. These values appear on certificates, ID cards, letters and printed reports.',
         'Use <strong>Appearance</strong> to pick light, dark or system theme and the accent colour.',

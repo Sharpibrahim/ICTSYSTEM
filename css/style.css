@@ -6,59 +6,61 @@
 
 /* ── 1. Design tokens ───────────────────────────────────────────────────── */
 :root {
-  /* Brand — school blue. Navy ink carries actions, azure carries emphasis,
-     slate carries the quieter marks. One family, a few steps, no gradients. */
-  --primary-50:  #e9eef7;
-  --primary-100: #d3dcef;
-  --primary-200: #adc0dd;
-  --primary-300: #7f9bc5;
-  --primary-400: #4f74a6;
-  --primary-500: #2f5688;
-  --primary-600: #24518f;
-  --primary-700: #1c3f6f;
-  --primary-800: #163253;
-  --primary-900: #10253d;
-  --primary:     #1d3f70;
-  --primary-ink: #16325a;
+  /* Brand — a deep, saturated blue system: azure for actions, cyan for
+     accents, indigo for secondary data. Depth comes from layering (tints,
+     gradients, shadow) rather than from many unrelated hues. */
+  --primary-50:  #eef4ff;
+  --primary-100: #dbe6ff;
+  --primary-200: #bcd0ff;
+  --primary-300: #92b0fd;
+  --primary-400: #668bf7;
+  --primary-500: #3f68ec;
+  --primary-600: #2450d8;
+  --primary-700: #1d40ad;
+  --primary-800: #1b3788;
+  --primary-900: #172c66;
+  --primary:     #2450d8;
+  --primary-ink: #1b3788;
 
-  --secondary-50:  #eaf2f9;
-  --secondary-100: #d5e6f4;
-  --secondary-200: #adcbe8;
-  --secondary-300: #7fadd7;
-  --secondary-400: #4a8cc2;
-  --secondary-500: #2f6ea8;
-  --secondary-600: #275c8c;
-  --secondary-700: #1f4a72;
-  --secondary:     #2f6ea8;
+  --secondary-50:  #eef2ff;
+  --secondary-100: #e0e7ff;
+  --secondary-200: #c7d2fe;
+  --secondary-300: #a5b4fc;
+  --secondary-400: #818cf8;
+  --secondary-500: #6366f1;
+  --secondary-600: #4f46e5;
+  --secondary-700: #4338ca;
+  --secondary:     #4f46e5;
 
-  --accent-50:  #eef1f6;
-  --accent-100: #dde3ec;
-  --accent-200: #c1cad8;
-  --accent-300: #9dabc1;
-  --accent-400: #75889f;
-  --accent-500: #556a83;
-  --accent-600: #425466;
-  --accent:     #3d5a80;
+  --accent-50:  #ecfeff;
+  --accent-100: #cffafe;
+  --accent-200: #a5f3fc;
+  --accent-300: #67e8f9;
+  --accent-400: #22d3ee;
+  --accent-500: #06b6d4;
+  --accent-600: #0891b2;
+  --accent:     #06b6d4;
 
   /* Semantic */
-  --success-soft: #e6f0e8; --success: #2c6b45; --success-strong: #1e4d31;
-  --warning-soft: #fbf2dc; --warning: #8a6412; --warning-strong: #6b4d0e;
-  --danger-soft:  #f9e9e4; --danger:  #a1442c; --danger-strong:  #7d3521;
-  --info-soft:    #e8eef7; --info:    #2f5688; --info-strong:    #23406a;
-  --neutral-soft: #eceff3; --neutral: #66748a;
+  --success-soft: #e7f7ee; --success: #0f9d58; --success-strong: #0b7a44;
+  --warning-soft: #fef6e7; --warning: #c07a09; --warning-strong: #97590a;
+  --danger-soft:  #fdecec; --danger:  #dc3d43; --danger-strong:  #b02730;
+  --info-soft:    #e8f1ff; --info:    #2563eb; --info-strong:    #1d4ed8;
+  --neutral-soft: #eef1f6; --neutral: #61708b;
 
-  /* Radii / elevation — near-square corners and paper-flat shadows: printed
-     stationery, not floating software panels. */
-  --r-xs: 2px; --r-sm: 3px; --r-md: 5px; --r-lg: 8px; --r-xl: 12px; --r-full: 999px;
-  --sh-xs: 0 1px 0 rgba(31, 39, 31, .05);
-  --sh-sm: 0 1px 2px rgba(31, 39, 31, .06), 0 1px 0 rgba(31, 39, 31, .04);
-  --sh-md: 0 4px 12px rgba(31, 39, 31, .08), 0 1px 2px rgba(31, 39, 31, .05);
-  --sh-lg: 0 14px 34px rgba(31, 39, 31, .15), 0 3px 8px rgba(31, 39, 31, .07);
-  --sh-focus: 0 0 0 3px rgba(35, 82, 54, .22);
+  /* Radii / elevation — rounded, layered surfaces. Three shadow steps:
+     resting, raised (hover) and floating (menus, modals). */
+  --r-xs: 6px; --r-sm: 9px; --r-md: 12px; --r-lg: 16px; --r-xl: 22px; --r-full: 999px;
+  --sh-xs: 0 1px 2px rgba(16, 30, 63, .05);
+  --sh-sm: 0 1px 3px rgba(16, 30, 63, .07), 0 1px 2px rgba(16, 30, 63, .04);
+  --sh-md: 0 6px 18px rgba(16, 30, 63, .09), 0 2px 5px rgba(16, 30, 63, .05);
+  --sh-lg: 0 22px 50px rgba(16, 30, 63, .18), 0 6px 16px rgba(16, 30, 63, .08);
+  --sh-focus: 0 0 0 3px rgba(63, 104, 236, .28);
+  --sh-glow: 0 8px 20px rgba(36, 80, 216, .28);
 
-  /* Typography — a book serif for headings over a humanist sans, the pairing
-     of a printed school report. No webfonts: these ship with the machine. */
-  --font-display: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, "Times New Roman", serif;
+  /* Typography — one crisp interface sans across the app; the certificate and
+     printed documents keep their serif. No webfonts: these ship with the PC. */
+  --font-display: "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
   --font: "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
   --font-mono: "SFMono-Regular", ui-monospace, "Courier New", Consolas, "Liberation Mono", monospace;
 
@@ -68,59 +70,64 @@
   --gutter: 26px;
   --speed: .18s;
 
-  /* Surfaces — light theme: cool paper, ink text, hairline rules */
-  --bg:            #eef1f5;
-  --bg-alt:        #e3e8ef;
+  /* Surfaces — light theme: bright canvas, white raised cards, deep sidebar */
+  --bg:            #f4f6fb;
+  --bg-alt:        #e9edf6;
   --surface:       #ffffff;
-  --surface-2:     #f7f9fc;
-  --surface-3:     #edf1f7;
-  --sidebar-bg:    #142c4f;
-  --sidebar-bg-2:  #1d3b66;
-  --sidebar-ink:   #cbd8ea;
-  --sidebar-ink-2: #8ba1c0;
+  --surface-2:     #f8fafd;
+  --surface-3:     #eef2f9;
+  --sidebar-bg:    #101c3d;
+  --sidebar-bg-2:  #17295c;
+  --sidebar-ink:   #c3d0ea;
+  --sidebar-ink-2: #8595bd;
   --sidebar-hover: rgba(255, 255, 255, .07);
-  --sidebar-active: rgba(110, 165, 235, .22);
-  --text:          #16202e;
-  --text-2:        #47556a;
-  --text-3:        #738299;
-  --border:        #dbe2ea;
-  --border-2:      #c2ccd9;
-  --overlay:       rgba(14, 24, 38, .58);
-  --skeleton:      linear-gradient(90deg, #eaeef4 25%, #dde4ec 37%, #eaeef4 63%);
-  --chart-grid:    #e2e8f0;
+  --sidebar-active: rgba(63, 104, 236, .3);
+  --text:          #101a2e;
+  --text-2:        #46536e;
+  --text-3:        #6f7d96;
+  --border:        #e3e8f2;
+  --border-2:      #ccd5e6;
+  --overlay:       rgba(10, 18, 38, .58);
+  --skeleton:      linear-gradient(90deg, #eef2f9 25%, #e2e8f3 37%, #eef2f9 63%);
+  --chart-grid:    #e7ecf6;
 }
 
 [data-theme="dark"] {
   --primary:     #4d7bff;
   --primary-ink: #3f6ae8;
-  --primary-50:  #16223a;
-  --primary-100: #1c2c4c;
-  --primary-200: #264067;
-  --primary-600: #6d9ad6;
-  --primary-700: #9dbde8;
+  --primary-50:  #14203c;
+  --primary-100: #1a2a52;
+  --primary-200: #243b74;
+  --primary-600: #5d86f5;
+  --primary-700: #8aa8fa;
 
-  --bg:            #0d1320;
-  --bg-alt:        #121a2a;
-  --surface:       #141d2e;
-  --surface-2:     #192336;
-  --surface-3:     #1f2b40;
-  --sidebar-bg:    #070c16;
-  --sidebar-bg-2:  #101b2e;
-  --sidebar-ink:   #c7d4e6;
-  --sidebar-ink-2: #8296b4;
+  --bg:            #070c18;
+  --bg-alt:        #0b1223;
+  --surface:       #0e1729;
+  --surface-2:     #131f36;
+  --surface-3:     #182543;
+  --sidebar-bg:    #05090f;
+  --sidebar-bg-2:  #0c1730;
+  --sidebar-ink:   #b7c5e0;
+  --sidebar-ink-2: #7787a6;
   --sidebar-hover: rgba(255, 255, 255, .06);
-  --sidebar-active: rgba(110, 165, 235, .24);
-  --text:          #e7ecf4;
-  --text-2:        #adb9cb;
-  --text-3:        #8394ab;
-  --border:        #22304a;
-  --border-2:      #2f4059;
-  --overlay:       rgba(5, 9, 16, .72);
-  --skeleton:      linear-gradient(90deg, #192336 25%, #22304a 37%, #192336 63%);
-  --chart-grid:    #22304a;
+  --sidebar-active: rgba(93, 134, 245, .26);
+  --text:          #e9eefb;
+  --text-2:        #a9b6cf;
+  --text-3:        #7d8cab;
+  --border:        #1c2947;
+  --border-2:      #29395c;
+  --overlay:       rgba(3, 6, 14, .7);
+  --skeleton:      linear-gradient(90deg, #131f36 25%, #1b2946 37%, #131f36 63%);
+  --chart-grid:    #1c2947;
 
-  --success-soft: #142c1f; --danger-soft: #2c1a15; --warning-soft: #2a2413;
-  --info-soft:    #16223a; --neutral-soft: #1e2636;
+  --success-soft: #0c2a1c; --danger-soft: #2c1416; --warning-soft: #2b2110;
+  --info-soft:    #12203c; --neutral-soft: #172134;
+  --sh-xs: 0 1px 2px rgba(0, 0, 0, .45);
+  --sh-sm: 0 1px 3px rgba(0, 0, 0, .5);
+  --sh-md: 0 8px 22px rgba(0, 0, 0, .55);
+  --sh-lg: 0 24px 54px rgba(0, 0, 0, .65);
+  --sh-glow: 0 8px 22px rgba(36, 80, 216, .4);
   --sh-xs: 0 1px 2px rgba(0, 0, 0, .4);
   --sh-sm: 0 2px 6px rgba(0, 0, 0, .45);
   --sh-md: 0 8px 22px rgba(0, 0, 0, .5);
@@ -152,11 +159,11 @@ a { color: var(--primary); text-decoration: none; }
 a:hover { text-decoration: underline; }
 ul, ol { list-style: none; }
 table { border-collapse: collapse; width: 100%; }
-h1, h2, h3, h4, h5 { font-family: var(--font-display); line-height: 1.24; font-weight: 600; letter-spacing: 0; color: var(--text); }
-h1 { font-size: 1.72rem; }
-h2 { font-size: 1.3rem; }
-h3 { font-size: 1.08rem; }
-h4 { font-size: .98rem; }
+h1, h2, h3, h4, h5 { font-family: var(--font-display); line-height: 1.22; font-weight: 700; letter-spacing: -.021em; color: var(--text); }
+h1 { font-size: 1.66rem; }
+h2 { font-size: 1.24rem; }
+h3 { font-size: 1.05rem; }
+h4 { font-size: .95rem; }
 /* Numbers line up in tables and stat rows, the way a printed register does. */
 table, .stat-strip, .strip-item, .metric, .metric strong { font-variant-numeric: tabular-nums; }
 code, kbd, pre { font-family: var(--font-mono); font-size: .86em; }
@@ -243,10 +250,14 @@ hr { border: 0; border-top: 1px solid var(--border); }
 .login-brand {
   position: relative; overflow: hidden; padding: 54px 58px;
   display: flex; flex-direction: column; gap: 26px;
-  color: #e7edf7;
-  /* Flat navy with an azure rule: the club's letterhead, not a poster. */
-  background: #142c4f;
-  border-right: 4px solid var(--secondary-500);
+  color: #eaf1ff;
+  /* Deep gradient panel with cyan and indigo light: the club's own app, not a
+     blank form. Same recipe as the dashboard hero so the product feels whole. */
+  background:
+    radial-gradient(720px 520px at 84% 8%, rgba(6, 182, 212, .3), transparent 60%),
+    radial-gradient(680px 520px at 4% 98%, rgba(79, 70, 229, .42), transparent 62%),
+    linear-gradient(160deg, #0b1730 0%, #132a5e 50%, #1a1f6b 100%);
+  border-right: 0;
 }
 .login-brand::after {
   content: ""; position: absolute; inset: 0; pointer-events: none; opacity: .5;
@@ -272,7 +283,7 @@ hr { border: 0; border-top: 1px solid var(--border); }
 .brand-eyebrow { font-size: .74rem; letter-spacing: .2em; text-transform: uppercase; color: #8fb2e8; }
 .brand-name { font-size: clamp(1.5rem, 2.6vw, 2.05rem); letter-spacing: .04em; color: #fff; line-height: 1.1; }
 .brand-name span { color: #58d7f0; letter-spacing: .22em; font-size: .74em; }
-.login-tagline { font-size: 1rem; color: #bcc9dd; max-width: 52ch; }
+.login-tagline { font-size: 1rem; color: #bac9e6; max-width: 52ch; }
 .login-feature-list { display: grid; gap: 14px; margin-top: 4px; }
 .login-feature-list li { display: flex; gap: 14px; align-items: flex-start; }
 .lf-ico {
@@ -280,9 +291,9 @@ hr { border: 0; border-top: 1px solid var(--border); }
   background: rgba(255, 255, 255, .08); border: 1px solid rgba(255, 255, 255, .13);
 }
 .lf-ico svg { width: 19px; height: 19px; stroke: #6fdcf5; }
-.login-feature-list strong { display: block; color: #eef3fb; font-size: .93rem; font-weight: 600; }
-.login-feature-list div span { font-size: .82rem; color: #9cadc6; }
-.login-brand-foot { margin-top: auto; display: flex; align-items: center; gap: 9px; font-size: .78rem; color: #90a3c0; }
+.login-feature-list strong { display: block; color: #f2f6ff; font-size: .93rem; font-weight: 600; }
+.login-feature-list div span { font-size: .82rem; color: #9dafd0; }
+.login-brand-foot { margin-top: auto; display: flex; align-items: center; gap: 9px; font-size: .78rem; color: #93a6c9; }
 .login-brand-foot .dot { width: 8px; height: 8px; border-radius: 50%; background: #34d399; box-shadow: 0 0 0 4px rgba(52, 211, 153, .18); }
 
 .login-panel { display: grid; place-items: center; padding: 40px 28px; background: var(--bg); }

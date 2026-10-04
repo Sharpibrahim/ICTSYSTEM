@@ -10,7 +10,7 @@
   var U = Utils;
   var uidn = 0;
 
-  var DEFAULT_COLORS = ['#1d3f70', '#2f6ea8', '#4a90c2', '#3d5a80', '#2c6b45', '#8a6412', '#66748a', '#16325a', '#a1442c', '#4f74a6'];
+  var DEFAULT_COLORS = ['#2450d8', '#4f46e5', '#06b6d4', '#0f9d58', '#f59e0b', '#dc3d43', '#0891b2', '#7c3aed', '#22c55e', '#3f68ec'];
 
   function esc(s) { return String(s === undefined || s === null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;'); }
   function tipAttr(html) { return ' data-chart-tip="' + String(html).replace(/&/g, '&amp;').replace(/"/g, '&quot;') + '"'; }
@@ -223,7 +223,7 @@
       return [((W - 4) * i) / (vals.length - 1) + 2, H - 3 - ((v - min) / span) * (H - 8)];
     });
     var d = pts.map(function (p, i) { return (i ? 'L' : 'M') + p[0].toFixed(1) + ' ' + p[1].toFixed(1); }).join(' ');
-    var col = o.color || '#1d3f70';
+    var col = o.color || '#2450d8';
     var last = pts[pts.length - 1];
     return '<svg class="sparkline" width="' + W + '" height="' + H + '" viewBox="0 0 ' + W + ' ' + H + '" aria-hidden="true">' +
       '<path d="' + d + ' L ' + W + ' ' + H + ' L 0 ' + H + ' Z" fill="' + col + '" opacity="0.12"/>' +

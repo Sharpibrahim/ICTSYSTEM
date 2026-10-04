@@ -32,10 +32,10 @@
 
   /* ── Placeholder artwork (inline SVG, works offline) ──────────────────── */
   var ART = [
-    ['#1d3f70', '#4f74a6'], ['#142c4f', '#2f5688'], ['#2f6ea8', '#7fadd7'],
-    ['#3d5a80', '#6b8cae'], ['#16325a', '#4a90c2'], ['#24518f', '#7f9bc5'],
-    ['#2c6b45', '#7fae91'], ['#556a83', '#8ba1c0'], ['#1c3f6f', '#4a8cc2'],
-    ['#8a6412', '#c39a34']
+    ['#2450d8', '#3f68ec'], ['#4f46e5', '#6366f1'], ['#06b6d4', '#22d3ee'],
+    ['#0f9d58', '#34d399'], ['#0891b2', '#38bdf8'], ['#1b3788', '#3f68ec'],
+    ['#7c3aed', '#a78bfa'], ['#c07a09', '#f59e0b'], ['#0b7a44', '#22c55e'],
+    ['#3f68ec', '#22d3ee']
   ];
   function placeholder(label, idx, icon) {
     var pair = ART[(idx || 0) % ART.length];

@@ -690,105 +690,106 @@ endobj
 << /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 54 0 R >>
 endobj
 56 0 obj
-<< /Length 5679 >>
+<< /Length 5615 >>
 stream
 0.85 0.85 0.85 RG 0.8 w 62.00 54.00 m 533.00 54.00 l S
 BT /F2 15.00 Tf 0 0 0 rg 62.00 780.00 Td (24. Settings, users and data) Tj ET
 BT /F3 10.20 Tf 0 0 0 rg 62.00 756.00 Td (Club identity, appearance, accounts, notifications and backup.) Tj ET
-BT /F1 9.60 Tf 0 0 0 rg 62.00 734.00 Td (The platform is styled like the school's own stationery: club blue on cool paper: navy ink) Tj ET
-BT /F1 9.60 Tf 0 0 0 rg 72.00 719.50 Td (for actions, azure for emphasis, a book serif for headings and hairline rules on the tables.) Tj ET
-BT /F1 9.60 Tf 0 0 0 rg 72.00 705.00 Td (Choose light, dark or the system setting in Appearance; both themes follow the same palette.) Tj ET
-BT /F2 11.00 Tf 0 0 0 rg 62.00 682.50 Td (How to use it) Tj ET
-BT /F1 9.80 Tf 0 0 0 rg 62.00 664.50 Td (1.  Open Settings -> Club information to set the club name, school name, motto,) Tj ET
-BT /F1 9.80 Tf 0 0 0 rg 62.00 650.00 Td (    description, contact details, academic year, current term, term dates, currency and) Tj ET
-BT /F1 9.80 Tf 0 0 0 rg 62.00 635.50 Td (    document signatories. These values appear on certificates, ID cards, letters and) Tj ET
-BT /F1 9.80 Tf 0 0 0 rg 62.00 621.00 Td (    printed reports.) Tj ET
-BT /F1 9.80 Tf 0 0 0 rg 62.00 606.50 Td (2.  Use Appearance to pick light, dark or system theme and the accent colour.) Tj ET
-BT /F1 9.80 Tf 0 0 0 rg 62.00 592.00 Td (3.  In Users & roles create accounts for cabinet members: name, username, email, role,) Tj ET
-BT /F1 9.80 Tf 0 0 0 rg 62.00 577.50 Td (    linked member profile and password. Reset a password, change a role or deactivate an) Tj ET
-BT /F1 9.80 Tf 0 0 0 rg 62.00 563.00 Td (    account at any time.) Tj ET
-BT /F1 9.80 Tf 0 0 0 rg 62.00 548.50 Td (4.  The quickest way to change the background: open Certificates and click the Certificate) Tj ET
-BT /F1 9.80 Tf 0 0 0 rg 62.00 534.00 Td (    background button at the top of the page \(there is a second one on every certificate) Tj ET
-BT /F1 9.80 Tf 0 0 0 rg 62.00 519.50 Td (    page and inside every certificate preview\). The dialog shows the two built-in designs) Tj ET
-BT /F1 9.80 Tf 0 0 0 rg 62.00 505.00 Td (    - Cream & ornate is the club default, Navy & gold is the alternative - plus an Upload) Tj ET
-BT /F1 9.80 Tf 0 0 0 rg 62.00 490.50 Td (    my image button for your own PNG or JPEG up to 4 MB.) Tj ET
-BT /F1 9.80 Tf 0 0 0 rg 62.00 476.00 Td (5.  The same window is available in Settings -> Club information -> Certificate) Tj ET
-BT /F1 9.80 Tf 0 0 0 rg 62.00 461.50 Td (    background, where you can click either tile to switch designs, remove your image, or) Tj ET
-BT /F1 9.80 Tf 0 0 0 rg 62.00 447.00 Td (    preview a real certificate at any time. The design you pick applies to every) Tj ET
-BT /F1 9.80 Tf 0 0 0 rg 62.00 432.50 Td (    certificate, every print-out and every download.) Tj ET
-BT /F1 9.80 Tf 0 0 0 rg 62.00 418.00 Td (6.  If your background leaves its clear space somewhere else, use Align the content in the) Tj ET
-BT /F1 9.80 Tf 0 0 0 rg 62.00 403.50 Td (    same window: choose Top / Middle / Bottom and Left / Center / Right, nudge the block) Tj ET
-BT /F1 9.80 Tf 0 0 0 rg 62.00 389.00 Td (    sideways or up and down, and change the text size. A live sample certificate below the) Tj ET
-BT /F1 9.80 Tf 0 0 0 rg 62.00 374.50 Td (    controls updates as you drag, so you can see exactly where the name and signatures) Tj ET
-BT /F1 9.80 Tf 0 0 0 rg 62.00 360.00 Td (    will land. Reset alignment puts everything back in the centre.) Tj ET
-BT /F1 9.80 Tf 0 0 0 rg 62.00 345.50 Td (7.  In Notifications choose which alerts the app raises \(meetings, activities, tasks,) Tj ET
-BT /F1 9.80 Tf 0 0 0 rg 62.00 331.00 Td (    announcements, low attendance\) and set the low-attendance threshold.) Tj ET
-BT /F1 9.80 Tf 0 0 0 rg 62.00 316.50 Td (8.  In Data download a full JSON backup, restore from a backup \(merge or replace\), import) Tj ET
-BT /F1 9.80 Tf 0 0 0 rg 62.00 302.00 Td (    records from CSV, and reset or re-seed the demo data.) Tj ET
-BT /F2 11.00 Tf 0 0 0 rg 62.00 281.50 Td (Notes) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 263.50 Td (- Back up before every term. The app stores data in this browser only: clearing browsing) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 249.00 Td (  data deletes it unless you have a backup file.) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 234.50 Td (- Empty every module is the switch-over button: it deletes every record in every module so) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 220.00 Td (  the club starts on its own data. The sign-in accounts, club information, appearance, the) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 205.50 Td (  certificate design and the Firebase connection are kept, and the confirmation asks you) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 191.00 Td (  to type EMPTY so it cannot be pressed by accident. Press Sync now afterwards and the) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 176.50 Td (  shared database is emptied too.) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 162.00 Td (- Remove sample records deletes exactly the demonstration dataset the platform ships with,) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 147.50 Td (  so the club can start on its own records. The sign-in accounts are never touched, and) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 133.00 Td (  anything the club entered itself - including records an earlier version labelled as) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 118.50 Td (  sample data - is kept. Reload sample data puts the demonstration club back, and Reset) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 104.00 Td (  everything wipes this browser and rebuilds it.) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 89.50 Td (- Where to keep those backups \(and which cloud service to choose\) is set out in) Tj ET
+BT /F1 9.60 Tf 0 0 0 rg 62.00 734.00 Td (The platform is styled like the school's own stationery: a layered blue system: azure for) Tj ET
+BT /F1 9.60 Tf 0 0 0 rg 72.00 719.50 Td (actions, cyan for accents, indigo for secondary data, raised white cards, gradient data) Tj ET
+BT /F1 9.60 Tf 0 0 0 rg 72.00 705.00 Td (marks and quiet motion. Choose light, dark or the system setting in Appearance; both themes) Tj ET
+BT /F1 9.60 Tf 0 0 0 rg 72.00 690.50 Td (follow the same palette.) Tj ET
+BT /F2 11.00 Tf 0 0 0 rg 62.00 668.00 Td (How to use it) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 650.00 Td (1.  Open Settings -> Club information to set the club name, school name, motto,) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 635.50 Td (    description, contact details, academic year, current term, term dates, currency and) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 621.00 Td (    document signatories. These values appear on certificates, ID cards, letters and) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 606.50 Td (    printed reports.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 592.00 Td (2.  Use Appearance to pick light, dark or system theme and the accent colour.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 577.50 Td (3.  In Users & roles create accounts for cabinet members: name, username, email, role,) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 563.00 Td (    linked member profile and password. Reset a password, change a role or deactivate an) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 548.50 Td (    account at any time.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 534.00 Td (4.  The quickest way to change the background: open Certificates and click the Certificate) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 519.50 Td (    background button at the top of the page \(there is a second one on every certificate) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 505.00 Td (    page and inside every certificate preview\). The dialog shows the two built-in designs) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 490.50 Td (    - Cream & ornate is the club default, Navy & gold is the alternative - plus an Upload) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 476.00 Td (    my image button for your own PNG or JPEG up to 4 MB.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 461.50 Td (5.  The same window is available in Settings -> Club information -> Certificate) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 447.00 Td (    background, where you can click either tile to switch designs, remove your image, or) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 432.50 Td (    preview a real certificate at any time. The design you pick applies to every) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 418.00 Td (    certificate, every print-out and every download.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 403.50 Td (6.  If your background leaves its clear space somewhere else, use Align the content in the) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 389.00 Td (    same window: choose Top / Middle / Bottom and Left / Center / Right, nudge the block) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 374.50 Td (    sideways or up and down, and change the text size. A live sample certificate below the) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 360.00 Td (    controls updates as you drag, so you can see exactly where the name and signatures) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 345.50 Td (    will land. Reset alignment puts everything back in the centre.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 331.00 Td (7.  In Notifications choose which alerts the app raises \(meetings, activities, tasks,) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 316.50 Td (    announcements, low attendance\) and set the low-attendance threshold.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 302.00 Td (8.  In Data download a full JSON backup, restore from a backup \(merge or replace\), import) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 287.50 Td (    records from CSV, and reset or re-seed the demo data.) Tj ET
+BT /F2 11.00 Tf 0 0 0 rg 62.00 267.00 Td (Notes) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 249.00 Td (- Back up before every term. The app stores data in this browser only: clearing browsing) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 234.50 Td (  data deletes it unless you have a backup file.) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 220.00 Td (- Empty every module is the switch-over button: it deletes every record in every module so) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 205.50 Td (  the club starts on its own data. The sign-in accounts, club information, appearance, the) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 191.00 Td (  certificate design and the Firebase connection are kept, and the confirmation asks you) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 176.50 Td (  to type EMPTY so it cannot be pressed by accident. Press Sync now afterwards and the) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 162.00 Td (  shared database is emptied too.) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 147.50 Td (- Remove sample records deletes exactly the demonstration dataset the platform ships with,) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 133.00 Td (  so the club can start on its own records. The sign-in accounts are never touched, and) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 118.50 Td (  anything the club entered itself - including records an earlier version labelled as) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 104.00 Td (  sample data - is kept. Reload sample data puts the demonstration club back, and Reset) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 89.50 Td (  everything wipes this browser and rebuilds it.) Tj ET
 endstream
 endobj
 57 0 obj
 << /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 56 0 R >>
 endobj
 58 0 obj
-<< /Length 5178 >>
+<< /Length 5308 >>
 stream
 0.85 0.85 0.85 RG 0.8 w 62.00 54.00 m 533.00 54.00 l S
-BT /F1 9.40 Tf 0 0 0 rg 62.00 780.00 Td (  docs/CLOUD-STORAGE.md in the project folder: the short answer is a shared school Google) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 765.50 Td (  Drive folder with dated JSON backups every week, plus a USB copy and a printed termly) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 751.00 Td (  report.) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 736.50 Td (- The platform can also put the backup into Microsoft OneDrive for you: Settings -> Data) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 722.00 Td (  -> Cloud backup. Route one writes each backup into a folder you pick once - the OneDrive) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 707.50 Td (  \(or Drive\) folder on the PC - and the sync client uploads it. Route two signs in to the) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 693.00 Td (  school's Microsoft 365 account and uploads straight into the app's own OneDrive folder;) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 678.50 Td (  it needs a one-time app registration \(choose How to set it up in the same card, or read) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 664.00 Td (  docs/ONEDRIVE.md\). Whichever route you use, Restore from OneDrive / folder lists the) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 649.50 Td (  backups and loads one back, in merge or replace mode.) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 635.00 Td (- Backups never contain sign-in tokens, and the OneDrive connection only ever sees the app) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 620.50 Td (  folder Apps/MRHS ICT Club Master - never the rest of the school's drive.) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 606.00 Td (- Firebase shared database. When several officers must work on the same live records -) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 591.50 Td (  attendance on one phone, finance on the desktop - connect the club's own Firebase) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 577.00 Td (  project in the same card: the club's Project ID and Web API key are already filled in) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 562.50 Td (  \(overwrite them only if the club moves to a different Firebase project\), so press Save) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 548.00 Td (  connection details, then Connect Firebase and sign in with the club's Firebase account.) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 533.50 Td (  Sync now exchanges records; the switch Keep this device in sync automatically uploads) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 519.00 Td (  every change by itself and collects what the other officers changed within a few) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 504.50 Td (  minutes; Upload everything is for after a restore. Twenty-two collections are shared,) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 490.00 Td (  while users \(officer accounts\), auditLog, verifications and notifications never leave) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 475.50 Td (  the device.) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 461.00 Td (- Deletions are final. A record deleted here is marked as deleted immediately, so loading) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 446.50 Td (  from the shared database never brings it back; the deletion uploads on the next sync. A) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 432.00 Td (  record deleted by another officer is removed on this device too, unless it was edited) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 417.50 Td (  here after that - in which case the edit is kept and uploaded.) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 403.00 Td (- The app keeps working with no internet: edits are saved here first and uploaded when the) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 388.50 Td (  connection returns. Where two officers changed the same record, the later edit \(compared) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 374.00 Td (  by its updatedAt time\) wins, and a local edit newer than the shared copy is never thrown) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 359.50 Td (  away - it is uploaded on the next sync. Setup takes about twenty minutes once \(create) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 345.00 Td (  the project, create the Firestore database, enable Email/Password, paste the security) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 330.50 Td (  rules\); the step-by-step guide is in docs/FIREBASE.md and behind How to set it up in the) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 316.00 Td (  app. Other options - Supabase, PocketBase, Turso, a Sheets mirror - are compared in) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 301.50 Td (  docs/DATABASE-OPTIONS.md.) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 287.00 Td (- Restore in merge mode to add a backup's records to what is already there; replace mode) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 272.50 Td (  wipes first - the app asks for confirmation and shows how many records each option will) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 258.00 Td (  affect.) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 243.50 Td (- A user who forgets their password cannot recover it; an administrator resets it here and) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 229.00 Td (  tells them the new one.) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 214.50 Td (- Deactivating a user immediately ends their access without deleting the audit trail of) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 200.00 Td (  what they did.) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 780.00 Td (- Where to keep those backups \(and which cloud service to choose\) is set out in) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 765.50 Td (  docs/CLOUD-STORAGE.md in the project folder: the short answer is a shared school Google) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 751.00 Td (  Drive folder with dated JSON backups every week, plus a USB copy and a printed termly) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 736.50 Td (  report.) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 722.00 Td (- The platform can also put the backup into Microsoft OneDrive for you: Settings -> Data) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 707.50 Td (  -> Cloud backup. Route one writes each backup into a folder you pick once - the OneDrive) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 693.00 Td (  \(or Drive\) folder on the PC - and the sync client uploads it. Route two signs in to the) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 678.50 Td (  school's Microsoft 365 account and uploads straight into the app's own OneDrive folder;) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 664.00 Td (  it needs a one-time app registration \(choose How to set it up in the same card, or read) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 649.50 Td (  docs/ONEDRIVE.md\). Whichever route you use, Restore from OneDrive / folder lists the) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 635.00 Td (  backups and loads one back, in merge or replace mode.) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 620.50 Td (- Backups never contain sign-in tokens, and the OneDrive connection only ever sees the app) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 606.00 Td (  folder Apps/MRHS ICT Club Master - never the rest of the school's drive.) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 591.50 Td (- Firebase shared database. When several officers must work on the same live records -) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 577.00 Td (  attendance on one phone, finance on the desktop - connect the club's own Firebase) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 562.50 Td (  project in the same card: the club's Project ID and Web API key are already filled in) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 548.00 Td (  \(overwrite them only if the club moves to a different Firebase project\), so press Save) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 533.50 Td (  connection details, then Connect Firebase and sign in with the club's Firebase account.) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 519.00 Td (  Sync now exchanges records; the switch Keep this device in sync automatically uploads) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 504.50 Td (  every change by itself and collects what the other officers changed within a few) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 490.00 Td (  minutes; Upload everything is for after a restore. Twenty-two collections are shared,) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 475.50 Td (  while users \(officer accounts\), auditLog, verifications and notifications never leave) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 461.00 Td (  the device.) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 446.50 Td (- Deletions are final. A record deleted here is marked as deleted immediately, so loading) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 432.00 Td (  from the shared database never brings it back; the deletion uploads on the next sync. A) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 417.50 Td (  record deleted by another officer is removed on this device too, unless it was edited) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 403.00 Td (  here after that - in which case the edit is kept and uploaded.) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 388.50 Td (- The app keeps working with no internet: edits are saved here first and uploaded when the) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 374.00 Td (  connection returns. Where two officers changed the same record, the later edit \(compared) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 359.50 Td (  by its updatedAt time\) wins, and a local edit newer than the shared copy is never thrown) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 345.00 Td (  away - it is uploaded on the next sync. Setup takes about twenty minutes once \(create) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 330.50 Td (  the project, create the Firestore database, enable Email/Password, paste the security) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 316.00 Td (  rules\); the step-by-step guide is in docs/FIREBASE.md and behind How to set it up in the) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 301.50 Td (  app. Other options - Supabase, PocketBase, Turso, a Sheets mirror - are compared in) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 287.00 Td (  docs/DATABASE-OPTIONS.md.) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 272.50 Td (- Restore in merge mode to add a backup's records to what is already there; replace mode) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 258.00 Td (  wipes first - the app asks for confirmation and shows how many records each option will) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 243.50 Td (  affect.) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 229.00 Td (- A user who forgets their password cannot recover it; an administrator resets it here and) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 214.50 Td (  tells them the new one.) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 200.00 Td (- Deactivating a user immediately ends their access without deleting the audit trail of) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 185.50 Td (  what they did.) Tj ET
 endstream
 endobj
 59 0 obj
@@ -915,19 +916,19 @@ xref
 0000051680 00000 n 
 0000053201 00000 n 
 0000053349 00000 n 
-0000059081 00000 n 
-0000059229 00000 n 
-0000064460 00000 n 
-0000064608 00000 n 
-0000066327 00000 n 
-0000066475 00000 n 
-0000067216 00000 n 
-0000067364 00000 n 
-0000067643 00000 n 
-0000067791 00000 n 
-0000068051 00000 n 
+0000059017 00000 n 
+0000059165 00000 n 
+0000064526 00000 n 
+0000064674 00000 n 
+0000066393 00000 n 
+0000066541 00000 n 
+0000067282 00000 n 
+0000067430 00000 n 
+0000067709 00000 n 
+0000067857 00000 n 
+0000068117 00000 n 
 trailer
 << /Size 68 /Root 1 0 R >>
 startxref
-68199
+68265
 %%EOF
