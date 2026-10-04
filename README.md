@@ -28,10 +28,21 @@ This takes a moment on the boot screen. Everything can be wiped or re-seeded fro
 
 ---
 
-## Demo sign-in
+## Signing in
 
-Every demo account uses the password **`demo1234`**. The login screen has one-tap buttons for
-each role.
+The eight club accounts (Administrator, Patron, President, Secretary, Treasurer, Training
+Coordinator, Project Coordinator, Member) ship with the demonstration password **`demo1234`**, so
+that a fresh copy of the app can be opened before the club has set anything up. The login screen
+shows a **First-time setup** panel listing exactly those accounts while any of them still uses it.
+
+The first time an officer signs in they are required to choose a password of their own — at least
+8 characters, mixing letters and numbers — and the demonstration password can never be chosen.
+Once every account has its own password the panel disappears. Use **Settings → Users** (administrators
+only) to add officers or to issue a one-time password when somebody forgets theirs; the app shows it
+once so it can be handed over in person.
+
+Who changed what is recorded in the **audit trail** (My Account → *My recent activity*, or the full
+trail under Settings → Data → **Audit trail**).
 
 | Username | Role | What they can do |
 |---|---|---|

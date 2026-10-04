@@ -121,6 +121,56 @@
   function connected() { var t = tokens(); return !!(t && t.refreshToken); }
   function account() { var t = tokens(); return (t && (t.email || t.localId)) || ''; }
 
+  /** Publishes this officer's role so the club's Firestore rules can allow or
+   *  refuse writes per account (see docs/FIREBASE.md). The document lives at
+   *  roles/{firebaseUid} and only the owner may write it; the rules read it as
+   *  the write claim. Sent on connect and whenever the local role changes. */
+  function roleClaim() {
+    var user = (global.Auth && Auth.currentUser && Auth.currentUser()) || null;
+    if (!user) return null;
+    var writeLevels = ['manage', 'full'];
+    var canWrite = false;
+    try {
+      canWrite = Store.COLLECTIONS.some(function (c) {
+        var level = Auth.level ? Auth.level(user.role, c) : 'none';
+        return writeLevels.indexOf(level) > -1;
+      });
+    } catch (e) { canWrite = user.role === 'Administrator'; }
+    return {
+      role: user.role,
+      name: user.name,
+      email: user.email || '',
+      canWrite: canWrite,
+      updatedAt: new Date().toISOString()
+    };
+  }
+
+  /** Sends the role claim unless it is unchanged since the last send. */
+  function pushRoleClaim(opts) {
+    opts = opts || {};
+    var t = tokens();
+    var claim = roleClaim();
+    if (!t || !t.localId || !claim) return Promise.resolve(false);
+    var state = readState();
+    var fingerprint = claim.role + '|' + claim.canWrite + '|' + claim.name;
+    if (!opts.force && state.claim === fingerprint) return Promise.resolve(false);
+    if (!online()) return Promise.resolve(false);
+    return call('documents:commit', {
+      method: 'POST',
+      body: { writes: [{ update: { name: docName('roles', t.localId), fields: toFields(claim) } }] }
+    }).then(function () {
+      var st = readState();
+      st.claim = fingerprint;
+      writeState(st);
+      return true;
+    })['catch'](function (err) {
+      /* The claim is a convenience, never a blocker: the rules may already
+         allow the account, or the connection may be offline. */
+      if (opts.quiet !== true) console.warn('[Sync] role claim not stored:', err && err.message);
+      return false;
+    });
+  }
+
   /** Signs an officer in with a Firebase Authentication account. */
   function signIn(email, password) {
     if (!configured()) {
@@ -143,6 +193,7 @@
           email: json.email || email, expiresIn: json.expiresIn
         });
         toast('Firebase connected', 'Signed in as ' + (json.email || email) + '. Records can now be shared with the other officers.', 'success');
+        pushRoleClaim({ quiet: true });          /* publish this officer's rights */
         return true;
       });
     })['catch'](function (err) {
@@ -526,7 +577,7 @@
   /** Upload local edits, then bring back anything the other officers changed. */
   function sync(opts) {
     opts = opts || {};
-    return push(opts).then(function (up) {
+    return pushRoleClaim({ quiet: true }).then(function () { return push(opts); }).then(function (up) {
       if (up.error || up.offline) return up;
       return pull(opts).then(function (down) {
         return {
@@ -631,6 +682,7 @@
     configured: configured, saveConfig: saveConfig,
     connected: connected, account: account, signIn: signIn, signOut: signOut,
     push: push, pull: pull, sync: sync, pending: pending, diff: diff,
+    roleClaim: roleClaim, pushRoleClaim: pushRoleClaim,
     setAuto: setAuto, schedule: schedule, maybePull: maybePull,
     /* constants + helpers used by the settings screen and the tests */
     localOnly: LOCAL_ONLY, batchSize: BATCH, pageSize: PAGE, autoDelay: AUTO_DELAY,

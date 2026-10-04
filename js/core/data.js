@@ -213,14 +213,14 @@
   /* ── Users (demo accounts) ────────────────────────────────────────────── */
   function buildUsers() {
     return [
-      { id: 'usr-01', demo: true, username: 'admin', email: 'admin@mrhsict.ac.ug', name: 'System Administrator', role: 'Administrator', password: 'demo1234', memberId: null, status: 'Active', phone: '+256 700 100 001', lastLogin: day(-1) },
-      { id: 'usr-02', demo: true, username: 'patron', email: 'patron@mrhsict.ac.ug', name: 'Mr. Julius Kagimu', role: 'Patron', password: 'demo1234', memberId: 'staff-01', status: 'Active', phone: '+256 700 100 002', lastLogin: day(-2) },
-      { id: 'usr-03', demo: true, username: 'president', email: 'president@mrhsict.ac.ug', name: 'Ibrahim Ssemakula', role: 'President', password: 'demo1234', memberId: 'mem-001A', status: 'Active', lastLogin: day(0) },
-      { id: 'usr-04', demo: true, username: 'secretary', email: 'secretary@mrhsict.ac.ug', name: 'Grace Nakato', role: 'Secretary', password: 'demo1234', memberId: 'mem-003A', status: 'Active', lastLogin: day(-1) },
-      { id: 'usr-05', demo: true, username: 'treasurer', email: 'treasurer@mrhsict.ac.ug', name: 'Denis Ochieng', role: 'Treasurer', password: 'demo1234', memberId: 'mem-004A', status: 'Active', lastLogin: day(-3) },
-      { id: 'usr-06', demo: true, username: 'training', email: 'training@mrhsict.ac.ug', name: 'Martha Nabirye', role: 'Training Coordinator', password: 'demo1234', memberId: 'mem-007A', status: 'Active', lastLogin: day(-1) },
-      { id: 'usr-07', demo: true, username: 'projects', email: 'projects@mrhsict.ac.ug', name: 'Emmanuel Mugisha', role: 'Project Coordinator', password: 'demo1234', memberId: 'mem-006A', status: 'Active', lastLogin: day(-2) },
-      { id: 'usr-08', demo: true, username: 'member', email: 'member@mrhsict.ac.ug', name: 'Rebecca Kirabo', role: 'Member', password: 'demo1234', memberId: 'mem-014A', status: 'Active', lastLogin: day(-4) }
+      { id: 'usr-01', demo: true, username: 'admin', email: 'admin@mrhsict.ac.ug', name: 'System Administrator', role: 'Administrator', password: 'demo1234', mustChangePassword: true, memberId: null, status: 'Active', phone: '+256 700 100 001', lastLogin: day(-1) },
+      { id: 'usr-02', demo: true, username: 'patron', email: 'patron@mrhsict.ac.ug', name: 'Mr. Julius Kagimu', role: 'Patron', password: 'demo1234', mustChangePassword: true, memberId: 'staff-01', status: 'Active', phone: '+256 700 100 002', lastLogin: day(-2) },
+      { id: 'usr-03', demo: true, username: 'president', email: 'president@mrhsict.ac.ug', name: 'Ibrahim Ssemakula', role: 'President', password: 'demo1234', mustChangePassword: true, memberId: 'mem-001A', status: 'Active', lastLogin: day(0) },
+      { id: 'usr-04', demo: true, username: 'secretary', email: 'secretary@mrhsict.ac.ug', name: 'Grace Nakato', role: 'Secretary', password: 'demo1234', mustChangePassword: true, memberId: 'mem-003A', status: 'Active', lastLogin: day(-1) },
+      { id: 'usr-05', demo: true, username: 'treasurer', email: 'treasurer@mrhsict.ac.ug', name: 'Denis Ochieng', role: 'Treasurer', password: 'demo1234', mustChangePassword: true, memberId: 'mem-004A', status: 'Active', lastLogin: day(-3) },
+      { id: 'usr-06', demo: true, username: 'training', email: 'training@mrhsict.ac.ug', name: 'Martha Nabirye', role: 'Training Coordinator', password: 'demo1234', mustChangePassword: true, memberId: 'mem-007A', status: 'Active', lastLogin: day(-1) },
+      { id: 'usr-07', demo: true, username: 'projects', email: 'projects@mrhsict.ac.ug', name: 'Emmanuel Mugisha', role: 'Project Coordinator', password: 'demo1234', mustChangePassword: true, memberId: 'mem-006A', status: 'Active', lastLogin: day(-2) },
+      { id: 'usr-08', demo: true, username: 'member', email: 'member@mrhsict.ac.ug', name: 'Rebecca Kirabo', role: 'Member', password: 'demo1234', mustChangePassword: true, memberId: 'mem-014A', status: 'Active', lastLogin: day(-4) }
     ];
   }
 

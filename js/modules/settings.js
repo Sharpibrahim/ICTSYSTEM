@@ -189,10 +189,13 @@
             '<div class="strip-item"><span>Records</span><strong>' + stats.total + '</strong></div>' +
             '<div class="strip-item"><span>Local data</span><strong>' + stats.readable + '</strong></div>' +
             '<div class="strip-item"><span>Collections</span><strong>' + rows.length + '</strong></div>' +
+            '<div class="strip-item"><span>Audit entries</span><strong>' + Store.count('auditLog') + '</strong></div>' +
           '</div>' +
           '<div class="flex gap-1 wrap">' +
             '<button type="button" class="btn btn-primary" data-set="export">' + Icons.svg('download', { class: 'btn-ico' }) + 'Export backup (JSON)</button>' +
             '<button type="button" class="btn btn-outline" data-set="import">' + Icons.svg('upload', { class: 'btn-ico' }) + 'Import backup</button>' +
+            (Auth.can('settings', 'delete')
+              ? '<a class="btn btn-outline" href="#/audit">' + Icons.svg('history', { class: 'btn-ico' }) + 'Audit trail</a>' : '') +
           '</div>' +
           '<div class="alert alert-info mt-2">' + Icons.svg('info') +
             '<div>Backups include members, meetings, attendance, finances, certificates and settings. Import can merge with existing data or replace it completely.</div></div>' +
@@ -805,7 +808,7 @@
         { name: 'memberId', label: 'Linked member record', type: 'member', value: editing ? user.memberId : '', colSpan: 2, help: 'Link the account to a member so they can see their own records.' },
         { name: 'phone', label: 'Telephone', type: 'text', value: editing ? user.phone : '' },
         { name: 'status', label: 'Status', type: 'select', options: ['Active', 'Suspended'], value: editing ? (user.status || 'Active') : 'Active' },
-        (!editing ? { name: 'password', label: 'Initial password', type: 'text', required: true, value: 'demo1234', colSpan: 2, help: 'The user can change this after signing in.' } : { name: 'note', type: 'static', label: 'Password', value: 'Use “Reset password” to issue a new password.', colSpan: 2 })
+        (!editing ? { name: 'password', label: 'Temporary password', type: 'text', required: true, value: Auth.tempPassword(), colSpan: 2, help: 'Hand this over in person. The officer must choose a password of their own the first time they sign in.' } : { name: 'note', label: 'Password', value: 'Use the key button to issue a fresh temporary password.', colSpan: 2 })
       ]),
       submitLabel: editing ? 'Save account' : 'Create account',
       onOpen: function (c, form) { Forms.init(form); },
@@ -820,8 +823,8 @@
           return true;
         }
         Auth.createUser(data).then(function () {
-          UI.toast('User created', data.name + ' can now sign in as ' + data.role + '.', 'success');
           Router.refresh();
+          handOverPassword(data, data.password);
         }).catch(function (err) {
           UI.toast('Could not create user', err.message, 'error');
         });
@@ -830,18 +833,41 @@
     });
   }
 
+  /** Shows the one-time password once, with a copy button, because there is no
+   *  email service: the administrator hands it over in person. */
+  function handOverPassword(person, password) {
+    UI.modal({
+      title: 'Temporary password', subtitle: (person.name || person.username) + ' — ' + (person.role || ''),
+      icon: 'key', size: 'sm',
+      body: '<p class="muted">Give this password to ' + U.esc(person.name || person.username) +
+        ' in person or by telephone. It works for one sign-in only: the app then asks them to choose a password of their own.</p>' +
+        '<div class="code-block mono" id="temp-pass">' + U.esc(password) + '</div>' +
+        '<div class="alert alert-warning mt-2">' + Icons.svg('alert-triangle') +
+        '<div>Do not send it in a public group chat, and never write it on the notice board. If it is lost, reset it again.</div></div>',
+      actions: [
+        { label: 'Copy the password', variant: 'outline', onClick: function () {
+            Utils.copyToClipboard(password).then(function () { UI.toast('Copied', 'The temporary password is on your clipboard.', 'success'); });
+          } },
+        { label: 'Done', variant: 'primary' }
+      ]
+    });
+  }
+
   function resetPassword(user) {
     if (!CRUD.guard('settings', 'edit')) return;
+    var suggested = Auth.tempPassword();
     UI.formModal({
-      title: 'Reset password', subtitle: user ? user.name : '', icon: 'key', size: 'sm',
+      title: 'New password for ' + (user ? user.name : ''), subtitle: 'Issues a one-time password', icon: 'key', size: 'sm',
       formHtml: Forms.render([
-        { name: 'password', label: 'New password', type: 'text', required: true, value: 'demo1234', colSpan: 2, help: 'At least 6 characters. Share it with the user securely.' }
+        { name: 'password', label: 'Temporary password', type: 'text', required: true, value: suggested, colSpan: 2,
+          help: 'At least 8 characters, mixing letters and numbers. ' + (user ? user.name.split(' ')[0] : 'The officer') + ' must choose their own the moment they sign in.' }
       ]),
-      submitLabel: 'Set new password',
+      submitLabel: 'Issue the temporary password',
       onOpen: function (c, form) { Forms.init(form); },
       onSubmit: function (data) {
         Auth.resetPassword(user.id, data.password).then(function () {
-          UI.toast('Password reset', 'A new password has been set for ' + user.name + '.', 'success');
+          Router.refresh();
+          handOverPassword(user, data.password);
         }).catch(function (err) {
           UI.toast('Reset failed', err.message, 'error');
         });

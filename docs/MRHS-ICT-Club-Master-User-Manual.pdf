@@ -3,7 +3,7 @@
 << /Type /Catalog /Pages 2 0 R >>
 endobj
 2 0 obj
-<< /Type /Pages /Count 31 /Kids [7 0 R 9 0 R 11 0 R 13 0 R 15 0 R 17 0 R 19 0 R 21 0 R 23 0 R 25 0 R 27 0 R 29 0 R 31 0 R 33 0 R 35 0 R 37 0 R 39 0 R 41 0 R 43 0 R 45 0 R 47 0 R 49 0 R 51 0 R 53 0 R 55 0 R 57 0 R 59 0 R 61 0 R 63 0 R 65 0 R 67 0 R] >>
+<< /Type /Pages /Count 33 /Kids [7 0 R 9 0 R 11 0 R 13 0 R 15 0 R 17 0 R 19 0 R 21 0 R 23 0 R 25 0 R 27 0 R 29 0 R 31 0 R 33 0 R 35 0 R 37 0 R 39 0 R 41 0 R 43 0 R 45 0 R 47 0 R 49 0 R 51 0 R 53 0 R 55 0 R 57 0 R 59 0 R 61 0 R 63 0 R 65 0 R 67 0 R 69 0 R 71 0 R] >>
 endobj
 3 0 obj
 << /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
@@ -25,14 +25,14 @@ BT /F1 10.50 Tf 0 0 0 rg 62.00 550.00 Td (Every module, in the order you will us
 BT /F1 10.00 Tf 0 0 0 rg 62.00 490.00 Td (Academic year / term: Term 3 2026) Tj ET
 BT /F1 10.00 Tf 0 0 0 rg 62.00 475.50 Td (Generated 2026-10-04 from the built-in administrator handbook) Tj ET
 BT /F1 10.00 Tf 0 0 0 rg 62.00 461.00 Td (This manual is also available inside the app under "User Manual".) Tj ET
-BT /F2 10.50 Tf 0 0 0 rg 62.00 421.00 Td (28 sections) Tj ET
+BT /F2 10.50 Tf 0 0 0 rg 62.00 421.00 Td (29 sections) Tj ET
 endstream
 endobj
 7 0 obj
 << /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 6 0 R >>
 endobj
 8 0 obj
-<< /Length 2058 >>
+<< /Length 2143 >>
 stream
 0.85 0.85 0.85 RG 0.8 w 62.00 54.00 m 533.00 54.00 l S
 BT /F2 15.00 Tf 0 0 0 rg 62.00 780.00 Td (Contents) Tj ET
@@ -60,17 +60,18 @@ BT /F1 10.20 Tf 0 0 0 rg 62.00 464.00 Td (21.  Gallery) Tj ET
 BT /F1 10.20 Tf 0 0 0 rg 62.00 449.50 Td (22.  Documents) Tj ET
 BT /F1 10.20 Tf 0 0 0 rg 62.00 435.00 Td (23.  Analytics) Tj ET
 BT /F1 10.20 Tf 0 0 0 rg 62.00 420.50 Td (24.  Settings, users and data) Tj ET
-BT /F1 10.20 Tf 0 0 0 rg 62.00 406.00 Td (25.  Search, notifications and shortcuts) Tj ET
-BT /F1 10.20 Tf 0 0 0 rg 62.00 391.50 Td (26.  Term routines and best practice) Tj ET
-BT /F1 10.20 Tf 0 0 0 rg 62.00 377.00 Td (27.  Troubleshooting and FAQ) Tj ET
-BT /F1 10.20 Tf 0 0 0 rg 62.00 362.50 Td (28.  Glossary) Tj ET
+BT /F1 10.20 Tf 0 0 0 rg 62.00 406.00 Td (25.  My account and the audit trail) Tj ET
+BT /F1 10.20 Tf 0 0 0 rg 62.00 391.50 Td (26.  Search, notifications and shortcuts) Tj ET
+BT /F1 10.20 Tf 0 0 0 rg 62.00 377.00 Td (27.  Term routines and best practice) Tj ET
+BT /F1 10.20 Tf 0 0 0 rg 62.00 362.50 Td (28.  Troubleshooting and FAQ) Tj ET
+BT /F1 10.20 Tf 0 0 0 rg 62.00 348.00 Td (29.  Glossary) Tj ET
 endstream
 endobj
 9 0 obj
 << /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 8 0 R >>
 endobj
 10 0 obj
-<< /Length 3009 >>
+<< /Length 3496 >>
 stream
 0.85 0.85 0.85 RG 0.8 w 62.00 54.00 m 533.00 54.00 l S
 BT /F2 15.00 Tf 0 0 0 rg 62.00 780.00 Td (1. Getting started) Tj ET
@@ -83,23 +84,27 @@ BT /F1 9.80 Tf 0 0 0 rg 62.00 664.50 Td (1.  Open the app. The boot screen loads
 BT /F1 9.80 Tf 0 0 0 rg 62.00 650.00 Td (    dataset and takes a few seconds\).) Tj ET
 BT /F1 9.80 Tf 0 0 0 rg 62.00 635.50 Td (2.  On the login screen enter your username or email and password, then click Sign in.) Tj ET
 BT /F1 9.80 Tf 0 0 0 rg 62.00 621.00 Td (    Tick Remember me on a private device so you stay signed in.) Tj ET
-BT /F1 9.80 Tf 0 0 0 rg 62.00 606.50 Td (3.  Forgot a password? Click Forgot password? to see who to contact \(the club) Tj ET
-BT /F1 9.80 Tf 0 0 0 rg 62.00 592.00 Td (    administrator\) - passwords are stored as hashes and cannot be read back.) Tj ET
-BT /F1 9.80 Tf 0 0 0 rg 62.00 577.50 Td (4.  The first demo sign-in button below the form fills the credentials for you; every demo) Tj ET
-BT /F1 9.80 Tf 0 0 0 rg 62.00 563.00 Td (    account uses the password demo1234.) Tj ET
-BT /F1 9.80 Tf 0 0 0 rg 62.00 548.50 Td (5.  After signing in you land on the Dashboard. The left sidebar lists every module you) Tj ET
-BT /F1 9.80 Tf 0 0 0 rg 62.00 534.00 Td (    are allowed to open; the top bar holds global search, the theme switch, notifications) Tj ET
-BT /F1 9.80 Tf 0 0 0 rg 62.00 519.50 Td (    and your account menu.) Tj ET
-BT /F1 9.80 Tf 0 0 0 rg 62.00 505.00 Td (6.  Press Ctrl+K \(or ?+K on a Mac\) at any time to search the whole database.) Tj ET
-BT /F2 11.00 Tf 0 0 0 rg 62.00 484.50 Td (Notes) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 466.50 Td (- The sidebar collapses into a drawer on phones and tablets - tap the menu icon in the top) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 452.00 Td (  bar.) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 437.50 Td (- Every module page starts with headline numbers, then filters, then the record table.) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 423.00 Td (  Detail pages open when you click a record name.) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 408.50 Td (- Dark mode, light mode or follow the operating system: top-bar moon icon, or Settings ->) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 394.00 Td (  Appearance.) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 379.50 Td (- The footer shows the club name, the academic year and how many records are stored in) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 365.00 Td (  total.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 606.50 Td (3.  Forgot a password? Click Forgot password? for the real procedure: there is no email) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 592.00 Td (    server, so the administrator issues a one-time password from Settings -> Users -> key) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 577.50 Td (    button and hands it over in person. Passwords are stored as hashes and cannot be read) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 563.00 Td (    back.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 548.50 Td (4.  Still on the shipped demonstration password? A First-time setup panel below the form) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 534.00 Td (    lists the accounts that are; tap one to sign in, then choose a password of your own -) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 519.50 Td (    the app insists on it before it opens the club records. Once every officer has done so) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 505.00 Td (    the panel disappears for good.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 490.50 Td (5.  After signing in you land on the Dashboard. The left sidebar lists every module you) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 476.00 Td (    are allowed to open; the top bar holds global search, the theme switch, notifications) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 461.50 Td (    and your account menu.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 447.00 Td (6.  Press Ctrl+K \(or ?+K on a Mac\) at any time to search the whole database.) Tj ET
+BT /F2 11.00 Tf 0 0 0 rg 62.00 426.50 Td (Notes) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 408.50 Td (- The sidebar collapses into a drawer on phones and tablets - tap the menu icon in the top) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 394.00 Td (  bar.) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 379.50 Td (- Every module page starts with headline numbers, then filters, then the record table.) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 365.00 Td (  Detail pages open when you click a record name.) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 350.50 Td (- Dark mode, light mode or follow the operating system: top-bar moon icon, or Settings ->) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 336.00 Td (  Appearance.) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 321.50 Td (- The footer shows the club name, the academic year and how many records are stored in) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 307.00 Td (  total.) Tj ET
 endstream
 endobj
 11 0 obj
@@ -690,7 +695,7 @@ endobj
 << /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 54 0 R >>
 endobj
 56 0 obj
-<< /Length 5615 >>
+<< /Length 5701 >>
 stream
 0.85 0.85 0.85 RG 0.8 w 62.00 54.00 m 533.00 54.00 l S
 BT /F2 15.00 Tf 0 0 0 rg 62.00 780.00 Td (24. Settings, users and data) Tj ET
@@ -706,100 +711,160 @@ BT /F1 9.80 Tf 0 0 0 rg 62.00 621.00 Td (    document signatories. These values 
 BT /F1 9.80 Tf 0 0 0 rg 62.00 606.50 Td (    printed reports.) Tj ET
 BT /F1 9.80 Tf 0 0 0 rg 62.00 592.00 Td (2.  Use Appearance to pick light, dark or system theme and the accent colour.) Tj ET
 BT /F1 9.80 Tf 0 0 0 rg 62.00 577.50 Td (3.  In Users & roles create accounts for cabinet members: name, username, email, role,) Tj ET
-BT /F1 9.80 Tf 0 0 0 rg 62.00 563.00 Td (    linked member profile and password. Reset a password, change a role or deactivate an) Tj ET
-BT /F1 9.80 Tf 0 0 0 rg 62.00 548.50 Td (    account at any time.) Tj ET
-BT /F1 9.80 Tf 0 0 0 rg 62.00 534.00 Td (4.  The quickest way to change the background: open Certificates and click the Certificate) Tj ET
-BT /F1 9.80 Tf 0 0 0 rg 62.00 519.50 Td (    background button at the top of the page \(there is a second one on every certificate) Tj ET
-BT /F1 9.80 Tf 0 0 0 rg 62.00 505.00 Td (    page and inside every certificate preview\). The dialog shows the two built-in designs) Tj ET
-BT /F1 9.80 Tf 0 0 0 rg 62.00 490.50 Td (    - Cream & ornate is the club default, Navy & gold is the alternative - plus an Upload) Tj ET
-BT /F1 9.80 Tf 0 0 0 rg 62.00 476.00 Td (    my image button for your own PNG or JPEG up to 4 MB.) Tj ET
-BT /F1 9.80 Tf 0 0 0 rg 62.00 461.50 Td (5.  The same window is available in Settings -> Club information -> Certificate) Tj ET
-BT /F1 9.80 Tf 0 0 0 rg 62.00 447.00 Td (    background, where you can click either tile to switch designs, remove your image, or) Tj ET
-BT /F1 9.80 Tf 0 0 0 rg 62.00 432.50 Td (    preview a real certificate at any time. The design you pick applies to every) Tj ET
-BT /F1 9.80 Tf 0 0 0 rg 62.00 418.00 Td (    certificate, every print-out and every download.) Tj ET
-BT /F1 9.80 Tf 0 0 0 rg 62.00 403.50 Td (6.  If your background leaves its clear space somewhere else, use Align the content in the) Tj ET
-BT /F1 9.80 Tf 0 0 0 rg 62.00 389.00 Td (    same window: choose Top / Middle / Bottom and Left / Center / Right, nudge the block) Tj ET
-BT /F1 9.80 Tf 0 0 0 rg 62.00 374.50 Td (    sideways or up and down, and change the text size. A live sample certificate below the) Tj ET
-BT /F1 9.80 Tf 0 0 0 rg 62.00 360.00 Td (    controls updates as you drag, so you can see exactly where the name and signatures) Tj ET
-BT /F1 9.80 Tf 0 0 0 rg 62.00 345.50 Td (    will land. Reset alignment puts everything back in the centre.) Tj ET
-BT /F1 9.80 Tf 0 0 0 rg 62.00 331.00 Td (7.  In Notifications choose which alerts the app raises \(meetings, activities, tasks,) Tj ET
-BT /F1 9.80 Tf 0 0 0 rg 62.00 316.50 Td (    announcements, low attendance\) and set the low-attendance threshold.) Tj ET
-BT /F1 9.80 Tf 0 0 0 rg 62.00 302.00 Td (8.  In Data download a full JSON backup, restore from a backup \(merge or replace\), import) Tj ET
-BT /F1 9.80 Tf 0 0 0 rg 62.00 287.50 Td (    records from CSV, and reset or re-seed the demo data.) Tj ET
-BT /F2 11.00 Tf 0 0 0 rg 62.00 267.00 Td (Notes) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 249.00 Td (- Back up before every term. The app stores data in this browser only: clearing browsing) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 234.50 Td (  data deletes it unless you have a backup file.) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 220.00 Td (- Empty every module is the switch-over button: it deletes every record in every module so) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 205.50 Td (  the club starts on its own data. The sign-in accounts, club information, appearance, the) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 191.00 Td (  certificate design and the Firebase connection are kept, and the confirmation asks you) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 176.50 Td (  to type EMPTY so it cannot be pressed by accident. Press Sync now afterwards and the) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 162.00 Td (  shared database is emptied too.) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 147.50 Td (- Remove sample records deletes exactly the demonstration dataset the platform ships with,) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 133.00 Td (  so the club can start on its own records. The sign-in accounts are never touched, and) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 118.50 Td (  anything the club entered itself - including records an earlier version labelled as) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 104.00 Td (  sample data - is kept. Reload sample data puts the demonstration club back, and Reset) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 89.50 Td (  everything wipes this browser and rebuilds it.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 563.00 Td (    linked member profile and temporary password. The app proposes a one-time password) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 548.50 Td (    \(for example MRHS-kfq4a29\) and shows it once, with a copy button, so you can hand it) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 534.00 Td (    over in person - there is no email server. The officer must replace it with a password) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 519.50 Td (    of their own the first time they sign in. Change a role, issue a fresh temporary) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 505.00 Td (    password with the key button, or suspend an account at any time.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 490.50 Td (4.  The quickest way to change the background: open Certificates and click the Certificate) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 476.00 Td (    background button at the top of the page \(there is a second one on every certificate) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 461.50 Td (    page and inside every certificate preview\). The dialog shows the two built-in designs) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 447.00 Td (    - Cream & ornate is the club default, Navy & gold is the alternative - plus an Upload) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 432.50 Td (    my image button for your own PNG or JPEG up to 4 MB.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 418.00 Td (5.  The same window is available in Settings -> Club information -> Certificate) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 403.50 Td (    background, where you can click either tile to switch designs, remove your image, or) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 389.00 Td (    preview a real certificate at any time. The design you pick applies to every) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 374.50 Td (    certificate, every print-out and every download.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 360.00 Td (6.  If your background leaves its clear space somewhere else, use Align the content in the) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 345.50 Td (    same window: choose Top / Middle / Bottom and Left / Center / Right, nudge the block) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 331.00 Td (    sideways or up and down, and change the text size. A live sample certificate below the) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 316.50 Td (    controls updates as you drag, so you can see exactly where the name and signatures) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 302.00 Td (    will land. Reset alignment puts everything back in the centre.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 287.50 Td (7.  In Notifications choose which alerts the app raises \(meetings, activities, tasks,) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 273.00 Td (    announcements, low attendance\) and set the low-attendance threshold.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 258.50 Td (8.  In Data download a full JSON backup, restore from a backup \(merge or replace\), import) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 244.00 Td (    records from CSV, and reset or re-seed the demo data.) Tj ET
+BT /F2 11.00 Tf 0 0 0 rg 62.00 223.50 Td (Notes) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 205.50 Td (- Back up before every term. The app stores data in this browser only: clearing browsing) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 191.00 Td (  data deletes it unless you have a backup file.) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 176.50 Td (- Empty every module is the switch-over button: it deletes every record in every module so) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 162.00 Td (  the club starts on its own data. The sign-in accounts, club information, appearance, the) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 147.50 Td (  certificate design and the Firebase connection are kept, and the confirmation asks you) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 133.00 Td (  to type EMPTY so it cannot be pressed by accident. Press Sync now afterwards and the) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 118.50 Td (  shared database is emptied too.) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 104.00 Td (- Remove sample records deletes exactly the demonstration dataset the platform ships with,) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 89.50 Td (  so the club can start on its own records. The sign-in accounts are never touched, and) Tj ET
 endstream
 endobj
 57 0 obj
 << /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 56 0 R >>
 endobj
 58 0 obj
-<< /Length 5308 >>
+<< /Length 6195 >>
 stream
 0.85 0.85 0.85 RG 0.8 w 62.00 54.00 m 533.00 54.00 l S
-BT /F1 9.40 Tf 0 0 0 rg 62.00 780.00 Td (- Where to keep those backups \(and which cloud service to choose\) is set out in) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 765.50 Td (  docs/CLOUD-STORAGE.md in the project folder: the short answer is a shared school Google) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 751.00 Td (  Drive folder with dated JSON backups every week, plus a USB copy and a printed termly) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 736.50 Td (  report.) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 722.00 Td (- The platform can also put the backup into Microsoft OneDrive for you: Settings -> Data) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 707.50 Td (  -> Cloud backup. Route one writes each backup into a folder you pick once - the OneDrive) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 693.00 Td (  \(or Drive\) folder on the PC - and the sync client uploads it. Route two signs in to the) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 678.50 Td (  school's Microsoft 365 account and uploads straight into the app's own OneDrive folder;) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 664.00 Td (  it needs a one-time app registration \(choose How to set it up in the same card, or read) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 649.50 Td (  docs/ONEDRIVE.md\). Whichever route you use, Restore from OneDrive / folder lists the) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 635.00 Td (  backups and loads one back, in merge or replace mode.) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 620.50 Td (- Backups never contain sign-in tokens, and the OneDrive connection only ever sees the app) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 606.00 Td (  folder Apps/MRHS ICT Club Master - never the rest of the school's drive.) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 591.50 Td (- Firebase shared database. When several officers must work on the same live records -) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 577.00 Td (  attendance on one phone, finance on the desktop - connect the club's own Firebase) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 562.50 Td (  project in the same card: the club's Project ID and Web API key are already filled in) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 548.00 Td (  \(overwrite them only if the club moves to a different Firebase project\), so press Save) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 533.50 Td (  connection details, then Connect Firebase and sign in with the club's Firebase account.) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 519.00 Td (  Sync now exchanges records; the switch Keep this device in sync automatically uploads) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 504.50 Td (  every change by itself and collects what the other officers changed within a few) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 490.00 Td (  minutes; Upload everything is for after a restore. Twenty-two collections are shared,) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 475.50 Td (  while users \(officer accounts\), auditLog, verifications and notifications never leave) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 461.00 Td (  the device.) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 446.50 Td (- Deletions are final. A record deleted here is marked as deleted immediately, so loading) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 432.00 Td (  from the shared database never brings it back; the deletion uploads on the next sync. A) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 417.50 Td (  record deleted by another officer is removed on this device too, unless it was edited) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 403.00 Td (  here after that - in which case the edit is kept and uploaded.) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 388.50 Td (- The app keeps working with no internet: edits are saved here first and uploaded when the) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 374.00 Td (  connection returns. Where two officers changed the same record, the later edit \(compared) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 359.50 Td (  by its updatedAt time\) wins, and a local edit newer than the shared copy is never thrown) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 345.00 Td (  away - it is uploaded on the next sync. Setup takes about twenty minutes once \(create) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 330.50 Td (  the project, create the Firestore database, enable Email/Password, paste the security) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 316.00 Td (  rules\); the step-by-step guide is in docs/FIREBASE.md and behind How to set it up in the) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 301.50 Td (  app. Other options - Supabase, PocketBase, Turso, a Sheets mirror - are compared in) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 287.00 Td (  docs/DATABASE-OPTIONS.md.) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 272.50 Td (- Restore in merge mode to add a backup's records to what is already there; replace mode) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 258.00 Td (  wipes first - the app asks for confirmation and shows how many records each option will) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 243.50 Td (  affect.) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 229.00 Td (- A user who forgets their password cannot recover it; an administrator resets it here and) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 214.50 Td (  tells them the new one.) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 200.00 Td (- Deactivating a user immediately ends their access without deleting the audit trail of) Tj ET
-BT /F1 9.40 Tf 0 0 0 rg 62.00 185.50 Td (  what they did.) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 780.00 Td (  anything the club entered itself - including records an earlier version labelled as) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 765.50 Td (  sample data - is kept. Reload sample data puts the demonstration club back, and Reset) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 751.00 Td (  everything wipes this browser and rebuilds it.) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 736.50 Td (- Where to keep those backups \(and which cloud service to choose\) is set out in) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 722.00 Td (  docs/CLOUD-STORAGE.md in the project folder: the short answer is a shared school Google) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 707.50 Td (  Drive folder with dated JSON backups every week, plus a USB copy and a printed termly) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 693.00 Td (  report.) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 678.50 Td (- The platform can also put the backup into Microsoft OneDrive for you: Settings -> Data) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 664.00 Td (  -> Cloud backup. Route one writes each backup into a folder you pick once - the OneDrive) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 649.50 Td (  \(or Drive\) folder on the PC - and the sync client uploads it. Route two signs in to the) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 635.00 Td (  school's Microsoft 365 account and uploads straight into the app's own OneDrive folder;) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 620.50 Td (  it needs a one-time app registration \(choose How to set it up in the same card, or read) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 606.00 Td (  docs/ONEDRIVE.md\). Whichever route you use, Restore from OneDrive / folder lists the) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 591.50 Td (  backups and loads one back, in merge or replace mode.) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 577.00 Td (- Backups never contain sign-in tokens, and the OneDrive connection only ever sees the app) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 562.50 Td (  folder Apps/MRHS ICT Club Master - never the rest of the school's drive.) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 548.00 Td (- Firebase shared database. When several officers must work on the same live records -) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 533.50 Td (  attendance on one phone, finance on the desktop - connect the club's own Firebase) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 519.00 Td (  project in the same card: the club's Project ID and Web API key are already filled in) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 504.50 Td (  \(overwrite them only if the club moves to a different Firebase project\), so press Save) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 490.00 Td (  connection details, then Connect Firebase and sign in with the club's Firebase account.) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 475.50 Td (  Sync now exchanges records; the switch Keep this device in sync automatically uploads) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 461.00 Td (  every change by itself and collects what the other officers changed within a few) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 446.50 Td (  minutes; Upload everything is for after a restore. Twenty-two collections are shared,) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 432.00 Td (  while users \(officer accounts\), auditLog, verifications and notifications never leave) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 417.50 Td (  the device.) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 403.00 Td (- Deletions are final. A record deleted here is marked as deleted immediately, so loading) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 388.50 Td (  from the shared database never brings it back; the deletion uploads on the next sync. A) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 374.00 Td (  record deleted by another officer is removed on this device too, unless it was edited) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 359.50 Td (  here after that - in which case the edit is kept and uploaded.) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 345.00 Td (- The app keeps working with no internet: edits are saved here first and uploaded when the) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 330.50 Td (  connection returns. Where two officers changed the same record, the later edit \(compared) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 316.00 Td (  by its updatedAt time\) wins, and a local edit newer than the shared copy is never thrown) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 301.50 Td (  away - it is uploaded on the next sync. Setup takes about twenty minutes once \(create) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 287.00 Td (  the project, create the Firestore database, enable Email/Password, paste the security) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 272.50 Td (  rules\); the step-by-step guide is in docs/FIREBASE.md and behind How to set it up in the) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 258.00 Td (  app. Other options - Supabase, PocketBase, Turso, a Sheets mirror - are compared in) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 243.50 Td (  docs/DATABASE-OPTIONS.md.) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 229.00 Td (- Restore in merge mode to add a backup's records to what is already there; replace mode) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 214.50 Td (  wipes first - the app asks for confirmation and shows how many records each option will) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 200.00 Td (  affect.) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 185.50 Td (- Audit trail. Administrators can open Audit trail from this card \(or #/audit\). It lists) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 171.00 Td (  every record added, edited or deleted - when, by which officer, in which module, with) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 156.50 Td (  the fields that changed - plus sign-ins, password changes and backups. Filter by) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 142.00 Td (  officer, module, action or date, search it, export the CSV or print it for the file. The) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 127.50 Td (  trail stays on this device: it is never shared through Firebase.) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 113.00 Td (- A user who forgets their password cannot recover it - passwords are stored as one-way) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 98.50 Td (  hashes and nobody, not even an administrator, can read one back. Press the key button to) Tj ET
 endstream
 endobj
 59 0 obj
 << /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 58 0 R >>
 endobj
 60 0 obj
+<< /Length 592 >>
+stream
+0.85 0.85 0.85 RG 0.8 w 62.00 54.00 m 533.00 54.00 l S
+BT /F1 9.40 Tf 0 0 0 rg 62.00 780.00 Td (  issue a temporary password instead; it works for one sign-in and the officer then) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 765.50 Td (  chooses their own. The Forgot password? link on the sign-in screen explains exactly this) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 751.00 Td (  to the officer.) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 736.50 Td (- Deactivating a user immediately ends their access without deleting the audit trail of) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 722.00 Td (  what they did.) Tj ET
+endstream
+endobj
+61 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 60 0 R >>
+endobj
+62 0 obj
+<< /Length 3673 >>
+stream
+0.85 0.85 0.85 RG 0.8 w 62.00 54.00 m 533.00 54.00 l S
+BT /F2 15.00 Tf 0 0 0 rg 62.00 780.00 Td (25. My account and the audit trail) Tj ET
+BT /F3 10.20 Tf 0 0 0 rg 62.00 756.00 Td (Your own details, your password, your rights and what you have changed.) Tj ET
+BT /F1 9.60 Tf 0 0 0 rg 62.00 734.00 Td (Every officer - whatever their role - has the same personal page. Open it from My Account at) Tj ET
+BT /F1 9.60 Tf 0 0 0 rg 72.00 719.50 Td (the foot of the sidebar, or from the account menu in the top-right corner.) Tj ET
+BT /F2 11.00 Tf 0 0 0 rg 62.00 697.00 Td (How to use it) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 679.00 Td (1.  The page opens on My details: your name, username, email, telephone, role, when the) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 664.50 Td (    account was created, when you last signed in, and a link to your own member record if) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 650.00 Td (    one is linked. Edit my details lets you correct your name, email and telephone) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 635.50 Td (    yourself - your role and status can only be changed by an administrator.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 621.00 Td (2.  The Password panel changes your password: current password, new password, repeat it. A) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 606.50 Td (    strength meter tells you how good the new one is; the club rule is at least 8) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 592.00 Td (    characters mixing letters and numbers, and the shipped demonstration password is) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 577.50 Td (    refused. Nobody can read your password - it is stored as a hash.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 563.00 Td (3.  The What I may do panel lists every module with your rights in it: View only, Add &) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 548.50 Td (    edit or Full control. This is decided by the club's role matrix, not by you. To change) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 534.00 Td (    it, ask an administrator.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 519.50 Td (4.  My recent activity shows the entries you have written to the audit trail - what you) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 505.00 Td (    added, edited or deleted, and when.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 490.50 Td (5.  Administrators also have the full Audit trail \(Settings -> Data, or #/audit\): every) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 476.00 Td (    officer's entries, filtered by officer, module, action or date, searchable, exportable) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 461.50 Td (    to CSV and printable for the club file. It also records sign-ins, password changes and) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 447.00 Td (    backup imports.) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 432.50 Td (6.  The trail is deliberately kept on the device - it is never shared through Firebase -) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 418.00 Td (    and holds the newest 400 entries; Remove old entries keeps the newest 100 when the) Tj ET
+BT /F1 9.80 Tf 0 0 0 rg 62.00 403.50 Td (    list grows long.) Tj ET
+BT /F2 11.00 Tf 0 0 0 rg 62.00 383.00 Td (Notes) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 365.00 Td (- If a warning at the top of the page says some accounts still use the shipped) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 350.50 Td (  demonstration password, they are readable by anyone who has the project files: each) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 336.00 Td (  officer should set their own password promptly.) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 321.50 Td (- Signing out from the account menu ends your session; tick Remember me only on the office) Tj ET
+BT /F1 9.40 Tf 0 0 0 rg 62.00 307.00 Td (  computer, never on a shared one.) Tj ET
+endstream
+endobj
+63 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 62 0 R >>
+endobj
+64 0 obj
 << /Length 1666 >>
 stream
 0.85 0.85 0.85 RG 0.8 w 62.00 54.00 m 533.00 54.00 l S
-BT /F2 15.00 Tf 0 0 0 rg 62.00 780.00 Td (25. Search, notifications and shortcuts) Tj ET
+BT /F2 15.00 Tf 0 0 0 rg 62.00 780.00 Td (26. Search, notifications and shortcuts) Tj ET
 BT /F3 10.20 Tf 0 0 0 rg 62.00 756.00 Td (Getting to a record in two seconds.) Tj ET
 BT /F2 11.00 Tf 0 0 0 rg 62.00 734.00 Td (How to use it) Tj ET
 BT /F1 9.80 Tf 0 0 0 rg 62.00 716.00 Td (1.  Press Ctrl+K, press /, or click the search box in the top bar to open global search.) Tj ET
@@ -816,14 +881,14 @@ BT /F1 9.80 Tf 0 0 0 rg 62.00 571.00 Td (6.  Click your avatar in the top bar fo
 BT /F1 9.80 Tf 0 0 0 rg 62.00 556.50 Td (    and sign-out.) Tj ET
 endstream
 endobj
-61 0 obj
-<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 60 0 R >>
+65 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 64 0 R >>
 endobj
-62 0 obj
+66 0 obj
 << /Length 689 >>
 stream
 0.85 0.85 0.85 RG 0.8 w 62.00 54.00 m 533.00 54.00 l S
-BT /F2 15.00 Tf 0 0 0 rg 62.00 780.00 Td (26. Term routines and best practice) Tj ET
+BT /F2 15.00 Tf 0 0 0 rg 62.00 780.00 Td (27. Term routines and best practice) Tj ET
 BT /F3 10.20 Tf 0 0 0 rg 62.00 756.00 Td (A simple calendar of club administration.) Tj ET
 BT /F2 11.00 Tf 0 0 0 rg 62.00 734.00 Td (Notes) Tj ET
 BT /F1 9.40 Tf 0 0 0 rg 62.00 716.00 Td (- Keep one person responsible for entering data each week - records are only as good as) Tj ET
@@ -832,103 +897,107 @@ BT /F1 9.40 Tf 0 0 0 rg 62.00 687.00 Td (- Never delete a record to correct a mi
 BT /F1 9.40 Tf 0 0 0 rg 62.00 672.50 Td (  reason.) Tj ET
 endstream
 endobj
-63 0 obj
-<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 62 0 R >>
-endobj
-64 0 obj
-<< /Length 227 >>
-stream
-0.85 0.85 0.85 RG 0.8 w 62.00 54.00 m 533.00 54.00 l S
-BT /F2 15.00 Tf 0 0 0 rg 62.00 780.00 Td (27. Troubleshooting and FAQ) Tj ET
-BT /F3 10.20 Tf 0 0 0 rg 62.00 756.00 Td (Answers to the things that come up most often.) Tj ET
-endstream
-endobj
-65 0 obj
-<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 64 0 R >>
-endobj
-66 0 obj
-<< /Length 208 >>
-stream
-0.85 0.85 0.85 RG 0.8 w 62.00 54.00 m 533.00 54.00 l S
-BT /F2 15.00 Tf 0 0 0 rg 62.00 780.00 Td (28. Glossary) Tj ET
-BT /F3 10.20 Tf 0 0 0 rg 62.00 756.00 Td (Terms used in the club and in this system.) Tj ET
-endstream
-endobj
 67 0 obj
 << /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 66 0 R >>
 endobj
+68 0 obj
+<< /Length 227 >>
+stream
+0.85 0.85 0.85 RG 0.8 w 62.00 54.00 m 533.00 54.00 l S
+BT /F2 15.00 Tf 0 0 0 rg 62.00 780.00 Td (28. Troubleshooting and FAQ) Tj ET
+BT /F3 10.20 Tf 0 0 0 rg 62.00 756.00 Td (Answers to the things that come up most often.) Tj ET
+endstream
+endobj
+69 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 68 0 R >>
+endobj
+70 0 obj
+<< /Length 208 >>
+stream
+0.85 0.85 0.85 RG 0.8 w 62.00 54.00 m 533.00 54.00 l S
+BT /F2 15.00 Tf 0 0 0 rg 62.00 780.00 Td (29. Glossary) Tj ET
+BT /F3 10.20 Tf 0 0 0 rg 62.00 756.00 Td (Terms used in the club and in this system.) Tj ET
+endstream
+endobj
+71 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 70 0 R >>
+endobj
 xref
-0 68
+0 72
 0000000000 65535 f 
 0000000009 00000 n 
 0000000058 00000 n 
-0000000325 00000 n 
-0000000395 00000 n 
-0000000470 00000 n 
-0000000548 00000 n 
-0000001324 00000 n 
-0000001470 00000 n 
-0000003580 00000 n 
-0000003726 00000 n 
-0000006788 00000 n 
-0000006936 00000 n 
-0000008210 00000 n 
-0000008358 00000 n 
-0000010699 00000 n 
-0000010847 00000 n 
-0000013607 00000 n 
-0000013755 00000 n 
-0000015919 00000 n 
-0000016067 00000 n 
-0000018305 00000 n 
-0000018453 00000 n 
-0000020959 00000 n 
-0000021107 00000 n 
-0000023256 00000 n 
-0000023404 00000 n 
-0000025090 00000 n 
-0000025238 00000 n 
-0000027220 00000 n 
-0000027368 00000 n 
-0000029060 00000 n 
-0000029208 00000 n 
-0000033531 00000 n 
-0000033679 00000 n 
-0000035292 00000 n 
-0000035440 00000 n 
-0000039546 00000 n 
-0000039694 00000 n 
-0000041078 00000 n 
-0000041226 00000 n 
-0000042842 00000 n 
-0000042990 00000 n 
-0000044152 00000 n 
-0000044300 00000 n 
-0000045653 00000 n 
-0000045801 00000 n 
-0000047760 00000 n 
-0000047908 00000 n 
-0000048876 00000 n 
-0000049024 00000 n 
-0000050354 00000 n 
-0000050502 00000 n 
-0000051532 00000 n 
-0000051680 00000 n 
-0000053201 00000 n 
-0000053349 00000 n 
-0000059017 00000 n 
-0000059165 00000 n 
-0000064526 00000 n 
-0000064674 00000 n 
-0000066393 00000 n 
-0000066541 00000 n 
-0000067282 00000 n 
-0000067430 00000 n 
-0000067709 00000 n 
-0000067857 00000 n 
-0000068117 00000 n 
+0000000339 00000 n 
+0000000409 00000 n 
+0000000484 00000 n 
+0000000562 00000 n 
+0000001338 00000 n 
+0000001484 00000 n 
+0000003679 00000 n 
+0000003825 00000 n 
+0000007374 00000 n 
+0000007522 00000 n 
+0000008796 00000 n 
+0000008944 00000 n 
+0000011285 00000 n 
+0000011433 00000 n 
+0000014193 00000 n 
+0000014341 00000 n 
+0000016505 00000 n 
+0000016653 00000 n 
+0000018891 00000 n 
+0000019039 00000 n 
+0000021545 00000 n 
+0000021693 00000 n 
+0000023842 00000 n 
+0000023990 00000 n 
+0000025676 00000 n 
+0000025824 00000 n 
+0000027806 00000 n 
+0000027954 00000 n 
+0000029646 00000 n 
+0000029794 00000 n 
+0000034117 00000 n 
+0000034265 00000 n 
+0000035878 00000 n 
+0000036026 00000 n 
+0000040132 00000 n 
+0000040280 00000 n 
+0000041664 00000 n 
+0000041812 00000 n 
+0000043428 00000 n 
+0000043576 00000 n 
+0000044738 00000 n 
+0000044886 00000 n 
+0000046239 00000 n 
+0000046387 00000 n 
+0000048346 00000 n 
+0000048494 00000 n 
+0000049462 00000 n 
+0000049610 00000 n 
+0000050940 00000 n 
+0000051088 00000 n 
+0000052118 00000 n 
+0000052266 00000 n 
+0000053787 00000 n 
+0000053935 00000 n 
+0000059689 00000 n 
+0000059837 00000 n 
+0000066085 00000 n 
+0000066233 00000 n 
+0000066877 00000 n 
+0000067025 00000 n 
+0000070751 00000 n 
+0000070899 00000 n 
+0000072618 00000 n 
+0000072766 00000 n 
+0000073507 00000 n 
+0000073655 00000 n 
+0000073934 00000 n 
+0000074082 00000 n 
+0000074342 00000 n 
 trailer
-<< /Size 68 /Root 1 0 R >>
+<< /Size 72 /Root 1 0 R >>
 startxref
-68265
+74490
 %%EOF

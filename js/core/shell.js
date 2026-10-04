@@ -56,6 +56,7 @@
     },
     {
       group: 'System', items: [
+        { key: 'account', label: 'My Account', path: '/account', icon: 'user-cog', module: 'dashboard' },
         { key: 'settings', label: 'Settings', path: '/settings', icon: 'sliders', module: 'settings' },
         { key: 'manual', label: 'User Manual', path: '/manual', icon: 'book', module: 'manual' },
         { key: 'verify', label: 'Verify Certificate', path: '/verify', icon: 'verified', module: 'certificates' }
@@ -546,11 +547,7 @@
     if (man) man.hidden = !Auth.can('manual', 'view');
     var prof = document.getElementById('menu-profile');
     if (prof) {
-      prof.onclick = function () {
-        var memberId = user.memberId;
-        if (memberId && Store.find('members', memberId)) Router.go('/members/' + memberId);
-        else Router.go('/settings');
-      };
+      prof.onclick = function () { Router.go('/account'); };
     }
   }
 

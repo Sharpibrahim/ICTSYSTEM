@@ -141,20 +141,115 @@
   }
 
   /* ── Bootstrap / migration ────────────────────────────────────────────── */
-  /** Convert any plaintext demo passwords into hashes on first run. */
+  /** Convert any plaintext demo passwords into hashes on first run, and mark
+   *  every account still using the published demo password so the officer is
+   *  made to choose their own before using the club's records. */
   function migrate() {
     var users = Store.all('users');
     var jobs = [];
+    var changed = false;
+    var demoHash = null;
+    var plainDemo = users.some(function (u) { return u.password === 'demo1234'; });
+
+    if (plainDemo || users.some(function (u) { return u.passwordHash && !u.mustChangePassword; })) {
+      demoHash = hash('demo1234');
+    }
+
     users.forEach(function (u) {
       if (u.password && !u.passwordHash) {
         jobs.push(hash(u.password).then(function (h) {
           u.passwordHash = h;
+          if (u.password === 'demo1234') u.mustChangePassword = true;
           delete u.password;
+          changed = true;
           return true;
         }));
       }
     });
-    return Promise.all(jobs).then(function () { if (jobs.length) Store.save('users', true); });
+
+    return Promise.all(jobs).then(function () {
+      if (!demoHash) return null;
+      return demoHash.then(function (h) {
+        users.forEach(function (u) {
+          if (u.passwordHash === h && !u.mustChangePassword) { u.mustChangePassword = true; changed = true; }
+        });
+        return true;
+      });
+    }).then(function () {
+      if (changed) Store.save('users', true);
+      return changed;
+    });
+  }
+
+  /** The accounts that still use the shipped demonstration password. As long
+   *  as the list is not empty the sign-in shortcut stays on the login screen,
+   *  because anyone who reads the project could sign in as those accounts. */
+  function pendingAccounts() {
+    return Store.all('users').filter(function (u) {
+      return u.status !== 'Suspended' && u.mustChangePassword === true;
+    });
+  }
+  function needsSetup() { return pendingAccounts().length > 0; }
+
+  /** The officer chooses their own password at first sign-in. Only permitted
+   *  while the account is still flagged, so it can never be used to take over
+   *  an account that has a real password. */
+  function firstPasswordChange(userId, newPassword) {
+    var user = Store.find('users', userId);
+    if (!user) return Promise.reject(new Error('Account not found.'));
+    if (user.mustChangePassword !== true) return Promise.reject(new Error('This account already has its own password.'));
+    var problem = passwordProblem(newPassword, user);
+    if (problem) return Promise.reject(new Error(problem));
+    return hash(newPassword).then(function (h) {
+      user.passwordHash = h;
+      delete user.password;
+      delete user.mustChangePassword;
+      user.passwordChangedAt = new Date().toISOString();
+      Store.save('users');
+      auditPassword(user, 'first password set');
+      return true;
+    });
+  }
+
+  /** A readable one-time password an administrator can hand over in person. */
+  function tempPassword() {
+    var letters = 'abcdefghjkmnpqrstuvwxyz', digits = '23456789';
+    var out = 'MRHS-';
+    for (var i = 0; i < 4; i++) out += letters.charAt(Math.floor(Math.random() * letters.length));
+    for (var j = 0; j < 3; j++) out += digits.charAt(Math.floor(Math.random() * digits.length));
+    return out;
+  }
+
+  /** Shared password rules. */
+  function passwordProblem(password, user) {
+    if (String(password || '').length < 8) return 'Use at least 8 characters.';
+    if (String(password) === 'demo1234') return 'That is the published demonstration password — choose your own.';
+    if (String(password).toLowerCase() === String(user && user.username || '').toLowerCase()) return 'Do not use the username as the password.';
+    if (!/[A-Za-z]/.test(password) || !/[0-9]/.test(password)) return 'Mix letters and numbers.';
+    return '';
+  }
+
+  /** How strong the password looks, for the meter on the change-password form. */
+  function passwordStrength(password) {
+    var p = String(password || '');
+    var score = 0;
+    if (p.length >= 8) score++;
+    if (p.length >= 12) score++;
+    if (/[A-Z]/.test(p) && /[a-z]/.test(p)) score++;
+    if (/[0-9]/.test(p)) score++;
+    if (/[^A-Za-z0-9]/.test(p)) score++;
+    if (/^demo1234$/i.test(p)) score = 0;
+    var labels = ['Very weak', 'Weak', 'Fair', 'Good', 'Strong', 'Very strong'];
+    return { score: score, label: labels[Math.min(score, 5)] };
+  }
+
+  function auditPassword(user, what) {
+    Store.insert('auditLog', {
+      id: Utils.uid('log'), action: 'security', collection: 'users',
+      recordId: user.id, label: user.username,
+      user: (state.user && state.user.username) || user.username,
+      at: new Date().toISOString(), meta: { note: what, demo: false }
+    });
   }
 
   /** Restore a session from storage (called during app boot). */
@@ -226,8 +321,10 @@
     return hash(newPassword).then(function (h) {
       user.passwordHash = h;
       delete user.password;
+      user.mustChangePassword = true;      /* the owner sets their own on next sign-in */
       user.passwordChangedAt = new Date().toISOString();
       Store.save('users');
+      auditPassword(user, 'password reset by an administrator');
       return true;
     });
   }
@@ -241,7 +338,9 @@
     }).then(function (nh) {
       user.passwordHash = nh;
       user.passwordChangedAt = new Date().toISOString();
+      delete user.mustChangePassword;
       Store.save('users');
+      auditPassword(user, 'password changed');
       return true;
     });
   }
@@ -250,13 +349,17 @@
   function createUser(data) {
     var existing = findAccount(data.username) || findAccount(data.email);
     if (existing) return Promise.reject(new Error('A user with that username or email already exists.'));
-    return hash(data.password || 'demo1234').then(function (h) {
+    var temp = data.password || tempPassword();
+    var problem = passwordProblem(temp, { username: data.username });
+    if (problem) return Promise.reject(new Error(problem));
+    return hash(temp).then(function (h) {
       var rec = {
-        id: Utils.uid('usr'), demo: data.demo !== false,
+        id: Utils.uid('usr'), demo: false,
         username: data.username, email: data.email, name: data.name,
         role: data.role || 'Member', memberId: data.memberId || null,
         phone: data.phone || '', status: data.status || 'Active',
-        passwordHash: h, createdAt: new Date().toISOString(), lastLogin: null
+        passwordHash: h, createdAt: new Date().toISOString(), lastLogin: null,
+        mustChangePassword: true           /* they choose their own at first sign-in */
       };
       Store.insert('users', rec);
       return rec;
@@ -345,6 +448,12 @@
     findAccount: findAccount,
     resetPassword: resetPassword,
     changePassword: changePassword,
+    firstPasswordChange: firstPasswordChange,
+    passwordProblem: passwordProblem,
+    tempPassword: tempPassword,
+    passwordStrength: passwordStrength,
+    needsSetup: needsSetup,
+    pendingAccounts: pendingAccounts,
     createUser: createUser,
     usersForMember: usersForMember,
     lockedOut: lockedOut

@@ -9,9 +9,9 @@
 <title>MRHS ICT CLUB MASTER &middot; Mbazzi Riverside High School ICT Club</title>
 <link rel="icon" href="assets/logo/logo.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="assets/logo/logo.svg">
-<link rel="stylesheet" href="css/style.css?v=20261003N">
-<link rel="stylesheet" href="css/components.css?v=20261003N">
-<link rel="stylesheet" href="css/responsive.css?v=20261003N">
+<link rel="stylesheet" href="css/style.css?v=20261003P">
+<link rel="stylesheet" href="css/components.css?v=20261003P">
+<link rel="stylesheet" href="css/responsive.css?v=20261003P">
 </head>
 <body data-route="boot">
 
@@ -119,19 +119,9 @@
           </button>
         </form>
 
-        <div class="login-demo">
-          <div class="login-demo-head">
-            <h3>Demo accounts</h3>
-            <span class="badge badge-info badge-soft">Role-based access</span>
-          </div>
-          <p class="muted small">Select a role to sign in instantly. Every account uses password <code>demo1234</code>.</p>
-          <div class="demo-chips" id="demo-chips"></div>
-          <button type="button" class="btn btn-ghost btn-sm btn-block" id="fill-credentials">
-            Fill administrator credentials
-          </button>
-        </div>
+        <div class="login-demo" id="login-demo" hidden></div>
 
-        <p class="login-foot">MRHS ICT Club Master v1.0 &middot; Prototype build &middot; Data stored locally in this browser</p>
+        <p class="login-foot">MRHS ICT Club Master v1.0 &middot; Mbazzi Riverside High School &middot; Records stored in this browser</p>
       </div>
     </section>
   </div>
@@ -249,7 +239,7 @@
             </div>
             <hr class="dropdown-sep">
             <button class="dropdown-item" role="menuitem" data-close-dropdown id="menu-profile" type="button">
-              <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><use href="#i-user"></use></svg> My profile</button>
+              <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><use href="#i-user"></use></svg> My account</button>
             <a class="dropdown-item" role="menuitem" href="#/settings" data-close-dropdown>
               <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><use href="#i-settings"></use></svg> Settings</a>
             <a class="dropdown-item" role="menuitem" href="#/verify" data-close-dropdown>
@@ -306,46 +296,48 @@
 <div id="toast-root" class="toast-root" role="status" aria-live="polite" aria-atomic="false"></div>
 <div id="print-area" class="print-area" aria-hidden="true"></div>
 
-<script src="js/core/icons.js?v=20261003N"></script>
-<script src="js/core/utils.js?v=20261003N"></script>
-<script src="js/core/store.js?v=20261003N"></script>
-<script src="js/core/data.js?v=20261003N"></script>
-<script src="js/core/auth.js?v=20261003N"></script>
-<script src="js/core/ui.js?v=20261003N"></script>
-<script src="js/core/forms.js?v=20261003N"></script>
-<script src="js/core/charts.js?v=20261003N"></script>
-<script src="js/core/crud.js?v=20261003N"></script>
-<script src="js/core/certbg.js?v=20261003N"></script>
-<script src="js/core/print.js?v=20261003N"></script>
-<script src="js/core/cards.js?v=20261003N"></script>
-<script src="js/core/cloud.js?v=20261003N"></script>
-<script src="js/core/sync.js?v=20261003N"></script>
-<script src="js/core/metrics.js?v=20261003N"></script>
-<script src="js/core/router.js?v=20261003N"></script>
-<script src="js/core/module.js?v=20261003N"></script>
-<script src="js/core/shell.js?v=20261003N"></script>
-<script src="js/modules/dashboard.js?v=20261003N"></script>
-<script src="js/modules/members.js?v=20261003N"></script>
-<script src="js/modules/cabinet.js?v=20261003N"></script>
-<script src="js/modules/meetings.js?v=20261003N"></script>
-<script src="js/modules/attendance.js?v=20261003N"></script>
-<script src="js/modules/courses.js?v=20261003N"></script>
-<script src="js/modules/activities.js?v=20261003N"></script>
-<script src="js/modules/projects.js?v=20261003N"></script>
-<script src="js/modules/reports.js?v=20261003N"></script>
-<script src="js/modules/certificates.js?v=20261003N"></script>
-<script src="js/modules/resources.js?v=20261003N"></script>
-<script src="js/modules/announcements.js?v=20261003N"></script>
-<script src="js/modules/tasks.js?v=20261003N"></script>
-<script src="js/modules/calendar.js?v=20261003N"></script>
-<script src="js/modules/equipment.js?v=20261003N"></script>
-<script src="js/modules/finance.js?v=20261003N"></script>
-<script src="js/modules/achievements.js?v=20261003N"></script>
-<script src="js/modules/gallery.js?v=20261003N"></script>
-<script src="js/modules/documents.js?v=20261003N"></script>
-<script src="js/modules/analytics.js?v=20261003N"></script>
-<script src="js/modules/settings.js?v=20261003N"></script>
-<script src="js/modules/manual.js?v=20261003N"></script>
-<script src="js/app.js?v=20261003N"></script>
+<script src="js/core/icons.js?v=20261003P"></script>
+<script src="js/core/utils.js?v=20261003P"></script>
+<script src="js/core/store.js?v=20261003P"></script>
+<script src="js/core/data.js?v=20261003P"></script>
+<script src="js/core/auth.js?v=20261003P"></script>
+<script src="js/core/ui.js?v=20261003P"></script>
+<script src="js/core/forms.js?v=20261003P"></script>
+<script src="js/core/charts.js?v=20261003P"></script>
+<script src="js/core/crud.js?v=20261003P"></script>
+<script src="js/core/certbg.js?v=20261003P"></script>
+<script src="js/core/print.js?v=20261003P"></script>
+<script src="js/core/cards.js?v=20261003P"></script>
+<script src="js/core/cloud.js?v=20261003P"></script>
+<script src="js/core/sync.js?v=20261003P"></script>
+<script src="js/core/metrics.js?v=20261003P"></script>
+<script src="js/core/router.js?v=20261003P"></script>
+<script src="js/core/module.js?v=20261003P"></script>
+<script src="js/core/shell.js?v=20261003P"></script>
+<script src="js/modules/dashboard.js?v=20261003P"></script>
+<script src="js/modules/members.js?v=20261003P"></script>
+<script src="js/modules/cabinet.js?v=20261003P"></script>
+<script src="js/modules/meetings.js?v=20261003P"></script>
+<script src="js/modules/attendance.js?v=20261003P"></script>
+<script src="js/modules/courses.js?v=20261003P"></script>
+<script src="js/modules/activities.js?v=20261003P"></script>
+<script src="js/modules/projects.js?v=20261003P"></script>
+<script src="js/modules/reports.js?v=20261003P"></script>
+<script src="js/modules/certificates.js?v=20261003P"></script>
+<script src="js/modules/resources.js?v=20261003P"></script>
+<script src="js/modules/announcements.js?v=20261003P"></script>
+<script src="js/modules/tasks.js?v=20261003P"></script>
+<script src="js/modules/calendar.js?v=20261003P"></script>
+<script src="js/modules/equipment.js?v=20261003P"></script>
+<script src="js/modules/finance.js?v=20261003P"></script>
+<script src="js/modules/achievements.js?v=20261003P"></script>
+<script src="js/modules/gallery.js?v=20261003P"></script>
+<script src="js/modules/documents.js?v=20261003P"></script>
+<script src="js/modules/analytics.js?v=20261003P"></script>
+<script src="js/modules/settings.js?v=20261003P"></script>
+<script src="js/modules/manual.js?v=20261003P"></script>
+<script src="js/modules/accounts.js?v=20261003P"></script>
+<script src="js/modules/audit.js?v=20261003P"></script>
+<script src="js/app.js?v=20261003P"></script>
 </body>
 </html>

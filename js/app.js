@@ -16,9 +16,27 @@
 
   /* ══ Login screen ════════════════════════════════════════════════════ */
   function renderDemoAccounts() {
+    var panel = document.getElementById('login-demo');
+    if (!panel) return;
+    /* These shortcuts exist only while accounts still use the shipped
+       demonstration password. They list exactly those accounts, and the panel
+       disappears for good once every officer has a password of their own. */
+    var pending = Auth.pendingAccounts();
+    if (!pending.length) {
+      panel.hidden = true;
+      panel.innerHTML = '';
+      return;
+    }
+    panel.hidden = false;
+    panel.innerHTML =
+      '<div class="login-demo-head"><h3>First-time setup</h3>' +
+      '<span class="badge badge-warning badge-soft">Set your own passwords</span></div>' +
+      '<p class="muted small">' + U.plural(pending.length, 'account') + ' still use the published demonstration password ' +
+      '<code>demo1234</code>. Sign in and you will be asked to choose your own — the shortcut disappears once every officer has done so.</p>' +
+      '<div class="demo-chips" id="demo-chips"></div>';
     var host = document.getElementById('demo-chips');
     if (!host) return;
-    var accounts = Store.all('users');
+    var accounts = pending;
     host.innerHTML = accounts.map(function (u) {
       var info = Auth.roleInfo(u.role);
       return '<button type="button" class="demo-chip" data-demo="' + U.attr(u.username) + '">' +
@@ -33,8 +51,39 @@
       var user = U.findBy(accounts, 'username', username);
       document.getElementById('login-user').value = username;
       document.getElementById('login-pass').value = 'demo1234';
-      if (user) UI.toast('Demo account selected', 'Signing in as ' + user.name + ' (' + user.role + ').', 'info', { duration: 2600 });
+      if (user) UI.toast('Demonstration account', user.name + ' must choose a password of their own.', 'info', { duration: 3000 });
       doLogin(username, 'demo1234', true);
+    });
+  }
+
+  /** Mandatory first-sign-in password: cannot be dismissed until it is done. */
+  function openPasswordSetup(user) {
+    UI.formModal({
+      title: 'Choose your own password', icon: 'key', size: 'sm', dismissible: false,
+      subtitle: user.name + ' · ' + user.role,
+      formHtml: Forms.render([
+        { name: 'password', label: 'New password', type: 'password', required: true, colSpan: 2,
+          help: 'At least 8 characters, mixing letters and numbers. Do not reuse the demonstration password.' },
+        { name: 'confirm', label: 'Repeat the new password', type: 'password', required: true, colSpan: 2 }
+      ]),
+      submitLabel: 'Save my password',
+      cancelLabel: 'Sign out',
+      onOpen: function (c, form) { Forms.init(form); },
+      onSubmit: function (values, c) {
+        if (values.password !== values.confirm) {
+          UI.toast('The two passwords differ', 'Type the same password in both boxes.', 'warning');
+          return true;
+        }
+        UI.toast('Saving', 'Setting your password…', 'info', { duration: 1500 });
+        Auth.firstPasswordChange(user.id, values.password).then(function () {
+          c.close();
+          UI.toast('Your password is set', 'Only you know it now. Keep it safe — an administrator can reset it if you forget it.', 'success', { duration: 6000 });
+          renderDemoAccounts();
+        }).catch(function (err) {
+          UI.toast('Could not set the password', (err && err.message) || 'Try a longer password.', 'error');
+        });
+        return true;
+      }
     });
   }
 
@@ -59,6 +108,7 @@
       var user = Auth.currentUser();
       UI.toast('Welcome, ' + user.name.split(' ')[0], 'You are signed in as ' + user.role + '.', 'success');
       showApp();
+      if (user.mustChangePassword) openPasswordSetup(user);
     }).catch(function (err) {
       if (btn) { btn.disabled = false; btn.innerHTML = Icons.svg('log-in', { class: 'btn-ico' }) + '<span>Sign in</span>'; }
       alertBox.hidden = false;
@@ -70,6 +120,13 @@
 
   function initLogin() {
     renderDemoAccounts();
+    /* the mandatory change dialog offers "Sign out" instead of Cancel */
+    document.addEventListener('click', function (e) {
+      var btn = e.target.closest && e.target.closest('.modal [data-mact="0"]');
+      if (!btn) return;
+      if (!btn.textContent || btn.textContent.trim() !== 'Sign out') return;
+      setTimeout(function () { Auth.logout(); location.reload(); }, 60);
+    });
 
     var form = document.getElementById('login-form');
     form.addEventListener('submit', function (e) {
@@ -95,7 +152,7 @@
     });
 
     var fill = document.getElementById('fill-credentials');
-    fill.addEventListener('click', function () {
+    if (fill) fill.addEventListener('click', function () {
       document.getElementById('login-user').value = 'admin';
       document.getElementById('login-pass').value = 'demo1234';
       showFieldError('login-user', '');
@@ -107,36 +164,34 @@
     document.getElementById('forgot-link').addEventListener('click', forgotPassword);
   }
 
+  /** Real recovery: no email service is wired up, so an administrator resets
+   *  the password and the officer chooses their own at the next sign-in. This
+   *  dialog states the actual procedure instead of pretending to reset it. */
   function forgotPassword() {
-    UI.formModal({
-      title: 'Reset your password',
-      subtitle: 'Prototype password recovery — no email is sent from this build.',
-      icon: 'key',
-      size: 'sm',
-      formHtml: Forms.render([
-        { name: 'identifier', label: 'Username or email address', type: 'text', required: true, placeholder: 'e.g. secretary or secretary@mrhsict.ac.ug', colSpan: 2 },
-        { name: 'password', label: 'New password', type: 'password', required: true, minLength: 6, help: 'At least 6 characters.', colSpan: 2 },
-        { name: 'confirm', label: 'Confirm new password', type: 'password', required: true, colSpan: 2 }
-      ]),
-      submitLabel: 'Reset password',
-      submitIcon: 'key',
-      onOpen: function (c, form) { Forms.init(form); },
-      validate: function (data) {
-        var errors = {};
-        if (data.password !== data.confirm) errors.confirm = 'The two passwords do not match.';
-        if (data.password && data.password.length < 6) errors.password = 'Use at least 6 characters.';
-        if (!Auth.findAccount(data.identifier)) errors.identifier = 'No account was found with that username or email.';
-        return errors;
-      },
-      onSubmit: function (data) {
-        return Auth.resetPassword(data.identifier, data.password).then(function () {
-          UI.toast('Password updated', 'You can now sign in with your new password.', 'success');
-          document.getElementById('login-user').value = data.identifier;
-          document.getElementById('login-pass').value = '';
-          document.getElementById('login-pass').focus();
-          return true;
-        });
-      }
+    var admin = Store.all('users').filter(function (u) {
+      return u.role === 'Administrator' && u.status !== 'Suspended';
+    })[0] || null;
+    var s = Store.settings();
+    var steps =
+      '<p class="muted">There is no email server in this installation, so a password is restored by an administrator rather than by a link.</p>' +
+      '<ol class="help-steps mt-2">' +
+        '<li><strong>Tell an administrator</strong> you have forgotten your password' + (admin ? ' — ' + U.esc(admin.name) + (admin.phone ? ' (' + U.esc(admin.phone) + ')' : '') + ', the club administrator' : '') + '.</li>' +
+        '<li><strong>They reset it</strong> in <span class="mono">Settings → Users → Reset password</span>. The temporary password lasts for one sign-in only.</li>' +
+        '<li><strong>You choose your own</strong> the moment you sign in — at least 8 characters mixing letters and numbers.</li>' +
+      '</ol>' +
+      '<p class="muted small mt-2"><strong>Lost administrator password?</strong> A JSON backup taken while the password was known restores the officer accounts with it (Settings → Data → Restore). With no usable backup, <strong>Reset everything</strong> in Settings → Data rebuilds this browser with the shipped accounts, so the club can start again and restore its records in merge mode.</p>' +
+      '<div class="alert alert-info mt-2">' + Icons.svg('shield') +
+      '<div>Nobody, not even an administrator, can see your password — only replace it. Keep yours to yourself; every change is written to the audit trail.</div></div>' +
+      (s.schoolEmail || s.schoolPhone
+        ? '<p class="muted small mt-2">Club office: ' + U.esc([s.schoolEmail, s.schoolPhone].filter(Boolean).join(' · ')) + '</p>' : '');
+    UI.modal({
+      title: 'Forgotten your password?',
+      subtitle: 'How an account is restored',
+      icon: 'key', size: 'sm',
+      body: steps,
+      actions: [
+        { label: 'Close', variant: 'primary' }
+      ]
     });
   }
 
@@ -145,6 +200,7 @@
     document.getElementById('boot-screen').hidden = true;
     document.getElementById('app-shell').hidden = true;
     document.getElementById('login-screen').hidden = false;
+    renderDemoAccounts();          /* the setup shortcut disappears once it is no longer needed */
     document.body.setAttribute('data-route', 'login');
     document.title = 'Sign in · MRHS ICT CLUB MASTER';
     var userField = document.getElementById('login-user');

@@ -25,8 +25,8 @@
       steps: [
         'Open the app. The boot screen loads the club data (a first run seeds the full demo dataset and takes a few seconds).',
         'On the login screen enter your username or email and password, then click <strong>Sign in</strong>. Tick <em>Remember me</em> on a private device so you stay signed in.',
-        'Forgot a password? Click <strong>Forgot password?</strong> to see who to contact (the club administrator) — passwords are stored as hashes and cannot be read back.',
-        'The first demo sign-in button below the form fills the credentials for you; every demo account uses the password <strong>demo1234</strong>.',
+        'Forgot a password? Click <strong>Forgot password?</strong> for the real procedure: there is no email server, so the administrator issues a one-time password from <strong>Settings → Users → key button</strong> and hands it over in person. Passwords are stored as hashes and cannot be read back.',
+        'Still on the shipped demonstration password? A <strong>First-time setup</strong> panel below the form lists the accounts that are; tap one to sign in, then choose a password of your own — the app insists on it before it opens the club records. Once every officer has done so the panel disappears for good.',
         'After signing in you land on the <strong>Dashboard</strong>. The left sidebar lists every module you are allowed to open; the top bar holds global search, the theme switch, notifications and your account menu.',
         'Press <kbd>Ctrl</kbd>+<kbd>K</kbd> (or <kbd>⌘</kbd>+<kbd>K</kbd> on a Mac) at any time to search the whole database.'
       ],
@@ -438,7 +438,7 @@
       steps: [
         'Open <strong>Settings → Club information</strong> to set the club name, school name, motto, description, contact details, academic year, current term, term dates, currency and document signatories. These values appear on certificates, ID cards, letters and printed reports.',
         'Use <strong>Appearance</strong> to pick light, dark or system theme and the accent colour.',
-        'In <strong>Users &amp; roles</strong> create accounts for cabinet members: name, username, email, role, linked member profile and password. Reset a password, change a role or deactivate an account at any time.',
+        'In <strong>Users &amp; roles</strong> create accounts for cabinet members: name, username, email, role, linked member profile and temporary password. The app proposes a one-time password (for example <span class="mono">MRHS-kfq4a29</span>) and shows it once, with a copy button, so you can hand it over in person — there is no email server. The officer must replace it with a password of their own the first time they sign in. Change a role, issue a fresh temporary password with the key button, or suspend an account at any time.',
         'The quickest way to change the background: open <strong>Certificates</strong> and click the <strong>Certificate background</strong> button at the top of the page (there is a second one on every certificate page and inside every certificate preview). The dialog shows the two built-in designs — <strong>Cream &amp; ornate</strong> is the club default, <strong>Navy &amp; gold</strong> is the alternative — plus an <strong>Upload my image</strong> button for your own PNG or JPEG up to 4 MB.',
         'The same window is available in <strong>Settings → Club information → Certificate background</strong>, where you can click either tile to switch designs, remove your image, or preview a real certificate at any time. The design you pick applies to every certificate, every print-out and every download.',
         'If your background leaves its clear space somewhere else, use <strong>Align the content</strong> in the same window: choose Top / Middle / Bottom and Left / Center / Right, nudge the block sideways or up and down, and change the text size. A live sample certificate below the controls updates as you drag, so you can see exactly where the name and signatures will land. <strong>Reset alignment</strong> puts everything back in the centre.',
@@ -456,8 +456,28 @@
         '<strong>Deletions are final.</strong> A record deleted here is marked as deleted immediately, so loading from the shared database never brings it back; the deletion uploads on the next sync. A record deleted by another officer is removed on this device too, unless it was edited here after that — in which case the edit is kept and uploaded.',
         'The app keeps working with no internet: edits are saved here first and uploaded when the connection returns. Where two officers changed the same record, the later edit (compared by its <span class="mono">updatedAt</span> time) wins, and a local edit newer than the shared copy is never thrown away — it is uploaded on the next sync. Setup takes about twenty minutes once (create the project, create the Firestore database, enable Email/Password, paste the security rules); the step-by-step guide is in <strong>docs/FIREBASE.md</strong> and behind <strong>How to set it up</strong> in the app. Other options — Supabase, PocketBase, Turso, a Sheets mirror — are compared in <strong>docs/DATABASE-OPTIONS.md</strong>.',
         'Restore in <em>merge</em> mode to add a backup’s records to what is already there; <em>replace</em> mode wipes first — the app asks for confirmation and shows how many records each option will affect.',
-        'A user who forgets their password cannot recover it; an administrator resets it here and tells them the new one.',
+        '<strong>Audit trail.</strong> Administrators can open <strong>Audit trail</strong> from this card (or <span class="mono">#/audit</span>). It lists every record added, edited or deleted — when, by which officer, in which module, with the fields that changed — plus sign-ins, password changes and backups. Filter by officer, module, action or date, search it, export the CSV or print it for the file. The trail stays on this device: it is never shared through Firebase.',
+        'A user who forgets their password cannot recover it — passwords are stored as one-way hashes and nobody, not even an administrator, can read one back. Press the key button to issue a temporary password instead; it works for one sign-in and the officer then chooses their own. The <strong>Forgot password?</strong> link on the sign-in screen explains exactly this to the officer.',
         'Deactivating a user immediately ends their access without deleting the audit trail of what they did.'
+      ]
+    },
+    {
+      id: 'my-account',
+      title: 'My account and the audit trail',
+      icon: 'user-cog',
+      tagline: 'Your own details, your password, your rights and what you have changed.',
+      intro: 'Every officer — whatever their role — has the same personal page. Open it from <strong>My Account</strong> at the foot of the sidebar, or from the account menu in the top-right corner.',
+      steps: [
+        'The page opens on <strong>My details</strong>: your name, username, email, telephone, role, when the account was created, when you last signed in, and a link to your own member record if one is linked. <strong>Edit my details</strong> lets you correct your name, email and telephone yourself — your role and status can only be changed by an administrator.',
+        'The <strong>Password</strong> panel changes your password: current password, new password, repeat it. A strength meter tells you how good the new one is; the club rule is at least 8 characters mixing letters and numbers, and the shipped demonstration password is refused. Nobody can read your password — it is stored as a hash.',
+        'The <strong>What I may do</strong> panel lists every module with your rights in it: <em>View only</em>, <em>Add &amp; edit</em> or <em>Full control</em>. This is decided by the club\u2019s role matrix, not by you. To change it, ask an administrator.',
+        '<strong>My recent activity</strong> shows the entries you have written to the audit trail — what you added, edited or deleted, and when.',
+        'Administrators also have the full <strong>Audit trail</strong> (Settings → Data, or <span class="mono">#/audit</span>): every officer\u2019s entries, filtered by officer, module, action or date, searchable, exportable to CSV and printable for the club file. It also records sign-ins, password changes and backup imports.',
+        'The trail is deliberately kept on the device — it is never shared through Firebase — and holds the newest 400 entries; <strong>Remove old entries</strong> keeps the newest 100 when the list grows long.'
+      ],
+      notes: [
+        'If a warning at the top of the page says some accounts still use the shipped demonstration password, they are readable by anyone who has the project files: each officer should set their own password promptly.',
+        'Signing out from the account menu ends your session; tick <em>Remember me</em> only on the office computer, never on a shared one.'
       ]
     },
     {
@@ -513,6 +533,7 @@
       tagline: 'Answers to the things that come up most often.',
       faq: [
         { q: 'My data disappeared after clearing the browser.', a: 'The app stores everything in this browser. Clearing browsing data removes it. Restore from your JSON backup in Settings → Data; if you have none, the app can re-seed the demo data so you can start again.' },
+        { q: 'The administrator password is lost and no one can get in.', a: 'Passwords are one-way hashes, so nothing can read them back. Two real routes remain. First, restore a JSON backup taken while the password was known — backups include the officer accounts, so access returns with them (Settings → Data → Restore). Second, if there is no usable backup: Settings → Data → <strong>Reset everything</strong> rebuilds this browser with the shipped demonstration accounts, you sign in as <span class="mono">admin</span> with <span class="mono">demo1234</span>, set real passwords again, then <strong>Restore</strong> the club records in <em>merge</em> mode. To avoid all of this, write the administrator password in the club file held by the patron, and download a backup every term.' },
         { q: 'It says “Storage limit reached”.', a: 'The browser storage quota is full. Export a backup, then delete large attachments (photos, documents, gallery images) you no longer need. Old backups are the usual culprit.' },
         { q: 'A page says “Access restricted”.', a: 'Your role does not include that module. Ask an administrator to review your role in Settings → Users & roles.' },
         { q: 'I cannot print a certificate properly.', a: 'Choose A4 landscape, disable headers and footers in the print dialog, and turn off “Fit to page” so the border is not clipped. The preview shows exactly what will print.' },
@@ -539,6 +560,8 @@
           ['Certificate number', 'The unique public reference of a certificate, e.g. MRHSICT-2026-CERT-0001, used for verification.'],
           ['Asset ID', 'The unique tag of a piece of club equipment, e.g. MRHS-ICT-EQ-0001.'],
           ['Merge / Replace', 'How a backup is restored: add to existing records, or wipe and restore only the backup.'],
+          ['Role claim', 'The document the app writes in Firebase for each officer (<span class="mono">roles/{uid}</span>) saying which club role they hold and whether they may write. The security rules read it, so only officers can change shared records.'],
+          ['First sign-in password', 'New and reset accounts must choose their own password the first time they sign in — at least 8 characters mixing letters and numbers. The published demonstration password cannot be reused.'],
           ['Firebase / Firestore', 'Google’s free hosted database. The club uses it so several officers work on the same live records; the device keeps working offline and uploads when there is internet.'],
           ['Sync now', 'Exchanges records with the shared database: local changes go up, the other officers’ changes come down.'],
           ['Pending changes', 'Records edited here that have not been uploaded yet — usually because the device was offline.'],

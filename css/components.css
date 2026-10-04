@@ -1325,3 +1325,24 @@ input[type="number"], input[type="date"], input[type="search"], input[type="tel"
   .view-root > *, .cards-grid > *, .grid > *, .stat-card { animation: none; }
   .btn:hover, .stat-card:hover, .nav-item:hover { transform: none; }
 }
+
+/* ── 23. My account ────────────────────────────────────────────────────────
+   The signed-in officer's own page: who they are, their password, and what
+   the club lets them do. Kept with the finish section so it inherits the same
+   depth, focus rings and motion as the rest of the interface. */
+.profile-head { display: flex; align-items: center; gap: 14px; padding: 14px 16px; border-radius: var(--r-md);
+  background: linear-gradient(135deg, var(--primary-50, #eef2ff), var(--surface)); border: 1px solid var(--border); }
+.profile-head-info { flex: 1 1 auto; min-width: 0; }
+.profile-head-info h3 { margin: 0; font-size: 1.05rem; }
+.profile-head-info p { margin: 2px 0 0; }
+.strength { display: flex; align-items: center; gap: 10px; }
+.strength-bar { flex: 1 1 auto; height: 7px; border-radius: 999px; background: var(--surface-3, #eef1f8); overflow: hidden; }
+.strength-bar > span { display: block; height: 100%; width: 8%; border-radius: 999px; transition: width .25s ease, background .25s ease; background: var(--danger); }
+.strength-bar > span.s-3 { background: var(--warning); }
+.strength-bar > span.s-4 { background: var(--info); }
+.strength-bar > span.s-5 { background: var(--success); }
+.strength > span { white-space: nowrap; }
+.code-block { padding: 12px 14px; border-radius: var(--r-md); background: var(--surface-3, #f4f6fb);
+  border: 1px dashed var(--border-strong, var(--border)); font-size: 1.15rem; letter-spacing: .08em;
+  text-align: center; word-break: break-all; }
+@media (max-width: 640px) { .profile-head { flex-wrap: wrap; } }

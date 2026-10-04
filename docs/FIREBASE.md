@@ -70,25 +70,51 @@ service cloud.firestore {
 }
 ```
 
-Stricter version — the same signed-in accounts, but records may only be changed
-by officers. Add a `roles/{uid}` document per officer with a `role` field and use:
+Stricter version — everyone signed in may **read**, but only officers may
+**write**. The app maintains the claim itself: when an officer connects in
+*Settings → Data → Firebase shared database*, the app writes
+`roles/{their Firebase uid}` with their club role and a `canWrite` flag taken
+from the role matrix. Nobody can write another officer's claim.
 
 ```
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    function officer() {
-      return request.auth != null &&
-        get(/databases/$(database)/documents/roles/$(request.auth.uid)).data.role in
-          ['admin', 'patron', 'president', 'secretary', 'treasurer'];
-    }
+
+    // Everyone signed in may read. Guests can do nothing.
     match /{document=**} {
       allow read: if request.auth != null;
-      allow write: if officer();
+    }
+
+    // An officer may only write their own claim document.
+    match /roles/{uid} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null && request.auth.uid == uid;
+    }
+
+    // Records: only officers, and only those whose claim says they may write.
+    function canWrite() {
+      return request.auth != null &&
+        exists(/databases/$(database)/documents/roles/$(request.auth.uid)) &&
+        get(/databases/$(database)/documents/roles/$(request.auth.uid)).data.canWrite == true;
+    }
+    match /{collection}/{doc} {
+      allow write: if canWrite();
     }
   }
 }
 ```
+
+Notes
+
+- Officer roles that carry write access are set by the app's own permission
+  matrix: Administrator, Patron, President, Secretary, Treasurer (and the
+  coordinators for their own modules). A membership-only account signs in,
+  reads everything it is allowed to see and is refused writes.
+- Publish the strict rules **after** connecting at least one administrator,
+  otherwise that first claim cannot be written.
+- To revoke an officer immediately: delete their `roles/{uid}` document in the
+  console (or set `canWrite` to `false`), and remove their Authentication user.
 
 Notes
 
@@ -162,7 +188,7 @@ settings are shared only through a JSON backup.
 | “That email address and password were not accepted.” | Create the account in *Authentication → Users*, or reset its password there. |
 | “Email/password sign-in is not enabled for this project yet.” | *Authentication → Sign-in method → Email/Password → Enable*. |
 | “That Firebase project or database was not found.” | Check the Project ID, and that Firestore has been created in that project. |
-| “Firebase refused the request (403).” | Publish the security rules in section 3, and confirm you are signed in. |
+| “Firebase refused the request (403).” | Publish the security rules in section 3, and confirm you are signed in. If the stricter rules are published, connect once as an administrator so that officer's role claim exists. |
 | “The API key does not match that Firebase project.” | Copy the Web API key again from *Project settings → General*. |
 | Records do not appear on the other device | Press **Sync now** there; check the pending count and that both devices use the same project ID. |
 | The app says “Offline” | The preview sandbox and airplane mode cannot reach Google; open the app from its real address. |
