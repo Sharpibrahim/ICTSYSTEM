@@ -268,6 +268,14 @@
     options = options || {};
     return new Promise(function (resolve) {
       var decided = false;
+      /* Callers may either pass onConfirm/onCancel or await the promise — both
+         work. Ignoring onConfirm silently broke every destructive button that
+         used it (remove sample data, reload sample data, reset everything,
+         restore default club info, archive announcement). */
+      function run(handler, label) {
+        if (typeof handler !== 'function') return;
+        try { handler(); } catch (e) { console.error('[UI.confirm] ' + label + ' handler failed', e); }
+      }
       var tone = options.tone || 'danger';
       var ctrl = modal({
         title: options.title || 'Please confirm',
@@ -282,7 +290,7 @@
             '<input type="text" class="mt-1" data-confirm-word autofocus placeholder="' + U.esc(options.confirmWord) + '">' : '') +
           '</div>',
         actions: [
-          { label: options.cancelLabel || 'Cancel', tone: 'outline', onClick: function (c) { decided = true; resolve(false); c.close(); } },
+          { label: options.cancelLabel || 'Cancel', tone: 'outline', onClick: function (c) { decided = true; resolve(false); run(options.onCancel, 'onCancel'); c.close(); } },
           {
             label: options.confirmLabel || 'Confirm', tone: tone === 'danger' ? 'danger' : 'primary',
             icon: options.confirmIcon || (tone === 'danger' ? 'trash' : 'check'),
@@ -293,7 +301,7 @@
                 wordInput.focus();
                 return;
               }
-              decided = true; resolve(true); c.close();
+              decided = true; resolve(true); run(options.onConfirm, 'onConfirm'); c.close();
             }
           }
         ],

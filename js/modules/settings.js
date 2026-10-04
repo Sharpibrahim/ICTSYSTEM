@@ -724,11 +724,18 @@
     UI.confirm({
       title: 'Remove sample records', tone: 'warning', confirmLabel: 'Remove sample data',
       message: 'Delete every record marked as sample/demo data?',
-      details: 'Your own records, the sign-in accounts and your settings are kept. Export a backup first if you are unsure.',
+      details: 'Deletes the demonstration records only. Your own records, the sign-in accounts and your settings are kept. Export a backup first if you are unsure.',
       onConfirm: function () {
-        var removed = 0;
-        Store.COLLECTIONS.forEach(function (c) { removed += Store.stripDemo(c); });
-        UI.toast('Sample data removed', removed + ' demonstration records were deleted.', 'success');
+        var removed = 0, kept = 0;
+        Store.COLLECTIONS.forEach(function (c) {
+          if (c === 'users') return;              /* never delete sign-in accounts */
+          var r = Store.stripDemo(c);
+          removed += r.removed; kept += r.kept;
+        });
+        UI.toast('Sample data removed',
+          removed + ' demonstration records were deleted. ' +
+          (kept ? kept + ' record' + (kept === 1 ? '' : 's') + ' you had entered were kept. ' : '') +
+          'Your sign-in accounts and settings are untouched.', 'success');
         Shell.refresh();
         Router.refresh();
       }

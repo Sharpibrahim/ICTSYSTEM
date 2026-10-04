@@ -166,7 +166,10 @@
     if (!record.id) record.id = Utils.uid(collection.slice(0, 3));
     record.createdAt = record.createdAt || new Date().toISOString();
     record.updatedAt = new Date().toISOString();
-    if (record.demo === undefined) record.demo = true;
+    /* Real records entered in the app must never be flagged as sample data:
+       the seed marks its own records demo:true explicitly, so anything created
+       through the app is the club's own and survives "Remove sample records". */
+    if (record.demo === undefined) record.demo = false;
     rows.push(record);
     save(collection);
     audit('create', collection, record);
@@ -351,9 +354,59 @@
   }
 
   /* ── Demo helpers ─────────────────────────────────────────────────────── */
-  function stripDemo(collection) {
-    var removed = removeWhere(collection, function (r) { return r.demo === true; });
-    return removed.length;
+  /* The IDs the demonstration dataset ships with, so "Remove sample records"
+     can name exactly those records instead of guessing from flags or dates.
+     Built once, lazily, from the same generator that seeds a new install. */
+  var seedIndexCache = null;
+  function seedIdIndex() {
+    if (seedIndexCache) return seedIndexCache;
+    seedIndexCache = {};
+    try {
+      var scratch = Data.seed({});
+      Object.keys(scratch).forEach(function (c) {
+        if (c.charAt(0) === '_' || !Array.isArray(scratch[c])) return;
+        seedIndexCache[c] = {};
+        scratch[c].forEach(function (r) { if (r && r.id) seedIndexCache[c][r.id] = true; });
+      });
+    } catch (e) {
+      console.error('[Store] could not index the sample dataset', e);
+      seedIndexCache = {};
+    }
+    return seedIndexCache;
+  }
+
+  /** Deletes the demonstration records of one collection.
+   *
+   *  Callers must skip 'users' - the demonstration sign-in accounts are seed
+   *  records too, and deleting them locks the club out of the app.
+   *
+   *  Only records the sample dataset actually created are deleted. A seeded
+   *  record the club edited afterwards, or a record the club entered itself
+   *  (even one an older version of the app flagged as demo), is kept and has
+   *  the demo flag cleared.
+   *  Returns { removed, kept }.
+   */
+  function stripDemo(collection, opts) {
+    opts = opts || {};
+    var ids = seedIdIndex()[collection] || null;
+    var meta = lsGet(KEY.meta, {}) || {};
+    var seededAt = Date.parse(meta.seededAt || '') || 0;
+    var rows = all(collection);
+    var removed = 0, kept = 0, changed = false;
+    for (var i = rows.length - 1; i >= 0; i--) {
+      var r = rows[i];
+      if (r.demo !== true) continue;
+      var fromSeed = ids ? ids[r.id] === true : true;      /* no index: keep old behaviour */
+      if (fromSeed && seededAt) {
+        var stamp = Date.parse(r.updatedAt || r.createdAt || '') || 0;
+        if (stamp > seededAt) fromSeed = false;            /* edited since seeding */
+      }
+      if (fromSeed) { rows.splice(i, 1); removed++; }
+      else { r.demo = false; kept++; }
+      changed = true;
+    }
+    if (changed) save(collection);
+    return { removed: removed, kept: kept };
   }
 
   global.Store = {
