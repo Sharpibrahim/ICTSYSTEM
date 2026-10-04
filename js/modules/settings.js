@@ -296,6 +296,7 @@
           field('firebaseProjectId', 'Firebase project ID', fb.projectId, { placeholder: 'mrhs-ict-club', help: 'Firebase console → Project settings → General → Project ID.' }) +
           field('firebaseApiKey', 'Web API key', fb.apiKey, { help: 'Firebase console → Project settings → General → Web API key. This key is not a secret; the security rules protect the data.' }) +
         '</form>' +
+        '<p class="help">' + Icons.svg('info') + ' The club\u2019s Firebase project is filled in already \u2014 on other devices just press <strong>Save connection details</strong>, then <strong>Connect Firebase</strong>. Overwrite these two boxes only if the club moves to a different project.</p>' +
         (fb.connected
           ? '<p class="small mt-1">Signed in as <strong>' + U.esc(fb.account) + '</strong>' +
               (fb.lastAt ? ' · last sync ' + U.esc(U.fmtDate(fb.lastAt, 'long')) + ' at ' + U.esc(String(fb.lastAt).slice(11, 16)) : '') +

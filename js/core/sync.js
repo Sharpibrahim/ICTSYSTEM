@@ -41,6 +41,17 @@
   /* Local-only collections: never uploaded. */
   var LOCAL_ONLY = ['users', 'auditLog', 'verifications', 'notifications'];
 
+  /* The club's own Firebase project, shipped as the default so that every
+     officer's device only has to press "Connect Firebase" and sign in.
+     These two values are public by design (they travel in the browser);
+     the data is protected by the security rules in docs/FIREBASE.md.
+     Overwrite them in Settings -> Data if the club ever moves to another
+     project. */
+  var DEFAULTS = {
+    projectId: 'mrhs-ict-club',
+    apiKey: 'AIzaSyDq-e9_ALtjfSP2EqyiRuYP1vxcTk8hBY0'
+  };
+
   function syncedCollections() {
     return Store.COLLECTIONS.filter(function (c) { return LOCAL_ONLY.indexOf(c) === -1; });
   }
@@ -61,8 +72,8 @@
   function toast(title, message, tone) { UI.toast(title, message, tone || 'info'); }
 
   /* ══ Configuration ══════════════════════════════════════════════════════ */
-  function projectId() { return String(settings().firebaseProjectId || '').trim(); }
-  function apiKey() { return String(settings().firebaseApiKey || '').trim(); }
+  function projectId() { return String(settings().firebaseProjectId || '').trim() || DEFAULTS.projectId; }
+  function apiKey() { return String(settings().firebaseApiKey || '').trim() || DEFAULTS.apiKey; }
   function configured() { return !!projectId() && !!apiKey(); }
   function autoEnabled() { return settings().syncEnabled === true; }
 
