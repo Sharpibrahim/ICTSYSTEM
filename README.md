@@ -41,6 +41,28 @@ The deployment is only the application. Club records stay in the browser (and in
 Firebase if the club connected it), so a redeploy can never touch them. Keep
 downloading a JSON backup each term.
 
+## Screen sizes
+
+The layout is rebuilt, not shrunk, at every size — 320 px phones up to 4K
+displays and everything between (1 366 × 768 office laptops, 1 024 px tablets,
+iPad portrait, phones in landscape):
+
+| Screen | What the platform does |
+|---|---|
+| ≥ 1 700 px | content column capped and centred so text does not stretch; larger type on 4K |
+| 1 366 × 768 | full sidebar, tighter spacing, compact banner, shorter top bar |
+| ~1 024 px | sidebar becomes an icon rail; two-column panels stay side by side |
+| 768 px (tablet portrait) | sidebar becomes a drawer; data tables become one card per record with labelled values |
+| 360–480 px (phones) | one column; dialogs are bottom sheets; 44 px touch targets; 16 px inputs (no iOS zoom); safe-area padding for notches |
+| 320–360 px | statistic cards stay two-up (full width below 340 px); wide tables scroll in their own box |
+| phone landscape | banner sheds secondary text; calendar and register get the height |
+| 200 % browser zoom | takes the tablet layout rather than breaking |
+| print | tables restored to full rows, A4, certificates A4 landscape |
+
+Widths are fluid (`clamp()`), so there is no size at which the layout looks
+cramped or sparse. `css/adaptive.css` holds the rules; the checks are in
+`tools/` (see `tools/README.md`).
+
 ## Colour schemes
 
 Eleven complete schemes ship with the platform — Azure & Cyan (default),

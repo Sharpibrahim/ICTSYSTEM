@@ -1,0 +1,15 @@
+{
+  "name": "mrhs-ict-club-master-checks",
+  "private": true,
+  "description": "Test harnesses for MRHS ICT CLUB MASTER. Not part of the deployed app.",
+  "scripts": {
+    "install-checks": "npm install jsdom css-tree",
+    "check": "node check.js",
+    "check:css": "node check-css.js ../css/style.css ../css/components.css ../css/palette.css ../css/responsive.css ../css/adaptive.css",
+    "check:responsive": "node check-responsive.js"
+  },
+  "dependencies": {
+    "css-tree": "^3.0.0",
+    "jsdom": "^26.0.0"
+  }
+}

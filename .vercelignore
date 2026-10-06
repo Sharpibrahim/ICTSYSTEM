@@ -1,6 +1,9 @@
 # Files and folders that do not need to be uploaded to Vercel.
 # The deployment is the app itself: index.html, css/, js/, assets/.
 
+# Test harnesses (documented in tools/README.md)
+tools/
+
 # Local screenshots kept with the project for reference
 image-search/
 

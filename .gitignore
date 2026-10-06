@@ -1,0 +1,14 @@
+# Test-tool dependencies are installed per machine, never committed.
+tools/node_modules/
+tools/package-lock.json
+tools/manual.json
+
+# OS / editor clutter
+.DS_Store
+Thumbs.db
+*.swp
+.idea/
+.vscode/
+
+# Nothing here is built, so anything else generated stays out by habit.
+*.log

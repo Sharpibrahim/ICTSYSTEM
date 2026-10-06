@@ -111,7 +111,9 @@
       if (cell) cell.events.push(e);
     });
     var html = '<div class="cal-dow">' + ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map(function (d) { return '<span>' + d + '</span>'; }).join('') + '</div>';
-    html += '<div class="cal-grid">' + cells.map(function (c) {
+    html += '<div class="rotate-hint">' + Icons.svg('smartphone', { size: 16 }) +
+      '<span>Turn the phone sideways for a wider month view.</span></div>' +
+      '<div class="cal-grid">' + cells.map(function (c) {
       var shown = c.events.slice(0, 3);
       return '<button type="button" class="cal-cell' + (c.out ? ' out' : '') + (c.iso === todayKey ? ' today' : '') +
         (c.iso === state.selected ? ' selected' : '') + '" data-day="' + c.iso + '" aria-label="' + U.attr(U.fmtDate(c.iso, 'long')) + '">' +

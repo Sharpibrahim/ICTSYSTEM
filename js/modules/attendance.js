@@ -126,7 +126,9 @@
             ' records exist for this session. Saving will update them.</div></div>'
           : '') +
         (draft.contextId
-          ? Forms.attendanceGrid(members, existing) + '<p class="help mt-1">Members are listed with their current status. “Late” counts towards the attendance rate; “Excused” and “Absent” do not.</p>'
+          ? '<div class="rotate-hint">' + Icons.svg('smartphone', { size: 16 }) +
+            '<span>Turn the phone sideways to see more members on one line of the register.</span></div>' +
+            Forms.attendanceGrid(members, existing) + '<p class="help mt-1">Members are listed with their current status. “Late” counts towards the attendance rate; “Excused” and “Absent” do not.</p>'
           : '<div>' + UI.emptyState({ icon: 'calendar-check', title: 'Select a session', message: 'Pick the session type and the specific session to record attendance for.' }) + '</div>');
 
       Forms.initAttendanceGrid(host);

@@ -65,6 +65,8 @@
     'git-branch': '<circle cx="7" cy="5.4" r="2.6"/><circle cx="7" cy="18.6" r="2.6"/><circle cx="17" cy="9" r="2.6"/><path d="M7 8v8"/><path d="M17 11.6c0 3-2.4 4.2-5 4.6"/>',
     palette: '<path d="M12 3.4a8.6 8.6 0 0 0 0 17.2c1.5 0 2.1-1 2.1-2s-.9-1.6-.9-2.7.8-1.8 2.1-1.8h1.6a3.7 3.7 0 0 0 3.7-3.7c0-3.9-3.9-7-8.6-7z"/><circle cx="7.9" cy="10.6" r="1.2"/><circle cx="12" cy="7.8" r="1.2"/><circle cx="16.2" cy="10.2" r="1.2"/>',
     'qr-code': '<rect x="3.4" y="3.4" width="6.6" height="6.6" rx="1.6"/><rect x="14" y="3.4" width="6.6" height="6.6" rx="1.6"/><rect x="3.4" y="14" width="6.6" height="6.6" rx="1.6"/><path d="M14 14h3.2v3.2H14zM20.6 14v6.6h-4M17.4 20.6h.01"/>',
+    smartphone: '<rect x="6.4" y="2.4" width="11.2" height="19.2" rx="3.2"/><path d="M10.2 5.4h3.6"/><path d="M10.6 18.6h2.8"/>',
+    'rotate-phone': '<rect x="3.4" y="7.6" width="12" height="8.8" rx="2.4"/><path d="M17.4 12a4.6 4.6 0 0 1-4.6 4.6"/><path d="M14 14.4l-1.4 2.2 2.5.5"/>',
     'id-card': '<rect x="2.6" y="5" width="18.8" height="14" rx="2.6"/><circle cx="8.6" cy="11" r="2.4"/><path d="M4.9 16.6c.6-1.6 2-2.5 3.7-2.5s3.1.9 3.7 2.5"/><path d="M14.8 10h4.2M14.8 13h3.2"/>',
     building: '<path d="M4 20.4V6a2 2 0 0 1 2-2h6.4a2 2 0 0 1 2 2v14.4"/><path d="M14.4 9.8h3.6a2 2 0 0 1 2 2v8.6"/><path d="M3 20.4h18"/><path d="M7.4 8h3.6M7.4 11.6h3.6M7.4 15.2h3.6"/>',
     globe: '<circle cx="12" cy="12" r="8.6"/><path d="M3.4 12h17.2"/><path d="M12 3.4c2.2 2.4 3.4 5.4 3.4 8.6s-1.2 6.2-3.4 8.6c-2.2-2.4-3.4-5.4-3.4-8.6S9.8 5.8 12 3.4z"/>',

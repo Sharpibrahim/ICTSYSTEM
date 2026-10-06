@@ -108,7 +108,7 @@
   .modal-foot { padding: 12px 15px; border-radius: 0 0 var(--r-lg) var(--r-lg); }
   .modal-foot .mf-right { width: 100%; }
   .modal-foot .mf-right .btn { flex: 1; }
-  .drawer { width: 100vw; }
+  .drawer { width: 100%; }
   .cal-cell { min-height: 62px; padding: 4px; }
   .cal-event { font-size: .64rem; padding: 2px 4px; }
   .cal-day { font-size: .72rem; width: 21px; height: 21px; }

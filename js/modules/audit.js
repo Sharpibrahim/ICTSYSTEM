@@ -83,17 +83,17 @@
         ? e.meta.changed.map(function (k) { return U.titleCase(k); }).join(', ') : '';
       var note = e.meta && e.meta.note ? e.meta.note : '';
       return '<tr>' +
-        '<td class="nowrap">' + U.esc(U.fmtDate(e.at, 'long')) + ' <span class="muted small">' + U.esc(String(e.at || '').slice(11, 16)) + '</span></td>' +
-        '<td>' + U.esc(e.user || 'system') + '</td>' +
-        '<td>' + UI.badge(ACTION_LABELS[e.action] || U.titleCase(e.action || ''), ACTION_TONES[e.action] || 'neutral') + '</td>' +
-        '<td>' + U.esc(U.titleCase(e.collection || '')) + '</td>' +
-        '<td>' + '<span class="td-strong">' + U.esc(e.label || e.recordId || '—') + '</span>' +
+        '<td class="nowrap cell-primary" data-label="When">' + U.esc(U.fmtDate(e.at, 'long')) + ' <span class="muted small">' + U.esc(String(e.at || '').slice(11, 16)) + '</span></td>' +
+        '<td data-label="Officer">' + U.esc(e.user || 'system') + '</td>' +
+        '<td data-label="What">' + UI.badge(ACTION_LABELS[e.action] || U.titleCase(e.action || ''), ACTION_TONES[e.action] || 'neutral') + '</td>' +
+        '<td data-label="Module">' + U.esc(U.titleCase(e.collection || '')) + '</td>' +
+        '<td data-label="Record">' + '<span class="td-strong">' + U.esc(e.label || e.recordId || '—') + '</span>' +
           (e.recordId && e.label && e.label !== e.recordId ? '<br><span class="muted xs mono">' + U.esc(e.recordId) + '</span>' : '') + '</td>' +
-        '<td class="small muted">' + U.esc(note || changed || '—') + '</td>' +
+        '<td class="small muted" data-label="Details">' + U.esc(note || changed || '—') + '</td>' +
       '</tr>';
     }).join('');
 
-    return '<div class="table-wrap"><table class="data-table" id="audit-table">' +
+    return '<div class="table-wrap stacked"><table class="data-table" id="audit-table">' +
       '<thead><tr>' +
         '<th>When</th><th>Officer</th><th>What</th><th>Module</th><th>Record</th><th>Details</th>' +
       '</tr></thead><tbody>' + body + '</tbody></table></div>' +
