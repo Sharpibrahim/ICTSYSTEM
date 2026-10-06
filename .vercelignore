@@ -1,0 +1,21 @@
+# Files and folders that do not need to be uploaded to Vercel.
+# The deployment is the app itself: index.html, css/, js/, assets/.
+
+# Local screenshots kept with the project for reference
+image-search/
+
+# Editor / OS clutter
+.DS_Store
+Thumbs.db
+*.swp
+*.tmp
+.tmp-*
+*~
+.vscode/
+.idea/
+
+# Only the deployed branch is built, but keep Vercel's own state out of the upload
+.vercel/
+
+# Notes and generators that live outside the app
+*.log

@@ -247,6 +247,8 @@
         Sync.init();
         if (Sync.connected() && Sync.settings().syncEnabled) Sync.maybePull(true);
       }
+      /* the sign-in screen carries the club's colours before anyone signs in */
+      if (global.Shell && Shell.applyScheme) Shell.applyScheme(Store.settings().accent || 'azure', { save: false });
       var user = Auth.restore();
       initLogin();
       if (user) {

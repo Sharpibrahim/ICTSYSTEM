@@ -17,7 +17,7 @@
     return /Competition/.test(cat) ? 'warning' : /Innovation/.test(cat) ? 'secondary' : /Member/.test(cat) ? 'primary'
       : /Training/.test(cat) ? 'accent' : /Community/.test(cat) ? 'success' : 'info';
   }
-  var PALETTE = ['#2545d6', '#6d28d9', '#06b6d4', '#12884f', '#b7791f', '#d64545', '#0e9488'];
+  var PALETTE = ['var(--primary-700, #2545d6)', 'var(--secondary-700, #6d28d9)', 'var(--accent-600, #06b6d4)', '#12884f', '#b7791f', '#d64545', 'var(--accent-600, #0e9488)'];
 
   var config = {
     key: 'achievements',

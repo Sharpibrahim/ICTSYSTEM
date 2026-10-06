@@ -152,6 +152,48 @@
     }
     return saved;
   }
+  var SCHEMES = [
+    ['azure',    'Azure & Cyan',    'The club\u2019s own deep blue with cyan light — the default'],
+    ['indigo',   'Indigo & Violet', 'Rich purple-blue, suits presentations and badges'],
+    ['royal',    'Royal & Gold',    'Club navy with gold — dignified on certificates and print'],
+    ['emerald',  'Emerald & Teal',  'Green and teal, fresh for training and the laboratory'],
+    ['midnight', 'Midnight & Cyan', 'Near-black navy with bright cyan accents for evening work'],
+    ['plum',     'Plum & Rose',     'Deep berry tones, warm and distinctive'],
+    ['slate',    'Slate & Steel',   'Quiet formal grey-blue for printed cabinets'],
+    ['sunset',   'Sunset & Coral',  'Orange and coral, energetic on the notice board'],
+    ['lagoon',   'Teal & Sand',     'Calm coastal teal with sand-gold highlights'],
+    ['sky',      'Sky & Ash',       'Bright sky blue and neutral grey for projectors'],
+    ['teams',    'System Blue',     'The familiar Windows blue for school computers']
+  ];
+  function schemeKey(key) {
+    var k = String(key || 'azure');
+    if (k === 'primary') k = 'azure';            /* the old single-theme value */
+    return SCHEMES.some(function (s) { return s[0] === k; }) ? k : 'azure';
+  }
+  /** Applies the club's colour scheme to the whole interface. */
+  function applyScheme(key, opts) {
+    opts = opts || {};
+    var k = schemeKey(key || Store.settings().accent);
+    if (opts.save !== false && Store.settings().accent !== k) Store.saveSettings({ accent: k });
+    document.documentElement.setAttribute('data-accent', k);
+    var info = SCHEMES.filter(function (s) { return s[0] === k; })[0] || SCHEMES[0];
+    var meta = document.getElementById('theme-color-meta');
+    if (meta) {
+      var probe = document.createElement('span');
+      probe.style.color = 'var(--primary)';
+      document.body.appendChild(probe);
+      var rgb = getComputedStyle(probe).color;
+      probe.remove();
+      if (rgb && rgb !== 'rgba(0, 0, 0, 0)') meta.setAttribute('content', rgb);
+    }
+    U.$$('[data-accent-choice]').forEach(function (b) {
+      var on = b.getAttribute('data-accent-choice') === k;
+      b.setAttribute('aria-checked', String(on));
+      b.classList.toggle('active', on);
+    });
+    return info;
+  }
+
   function applyTheme(mode, opts) {
     opts = opts || {};
     if (mode) Store.saveSettings({ theme: mode });
@@ -162,6 +204,7 @@
     if (icon) icon.innerHTML = Icons.ref('sun');
     var meta = document.querySelector('meta[name="color-scheme"]');
     if (meta) meta.setAttribute('content', resolved === 'dark' ? 'dark' : 'light');
+    applyScheme(Store.settings().accent || 'azure', { save: false });   /* keep the club colour */
     U.$$('[data-theme-choice]').forEach(function (b) {
       var on = b.getAttribute('data-theme-choice') === (mode || Store.settings().theme || 'light');
       b.setAttribute('aria-checked', String(on));
@@ -173,9 +216,16 @@
   }
   function initTheme() {
     applyTheme(Store.settings().theme || 'light', { silent: true });
+    applyScheme(Store.settings().accent || 'azure', { save: false });
     U.$$('[data-theme-choice]').forEach(function (b) {
       b.addEventListener('click', function () {
         applyTheme(b.getAttribute('data-theme-choice'));
+        UI.closeDropdowns();
+      });
+    });
+    U.$$('[data-accent-choice]').forEach(function (b) {
+      b.addEventListener('click', function () {
+        applyScheme(b.getAttribute('data-accent-choice'));
         UI.closeDropdowns();
       });
     });
@@ -658,6 +708,7 @@
 
   global.Shell = {
     NAV: NAV, items: items, configFor: configFor,
+    SCHEMES: SCHEMES, applyScheme: applyScheme, schemeKey: schemeKey,
     init: init, refresh: refresh, setActive: setActive, renderNav: renderNav,
     openSearch: openSearch, closeSearch: closeSearch, searchIndex: searchIndex,
     notifications: notifications, markRead: markRead,

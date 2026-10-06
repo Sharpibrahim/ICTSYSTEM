@@ -88,7 +88,19 @@
               return '<button type="button" class="theme-option' + ((c.theme || 'light') === t[0] ? ' active' : '') + '" data-theme-choice="' + t[0] + '">' +
                 '<span class="to-swatch ' + t[0] + '"></span><strong>' + t[1] + '</strong><span class="muted small">' + t[2] + '</span></button>';
             }).join('') + '</div>' +
-          '<p class="help mt-2">The theme applies immediately and is remembered for this browser.</p>'
+          '<p class="help mt-2">The theme applies immediately and is remembered for this browser.</p>' +
+          '<div class="swatch-grid mt-3" role="radiogroup" aria-label="Colour scheme">' +
+            (global.Shell && Shell.SCHEMES ? Shell.SCHEMES : []).map(function (sc) {
+              var on = (c.accent || 'azure') === sc[0] || (c.accent === 'primary' && sc[0] === 'azure');
+              return '<button type="button" class="swatch' + (on ? ' active' : '') + '" data-accent-choice="' + sc[0] + '"' +
+                ' role="radio" aria-checked="' + (on ? 'true' : 'false') + '" title="' + U.attr(sc[2]) + '">' +
+                '<span class="sw-strip" data-scheme="' + sc[0] + '"><i></i><i></i><i></i><i></i><i></i></span>' +
+                '<strong>' + U.esc(sc[1]) + '</strong>' +
+                '<span class="muted xs">' + U.esc(sc[2]) + '</span>' +
+                (on ? '<span class="sw-tick">' + Icons.svg('check', { size: 14 }) + '</span>' : '') +
+              '</button>';
+            }).join('') + '</div>' +
+          '<p class="help mt-2">Eleven colour schemes, each a full set: buttons, tables, charts, the sidebar, the sign-in panel, ID cards and certificates all follow the one you choose. Administrators can set the club\u2019s choice here; it applies to every screen on this device.</p>'
       }) +
       UI.card({
         title: 'Display preferences', icon: 'sliders',
@@ -382,6 +394,19 @@
       root.addEventListener('click', function (e) {
         var t = e.target.closest('[data-tab]');
         if (t) { tab = t.getAttribute('data-tab'); Router.refresh(); return; }
+        var swatch = e.target.closest('[data-accent-choice]');
+        if (swatch) {
+          var key = swatch.getAttribute('data-accent-choice');
+          var info = Shell.applyScheme(key);
+          U.$$('.swatch', root).forEach(function (b) {
+            var on = b === swatch;
+            b.classList.toggle('active', on);
+            b.setAttribute('aria-checked', String(on));
+          });
+          UI.toast('Colour scheme applied', (info && info[1] ? info[1] : key) + ' is now the club\u2019s look on this device.', 'success', { duration: 2600 });
+          Shell.refresh();
+          return;
+        }
         var theme = e.target.closest('[data-theme-choice]');
         if (theme) {
           var choice = theme.getAttribute('data-theme-choice');

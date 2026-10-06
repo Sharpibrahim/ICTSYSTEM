@@ -10,11 +10,53 @@
   var U = Utils;
   var uidn = 0;
 
-  var DEFAULT_COLORS = ['#2450d8', '#4f46e5', '#06b6d4', '#0f9d58', '#f59e0b', '#dc3d43', '#0891b2', '#7c3aed', '#22c55e', '#3f68ec'];
+  /* Charts read the active colour scheme from the stylesheet, so switching the
+     scheme in Settings recolours every chart without re-rendering the code. */
+  var FALLBACK_COLORS = ['#2450d8', '#4f46e5', '#06b6d4', '#0f9d58', '#f59e0b', '#dc3d43', '#0891b2', '#7c3aed', '#22c55e', '#3f68ec'];
+  var schemeCache = { key: '', colors: FALLBACK_COLORS };
+  function schemeColors() {
+    var key = (document.documentElement.getAttribute('data-accent') || 'azure') + '|' + (document.documentElement.getAttribute('data-theme') || 'light');
+    if (schemeCache.key === key) return schemeCache.colors;
+    var pick = function (name, fb) {
+      var probe = document.createElement('span');
+      probe.style.color = 'var(' + name + ')';
+      probe.style.display = 'none';
+      document.body.appendChild(probe);
+      var rgb = getComputedStyle(probe).color;
+      probe.remove();
+      return (rgb && rgb !== 'rgba(0, 0, 0, 0)') ? rgb : fb;
+    };
+    var usable = function (v, fb) {
+      return (typeof v === 'string' && /^(#|rgb|hsl)/i.test(v.trim())) ? v : fb;
+    };
+    var list = [];
+    try {
+      list = [
+        pick('--primary-600', FALLBACK_COLORS[0]),
+        pick('--secondary-600', FALLBACK_COLORS[1]),
+        pick('--accent-500', FALLBACK_COLORS[2]),
+        pick('--primary-800', FALLBACK_COLORS[5]),
+        pick('--secondary-700', FALLBACK_COLORS[3]),
+        pick('--accent-600', FALLBACK_COLORS[4]),
+        pick('--primary-400', FALLBACK_COLORS[9]),
+        pick('--secondary-500', FALLBACK_COLORS[7]),
+        pick('--accent-300', FALLBACK_COLORS[8]),
+        pick('--primary-500', FALLBACK_COLORS[0])
+      ];
+    } catch (e) { list = FALLBACK_COLORS.slice(); }
+    list = list.map(function (v, i) { return usable(v, FALLBACK_COLORS[i % FALLBACK_COLORS.length]); });
+    schemeCache = { key: key, colors: list };
+    return list;
+  }
+  function DEFAULT_COLORS() { return schemeColors(); }
 
   function esc(s) { return String(s === undefined || s === null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;'); }
   function tipAttr(html) { return ' data-chart-tip="' + String(html).replace(/&/g, '&amp;').replace(/"/g, '&quot;') + '"'; }
-  function color(i, custom) { return custom || DEFAULT_COLORS[i % DEFAULT_COLORS.length]; }
+  function color(i, custom) {
+    if (custom) return custom;
+    var list = schemeColors();
+    return list[i % list.length];
+  }
   function niceMax(v) {
     if (v <= 0) return 4;
     var mag = Math.pow(10, Math.floor(Math.log10(v)));
@@ -223,7 +265,7 @@
       return [((W - 4) * i) / (vals.length - 1) + 2, H - 3 - ((v - min) / span) * (H - 8)];
     });
     var d = pts.map(function (p, i) { return (i ? 'L' : 'M') + p[0].toFixed(1) + ' ' + p[1].toFixed(1); }).join(' ');
-    var col = o.color || '#2450d8';
+    var col = o.color || schemeColors()[0];
     var last = pts[pts.length - 1];
     return '<svg class="sparkline" width="' + W + '" height="' + H + '" viewBox="0 0 ' + W + ' ' + H + '" aria-hidden="true">' +
       '<path d="' + d + ' L ' + W + ' ' + H + ' L 0 ' + H + ' Z" fill="' + col + '" opacity="0.12"/>' +

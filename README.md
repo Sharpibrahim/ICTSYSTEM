@@ -28,6 +28,32 @@ This takes a moment on the boot screen. Everything can be wiped or re-seeded fro
 
 ---
 
+## Hosting
+
+The project is a static site with no build step and no dependencies, so it can
+be published from a phone in a few minutes. **Vercel** instructions — import the
+repository, leave the build settings empty, deploy — are in
+`docs/DEPLOY-VERCEL.md`, together with the custom-domain and update notes.
+Nothing needs to be installed, compiled or configured: Vercel serves
+`index.html`, `css/`, `js/` and `assets/` exactly as they are.
+
+The deployment is only the application. Club records stay in the browser (and in
+Firebase if the club connected it), so a redeploy can never touch them. Keep
+downloading a JSON backup each term.
+
+## Colour schemes
+
+Eleven complete schemes ship with the platform — Azure & Cyan (default),
+Indigo & Violet, Royal & Gold, Emerald & Teal, Midnight & Cyan, Plum & Rose,
+Slate & Steel, Sunset & Coral, Teal & Sand, Sky & Ash and System Blue. Pick one
+in **Settings → Appearance**; the whole application follows it at once,
+including the sidebar, welcome banner, sign-in panel, tables, charts, ID cards
+and certificates. The scheme is remembered per device and is included in JSON
+backups (`settings.accent`).
+
+Adding another is a copy-and-paste job: duplicate a block in `css/palette.css`,
+change the hues, then add the name to `SCHEMES` in `js/core/shell.js`.
+
 ## Signing in
 
 The eight club accounts (Administrator, Patron, President, Secretary, Treasurer, Training

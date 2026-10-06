@@ -32,7 +32,9 @@
 
   /* ── Placeholder artwork (inline SVG, works offline) ──────────────────── */
   var ART = [
-    ['#2450d8', '#3f68ec'], ['#4f46e5', '#6366f1'], ['#06b6d4', '#22d3ee'],
+    ['var(--primary-700, #2450d8)', 'var(--primary-500, #3f68ec)'],
+    ['var(--secondary-700, #4f46e5)', 'var(--secondary-500, #6366f1)'],
+    ['var(--accent-600, #06b6d4)', 'var(--accent-400, #22d3ee)'],
     ['#0f9d58', '#34d399'], ['#0891b2', '#38bdf8'], ['#1b3788', '#3f68ec'],
     ['#7c3aed', '#a78bfa'], ['#c07a09', '#f59e0b'], ['#0b7a44', '#22c55e'],
     ['#3f68ec', '#22d3ee']
