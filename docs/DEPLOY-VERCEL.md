@@ -32,6 +32,36 @@ Deploy".
 If Vercel ever asks about a "Production Branch", pick the branch you pushed —
 this project is published from one branch only.
 
+### If the first deploy shows "404 NOT_FOUND"
+
+Vercel deploys one branch as the **production** site, and a fresh import picks
+the repository's default branch — `main`. On this repository `main` is still the
+original placeholder, so a deployment built from it has nothing to serve and
+Vercel answers **404 NOT_FOUND**. The application lives on the working branch
+`arena/01a10127-ictsystem`, together with this guide, `vercel.json` and the
+whole platform.
+
+The build itself was fine — it was told to publish an empty branch. Two ways
+out, and either one is permanent:
+
+**Fix it on GitHub (recommended, the default import then works forever).**
+Merge the open pull request **#2** on GitHub (green **Merge pull request**, then
+**Confirm merge**). That brings `index.html`, `css/`, `js/`, `assets/` and
+`vercel.json` into `main`, and Vercel rebuilds automatically the moment the
+merge lands. Every later merge to `main` redeploys the site.
+
+**Or fix it in Vercel (no merge).** In the project, open
+**Settings → Git → Production Branch**, type `arena/01a10127-ictsystem`, press
+**Save**, and then publish a deployment from that branch: open **Deployments**,
+and on the newest deployment press **⋯ → Promote to Production**. If the list
+still only contains builds of `main`, push any new commit to
+`arena/01a10127-ictsystem` — Vercel will build it as production under the new
+setting.
+
+Whichever you choose, open the project's **Deployments** tab afterwards: the
+newest entry should say **Ready** and name `arena/01a10127-ictsystem` (or `main`
+after the merge). Press **Visit** on it, or just refresh the public link.
+
 ### What the folder contains for Vercel
 
 | File | Why |

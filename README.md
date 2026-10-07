@@ -41,6 +41,14 @@ The deployment is only the application. Club records stay in the browser (and in
 Firebase if the club connected it), so a redeploy can never touch them. Keep
 downloading a JSON backup each term.
 
+## Publishing
+
+The app is deployed on Vercel as a static site (no build step). Vercel publishes
+the repository's default branch, so the working branch must be merged into `main`
+first — otherwise the deployment has no `index.html` and shows **404 NOT_FOUND**.
+See `docs/DEPLOY-VERCEL.md`, including its "If the first deploy shows 404
+NOT_FOUND" section.
+
 ## Screen sizes
 
 The layout is rebuilt, not shrunk, at every size — 320 px phones up to 4K
