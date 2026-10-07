@@ -1,0 +1,386 @@
+/* ==========================================================================
+   MRHS ICT CLUB MASTER — adaptive.css
+   Screen-size compatibility, from a 320 px phone to a 4K classroom display.
+
+   Loaded last, so these rules have the final word. The approach is:
+     • fluid type and spacing (clamp) instead of one fixed size per breakpoint;
+     • a content column that stops widening on very large monitors;
+     • genuine re-layouts, not shrinking — tables become cards, grids collapse,
+       the sidebar becomes a drawer, modals become bottom sheets;
+     • overflow handled deliberately: wide data scrolls in its own container
+       with a visible hint rather than pushing the page sideways;
+     • touch, notch, keyboard and printable variations all covered.
+
+   Breakpoints covered: ≥2560, ≥1920, 1440, 1366, 1280, 1150, 1024, 900, 820,
+   768, 640, 560, 480, 400, 340, plus short-height and landscape cases.
+   ========================================================================== */
+
+/* ── 1. Fluid foundation ──────────────────────────────────────────────────
+   The gutter, the top bar and the section spacing scale with the viewport, so
+   there is no width at which the layout looks either cramped or sparse. */
+:root {
+  --gutter: clamp(12px, 1.5vw, 34px);
+  --topbar-h: clamp(56px, 4.6vw, 68px);
+  --card-pad: clamp(13px, 1.5vw, 20px);
+  --sh-break-r: 20px;                  /* the fluid type floor, in px */
+}
+
+/* Nothing may push the page sideways; wide anything scrolls in its own box. */
+html { overflow-x: hidden; overflow-x: clip; }
+body { overflow-x: clip; max-width: 100%; }
+img, video, canvas, iframe { max-width: 100%; height: auto; }
+/* Icons inside a button must not be squashed by flex; charts may shrink. */
+.btn > svg, .tab > svg, .badge > svg, .nav-item > svg, .stat-ico > svg,
+.mini-btn > svg, .icon-btn > svg, .chip > svg { flex: none; }
+pre, code, kbd, .mono { overflow-wrap: anywhere; }
+.modal, .drawer, .toast, .alert, .card, .page-head, .field, .kv { min-width: 0; }
+.card-body, .card-head, .modal-body { min-width: 0; }
+
+/* Long unbroken strings (imported names, URLs, serial numbers) must wrap
+   rather than stretch a table column off the screen. */
+.data-table td, .stat-table td, .kv-value, .tl-body strong { overflow-wrap: anywhere; }
+
+/* ── 2. Wide displays ─────────────────────────────────────────────────────
+   On a big monitor the eye does not need a 2 500 px line of text: the content
+   column is capped and centred, and the data marks grow a little. The rules
+   run from the smallest wide screen to the largest, so a 4K display wins. */
+@media (min-width: 1440px) {
+  .search-field { max-width: 360px; }
+  .cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .record-grid { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
+}
+@media (min-width: 1700px) {
+  .view-root { width: 100%; max-width: 1720px; margin-inline: auto; }
+  .stat-grid { grid-template-columns: repeat(auto-fill, minmax(236px, 1fr)); }
+  table.data-table { font-size: .885rem; }
+  .chart-wrap svg { max-height: 380px; }
+}
+@media (min-width: 1920px) {
+  body { font-size: 15px; }
+  .stat-grid { gap: 18px; }
+  .hero { padding: 24px 28px; }
+  .card-body { padding: 20px 22px; }
+}
+@media (min-width: 2400px) {
+  :root { --sidebar-w: 300px; }
+  .view-root { max-width: 1980px; }
+}
+@media (min-width: 2560px) {
+  :root { --gutter: 48px; --sidebar-w: 312px; }
+  .view-root { max-width: 2100px; }
+  body { font-size: 16px; }
+  .stat-grid { grid-template-columns: repeat(auto-fill, minmax(276px, 1fr)); gap: 20px; }
+  .card-body, .modal-body { padding: 24px 26px; }
+}
+/* A very wide screen with a very short height (a projector or a mirrored
+   presentation laptop) would rather have a narrower column. */
+@media (min-width: 1700px) and (max-height: 800px) {
+  .view-root { max-width: 1560px; }
+  .hero { padding: 18px 22px; }
+}
+
+/* ── 3. Small laptops and tablets in landscape (≤1366 … ≥1025) ──────────── */
+@media (max-width: 1366px) {
+  .search-field { max-width: 300px; }
+  .stat-grid { gap: 13px; }
+}
+@media (max-width: 1150px) and (min-width: 901px) {
+  /* Icon rail: the sidebar keeps every module one click away but gives the
+     records the width they need. Every rail item keeps its tooltip. */
+  :root { --sidebar-w: 76px; }
+  .sidebar-brand-text, .sidebar-club, .nav-text, .nav-count, .storage-meter, .sidebar-version { display: none; }
+  .sidebar-head { justify-content: center; padding: 15px 8px 12px; }
+  .nav-section-label { display: none; }
+  .nav-section { margin-top: 6px; border-top: 1px solid rgba(255, 255, 255, .07); padding-top: 6px; }
+  .nav-section:first-child { border-top: 0; padding-top: 0; margin-top: 0; }
+  .nav-item { justify-content: center; padding: 11px 8px; }
+  .nav-item .nav-ico { width: 20px; height: 20px; }
+  .nav-item.active::before { left: -12px; }
+  .card-head, .card-body, .card-foot { padding-left: 15px; padding-right: 15px; }
+}
+
+/* ── 4. Tablets (≤1024) ───────────────────────────────────────────────────
+   Still a sidebar layout, but every multi-column grid drops to two columns
+   and the tables get their own horizontal scroller with a shadow hint. */
+@media (max-width: 1024px) {
+  .cols-3, .cols-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .record-grid { grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); }
+  .hero { padding: 18px 20px; }
+  .hero-text h1 { font-size: 1.24rem; }
+  .stat-value { font-size: 1.55rem; }
+  .cert-preview { padding: 26px 30px 22px; }
+}
+
+/* Wide data in its own scroller, with a soft edge shadow that appears only
+   when there is more to see (background-attachment: local does the trick). */
+.table-wrap, .stat-table-wrap, .scroll-y, .scroll-y-sm {
+  overflow-x: auto; overscroll-behavior-x: contain; -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin; scrollbar-color: var(--border-2) transparent;
+}
+.table-wrap::-webkit-scrollbar, .scroll-y::-webkit-scrollbar, .scroll-y-sm::-webkit-scrollbar { height: 8px; }
+.table-wrap::-webkit-scrollbar-thumb, .scroll-y::-webkit-scrollbar-thumb, .scroll-y-sm::-webkit-scrollbar-thumb {
+  background: var(--border-2); border-radius: var(--r-full);
+}
+.table-wrap { background-image: linear-gradient(to right, transparent, rgba(16, 30, 63, .07)), linear-gradient(to right, rgba(16, 30, 63, .07), transparent);
+  background-position: 100% 0, 0 0; background-repeat: no-repeat; background-size: 22px 100%; background-attachment: local, scroll; }
+[data-theme="dark"] .table-wrap { background-image: linear-gradient(to right, transparent, rgba(0, 0, 0, .45)), linear-gradient(to right, rgba(0, 0, 0, .45), transparent); }
+
+/* ── 5. Phones and small tablets (≤900) ───────────────────────────────────
+   Shell-level: drawer navigation, compact top bar, single-column content. */
+@media (max-width: 900px) {
+  .sidebar { width: min(304px, 88vw); padding-bottom: env(safe-area-inset-bottom); }
+  .topbar { padding-left: max(12px, env(safe-area-inset-left)); padding-right: max(12px, env(safe-area-inset-right)); }
+  .hero { flex-direction: column; align-items: flex-start; gap: 16px; }
+  .hero-actions { width: 100%; }
+  .hero-meta { width: 100%; gap: 14px 22px; }
+  .stat-strip { grid-template-columns: repeat(auto-fit, minmax(132px, 1fr)); gap: 10px; }
+  .stat-strip .strip-item { padding: 10px 12px; }
+  .stat-strip .strip-item strong { font-size: 1.1rem; }
+  .card-head { flex-wrap: wrap; gap: 8px; }
+  .card-head .card-tools, .card-head > .btn { margin-left: 0; }
+  .toolbar { gap: 8px; }
+  .search-field { min-width: 0; flex: 1 1 190px; max-width: none; }
+  .tab { padding: 10px 13px; }
+  .kv-grid { gap: 12px 18px; }
+  .detail-header { flex-wrap: wrap; }
+  .page-actions { gap: 8px; }
+}
+
+/* ── 6. Tablet portrait / large phones (≤820) ─────────────────────────────
+   Data tables become stacked cards: every row is self-describing, so no
+   horizontal scrolling is needed to read a record. */
+@media (max-width: 820px) {
+  /* Every data table becomes one card per record: the row states its own
+     column names, so reading a member no longer means dragging the table. */
+  .table-wrap.stacked { background-image: none; }        /* nothing to scroll sideways */
+  .table-wrap.stacked table.data-table { min-width: 0; }
+  .table-wrap.stacked table.data-table thead { display: none; }
+  .table-wrap.stacked table.data-table tbody tr {
+    display: block; border: 1px solid var(--border); border-radius: var(--r-md);
+    margin: 9px 10px; padding: 11px 12px; background: var(--surface); box-shadow: var(--sh-xs);
+  }
+  .table-wrap.stacked table.data-table tbody tr:hover { background: var(--surface); }
+  .table-wrap.stacked table.data-table tbody td {
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    padding: 5px 0; border: 0; text-align: right; font-size: .84rem;
+  }
+  .table-wrap.stacked table.data-table tbody td::before {
+    content: attr(data-label); font-size: .7rem; font-weight: 700; letter-spacing: .06em;
+    text-transform: uppercase; color: var(--text-3); text-align: left; flex: none; max-width: 45%;
+  }
+  .table-wrap.stacked table.data-table tbody td.cell-primary {
+    display: block; text-align: left; padding-bottom: 8px; margin-bottom: 4px;
+    border-bottom: 1px dashed var(--border-2); font-size: .9rem;
+  }
+  .table-wrap.stacked table.data-table tbody td.cell-primary::before { display: none; }
+  .table-wrap.stacked table.data-table tbody td.col-actions {
+    justify-content: flex-end; padding-top: 9px; margin-top: 5px; border-top: 1px dashed var(--border-2); width: auto;
+  }
+  .table-wrap.stacked table.data-table tbody td.col-actions::before { content: "Actions"; }
+  .table-wrap.stacked table.data-table tbody td .row-actions { justify-content: flex-end; }
+  .table-wrap.stacked table.data-table tbody td[data-label=""] { justify-content: flex-end; }
+  .table-wrap.stacked table.data-table tbody td[data-label=""]::before { content: none; }
+
+  .stat-table { font-size: .82rem; }
+  .stat-table td, .stat-table th { padding: 8px 10px; }
+  .kanban { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+  .cal-cell { min-height: 92px; }
+}
+
+@media (max-width: 768px) {
+  .stat-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .quick-grid { grid-template-columns: repeat(auto-fill, minmax(148px, 1fr)); }
+  .kanban { grid-template-columns: minmax(0, 1fr); }
+  .cal-cell { min-height: 84px; }
+  .gallery-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
+  .hero-text p { font-size: .86rem; }
+  .modal { width: min(660px, calc(100% - 20px)); }
+}
+
+/* ── 7. Phones (≤640) ─────────────────────────────────────────────────────
+   The screen is a single column: one card, one field, one action at a time. */
+@media (max-width: 640px) {
+  /* iOS zooms the page when a field smaller than 16px takes focus. */
+  input, select, textarea, .input, .select, .textarea, .search-field input { font-size: 16px !important; }
+  .input, .select, .textarea { padding: 11px 12px; }
+
+  .cols-2, .cols-3, .cols-4, .grid { grid-template-columns: minmax(0, 1fr) !important; }
+  .stat-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+  /* Dialogs rise from the bottom edge, like every native phone sheet. */
+  .overlay { padding: 0; place-items: end stretch; }
+  .modal { width: 100%; max-width: 100%; max-height: 94vh; max-height: 94dvh; border-radius: var(--r-lg) var(--r-lg) 0 0; }
+  .modal.modal-sm, .modal.modal-lg, .modal.modal-xl { width: 100%; }
+  .modal-body { padding: 16px 15px 8px; overscroll-behavior: contain; }
+  .modal-foot { padding: 12px 15px calc(12px + env(safe-area-inset-bottom)); }
+  .modal-foot .mf-right { display: flex; gap: 8px; width: 100%; }
+  .modal-head { position: sticky; top: 0; z-index: 2; background: var(--surface); }
+
+  .drawer { width: 100%; }
+  .toast-root { bottom: max(12px, env(safe-area-inset-bottom)); }
+
+  /* Readable, tappable, and no clipped text in any cell. */
+  .row-actions { gap: 7px; }
+  .mini-btn { min-width: 38px; min-height: 38px; }
+  .icon-btn { min-width: 40px; min-height: 40px; }
+  .tabs { scroll-snap-type: x proximity; }
+  .tab { scroll-snap-align: start; }
+  .badge { white-space: nowrap; }
+  .cell-primary { overflow-wrap: anywhere; }
+
+  /* Calendar: keep the seven columns, drop the clipped labels. */
+  .cal-cell { min-height: 74px; padding: 3px; gap: 2px; border-right-width: 1px; }
+  .cal-event { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .cal-dow span { letter-spacing: 0; }
+
+  /* Certificates keep their A4 proportions; the text scales with the sheet. */
+  .cert-preview.has-bg { padding: 7% 8% 7.5%; }
+  .cert-school { font-size: clamp(.52rem, 2.6vw, .78rem); }
+  .cert-title { font-size: clamp(1rem, 5.4vw, 1.5rem); margin: 4px 0 1px; }
+  .cert-name { font-size: clamp(.95rem, 5vw, 1.4rem); margin: 3px 0 2px; }
+  .cert-body { font-size: clamp(.58rem, 2.9vw, .84rem); line-height: 1.5; margin-top: 7px; }
+  .cert-meta { gap: 10px; margin-top: 12px; }
+  .cert-foot { margin-top: 10px; }
+  .cert-preview .cert-sign { min-width: 92px; }
+
+  /* Identity cards: full width, never wider than the sheet. */
+  .id-card { width: 100%; max-width: 100%; }
+  .id-card-body { padding: 13px; gap: 11px; }
+  .id-card-photo { width: 68px; height: 82px; }
+  .cards-grid { grid-template-columns: 1fr; }
+
+  .gallery-grid { grid-template-columns: repeat(auto-fill, minmax(132px, 1fr)); }
+  .quick-grid { grid-template-columns: repeat(auto-fill, minmax(126px, 1fr)); }
+  .heat-cell { width: 10px; height: 10px; }
+  .hero-meta div span { font-size: .64rem; }
+  .login-panel { padding-bottom: max(26px, env(safe-area-inset-bottom)); }
+  .page-head h1 { gap: 7px; }
+  .breadcrumbs { font-size: .74rem; }
+}
+
+/* ── 8. Small phones (≤480) ───────────────────────────────────────────────
+   iPhone SE / Android compact. Nothing may overflow, so the remaining fixed
+   widths are capped and secondary columns are hidden rather than squeezed. */
+@media (max-width: 480px) {
+  .stat-card { padding: 11px 12px; }
+  .stat-value { font-size: 1.24rem; }
+  .stat-label { font-size: .7rem; }
+  .card-head h3 { font-size: .92rem; }
+  .page-head-text h1 { font-size: 1.14rem; }
+  .page-head .page-actions { width: 100%; }
+  .page-actions .btn, .page-actions .btn-outline { flex: 1 1 auto; justify-content: center; }
+  .toolbar { padding: 10px; }
+  .kv-grid { grid-template-columns: minmax(0, 1fr); }
+  .modal-foot .btn { flex: 1; }
+  .data-table td, .data-table th { padding: 8px 10px; }
+  .gallery-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+  .record-card-media { height: 118px; }
+  .login-card { padding: 22px 16px 18px; }
+  .demo-chip { padding: 9px 10px; }
+  .cal-cell { min-height: 62px; }
+  .cal-event { font-size: .58rem; }
+  .chart-legend { gap: 9px; font-size: .74rem; }
+  .timeline-item { gap: 10px; }
+  .tl-dot { width: 26px; height: 26px; }
+}
+
+/* ── 9. Very small phones (≤400, down to 320) ─────────────────────────────
+   Stat cards stay two-up (a single column makes the dashboard endless), but
+   smaller; below 340 they finally go full width. */
+@media (max-width: 400px) {
+  .stat-grid { gap: 9px; }
+  .stat-card { padding: 10px; gap: 6px; }
+  .stat-value { font-size: 1.16rem; }
+  .stat-foot { font-size: .7rem; gap: 6px; }
+  .stat-foot .trend { padding: 1px 6px; font-size: .68rem; }
+  .stat-ico { width: 30px; height: 30px; border-radius: 9px; }
+  .stat-ico svg { width: 15px; height: 15px; }
+  .quick-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .brand-name { font-size: 1.26rem; }
+  .hero-meta { gap: 10px 16px; }
+  .tab { padding: 9px 11px; font-size: .78rem; }
+  .modal-body { padding: 14px 13px 6px; }
+  .modal-head { padding: 14px 14px 10px; }
+  .badge { font-size: .66rem; padding: 2px 7px; }
+  .avatar-lg { width: 54px; height: 54px; }
+}
+@media (max-width: 340px) {
+  .stat-grid { grid-template-columns: minmax(0, 1fr); }
+  .gallery-grid { grid-template-columns: minmax(0, 1fr); }
+  .toolbar { gap: 7px; }
+  .btn { padding: 9px 12px; font-size: .8rem; }
+  :root { --gutter: 10px; }
+}
+
+/* ── 10. Short screens ────────────────────────────────────────────────────
+   Laptops at 1366 × 768 in a browser with two toolbars, and phones held
+   sideways, both leave little vertical room: the chrome gives some back. */
+@media (max-height: 720px) {
+  :root { --topbar-h: 56px; }
+  .hero { padding: 16px 18px; }
+  .hero-text h1 { font-size: 1.2rem; }
+  .stat-card { padding: 13px 14px; }
+  .login-panel { padding-top: 26px; padding-bottom: 26px; }
+}
+@media (max-height: 520px) and (orientation: landscape) {
+  .hero-meta { display: none; }
+  .hero { padding: 12px 16px; }
+  .boot-title { font-size: 1.05rem; }
+  .modal { max-height: 98vh; max-height: 98dvh; }
+  .sidebar-nav { padding-bottom: 26px; }
+}
+
+/* ── 11. Touch devices ────────────────────────────────────────────────────
+   Every control reaches the 44 px target when a finger, not a mouse, is
+   pointing; hover-only hints are switched off. */
+@media (hover: none), (pointer: coarse) {
+  .btn { min-height: 42px; }
+  .mini-btn { min-width: 42px; min-height: 42px; }
+  .icon-btn { min-width: 42px; min-height: 42px; }
+  .nav-item { min-height: 46px; }
+  .tab { min-height: 44px; }
+  .input, .select, .textarea { min-height: 44px; }
+  .tooltip { display: none; }
+  .row-actions { gap: 8px; }
+  .data-table tbody tr { cursor: pointer; }
+}
+
+/* ── 12. Notches, rounded corners and home bars ───────────────────────────
+   env() is ignored by older browsers, so the plain value is declared first. */
+.sidebar, .drawer { padding-bottom: 0; padding-bottom: env(safe-area-inset-bottom); }
+.view-root { padding-bottom: var(--gutter); padding-bottom: max(var(--gutter), env(safe-area-inset-bottom)); }
+.boot-screen { padding: 0; padding-left: env(safe-area-inset-left); padding-right: env(safe-area-inset-right); }
+
+/* ── 13. Portrait / landscape orientation help ────────────────────────────
+   A gentle nudge (never a blocker) when a wide module is opened in a very
+   narrow portrait window. It disappears the moment the phone is turned. */
+.rotate-hint { display: none; }
+@media (max-width: 560px) and (orientation: portrait) {
+  .rotate-hint { display: flex; gap: 9px; align-items: center; padding: 9px 12px; border-radius: var(--r-md);
+    background: var(--primary-50); border: 1px solid var(--primary-200); color: var(--primary-800);
+    font-size: .78rem; margin-bottom: 12px; }
+  [data-theme="dark"] .rotate-hint { color: var(--primary-200); }
+}
+
+/* ── 14. Keyboard and screen-reader sizes ─────────────────────────────────
+   A keyboard-only 1024 × 600 netbook, or a browser zoomed to 200 %, is the
+   same layout problem as a small screen — the 900 px rules already apply
+   because zoom reduces the CSS viewport. These add the last details. */
+@media (max-width: 900px) {
+  :focus-visible { outline-width: 3px; }
+  .skip-link:focus { position: fixed; top: 8px; left: 8px; z-index: 999; }
+}
+
+/* ── 15. Printing from any screen ─────────────────────────────────────────
+   Whoever prints is on whatever screen they have: the print layout must not
+   inherit a stacked-table or drawer decision from the screen size. */
+@media print {
+  .view-root { max-width: none !important; padding: 0 !important; }
+  .table-wrap.stacked table.data-table tbody tr { display: table-row !important; margin: 0 !important; padding: 0 !important; border: 0 !important; }
+  .table-wrap.stacked table.data-table tbody td { display: table-cell !important; text-align: left !important; padding: 6px 8px !important; border-bottom: 1px solid #ddd !important; }
+  .table-wrap.stacked table.data-table tbody td::before { content: none !important; }
+  .table-wrap.stacked table.data-table thead { display: table-header-group !important; }
+  .stat-grid { grid-template-columns: repeat(4, minmax(0, 1fr)) !important; }
+  .cols-2, .cols-3, .cols-4, .grid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+  .rotate-hint { display: none !important; }
+}

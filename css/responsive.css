@@ -1,0 +1,199 @@
+/* ==========================================================================
+   MRHS ICT CLUB MASTER — responsive.css
+   Layout adaptation for laptops, tablets and phones. Layouts are redesigned
+   rather than merely shrunk: the sidebar becomes a drawer, tables become
+   stacked cards, dashboards re-flow and forms collapse to one column.
+   ========================================================================== */
+
+/* ── Large desktop ≥ 1600px ─────────────────────────────────────────────── */
+@media (min-width: 1600px) {
+  :root { --gutter: 34px; }
+  .stat-grid { grid-template-columns: repeat(auto-fill, minmax(228px, 1fr)); }
+}
+
+/* ── Laptop ≤ 1280px ────────────────────────────────────────────────────── */
+@media (max-width: 1280px) {
+  :root { --sidebar-w: 244px; --gutter: 20px; }
+  .global-search-trigger { min-width: 220px; }
+  .global-search-trigger kbd { display: none; }
+  .cols-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .record-grid { grid-template-columns: repeat(auto-fill, minmax(268px, 1fr)); }
+}
+
+/* Collapsed icon rail on medium desktops */
+@media (max-width: 1100px) and (min-width: 901px) {
+  :root { --sidebar-w: 74px; }
+  .sidebar-brand-text, .sidebar-club, .nav-text, .nav-count, .storage-meter, .sidebar-version { display: none; }
+  .sidebar-head { justify-content: center; padding: 16px 8px 12px; }
+  .nav-section-label { display: none; }
+  .nav-section { margin-top: 6px; border-top: 1px solid rgba(255, 255, 255, .07); padding-top: 6px; }
+  .nav-section:first-child { border-top: 0; padding-top: 0; }
+  .nav-item { justify-content: center; padding: 12px 8px; }
+  .nav-item.active::before { left: -12px; }
+  .nav-item .nav-ico { width: 20px; height: 20px; }
+}
+
+/* ── Tablet ≤ 900px ─────────────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  :root { --topbar-h: 60px; --gutter: 16px; }
+
+  .only-mobile { display: grid; }
+
+  /* Sidebar becomes an off-canvas drawer */
+  .sidebar {
+    position: fixed; inset: 0 auto 0 0; height: 100dvh; width: min(300px, 86vw);
+    transform: translateX(-102%); transition: transform .26s cubic-bezier(.3, 1, .5, 1);
+    z-index: 70; box-shadow: var(--sh-lg);
+  }
+  .sidebar.open { transform: none; }
+  .sidebar-close { display: grid; }
+  .sidebar-brand-text, .sidebar-club, .nav-text, .nav-count, .storage-meter, .sidebar-version { display: revert; }
+  .nav-section-label { display: flex; }
+  .nav-item { justify-content: flex-start; }
+
+  .topbar { padding: 0 14px; gap: 10px; }
+  .page-crumb-text small { display: none; }
+  .global-search-trigger { min-width: 0; width: 42px; height: 38px; padding: 0; justify-content: center; }
+  .global-search-trigger span, .global-search-trigger kbd { display: none; }
+  .user-chip-text { display: none; }
+  .user-chip { padding: 4px; }
+  .user-chip .chev { display: none; }
+
+  .login-grid { grid-template-columns: 1fr; }
+  .login-brand { display: none; }
+  .login-panel { padding: 26px 18px; align-items: start; padding-top: 44px; min-height: 100vh; }
+  .login-card { width: 100%; }
+
+  .cols-3, .cols-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .page-head { flex-direction: column; align-items: stretch; }
+  .page-head .page-actions { justify-content: flex-start; }
+  .stat-grid { grid-template-columns: repeat(auto-fill, minmax(168px, 1fr)); }
+  .stat-value { font-size: 1.5rem; }
+  .hero { padding: 18px; }
+  .hero-meta { gap: 16px; }
+  .modal { max-height: 92vh; width: calc(100vw - 24px); }
+  .dropdown-menu-lg { min-width: min(340px, calc(100vw - 24px)); }
+  .cal-cell { min-height: 82px; }
+  .overlay { padding: 4vh 12px 12px; }
+  .toast-root { right: 12px; left: 12px; bottom: 12px; align-items: stretch; max-width: none; }
+}
+
+/* ── Mobile ≤ 640px ─────────────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  :root { --gutter: 12px; --topbar-h: 58px; }
+  body { font-size: 14px; }
+
+  .form-grid { grid-template-columns: 1fr; }
+  .field-row-2 { grid-template-columns: 1fr; }
+  .cols-2, .cols-3, .cols-4 { grid-template-columns: 1fr; }
+  .col-span-2 { grid-column: span 1; }
+  .stat-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 11px; }
+  .stat-card { padding: 13px; gap: 8px; }
+  .stat-value { font-size: 1.32rem; }
+  .stat-ico { width: 34px; height: 34px; border-radius: 10px; }
+  .stat-ico svg { width: 16px; height: 16px; }
+  .page-head-text h1 { font-size: 1.2rem; }
+  .page-actions .btn { flex: 1; }
+  .quick-grid { grid-template-columns: repeat(auto-fill, minmax(136px, 1fr)); }
+  .record-grid { grid-template-columns: 1fr; padding: 12px; gap: 12px; }
+  .detail-header { padding: 15px; }
+  .detail-header h1 { font-size: 1.15rem; }
+  .kv-grid { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; }
+  .card-head, .card-body, .card-foot { padding-left: 14px; padding-right: 14px; }
+  .toolbar { padding: 11px 12px; gap: 8px; }
+  .search-field { max-width: none; flex: 1 1 100%; }
+  .tab { padding: 10px 12px; font-size: .8rem; }
+  .modal-body { padding: 15px; }
+  .modal-head { padding: 15px 15px 12px; }
+  .modal-foot { padding: 12px 15px; border-radius: 0 0 var(--r-lg) var(--r-lg); }
+  .modal-foot .mf-right { width: 100%; }
+  .modal-foot .mf-right .btn { flex: 1; }
+  .drawer { width: 100%; }
+  .cal-cell { min-height: 62px; padding: 4px; }
+  .cal-event { font-size: .64rem; padding: 2px 4px; }
+  .cal-day { font-size: .72rem; width: 21px; height: 21px; }
+  .cal-dow span { font-size: .62rem; padding: 7px 2px; }
+  .cal-title { min-width: 0; font-size: .95rem; }
+  .gallery-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }
+  .id-card { width: 100%; max-width: 340px; }
+  .cert-preview { padding: 22px 16px; }
+  .cert-title { font-size: 1.3rem; }
+  .cert-name { font-size: 1.25rem; }
+  .cert-meta { flex-direction: column; gap: 16px; margin-top: 24px; }
+  .cert-seal { display: none; }
+  .kanban { grid-template-columns: 1fr; }
+  .org-level { flex-direction: column; align-items: stretch; }
+  .org-node { max-width: none; }
+  .tooltip { display: none; }
+  .heat-grid { grid-template-rows: repeat(7, 1fr); }
+  .heat-cell { width: 9px; height: 9px; }
+  .hero-actions { width: 100%; }
+  .hero-actions .btn { flex: 1; }
+  .cp-foot span:nth-child(1), .cp-foot span:nth-child(2) { display: none; }
+}
+
+/* ── Small mobile ≤ 400px ───────────────────────────────────────────────── */
+@media (max-width: 400px) {
+  .stat-grid { grid-template-columns: 1fr; }
+  .demo-chips { max-height: 168px; }
+  .login-card { padding: 22px 18px 18px; }
+  .brand-name { font-size: 1.3rem; }
+  .avatar-xl { width: 74px; height: 74px; font-size: 1.3rem; }
+}
+
+/* ── Responsive tables → stacked cards ──────────────────────────────────── */
+@media (max-width: 780px) {
+  .table-wrap.stacked table.data-table { min-width: 0; }
+  .table-wrap.stacked table.data-table thead { display: none; }
+  .table-wrap.stacked table.data-table tbody tr {
+    display: block; border: 1px solid var(--border); border-radius: var(--r-md);
+    margin: 10px 12px; padding: 12px 13px; background: var(--surface); box-shadow: var(--sh-xs);
+  }
+  .table-wrap.stacked table.data-table tbody tr:hover { background: var(--surface); }
+  .table-wrap.stacked table.data-table tbody td {
+    display: flex; align-items: center; justify-content: space-between; gap: 14px;
+    padding: 5px 0; border: 0; text-align: right; font-size: .845rem;
+  }
+  .table-wrap.stacked table.data-table tbody td::before {
+    content: attr(data-label); font-size: .71rem; font-weight: 700; letter-spacing: .06em;
+    text-transform: uppercase; color: var(--text-3); text-align: left; flex: none; max-width: 45%;
+  }
+  .table-wrap.stacked table.data-table tbody td.cell-primary {
+    display: block; text-align: left; padding-bottom: 9px; margin-bottom: 5px;
+    border-bottom: 1px dashed var(--border-2); font-size: .92rem;
+  }
+  .table-wrap.stacked table.data-table tbody td.cell-primary::before { display: none; }
+  .table-wrap.stacked table.data-table tbody td.col-actions {
+    justify-content: flex-end; padding-top: 9px; margin-top: 5px; border-top: 1px dashed var(--border-2); width: auto;
+  }
+  .table-wrap.stacked table.data-table tbody td.col-actions::before { content: "Actions"; }
+  .table-wrap.stacked table.data-table tbody td .row-actions { justify-content: flex-end; }
+}
+
+/* ── Landscape phones ───────────────────────────────────────────────────── */
+@media (max-height: 520px) and (orientation: landscape) {
+  .boot-logo { width: 62px; height: 62px; margin-bottom: 6px; }
+  .boot-title { font-size: 1.1rem; }
+  .modal { max-height: 96vh; }
+}
+
+/* ── Reduced motion ─────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
+}
+
+/* ── High contrast ──────────────────────────────────────────────────────── */
+@media (prefers-contrast: more) {
+  :root { --border: #b7c1d6; --border-2: #8e9cb8; --text-2: #2c3a52; --text-3: #4a5872; }
+}
+
+/* ── Print for documents ────────────────────────────────────────────────── */
+@media print {
+  .table-wrap { overflow: visible; }
+  table.data-table { min-width: 0; font-size: 11pt; }
+  .card { border: 1px solid #ccc; box-shadow: none; break-inside: avoid; }
+  .stat-grid { grid-template-columns: repeat(4, 1fr); }
+  .badge { border: 1px solid #999; }
+  .cert-preview { box-shadow: none; page-break-inside: avoid; }
+  @page { margin: 14mm; }
+}

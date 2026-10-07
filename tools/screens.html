@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Screen-size check — MRHS ICT CLUB MASTER</title>
+<style>
+  :root {
+    --ink: #101a2e; --muted: #6e7c96; --line: #dde3ef; --surface: #fff;
+    --bg: #eef2f9; --blue: #2450d8; --blue-soft: #eaf0ff;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; font: 14px/1.55 -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    color: var(--ink); background: var(--bg);
+  }
+  header {
+    padding: 16px 20px 14px; background: linear-gradient(135deg, #1b2a52, #2450d8);
+    color: #fff; display: flex; flex-wrap: wrap; gap: 10px 18px; align-items: center;
+  }
+  header h1 { margin: 0; font-size: 1.06rem; letter-spacing: .2px; }
+  header p { margin: 0; font-size: .8rem; opacity: .82; flex: 1 1 320px; }
+  .bar {
+    position: sticky; top: 0; z-index: 5; display: flex; flex-wrap: wrap; gap: 7px;
+    padding: 11px 20px; background: var(--surface); border-bottom: 1px solid var(--line);
+  }
+  button {
+    font: inherit; font-size: .82rem; font-weight: 600; cursor: pointer;
+    padding: 8px 13px; border-radius: 999px; border: 1px solid var(--line);
+    background: var(--surface); color: var(--ink);
+  }
+  button:hover { border-color: var(--blue); color: var(--blue); }
+  button[aria-pressed="true"] { background: var(--blue); border-color: var(--blue); color: #fff; }
+  button.ghost { border-style: dashed; }
+  .stage { padding: 22px 20px 60px; display: flex; justify-content: center; }
+  .frame {
+    background: var(--surface); border: 1px solid var(--line); border-radius: 14px;
+    box-shadow: 0 18px 50px rgba(16, 26, 46, .13); overflow: hidden;
+    display: flex; flex-direction: column; transition: width .18s ease, height .18s ease;
+  }
+  .frame-top {
+    display: flex; align-items: center; gap: 8px; padding: 8px 12px;
+    border-bottom: 1px solid var(--line); font-size: .76rem; color: var(--muted);
+  }
+  .dot { width: 9px; height: 9px; border-radius: 50%; background: #dbe2ef; }
+  .frame-top strong { color: var(--ink); font-size: .8rem; }
+  iframe { border: 0; width: 100%; flex: 1; background: #fff; }
+  .note {
+    max-width: 900px; margin: 0 auto; padding: 0 20px 40px; color: var(--muted);
+    font-size: .82rem;
+  }
+  .note b { color: var(--ink); }
+  @media (prefers-color-scheme: dark) {
+    :root { --ink: #e8edf8; --muted: #9aa8c4; --line: #2a3550; --surface: #151c2e; --bg: #0e1421; }
+    iframe { background: #0e1421; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <h1>Screen-size check</h1>
+  <p>This is a builder&rsquo;s tool, not part of the platform &mdash; Vercel never uploads the <code>tools/</code> folder. It loads the real application inside a frame you can resize, so the layout can be watched changing size by size.</p>
+</header>
+
+<div class="bar" role="group" aria-label="Choose a screen width">
+  <button data-w="320" data-h="640">320 &middot; small phone</button>
+  <button data-w="360" data-h="740" aria-pressed="true">360 &middot; phone</button>
+  <button data-w="414" data-h="896">414 &middot; large phone</button>
+  <button data-w="768" data-h="1024">768 &middot; tablet portrait</button>
+  <button data-w="1024" data-h="768">1024 &middot; tablet landscape</button>
+  <button data-w="1366" data-h="768">1366 &middot; office laptop</button>
+  <button data-w="1920" data-h="1080">1920 &middot; full HD</button>
+  <button data-w="2560" data-h="1200">2560 &middot; large display</button>
+  <button class="ghost" data-fit="1">Fit to this window</button>
+  <button class="ghost" data-reload="1">Reload the app</button>
+</div>
+
+<div class="stage">
+  <div class="frame" id="frame" style="width:360px;height:740px">
+    <div class="frame-top">
+      <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+      <strong id="label">360 &times; 740</strong>
+      <span id="hint" style="margin-left:auto">phone layout</span>
+    </div>
+    <iframe id="app" src="../index.html" title="MRHS ICT CLUB MASTER at this screen size" loading="eager"></iframe>
+  </div>
+</div>
+
+<p class="note">
+  <b>What to look for.</b> At 360&nbsp;px the sidebar is behind the menu button, tables are cards with labelled
+  values, dialogs slide up from the bottom edge and buttons are finger-sized. At 768&nbsp;px the same, one step
+  roomier. At 1024&nbsp;px the sidebar becomes an icon rail and two-column panels stay side by side. From
+  1366&nbsp;px the full sidebar returns. On a very wide screen the content stops widening and centres, so text
+  lines never stretch. The frame resizes the live app &mdash; no reload needed, except after changing the
+  application&rsquo;s own files.
+</p>
+
+<script>
+  var frame = document.getElementById('frame');
+  var label = document.getElementById('label');
+  var hint  = document.getElementById('hint');
+  var app   = document.getElementById('app');
+
+  function describe(w) {
+    if (w <= 400) return 'small phone layout';
+    if (w <= 640) return 'phone layout';
+    if (w <= 820) return 'tablet: cards, drawer';
+    if (w <= 900) return 'tablet: drawer navigation';
+    if (w <= 1150) return 'icon-rail sidebar';
+    if (w <= 1700) return 'full sidebar';
+    return 'capped, centred column';
+  }
+  function setSize(w, h) {
+    frame.style.width = w + 'px';
+    frame.style.height = h + 'px';
+    label.textContent = w + '\u00a0\u00d7\u00a0' + h;
+    hint.textContent = describe(w);
+    [].forEach.call(document.querySelectorAll('button[data-w]'), function (b) {
+      b.setAttribute('aria-pressed', String(Number(b.dataset.w) === w));
+    });
+  }
+  [].forEach.call(document.querySelectorAll('button[data-w]'), function (b) {
+    b.addEventListener('click', function () { setSize(Number(b.dataset.w), Number(b.dataset.h)); });
+  });
+  document.querySelector('button[data-fit]').addEventListener('click', function () {
+    var w = Math.min(window.innerWidth - 60, 1900);
+    var h = Math.max(420, window.innerHeight - 190);
+    frame.style.width = w + 'px';
+    frame.style.height = h + 'px';
+    label.textContent = 'fitted to this window';
+    hint.textContent = describe(w);
+    [].forEach.call(document.querySelectorAll('button[data-w]'), function (b) { b.setAttribute('aria-pressed', 'false'); });
+  });
+  document.querySelector('button[data-reload]').addEventListener('click', function () {
+    app.contentWindow.location.reload();
+  });
+  setSize(360, 740);
+</script>
+</body>
+</html>

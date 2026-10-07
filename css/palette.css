@@ -1,0 +1,505 @@
+/* ==========================================================================
+   MRHS ICT CLUB MASTER — palette.css
+   Colour schemes.
+
+   The base layer (style.css §1) holds the *shape* of every colour: how many
+   steps a ramp has, which token does what, how tinted shadows and focus rings
+   are derived. This file holds the *hues*. One scheme is active at a time —
+   set as data-accent on <html> by Settings → Appearance (or shell.js at boot)
+   — and every scheme restates the same token names, so every surface, chart,
+   badge, button, gradient and shadow follows it. Adding a scheme is a matter
+   of copying one block and changing the hues.
+
+   Contrast rule for every scheme: levels 700 and 800 are dark enough for white
+   text (they are used for button labels and table headers), levels 50–200 are
+   light enough for dark body text (they are used for soft fills).
+   ========================================================================== */
+
+/* ── Default: Azure & Cyan — the club's own deep blue ───────────────────── */
+[data-accent="azure"] {
+  --primary-rgb: 36,80,216; --secondary-rgb: 79,70,229; --accent-rgb: 6,182,212;
+  --deep-900: #0c1530; --deep-800: #17295c; --sidebar-bg: #101c3d; --sidebar-bg-2: #17295c;
+  --primary-50: #eef4ff;  --primary-100: #dbe6ff; --primary-200: #bcd0ff;
+  --primary-300: #92b0fd; --primary-400: #668bf7; --primary-500: #3f68ec;
+  --primary-600: #2450d8; --primary-700: #1d40ad; --primary-800: #1b3788;
+  --primary-900: #172c66; --primary: #2450d8;    --primary-ink: #1b3788;
+
+  --secondary-50: #eef2ff;  --secondary-100: #e0e7ff; --secondary-200: #c7d2fe;
+  --secondary-300: #a5b4fc; --secondary-400: #818cf8; --secondary-500: #6366f1;
+  --secondary-600: #4f46e5; --secondary-700: #4338ca;
+  --secondary: #4f46e5;    --secondary-ink: #3730a3;
+
+  --accent-50: #ecfeff;  --accent-100: #cffafe; --accent-200: #a5f3fc;
+  --accent-300: #67e8f9; --accent-400: #22d3ee; --accent-500: #06b6d4;
+  --accent-600: #0891b2; --accent: #06b6d4;    --accent-ink: #0e7490;
+
+  --grad-brand: linear-gradient(135deg, #2450d8 0%, #4f46e5 52%, #06b6d4 100%);
+  --grad-deep:  linear-gradient(135deg, #172c66 0%, #2450d8 55%, #4f46e5 100%);
+  --grad-soft:  linear-gradient(135deg, #eef4ff 0%, #ffffff 60%, #ecfeff 100%);
+  --grad-accent-bar: linear-gradient(90deg, #2450d8, #4f46e5 48%, #06b6d4);
+}
+
+/* ── Indigo & Violet ────────────────────────────────────────────────────── */
+[data-accent="indigo"] {
+  --primary-rgb: 79,70,229; --secondary-rgb: 124,58,237; --accent-rgb: 217,70,239;
+  --deep-900: #150f33; --deep-800: #2b2270; --sidebar-bg: #181240; --sidebar-bg-2: #2b2270;
+  --primary-50: #eef2ff;  --primary-100: #e0e7ff; --primary-200: #c7d2fe;
+  --primary-300: #a5b4fc; --primary-400: #818cf8; --primary-500: #6366f1;
+  --primary-600: #4f46e5; --primary-700: #4338ca; --primary-800: #3730a3;
+  --primary-900: #2c2a7a; --primary: #4f46e5;    --primary-ink: #3730a3;
+
+  --secondary-50: #f5f3ff;  --secondary-100: #ede9fe; --secondary-200: #ddd6fe;
+  --secondary-300: #c4b5fd; --secondary-400: #a78bfa; --secondary-500: #8b5cf6;
+  --secondary-600: #7c3aed; --secondary-700: #6d28d9;
+  --secondary: #7c3aed;    --secondary-ink: #5b21b6;
+
+  --accent-50: #fdf4ff;  --accent-100: #fae8ff; --accent-200: #f5d0fe;
+  --accent-300: #f0abfc; --accent-400: #e879f9; --accent-500: #d946ef;
+  --accent-600: #c026d3; --accent: #d946ef;    --accent-ink: #a21caf;
+
+  --grad-brand: linear-gradient(135deg, #4f46e5 0%, #7c3aed 52%, #d946ef 100%);
+  --grad-deep:  linear-gradient(135deg, #2c2a7a 0%, #4f46e5 55%, #7c3aed 100%);
+  --grad-soft:  linear-gradient(135deg, #eef2ff 0%, #ffffff 60%, #fdf4ff 100%);
+  --grad-accent-bar: linear-gradient(90deg, #4f46e5, #7c3aed 48%, #d946ef);
+}
+
+/* ── Royal & Gold — the club's official colours ─────────────────────────── */
+[data-accent="royal"] {
+  --primary-rgb: 37,64,184; --secondary-rgb: 217,154,6; --accent-rgb: 245,158,11;
+  --deep-900: #0a1130; --deep-800: #182469; --sidebar-bg: #0f1740; --sidebar-bg-2: #182469;
+  --primary-50: #eef2ff;  --primary-100: #dbe4ff; --primary-200: #bac9ff;
+  --primary-300: #8ea6fb; --primary-400: #5f7ef5; --primary-500: #3b5bdb;
+  --primary-600: #2540b8; --primary-700: #1b3092; --primary-800: #142471;
+  --primary-900: #101c56; --primary: #2540b8;    --primary-ink: #1b3092;
+
+  --secondary-50: #fef9e7;  --secondary-100: #fdf2c8; --secondary-200: #fbe38e;
+  --secondary-300: #f8cf4a; --secondary-400: #f0b81b; --secondary-500: #d99a06;
+  --secondary-600: #a97704; --secondary-700: #7d5803;
+  --secondary: #d99a06;    --secondary-ink: #7d5803;
+
+  --accent-50: #fffbeb;  --accent-100: #fef3c7; --accent-200: #fde68a;
+  --accent-300: #fcd34d; --accent-400: #fbbf24; --accent-500: #f59e0b;
+  --accent-600: #d97706; --accent: #f59e0b;    --accent-ink: #b45309;
+
+  --grad-brand: linear-gradient(135deg, #2540b8 0%, #3b5bdb 45%, #d99a06 100%);
+  --grad-deep:  linear-gradient(135deg, #101c56 0%, #1b3092 58%, #2540b8 100%);
+  --grad-soft:  linear-gradient(135deg, #eef2ff 0%, #ffffff 60%, #fffbeb 100%);
+  --grad-accent-bar: linear-gradient(90deg, #2540b8, #3b5bdb 50%, #d99a06);
+}
+
+/* ── Emerald & Teal ─────────────────────────────────────────────────────── */
+[data-accent="emerald"] {
+  --primary-rgb: 5,150,105; --secondary-rgb: 13,148,136; --accent-rgb: 34,197,94;
+  --deep-900: #04231a; --deep-800: #0a4a3a; --sidebar-bg: #062e24; --sidebar-bg-2: #0a4a3a;
+  --primary-50: #ecfdf5;  --primary-100: #d1fae5; --primary-200: #a7f3d0;
+  --primary-300: #6ee7b7; --primary-400: #34d399; --primary-500: #10b981;
+  --primary-600: #059669; --primary-700: #047857; --primary-800: #065f46;
+  --primary-900: #064e3b; --primary: #059669;    --primary-ink: #047857;
+
+  --secondary-50: #f0fdfa;  --secondary-100: #ccfbf1; --secondary-200: #99f6e4;
+  --secondary-300: #5eead4; --secondary-400: #2dd4bf; --secondary-500: #14b8a6;
+  --secondary-600: #0d9488; --secondary-700: #0f766e;
+  --secondary: #0d9488;    --secondary-ink: #0f766e;
+
+  --accent-50: #f0fdf4;  --accent-100: #dcfce7; --accent-200: #bbf7d0;
+  --accent-300: #86efac; --accent-400: #4ade80; --accent-500: #22c55e;
+  --accent-600: #16a34a; --accent: #22c55e;    --accent-ink: #15803d;
+
+  --grad-brand: linear-gradient(135deg, #047857 0%, #059669 50%, #2dd4bf 100%);
+  --grad-deep:  linear-gradient(135deg, #064e3b 0%, #047857 55%, #0d9488 100%);
+  --grad-soft:  linear-gradient(135deg, #ecfdf5 0%, #ffffff 60%, #f0fdfa 100%);
+  --grad-accent-bar: linear-gradient(90deg, #047857, #059669 48%, #2dd4bf);
+}
+
+/* ── Midnight & Cyan — deep, suited to the laboratory at night ─────────── */
+[data-accent="midnight"] {
+  --primary-rgb: 39,55,135; --secondary-rgb: 19,103,184; --accent-rgb: 34,211,238;
+  --deep-900: #080d22; --deep-800: #152250; --sidebar-bg: #0b1230; --sidebar-bg-2: #152250;
+  --primary-50: #eef2fb;  --primary-100: #dbe3f7; --primary-200: #bcc9ef;
+  --primary-300: #93a7e2; --primary-400: #6b83d6; --primary-500: #4a63c4;
+  --primary-600: #354aa8; --primary-700: #273787; --primary-800: #1e2b69;
+  --primary-900: #16204f; --primary: #273787;    --primary-ink: #1e2b69;
+
+  --secondary-50: #eef6ff;  --secondary-100: #d9ecff; --secondary-200: #b6daff;
+  --secondary-300: #84c0fb; --secondary-400: #4da2f5; --secondary-500: #1f84e0;
+  --secondary-600: #1367b8; --secondary-700: #0f5292;
+  --secondary: #1367b8;    --secondary-ink: #0f5292;
+
+  --accent-50: #ecfeff;  --accent-100: #cffafe; --accent-200: #a5f3fc;
+  --accent-300: #67e8f9; --accent-400: #22d3ee; --accent-500: #06b6d4;
+  --accent-600: #0891b2; --accent: #22d3ee;    --accent-ink: #0e7490;
+
+  --grad-brand: linear-gradient(135deg, #1e2b69 0%, #273787 48%, #0891b2 100%);
+  --grad-deep:  linear-gradient(135deg, #0d1533 0%, #16204f 55%, #273787 100%);
+  --grad-soft:  linear-gradient(135deg, #eef2fb 0%, #ffffff 60%, #ecfeff 100%);
+  --grad-accent-bar: linear-gradient(90deg, #273787, #1f84e0 50%, #22d3ee);
+}
+
+/* ── Plum & Rose — warm, distinctive, good on paper ─────────────────────── */
+[data-accent="plum"] {
+  --primary-rgb: 190,24,93; --secondary-rgb: 162,28,175; --accent-rgb: 244,63,94;
+  --deep-900: #2b0a1d; --deep-800: #5b1132; --sidebar-bg: #3a0d26; --sidebar-bg-2: #5b1132;
+  --primary-50: #fdf2f8;  --primary-100: #fce7f3; --primary-200: #fbcfe8;
+  --primary-300: #f9a8d4; --primary-400: #f472b6; --primary-500: #db2777;
+  --primary-600: #be185d; --primary-700: #9d174d; --primary-800: #831843;
+  --primary-900: #5b1132; --primary: #be185d;    --primary-ink: #9d174d;
+
+  --secondary-50: #fdf2f8;  --secondary-100: #fae8ff; --secondary-200: #f5d0fe;
+  --secondary-300: #f0abfc; --secondary-400: #d946ef; --secondary-500: #c026d3;
+  --secondary-600: #a21caf; --secondary-700: #86198f;
+  --secondary: #a21caf;    --secondary-ink: #86198f;
+
+  --accent-50: #fff1f2;  --accent-100: #ffe4e6; --accent-200: #fecdd3;
+  --accent-300: #fda4af; --accent-400: #fb7185; --accent-500: #f43f5e;
+  --accent-600: #e11d48; --accent: #f43f5e;    --accent-ink: #be123c;
+
+  --grad-brand: linear-gradient(135deg, #9d174d 0%, #be185d 50%, #a21caf 100%);
+  --grad-deep:  linear-gradient(135deg, #5b1132 0%, #831843 55%, #9d174d 100%);
+  --grad-soft:  linear-gradient(135deg, #fdf2f8 0%, #ffffff 60%, #fff1f2 100%);
+  --grad-accent-bar: linear-gradient(90deg, #9d174d, #be185d 48%, #a21caf);
+}
+
+/* ── Slate & Steel — quiet and formal for printed cabinets ─────────────── */
+[data-accent="slate"] {
+  --primary-rgb: 63,88,119; --secondary-rgb: 71,85,105; --accent-rgb: 8,145,178;
+  --deep-900: #151d27; --deep-800: #27364a; --sidebar-bg: #1a2431; --sidebar-bg-2: #27364a;
+  --primary-50: #f4f7fa;  --primary-100: #e6ecf3; --primary-200: #cfdae6;
+  --primary-300: #a9bbcf; --primary-400: #7b94b3; --primary-500: #546f92;
+  --primary-600: #3f5877; --primary-700: #33475f; --primary-800: #2a3a4d;
+  --primary-900: #1f2b39; --primary: #3f5877;    --primary-ink: #2a3a4d;
+
+  --secondary-50: #f1f5f9;  --secondary-100: #e2e8f0; --secondary-200: #cbd5e1;
+  --secondary-300: #94a3b8; --secondary-400: #64748b; --secondary-500: #475569;
+  --secondary-600: #334155; --secondary-700: #1e293b;
+  --secondary: #475569;    --secondary-ink: #1e293b;
+
+  --accent-50: #ecfeff;  --accent-100: #cffafe; --accent-200: #a5f3fc;
+  --accent-300: #67e8f9; --accent-400: #22d3ee; --accent-500: #0891b2;
+  --accent-600: #0e7490; --accent: #0891b2;    --accent-ink: #155e75;
+
+  --grad-brand: linear-gradient(135deg, #33475f 0%, #3f5877 50%, #0891b2 100%);
+  --grad-deep:  linear-gradient(135deg, #1f2b39 0%, #2a3a4d 55%, #33475f 100%);
+  --grad-soft:  linear-gradient(135deg, #f4f7fa 0%, #ffffff 60%, #ecfeff 100%);
+  --grad-accent-bar: linear-gradient(90deg, #33475f, #3f5877 50%, #0891b2);
+}
+
+/* ── Sunset & Coral — energetic, for the notice board ───────────────────── */
+[data-accent="sunset"] {
+  --primary-rgb: 194,65,12; --secondary-rgb: 220,38,38; --accent-rgb: 251,191,36;
+  --deep-900: #3d1206; --deep-800: #7c2d12; --sidebar-bg: #4a1808; --sidebar-bg-2: #7c2d12;
+  --primary-50: #fff7ed;  --primary-100: #ffedd5; --primary-200: #fed7aa;
+  --primary-300: #fdba74; --primary-400: #fb923c; --primary-500: #f97316;
+  --primary-600: #ea580c; --primary-700: #c2410c; --primary-800: #9a3412;
+  --primary-900: #7c2d12; --primary: #c2410c;    --primary-ink: #9a3412;
+
+  --secondary-50: #fef2f2;  --secondary-100: #fee2e2; --secondary-200: #fecaca;
+  --secondary-300: #fca5a5; --secondary-400: #f87171; --secondary-500: #ef4444;
+  --secondary-600: #dc2626; --secondary-700: #b91c1c;
+  --secondary: #dc2626;    --secondary-ink: #991b1b;
+
+  --accent-50: #fffbeb;  --accent-100: #fef3c7; --accent-200: #fde68a;
+  --accent-300: #fcd34d; --accent-400: #fbbf24; --accent-500: #f59e0b;
+  --accent-600: #d97706; --accent: #fbbf24;    --accent-ink: #92400e;
+
+  --grad-brand: linear-gradient(135deg, #9a3412 0%, #ea580c 50%, #fbbf24 100%);
+  --grad-deep:  linear-gradient(135deg, #7c2d12 0%, #9a3412 55%, #c2410c 100%);
+  --grad-soft:  linear-gradient(135deg, #fff7ed 0%, #ffffff 60%, #fffbeb 100%);
+  --grad-accent-bar: linear-gradient(90deg, #9a3412, #ea580c 48%, #fbbf24);
+}
+
+/* ── Teal & Sand — calm coastal pairing ────────────────────────────────── */
+[data-accent="lagoon"] {
+  --primary-rgb: 20,134,132; --secondary-rgb: 202,138,4; --accent-rgb: 6,182,212;
+  --deep-900: #062e2e; --deep-800: #0d5454; --sidebar-bg: #083a3a; --sidebar-bg-2: #0d5454;
+  --primary-50: #effcfb;  --primary-100: #d5f6f3; --primary-200: #adece8;
+  --primary-300: #79dcd7; --primary-400: #43c4c0; --primary-500: #1ea7a4;
+  --primary-600: #148684; --primary-700: #136b6a; --primary-800: #135556;
+  --primary-900: #124747; --primary: #148684;    --primary-ink: #135556;
+
+  --secondary-50: #fefce8;  --secondary-100: #fef9c3; --secondary-200: #fef08a;
+  --secondary-300: #fde047; --secondary-400: #facc15; --secondary-500: #eab308;
+  --secondary-600: #ca8a04; --secondary-700: #a16207;
+  --secondary: #ca8a04;    --secondary-ink: #854d0e;
+
+  --accent-50: #ecfeff;  --accent-100: #cffafe; --accent-200: #a5f3fc;
+  --accent-300: #67e8f9; --accent-400: #22d3ee; --accent-500: #06b6d4;
+  --accent-600: #0891b2; --accent: #06b6d4;    --accent-ink: #0e7490;
+
+  --grad-brand: linear-gradient(135deg, #135556 0%, #148684 48%, #22d3ee 100%);
+  --grad-deep:  linear-gradient(135deg, #124747 0%, #135556 55%, #148684 100%);
+  --grad-soft:  linear-gradient(135deg, #effcfb 0%, #ffffff 60%, #fefce8 100%);
+  --grad-accent-bar: linear-gradient(90deg, #135556, #148684 48%, #22d3ee);
+}
+
+/* ── Sky & Ash — bright, neutral, projector-friendly ───────────────────── */
+[data-accent="sky"] {
+  --primary-rgb: 2,132,199; --secondary-rgb: 71,85,105; --accent-rgb: 99,102,241;
+  --deep-900: #062338; --deep-800: #0a4a6e; --sidebar-bg: #083049; --sidebar-bg-2: #0a4a6e;
+  --primary-50: #f0f9ff;  --primary-100: #e0f2fe; --primary-200: #bae6fd;
+  --primary-300: #7dd3fc; --primary-400: #38bdf8; --primary-500: #0ea5e9;
+  --primary-600: #0284c7; --primary-700: #0369a1; --primary-800: #075985;
+  --primary-900: #0c4a6e; --primary: #0284c7;    --primary-ink: #075985;
+
+  --secondary-50: #f8fafc;  --secondary-100: #f1f5f9; --secondary-200: #e2e8f0;
+  --secondary-300: #cbd5e1; --secondary-400: #94a3b8; --secondary-500: #64748b;
+  --secondary-600: #475569; --secondary-700: #334155;
+  --secondary: #475569;    --secondary-ink: #1e293b;
+
+  --accent-50: #eef2ff;  --accent-100: #e0e7ff; --accent-200: #c7d2fe;
+  --accent-300: #a5b4fc; --accent-400: #818cf8; --accent-500: #6366f1;
+  --accent-600: #4f46e5; --accent: #6366f1;    --accent-ink: #4338ca;
+
+  --grad-brand: linear-gradient(135deg, #075985 0%, #0284c7 50%, #6366f1 100%);
+  --grad-deep:  linear-gradient(135deg, #0c4a6e 0%, #075985 55%, #0284c7 100%);
+  --grad-soft:  linear-gradient(135deg, #f0f9ff 0%, #ffffff 60%, #eef2ff 100%);
+  --grad-accent-bar: linear-gradient(90deg, #075985, #0284c7 50%, #6366f1);
+}
+
+/* ── System blue — the Windows default, familiar in the laboratory ────── */
+[data-accent="teams"] {
+  --primary-rgb: 30,91,168; --secondary-rgb: 53,107,166; --accent-rgb: 16,185,129;
+  --deep-900: #0a1f36; --deep-800: #123c68; --sidebar-bg: #0d2743; --sidebar-bg-2: #123c68;
+  --primary-50: #eef4fc;  --primary-100: #dce8f8; --primary-200: #b9d2f1;
+  --primary-300: #8bb4e7; --primary-400: #5c92db; --primary-500: #2f74ca;
+  --primary-600: #1e5ba8; --primary-700: #17497f; --primary-800: #123c68;
+  --primary-900: #0e2f52; --primary: #1e5ba8;    --primary-ink: #17497f;
+
+  --secondary-50: #f2f7fd;  --secondary-100: #e4eefa; --secondary-200: #c9ddf5;
+  --secondary-300: #9ec3ea; --secondary-400: #6ea3dd; --secondary-500: #4a86c8;
+  --secondary-600: #356ba6; --secondary-700: #2a5584;
+  --secondary: #356ba6;    --secondary-ink: #24476e;
+
+  --accent-50: #ecfdf5;  --accent-100: #d1fae5; --accent-200: #a7f3d0;
+  --accent-300: #6ee7b7; --accent-400: #34d399; --accent-500: #10b981;
+  --accent-600: #059669; --accent: #10b981;    --accent-ink: #047857;
+
+  --grad-brand: linear-gradient(135deg, #123c68 0%, #1e5ba8 50%, #4a86c8 100%);
+  --grad-deep:  linear-gradient(135deg, #0e2f52 0%, #123c68 55%, #17497f 100%);
+  --grad-soft:  linear-gradient(135deg, #eef4fc 0%, #ffffff 60%, #ecfdf5 100%);
+  --grad-accent-bar: linear-gradient(90deg, #123c68, #1e5ba8 50%, #4a86c8);
+}
+
+/* ── Dark theme ───────────────────────────────────────────────────────────
+   One rule for every scheme: the brand tokens step up to the lighter end of
+   each ramp (so buttons and charts glow on a dark canvas) and the soft tints
+   become translucent versions of the scheme's own hue, written as rgba() with
+   the raw channels above so they work in every browser. Nothing else needs a
+   per-scheme dark block. ──────────────────────────────────────────────────── */
+[data-theme="dark"] {
+  --primary:        var(--primary-400);
+  --primary-ink:    var(--primary-300);
+  --secondary:      var(--secondary-400);
+  --secondary-ink:  var(--secondary-300);
+  --accent:         var(--accent-400);
+  --accent-ink:     var(--accent-300);
+
+  --primary-50:  rgba(var(--primary-rgb), .14);
+  --primary-100: rgba(var(--primary-rgb), .22);
+  --primary-200: rgba(var(--primary-rgb), .32);
+  --primary-600: var(--primary-400);
+  --primary-700: var(--primary-300);
+
+  --secondary-50:  rgba(var(--secondary-rgb), .14);
+  --secondary-100: rgba(var(--secondary-rgb), .22);
+  --secondary-200: rgba(var(--secondary-rgb), .32);
+
+  --accent-50:  rgba(var(--accent-rgb), .14);
+  --accent-100: rgba(var(--accent-rgb), .22);
+  --accent-200: rgba(var(--accent-rgb), .32);
+
+  --grad-soft: linear-gradient(135deg, var(--surface-2) 0%, var(--surface) 55%, var(--surface-3) 100%);
+}
+
+/* ── Scheme-aware surfaces ────────────────────────────────────────────────
+   The base layer paints the shell, the hero and the sign-in panel with fixed
+   gradients. These rules re-point them at the active scheme, so choosing a
+   colour changes the sidebar, the welcome banner, the sign-in panel, the
+   buttons, the certificates and every chart together — not just a few links.
+   They load after the base layer and are intentionally specific. */
+
+.sidebar {
+  background:
+    radial-gradient(560px 300px at 110% -10%, rgba(var(--primary-rgb), .34), transparent 62%),
+    radial-gradient(520px 320px at -20% 108%, rgba(var(--accent-rgb), .24), transparent 60%),
+    linear-gradient(180deg, var(--sidebar-bg) 0%, var(--sidebar-bg-2) 100%);
+}
+.sidebar-head { background: linear-gradient(90deg, rgba(var(--primary-rgb), .26), transparent 78%); }
+.sidebar-club { background: rgba(var(--primary-rgb), .16); border-color: rgba(var(--accent-rgb), .3); }
+.nav-item.active, .nav-item[aria-current="page"] { box-shadow: inset 3px 0 0 var(--accent-400, var(--accent)); }
+.sidebar-foot { background: rgba(0, 0, 0, .22); }
+
+/* The welcome banner and the sign-in panel share one recipe. */
+.hero, .login-brand {
+  background:
+    radial-gradient(720px 420px at 88% 6%, rgba(var(--accent-rgb), .42), transparent 60%),
+    radial-gradient(620px 420px at 4% 100%, rgba(var(--secondary-rgb), .44), transparent 62%),
+    var(--grad-deep);
+}
+.hero { border-bottom: 3px solid transparent; border-image: var(--grad-accent-bar) 1; }
+.login-brand::before { background-image: var(--grad-brand); }
+
+/* Accent hairline under the top bar: the app wears its colour everywhere. */
+.topbar { border-bottom-color: transparent; box-shadow: 0 1px 0 0 var(--border), 0 2px 0 0 rgba(var(--primary-rgb), .35); }
+.page-crumb .pc-ico { background: linear-gradient(135deg, rgba(var(--primary-rgb), .18), rgba(var(--accent-rgb), .2)); color: var(--primary-700); }
+.brand-mark { background: var(--grad-brand); box-shadow: 0 6px 16px rgba(var(--primary-rgb), .38); }
+
+/* Buttons wear the full scheme. */
+.btn-primary { background: var(--grad-brand); border-color: transparent; }
+.btn-primary:hover { background: var(--grad-brand); filter: brightness(1.07) saturate(1.05); box-shadow: 0 10px 24px rgba(var(--primary-rgb), .36); }
+.btn-secondary { background: linear-gradient(135deg, var(--secondary-600), var(--secondary-500)); border-color: transparent; }
+.btn-secondary:hover { box-shadow: 0 10px 24px rgba(var(--secondary-rgb), .34); }
+
+/* Data marks, spines and numbers. */
+.stat-card { border-top: 3px solid transparent; border-image: var(--grad-accent-bar) 1; }
+.stat-value, .stat-card .stat-num { background: linear-gradient(120deg, var(--primary-700), var(--secondary-600) 58%, var(--accent-600));
+  -webkit-background-clip: text; background-clip: text; color: transparent; -webkit-text-fill-color: transparent; }
+[data-theme="dark"] .stat-value, [data-theme="dark"] .stat-card .stat-num { background: linear-gradient(120deg, var(--primary-300), var(--secondary-300) 58%, var(--accent-300));
+  -webkit-background-clip: text; background-clip: text; }
+.card-head > .card-ico, .card > .card-head .card-ico { background: linear-gradient(135deg, rgba(var(--primary-rgb), .16), rgba(var(--accent-rgb), .18)); color: var(--primary-700); }
+.data-table thead th, .stat-table thead th { background: linear-gradient(120deg, var(--primary-800), var(--primary-700) 55%, var(--secondary-600)); color: #fff; }
+.data-table thead th a, .data-table thead th button { color: #fff; }
+[id], a { scroll-margin-top: 80px; }
+a { color: var(--primary-700); }
+a:hover { color: var(--primary-800); }
+[data-theme="dark"] a { color: var(--primary-300); }
+::selection { background: rgba(var(--primary-rgb), .3); }
+:focus-visible { outline: 2px solid var(--primary-500); outline-offset: 2px; }
+
+/* Progress, rings and avatars follow the scheme. */
+.progress > i, .progress-bar > i, .storage-meter-bar > i { background: var(--grad-brand); }
+.avatar, .user-chip .avatar, #user-avatar, #menu-avatar { background: var(--grad-brand); }
+hr, .dropdown-sep { border-color: var(--border); }
+
+/* The certificate seal and crest keep the scheme's own gradient. */
+.cert-seal-mark, .cert-crest { background: var(--grad-brand); }
+.id-card-top, .cc-head { background: var(--grad-deep); }
+.id-card-top.tier-exec, .cc-head.tier-exec { background: linear-gradient(115deg, var(--deep-900), var(--primary-700) 55%, var(--primary-500)); }
+.id-card-top.tier-officer, .cc-head.tier-officer { background: linear-gradient(115deg, var(--accent-600), var(--accent-400) 55%, var(--accent-200)); }
+
+/* A faint aurora behind the page so the colour is never far away. */
+body[data-route]:not([data-route="login"]) .view-root::before {
+  content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 0;
+  background:
+    radial-gradient(720px 420px at 100% 0%, rgba(var(--primary-rgb), .10), transparent 62%),
+    radial-gradient(620px 400px at 0% 100%, rgba(var(--accent-rgb), .08), transparent 60%);
+}
+[data-theme="dark"] body .view-root::before,
+[data-theme="dark"] .view-root::before {
+  background:
+    radial-gradient(720px 420px at 100% 0%, rgba(var(--primary-rgb), .18), transparent 62%),
+    radial-gradient(620px 400px at 0% 100%, rgba(var(--accent-rgb), .14), transparent 60%);
+}
+.view-root { position: relative; }
+.view-root > * { position: relative; z-index: 1; }
+
+/* Section eyebrows and dividers pick up the accent. */
+.page-head h1 svg { color: var(--primary-600); }
+.muted.xs, .help { color: var(--text-3); }
+.badge-primary { background: linear-gradient(135deg, var(--primary-600), var(--secondary-600)); }
+.badge-accent { background: linear-gradient(135deg, var(--accent-600), var(--accent-400)); }
+
+@media (prefers-reduced-motion: reduce) {
+  .stat-value, .stat-card .stat-num { background: none; color: var(--primary-700); -webkit-text-fill-color: currentColor; }
+}
+
+/* ── The scheme picker in Settings → Appearance ───────────────────────────
+   Each tile previews the scheme's own five steps, painted from the same
+   variables the app uses, so what is chosen is exactly what is applied. */
+.swatch-grid { display: grid; gap: 10px; grid-template-columns: repeat(auto-fill, minmax(196px, 1fr)); }
+.swatch { position: relative; display: grid; gap: 5px; text-align: left; cursor: pointer;
+  padding: 11px 12px 12px; border-radius: var(--r-md); border: 1px solid var(--border);
+  background: var(--surface); color: var(--text); font: inherit;
+  transition: transform var(--speed) ease, box-shadow var(--speed) ease, border-color var(--speed) ease; }
+.swatch:hover { transform: translateY(-2px); box-shadow: var(--sh-md); border-color: var(--border-2); }
+.swatch.active { border-color: var(--primary-500); box-shadow: 0 0 0 3px rgba(var(--primary-rgb), .22), var(--sh-md); }
+.swatch strong { font-size: .84rem; }
+.swatch .xs { line-height: 1.3; }
+.sw-strip { display: flex; height: 26px; border-radius: 7px; overflow: hidden; box-shadow: var(--sh-xs); }
+.sw-strip i { flex: 1; }
+.sw-tick { position: absolute; top: 9px; right: 9px; width: 20px; height: 20px; border-radius: 50%;
+  display: grid; place-items: center; background: var(--primary-600); color: #fff; box-shadow: var(--sh-sm); }
+
+/* Preview strips: five steps of each scheme. The colours are literal because a
+   tile must show a scheme that is not the active one. */
+.sw-strip[data-scheme="azure"] i:nth-child(1) { background: #172c66; }
+.sw-strip[data-scheme="azure"] i:nth-child(2) { background: #2450d8; }
+.sw-strip[data-scheme="azure"] i:nth-child(3) { background: #3f68ec; }
+.sw-strip[data-scheme="azure"] i:nth-child(4) { background: #4f46e5; }
+.sw-strip[data-scheme="azure"] i:nth-child(5) { background: #06b6d4; }
+.sw-strip[data-scheme="indigo"] i:nth-child(1) { background: #2c2a7a; }
+.sw-strip[data-scheme="indigo"] i:nth-child(2) { background: #4f46e5; }
+.sw-strip[data-scheme="indigo"] i:nth-child(3) { background: #6366f1; }
+.sw-strip[data-scheme="indigo"] i:nth-child(4) { background: #7c3aed; }
+.sw-strip[data-scheme="indigo"] i:nth-child(5) { background: #d946ef; }
+.sw-strip[data-scheme="royal"] i:nth-child(1) { background: #142471; }
+.sw-strip[data-scheme="royal"] i:nth-child(2) { background: #2540b8; }
+.sw-strip[data-scheme="royal"] i:nth-child(3) { background: #3b5bdb; }
+.sw-strip[data-scheme="royal"] i:nth-child(4) { background: #d99a06; }
+.sw-strip[data-scheme="royal"] i:nth-child(5) { background: #fbbf24; }
+.sw-strip[data-scheme="emerald"] i:nth-child(1) { background: #065f46; }
+.sw-strip[data-scheme="emerald"] i:nth-child(2) { background: #059669; }
+.sw-strip[data-scheme="emerald"] i:nth-child(3) { background: #10b981; }
+.sw-strip[data-scheme="emerald"] i:nth-child(4) { background: #0d9488; }
+.sw-strip[data-scheme="emerald"] i:nth-child(5) { background: #2dd4bf; }
+.sw-strip[data-scheme="midnight"] i:nth-child(1) { background: #16204f; }
+.sw-strip[data-scheme="midnight"] i:nth-child(2) { background: #273787; }
+.sw-strip[data-scheme="midnight"] i:nth-child(3) { background: #4a63c4; }
+.sw-strip[data-scheme="midnight"] i:nth-child(4) { background: #1367b8; }
+.sw-strip[data-scheme="midnight"] i:nth-child(5) { background: #22d3ee; }
+.sw-strip[data-scheme="plum"] i:nth-child(1) { background: #5b1132; }
+.sw-strip[data-scheme="plum"] i:nth-child(2) { background: #be185d; }
+.sw-strip[data-scheme="plum"] i:nth-child(3) { background: #db2777; }
+.sw-strip[data-scheme="plum"] i:nth-child(4) { background: #a21caf; }
+.sw-strip[data-scheme="plum"] i:nth-child(5) { background: #f43f5e; }
+.sw-strip[data-scheme="slate"] i:nth-child(1) { background: #1f2b39; }
+.sw-strip[data-scheme="slate"] i:nth-child(2) { background: #3f5877; }
+.sw-strip[data-scheme="slate"] i:nth-child(3) { background: #546f92; }
+.sw-strip[data-scheme="slate"] i:nth-child(4) { background: #64748b; }
+.sw-strip[data-scheme="slate"] i:nth-child(5) { background: #0891b2; }
+.sw-strip[data-scheme="sunset"] i:nth-child(1) { background: #7c2d12; }
+.sw-strip[data-scheme="sunset"] i:nth-child(2) { background: #c2410c; }
+.sw-strip[data-scheme="sunset"] i:nth-child(3) { background: #f97316; }
+.sw-strip[data-scheme="sunset"] i:nth-child(4) { background: #dc2626; }
+.sw-strip[data-scheme="sunset"] i:nth-child(5) { background: #fbbf24; }
+.sw-strip[data-scheme="lagoon"] i:nth-child(1) { background: #124747; }
+.sw-strip[data-scheme="lagoon"] i:nth-child(2) { background: #148684; }
+.sw-strip[data-scheme="lagoon"] i:nth-child(3) { background: #1ea7a4; }
+.sw-strip[data-scheme="lagoon"] i:nth-child(4) { background: #ca8a04; }
+.sw-strip[data-scheme="lagoon"] i:nth-child(5) { background: #67e8f9; }
+.sw-strip[data-scheme="sky"] i:nth-child(1) { background: #075985; }
+.sw-strip[data-scheme="sky"] i:nth-child(2) { background: #0284c7; }
+.sw-strip[data-scheme="sky"] i:nth-child(3) { background: #38bdf8; }
+.sw-strip[data-scheme="sky"] i:nth-child(4) { background: #64748b; }
+.sw-strip[data-scheme="sky"] i:nth-child(5) { background: #6366f1; }
+.sw-strip[data-scheme="teams"] i:nth-child(1) { background: #123c68; }
+.sw-strip[data-scheme="teams"] i:nth-child(2) { background: #1e5ba8; }
+.sw-strip[data-scheme="teams"] i:nth-child(3) { background: #4a86c8; }
+.sw-strip[data-scheme="teams"] i:nth-child(4) { background: #356ba6; }
+.sw-strip[data-scheme="teams"] i:nth-child(5) { background: #10b981; }
+
+@media (max-width: 620px) { .swatch-grid { grid-template-columns: 1fr 1fr; } .swatch strong { font-size: .78rem; } .swatch .xs { display: none; } }
+
+/* ── Printing ─────────────────────────────────────────────────────────────
+   Reports, minutes, statements and registers must stay readable on the
+   school's black-and-white printer, so the colour layer steps aside there.
+   Certificates keep their own design: their print stylesheet is built by
+   Print.preview() and is not affected by these rules. */
+@media print {
+  body { background: #fff !important; }
+  .hero, .login-brand, .sidebar, .topbar { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .stat-value, .stat-card .stat-num {
+    background: none !important; -webkit-text-fill-color: currentColor !important; color: var(--primary-800) !important;
+  }
+  .data-table thead th, .stat-table thead th { background: #eef2f8 !important; color: #101a2e !important; }
+  .card, .stat-card { box-shadow: none !important; }
+  .view-root::before { display: none !important; }
+}
+
+/* ── Windows high-contrast mode ───────────────────────────────────────────
+   Some school machines run forced colours; the gradients are dropped so the
+   system's own palette takes over and nothing becomes unreadable. */
+@media (forced-colors: active) {
+  .hero, .login-brand, .sidebar, .data-table thead th, .btn-primary, .badge-primary, .brand-mark,
+  .avatar, .progress > i, .id-card-top, .cc-head { background: Canvas !important; color: CanvasText !important; border: 1px solid CanvasText; }
+  .stat-value, .stat-card .stat-num { background: none !important; -webkit-text-fill-color: currentColor !important; color: CanvasText !important; }
+}
